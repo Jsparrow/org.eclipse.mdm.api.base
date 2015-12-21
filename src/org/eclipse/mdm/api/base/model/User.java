@@ -10,68 +10,152 @@ package org.eclipse.mdm.api.base.model;
 
 import java.util.Map;
 
-import org.eclipse.mdm.api.base.marker.Deletable;
+/**
+ * Implementation of the user data item type.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ */
+public final class User extends AbstractDataItem implements Deletable, Describable {
 
-public final class User extends AbstractDataItem implements Describable, Deletable {
-	
+	// ======================================================================
+	// Class variables
+	// ======================================================================
+
+	/**
+	 * The 'Surname' attribute name.
+	 */
 	public static final String ATTR_SURNAME = "Surname";
-	public static final String ATTR_GIVENNAME = "GivenName";
+
+	/**
+	 * The 'GivenName' attribute name.
+	 */
+	public static final String ATTR_GIVEN_NAME = "GivenName";
+
+	/**
+	 * The 'Department' attribute name.
+	 */
 	public static final String ATTR_DEPARTMENT = "Department";
-	public static final String ATTR_TELEPHONE = "Telephone";
+
+	/**
+	 * The 'Telephone' attribute name.
+	 */
+	public static final String ATTR_PHONE = "Telephone";
+
+	/**
+	 * The 'EMail' attribute name.
+	 */
 	public static final String ATTR_EMAIL = "E-Mail";
 
-	private User(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> references) {
-		super(uri, values, references);
+	// ======================================================================
+	// Constructors
+	// ======================================================================
+
+	/**
+	 * Constructor.
+	 *
+	 * @param values This data item's values.
+	 * @param uri The data item identifier.
+	 * @param relatedDataItems Related data item instances.
+	 */
+	private User(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> relatedDataItems) {
+		super(values, uri, relatedDataItems);
 	}
 
-	@Override
-	public String getDescription() {
-		return super.getValue(ATTR_DESCRIPTION).getValue();
-	}
+	// ======================================================================
+	// Public methods
+	// ======================================================================
 
-	@Override
-	public void setDescription(String description) {
-		super.getValue(ATTR_DESCRIPTION).setValue(description);
-	}
-	
-	public String getEMail() {
-		return super.getValue(ATTR_EMAIL).getValue();
-	}
-	
-	public void setEMail(String eMail) {
-		super.getValue(ATTR_EMAIL).setValue(eMail);
-	}
-	
+	/**
+	 * Returns the surname of this user.
+	 *
+	 * @return The surname is returned.
+	 */
 	public String getSurname() {
-		return super.getValue(ATTR_SURNAME).getValue();
+		return getValue(ATTR_SURNAME).extract();
 	}
-	
+
+	/**
+	 * Sets new surname for this user.
+	 *
+	 * @param surame The new surname.
+	 */
 	public void setSurname(String surname) {
-		super.getValue(ATTR_SURNAME).setValue(surname);
+		getValue(ATTR_SURNAME).set(surname);
 	}
-	
+
+	/**
+	 * Returns the given name of this user.
+	 *
+	 * @return The given name is returned.
+	 */
 	public String getGivenName() {
-		return super.getValue(ATTR_GIVENNAME).getValue();
+		return getValue(ATTR_GIVEN_NAME).extract();
 	}
-	
+
+	/**
+	 * Sets new given name for this user.
+	 *
+	 * @param givenName The new given name.
+	 */
 	public void setGivenName(String givenName) {
-		super.getValue(ATTR_GIVENNAME).setValue(givenName);
+		getValue(ATTR_GIVEN_NAME).set(givenName);
 	}
-	
+
+	/**
+	 * Returns the department of this user.
+	 *
+	 * @return The department is returned.
+	 */
 	public String getDepartment() {
-		return super.getValue(ATTR_DEPARTMENT).getValue();
+		return getValue(ATTR_DEPARTMENT).extract();
 	}
-	
+
+	/**
+	 * Sets new department for this user.
+	 *
+	 * @param department The new department.
+	 */
 	public void setDepartment(String department) {
-		super.getValue(ATTR_DEPARTMENT).setValue(department);
+		getValue(ATTR_DEPARTMENT).set(department);
 	}
-	
-	public String getTelephone() {
-		return super.getValue(ATTR_TELEPHONE).getValue();
+
+	/**
+	 * Returns the phone number of this user.
+	 *
+	 * @return The phone number is returned.
+	 */
+	public String getPhone() {
+		return getValue(ATTR_PHONE).extract();
 	}
-	
-	public void setTelephone(String telephone) {
-		super.getValue(ATTR_TELEPHONE).setValue(telephone);
+
+	/**
+	 * Sets new phone number for this user.
+	 *
+	 * @param phone The new phone number.
+	 */
+	public void setPhone(String phone) {
+		getValue(ATTR_PHONE).set(phone);
 	}
-	
+
+	/**
+	 * Returns the e-mail address of this user.
+	 *
+	 * @return The e-mail address is returned.
+	 */
+	public String getMail() {
+		return getValue(ATTR_EMAIL).extract();
+	}
+
+	/**
+	 * Sets new e-mail address for this user.
+	 *
+	 * @param eMail The new e-mail address.
+	 */
+	public void setMail(String eMail) {
+		getValue(ATTR_EMAIL).set(eMail);
+	}
+
+
 }

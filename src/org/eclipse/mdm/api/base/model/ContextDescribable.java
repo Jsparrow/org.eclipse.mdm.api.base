@@ -6,30 +6,21 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.mdm.api.base.query;
+package org.eclipse.mdm.api.base.model;
 
 /**
- * Join enumeration.
+ * The {@link TestStep} and {@link Measurement} data item types implement this
+ * interface to indicate the availability of descriptive context data.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Query
+ * @see ContextRoot
+ * @see ContextComponent
+ * @see ContextSensor
+ * @see TestStep
+ * @see Measurement
  */
-public enum Join {
-
-	// ======================================================================
-	// Enumerations
-	// ======================================================================
-
-	/**
-	 * Enforces an inner join.
-	 */
-	INNER,
-
-	/**
-	 * Enforces an outer join.
-	 */
-	OUTER
+public interface ContextDescribable extends DataItem {
 
 }

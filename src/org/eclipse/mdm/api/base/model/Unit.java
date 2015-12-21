@@ -8,76 +8,162 @@
 
 package org.eclipse.mdm.api.base.model;
 
-import java.util.Date;
 import java.util.Map;
 
-import org.eclipse.mdm.api.base.marker.Deletable;
+/**
+ * Implementation of the unit data item type. Units referring to the same
+ * {@link PhysicalDimension} can be converted to each other by means of their
+ * attribute values "Offset" and "Factor". Names of the units must be unique.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ * @see PhysicalDimension
+ */
+public final class Unit extends AbstractDataItem implements Copyable, Datable, Deletable, Describable {
 
-public final class Unit extends AbstractDataItem implements Datable, Describable, Deletable {
+	// ======================================================================
+	// Class variables
+	// ======================================================================
 
+	/**
+	 * The 'Factor' attribute name.
+	 */
 	public static final String ATTR_FACTOR = "Factor";
+
+	/**
+	 * The 'Offset' attribute name.
+	 */
 	public static final String ATTR_OFFSET= "Offset";
+
+	/**
+	 * The 'DB' attribute name.
+	 */
 	public static final String ATTR_DB = "dB";
-	public static final String ATTR_DB_REF_FACTOR = "dB_reference_factor";
-	
-	private Unit(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> references) {
-		super(uri, values, references);	
-	}
-	
-	@Override
-	public String getDescription() {
-		return super.getValue(ATTR_DESCRIPTION).getValue();
+
+	/**
+	 * The 'DBRreferenceFactor' attribute name.
+	 */
+	public static final String ATTR_DB_REFERENCE_FACTOR = "dB_reference_factor";
+
+	// ======================================================================
+	// Constructors
+	// ======================================================================
+
+	/**
+	 * Constructor.
+	 *
+	 * @param values This data item's values.
+	 * @param uri The data item identifier.
+	 * @param relatedDataItems Related data item instances.
+	 */
+	private Unit(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> relatedDataItems) {
+		super(values, uri, relatedDataItems);
 	}
 
-	@Override
-	public void setDescription(String description) {
-		super.getValue(ATTR_DESCRIPTION).setValue(description);
-	}
+	// ======================================================================
+	// Public methods
+	// ======================================================================
 
-	@Override
-	public Date getDateCreated() {
-		return super.getValue(ATTR_DATECREATED).getValue();
-	}
-
-	@Override
-	public void setDateCreated(Date date) {
-		super.getValue(ATTR_DATECREATED).setValue(date);		
-	}
-
+	/**
+	 * Returns the factor of this unit.
+	 *
+	 * @return The factor is returned.
+	 */
 	public Double getFactor() {
-		return super.getValue(ATTR_FACTOR).getValue();
+		return getValue(ATTR_FACTOR).extract();
 	}
-	
+
+	/**
+	 * Sets new factor for this unit.
+	 *
+	 * @param factor The new factor.
+	 */
 	public void setFactor(Double factor) {
-		super.getValue(ATTR_FACTOR).setValue(factor);
+		getValue(ATTR_FACTOR).set(factor);
 	}
-	
+
+	/**
+	 * Returns the offset of this unit.
+	 *
+	 * @return The offset is returned.
+	 */
 	public Double getOffset() {
-		return super.getValue(ATTR_OFFSET).getValue();
+		return getValue(ATTR_OFFSET).extract();
 	}
-	
+
+	/**
+	 * Sets new offset for this unit.
+	 *
+	 * @param offset The new offset.
+	 */
 	public void setOffset(Double offset) {
-		super.getValue(ATTR_OFFSET).setValue(offset);
+		getValue(ATTR_OFFSET).set(offset);
 	}
-	
+
+	/**
+	 * Returns the decibel flag of this unit. If the flag is true, then
+	 * {@link #getDBRefFactor()} should return a finite value as returned
+	 * by {@link Float#isFinite(float)} that is not 0.
+	 *
+	 * @return True if this unit is a decibel unit.
+	 * @see #getDBRefFactor()
+	 */
 	public Boolean isDB() {
-		return super.getValue(ATTR_DB).getValue();
+		return getValue(ATTR_DB).extract();
 	}
-	
-	public void setDB(Boolean db) {
-		super.getValue(ATTR_DB).setValue(db);
-	}
-	
+
+	/**
+	 * Returns the factor, which allows to convert the decibel values back
+	 * into linear values. If the decibel flag is set to false, this method
+	 * should return 0. This is described in the ASAM NVH specification
+	 * (Chapter 11, 10.3).
+	 *
+	 * @return The decibel reference factor is returned.
+	 * @see #isDB()
+	 */
 	public Float getDBRefFactor() {
-		return super.getValue(ATTR_DB_REF_FACTOR).getValue();
+		return getValue(ATTR_DB_REFERENCE_FACTOR).extract();
 	}
-	
-	public void setDBRefFactor(Float dbRefFactor) {
-		super.getValue(ATTR_DB_REF_FACTOR).setValue(dbRefFactor);
+
+	/**
+	 * Changes the decibel status of this unit. The decibel flag is deduced from
+	 * passed reference factor. If the reference factor is finite, as returned
+	 * by {@link Float#isFinite(float)}, and not 0, then the decibel flag is set
+	 * to true and passed reference factor is taken. In any other case both, the
+	 * decibel flag and the reference factor, will be reset.
+	 *
+	 * @param dbReferenceFactor The new decibel reference factor.
+	 */
+	public void setDB(Float dbReferenceFactor) {
+		boolean isValid = dbReferenceFactor != null && Float.isFinite(dbReferenceFactor) &&
+				dbReferenceFactor.floatValue() != 0;
+		getValue(ATTR_DB).set(isValid);
+
+		if(isValid) {
+			getValue(ATTR_DB_REFERENCE_FACTOR).set(dbReferenceFactor);
+		} else {
+			getValue(ATTR_DB_REFERENCE_FACTOR).setValid(false);
+		}
 	}
-	
+
+	/**
+	 * Returns the related default {@link PhysicalDimension} data item for
+	 * this unit.
+	 *
+	 * @return Related default {@code PhysicalDimension} data item is returned.
+	 */
 	public PhysicalDimension getPhysicalDimension() {
-		return (PhysicalDimension)super.references.get(PhysicalDimension.class);
+		return getRelatedDataItem(PhysicalDimension.class);
 	}
-	
+
+	/**
+	 * Sets new related default {@link PhysicalDimension} data item for this unit.
+	 *
+	 * @param physicalDimension The new related {@code PhysicalDimension} data item.
+	 */
+	public void setPhysicalDimension(PhysicalDimension physicalDimension) {
+		setRelatedDataItem(physicalDimension);
+	}
+
 }

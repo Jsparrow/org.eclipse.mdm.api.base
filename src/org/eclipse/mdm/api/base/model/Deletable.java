@@ -6,30 +6,16 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.mdm.api.base.query;
+package org.eclipse.mdm.api.base.model;
 
 /**
- * Join enumeration.
+ * This interface is used to indicate that implementing data items are allowed
+ * to be deleted.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Query
  */
-public enum Join {
-
-	// ======================================================================
-	// Enumerations
-	// ======================================================================
-
-	/**
-	 * Enforces an inner join.
-	 */
-	INNER,
-
-	/**
-	 * Enforces an outer join.
-	 */
-	OUTER
+public interface Deletable extends DataItem {
 
 }

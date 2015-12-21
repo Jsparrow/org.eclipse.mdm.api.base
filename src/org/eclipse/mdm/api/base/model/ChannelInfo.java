@@ -10,29 +10,84 @@ package org.eclipse.mdm.api.base.model;
 
 import java.util.Map;
 
+/**
+ * Implementation of the channel info data item type.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ * @see Channel
+ */
+@Deprecated
+// TODO: relation to Channel (one channel relates to one or more ChannelInfo)
+// TODO: relation to ChannelGroup
 public final class ChannelInfo extends AbstractDataItem {
 
-	public static final String ATTR_INDEPENDENT = "IndependentFlag";
+	// ======================================================================
+	// Class variables
+	// ======================================================================
+
+	/**
+	 * The 'SequenceRepresentation' attribute name.
+	 */
 	public static final String ATTR_SEQUENCE_REPRESENTATION = "SequenceRepresentation";
-	public static final String ATTR_AXISTYPE = "axistype"; // TODO attribute on other (newer systems) 'AxisType' 
 
-	
-	private ChannelInfo(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> references) {
-		super(uri, values, references);
+	/**
+	 * The 'Independent' attribute name.
+	 */
+	public static final String ATTR_INDEPENDENT = "IndependentFlag";
+
+	/**
+	 * The 'AxisType' attribute name.
+	 */
+	public static final String ATTR_AXIS_TYPE = "axistype";
+
+	// ======================================================================
+	// Constructors
+	// ======================================================================
+
+	/**
+	 * Constructor.
+	 *
+	 * @param values This data item's values.
+	 * @param uri The data item identifier.
+	 * @param relatedDataItems Related data item instances.
+	 */
+	private ChannelInfo(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> relatedDataItems) {
+		super(values, uri, relatedDataItems);
 	}
 
+	// ======================================================================
+	// Public methods
+	// ======================================================================
+
+	/**
+	 * Returns the independence flag.
+	 *
+	 * @return True if this instance is independent.
+	 */
 	public Boolean isIndependent() {
-		return super.getValue(ATTR_INDEPENDENT).getValue();
+		return getValue(ATTR_INDEPENDENT).extract();
 	}
-	
+
+	/**
+	 * Returns the axis type.
+	 *
+	 * @return Axis type is returned.
+	 */
 	//TODO: mapping enum values
-	public Integer getAxisType() {
-		return super.getValue(ATTR_AXISTYPE).getValue();
+	public Integer getAxisTypeEnum() {
+		return getValue(ATTR_AXIS_TYPE).extract();
 	}
-	
+
+	/**
+	 * Returns the sequence representation.
+	 *
+	 * @return Sequence representation is returned.
+	 */
 	//TODO: mapping enum values
-	public Integer getSequenceRepresentation() {
-		return super.getValue(ATTR_SEQUENCE_REPRESENTATION).getValue();
+	public Integer getSequenceRepresentationEnum() {
+		return getValue(ATTR_SEQUENCE_REPRESENTATION).extract();
 	}
-	
-} 
+
+}

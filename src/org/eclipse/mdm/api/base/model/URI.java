@@ -8,33 +8,54 @@
 
 package org.eclipse.mdm.api.base.model;
 
+/**
+ * Unique identifier for {@link DataItem}s.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ * @see DataItem
+ */
 public final class URI {
+
+	// ======================================================================
+	// Instance variables
+	// ======================================================================
 
 	private final String envName;
 	private final String typeName;
-	private final long id;
-	
-	public URI(String envName, String typeName, long id) {
+	private final Long id;
+
+	// ======================================================================
+	// Constructors
+	// ======================================================================
+
+	public URI(String envName, String typeName, Long id) {
 		this.envName = envName;
 		this.typeName = typeName;
-		this.id = id;		
+		this.id = id;
 	}
-	
-	public long getId() {
-		return this.id;
+
+	// ======================================================================
+	// Public methods
+	// ======================================================================
+
+	public Long getID() {
+		return id;
 	}
-	
+
 	public String getTypeName() {
-		return this.typeName;
-	}	
-	
+		return typeName;
+	}
+
 	public String getEnvironmentName() {
-		return this.envName;
-	}	
-	
+		return envName;
+	}
+
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("mdmDataItem://");
-		sb.append(this.envName).append('/').append(this.typeName).append('/').append(this.id);
+		sb.append(envName).append('/').append(typeName).append('/').append(id);
 		return sb.toString();
 	}
 

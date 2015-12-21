@@ -10,95 +10,226 @@ package org.eclipse.mdm.api.base.model;
 
 import java.util.Map;
 
-import org.eclipse.mdm.api.base.marker.Deletable;
+/**
+ * Implementation of the physical dimension data item type. Each {@link Unit}
+ * must have a relation to an instance of this type. The attributes represent
+ * the exponents of the seven SI base units and additionally the angle exponent
+ * as defined in the ASAM NVH model. A {@code Unit} with a certain physical
+ * dimension can be converted to all other units having the same relation.
+ * Names of the physical dimensions must be unique.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ * @see Unit
+ */
+public final class PhysicalDimension extends AbstractDataItem implements Copyable, Describable, Deletable {
 
-public final class PhysicalDimension extends AbstractDataItem implements Describable, Deletable {
+	// ======================================================================
+	// Class variables
+	// ======================================================================
 
+	/**
+	 * The 'Length' attribute name.
+	 */
 	public static final String ATTR_LENGTH = "Length";
+
+	/**
+	 * The 'Mass' attribute name.
+	 */
 	public static final String ATTR_MASS = "Mass";
+
+	/**
+	 * The 'Time' attribute name.
+	 */
 	public static final String ATTR_TIME = "Time";
+
+	/**
+	 * The 'Current' attribute name.
+	 */
 	public static final String ATTR_CURRENT = "Current";
+
+	/**
+	 * The 'Temperature' attribute name.
+	 */
 	public static final String ATTR_TEMPERATURE = "Temperature";
+
+	/**
+	 * The 'MolarAmount' attribute name.
+	 */
 	public static final String ATTR_MOLAR_AMOUNT = "MolarAmount";
+
+	/**
+	 * The 'LuminousIntensity' attribute name.
+	 */
 	public static final String ATTR_LUMINOUS_INTENSITY = "LuminousIntensity";
+
+	/**
+	 * The 'Angle' attribute name.
+	 */
 	public static final String ATTR_ANGLE = "angle";
-	
-	private PhysicalDimension(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> references) {
-		super(uri, values, references);
+
+	// ======================================================================
+	// Constructors
+	// ======================================================================
+
+	/**
+	 * Constructor.
+	 *
+	 * @param values This data item's values.
+	 * @param uri The data item identifier.
+	 * @param relatedDataItems Related data item instances.
+	 */
+	private PhysicalDimension(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> relatedDataItems) {
+		super(values, uri, relatedDataItems);
 	}
 
-	@Override
-	public String getDescription() {
-		return super.getValue(ATTR_DESCRIPTION).getValue();
+	// ======================================================================
+	// Public methods
+	// ======================================================================
+
+	/**
+	 * Returns the length exponent of this physical dimension.
+	 *
+	 * @return The length exponent is returned.
+	 */
+	public Integer getLength() {
+		return getValue(ATTR_LENGTH).extract();
 	}
 
-	@Override
-	public void setDescription(String description) {
-		super.getValue(ATTR_DESCRIPTION).setValue(description);		
+	/**
+	 * Sets new length exponent for this physical dimension.
+	 *
+	 * @param exponent The new length exponent.
+	 */
+	public void setLength(Integer exponent) {
+		getValue(ATTR_LENGTH).set(exponent);
 	}
-	
-	public Integer getLengthExponent() {
-		return super.getValue(ATTR_LENGTH).getValue();
+
+	/**
+	 * Returns the mass exponent of this physical dimension.
+	 *
+	 * @return The mass exponent is returned.
+	 */
+	public Integer getMass() {
+		return getValue(ATTR_MASS).extract();
 	}
-	
-	public void setLengthExponent(Integer lengthExp) {
-		super.getValue(ATTR_LENGTH).setValue(lengthExp);
+
+	/**
+	 * Sets new mass exponent for this physical dimension.
+	 *
+	 * @param exponent The new mass exponent.
+	 */
+	public void setMass(Integer exponent) {
+		getValue(ATTR_MASS).set(exponent);
 	}
-	
-	public Integer getMassExponent() {
-		return super.getValue(ATTR_MASS).getValue();
+
+	/**
+	 * Returns the time exponent of this physical dimension.
+	 *
+	 * @return The time exponent is returned.
+	 */
+	public Integer getTime() {
+		return getValue(ATTR_TIME).extract();
 	}
-	
-	public void setMassExponent(Integer massExp) {
-		super.getValue(ATTR_MASS).setValue(massExp);
+
+	/**
+	 * Sets new time exponent for this physical dimension.
+	 *
+	 * @param exponent The new time exponent.
+	 */
+	public void setTime(Integer exponent) {
+		getValue(ATTR_TIME).set(exponent);
 	}
-	
-	public Integer getTimeExponent() {
-		return super.getValue(ATTR_TIME).getValue();
+
+	/**
+	 * Returns the current exponent of this physical dimension.
+	 *
+	 * @return The current exponent is returned.
+	 */
+	public Integer getCurrent() {
+		return getValue(ATTR_CURRENT).extract();
 	}
-	
-	public void setTimeExponent(Integer timeExp) {
-		super.getValue(ATTR_TIME).setValue(timeExp);
-	}	
-	
-	public Integer getCurrentExponent() {
-		return super.getValue(ATTR_CURRENT).getValue();
+
+	/**
+	 * Sets new current exponent for this physical dimension.
+	 *
+	 * @param exponent The new current exponent.
+	 */
+	public void setCurrent(Integer exponent) {
+		getValue(ATTR_CURRENT).set(exponent);
 	}
-	
-	public void setCurrentExponent(Integer currentExp) {
-		super.getValue(ATTR_CURRENT).setValue(currentExp);
+
+	/**
+	 * Returns the temperature exponent of this physical dimension.
+	 *
+	 * @return The temperature exponent is returned.
+	 */
+	public Integer getTemperature() {
+		return getValue(ATTR_TEMPERATURE).extract();
 	}
-	
-	public Integer getTemperatureExponent() {
-		return super.getValue(ATTR_TEMPERATURE).getValue();
+
+	/**
+	 * Sets new temperature exponent for this physical dimension.
+	 *
+	 * @param exponent The new temperature exponent.
+	 */
+	public void setTemperature(Integer exponent) {
+		getValue(ATTR_TEMPERATURE).set(exponent);
 	}
-	
-	public void setTemperatureExponent(Integer temperatureExp) {
-		super.getValue(ATTR_TEMPERATURE).setValue(temperatureExp);
+
+	/**
+	 * Returns the molar amount exponent of this physical dimension.
+	 *
+	 * @return The molar amount exponent is returned.
+	 */
+	public Integer getMolarAmount() {
+		return getValue(ATTR_MOLAR_AMOUNT).extract();
 	}
-	
-	public Integer getMolarAmountExponent() {
-		return super.getValue(ATTR_MOLAR_AMOUNT).getValue();
+
+	/**
+	 * Sets new molar amount exponent for this physical dimension.
+	 *
+	 * @param exponent The new molar amount exponent.
+	 */
+	public void setMolarAmount(Integer exponent) {
+		getValue(ATTR_MOLAR_AMOUNT).set(exponent);
 	}
-	
-	public void setMolarAmountExponent(Integer molarAmountExp) {
-		super.getValue(ATTR_MOLAR_AMOUNT).setValue(molarAmountExp);
+
+	/**
+	 * Returns the luminous intensity exponent of this physical dimension.
+	 *
+	 * @return The luminous intensity exponent is returned.
+	 */
+	public Integer getLuminousIntensity() {
+		return getValue(ATTR_LUMINOUS_INTENSITY).extract();
 	}
-	
-	public Integer getLuminousIntensityExponent() {
-		return super.getValue(ATTR_LUMINOUS_INTENSITY).getValue();
+
+	/**
+	 * Sets new luminous intensity exponent for this physical dimension.
+	 *
+	 * @param exponent The new luminous intensity exponent.
+	 */
+	public void setLuminousIntensity(Integer exponent) {
+		getValue(ATTR_LUMINOUS_INTENSITY).set(exponent);
 	}
-	
-	public void setLuminousIntensityExponent(Integer luminousIntensityExp) {
-		super.getValue(ATTR_LUMINOUS_INTENSITY).setValue(luminousIntensityExp);
+
+	/**
+	 * Returns the angle exponent of this physical dimension.
+	 *
+	 * @return The angle exponent is returned.
+	 */
+	public Integer getAngle() {
+		return getValue(ATTR_ANGLE).extract();
 	}
-	
-	public Integer getAngleExponent() {
-		return super.getValue(ATTR_ANGLE).getValue();
+
+	/**
+	 * Sets new angle exponent for this physical dimension.
+	 *
+	 * @param exponent The new angle exponent.
+	 */
+	public void setAngle(Integer exponent) {
+		getValue(ATTR_ANGLE).set(exponent);
 	}
-	
-	public void setAngleExponent(Integer angleExp) {
-		super.getValue(ATTR_ANGLE).setValue(angleExp);
-	}
-	
+
 }

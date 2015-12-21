@@ -8,10 +8,36 @@
 
 package org.eclipse.mdm.api.base.query;
 
+/**
+ * Relationship enumeration.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ * @see Entity
+ * @see Relation
+ */
 public enum Relationship {
 
-	FATHER_CHILD, 
-	INFO, 
+	// ======================================================================
+	// Enumerations
+	// ======================================================================
+
+	/**
+	 * Represents a hierarchical relation between two entities e.g.: {@code
+	 * Test} and {@code TestStep}.
+	 */
+	FATHER_CHILD,
+
+	/**
+	 * Represents an informational relation between two entities e.g.: {@code
+	 * Measurement} and {@code ParameterSet}.
+	 */
+	INFO,
+
+	/**
+	 * Represents an inheritance relation between two entities.
+	 */
 	INHERITANCE
-	
+
 }

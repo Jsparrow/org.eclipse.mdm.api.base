@@ -8,16 +8,41 @@
 
 package org.eclipse.mdm.api.base.query;
 
-public final class DataAccessException extends Exception { // TODO extend from DataProviderException?!
+/**
+ * Thrown to indicate errors while querying data.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ */
+public final class DataAccessException extends Exception {
+
+	// ======================================================================
+	// Class variables
+	// ======================================================================
 
 	private static final long serialVersionUID = 5024184555274518451L;
 
+	// ======================================================================
+	// Constructors
+	// ======================================================================
+
+	/**
+	 * Constructor.
+	 *
+	 * @param message The error message.
+	 */
 	public DataAccessException(String message) {
 		super(message);
 	}
-	
+
+	/**
+	 * Constructor.
+	 *
+	 * @param message The error message.
+	 * @param throwable The origin cause.
+	 */
 	public DataAccessException(String message, Throwable throwable) {
 		super(message, throwable);
 	}
-	
+
 }

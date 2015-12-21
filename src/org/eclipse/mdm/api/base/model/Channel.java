@@ -10,49 +10,93 @@ package org.eclipse.mdm.api.base.model;
 
 import java.util.Map;
 
-import org.eclipse.mdm.api.base.marker.Deletable;
-import org.eclipse.mdm.api.base.marker.Parameterizable;
+/**
+ * Implementation of the channel data item type.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ * @see Measurement
+ * @see ChannelGroup
+ * @see ContextSensor
+ * @see ParameterSet
+ */
+public final class Channel extends AbstractDataItem implements Deletable, Describable, Parameterizable {
 
-public final class Channel extends AbstractDataItem implements Describable, Parameterizable, Deletable {
+	// ======================================================================
+	// Class variables
+	// ======================================================================
 
-	public static final String ATTR_VALUETYPE = "DataType";
-	
+	/**
+	 * The {@link Measurement} parent type.
+	 */
+	public static final Class<Measurement> PARENT_TYPE_MEASUREMENT = Measurement.class;
+
+	/**
+	 * The 'ValueType' attribute name.
+	 */
+	public static final String ATTR_VALUE_TYPE = "DataType";
+
+	// ======================================================================
+	// Instance variables
+	// ======================================================================
+
 	private final Statistics statistics;
 
-	private Channel(Map<String, Value> values, URI uri,	Map<Class<? extends DataItem>, DataItem> references) {
-		super(uri, values, references);
-		this.statistics = new Statistics(values);			
+	// ======================================================================
+	// Constructors
+	// ======================================================================
+
+	/**
+	 * Constructor.
+	 *
+	 * @param values This data item's values.
+	 * @param uri The data item identifier.
+	 * @param relatedDataItems Related data item instances.
+	 */
+	private Channel(Map<String, Value> values, URI uri,	Map<Class<? extends DataItem>, DataItem> relatedDataItems) {
+		super(values, uri, relatedDataItems);
+		statistics = new Statistics(values);
 	}
 
-	@Override
-	public String getDescription() {
-		return super.getValue(ATTR_DESCRIPTION).getValue();
-	}
+	// ======================================================================
+	// Public methods
+	// ======================================================================
 
-	@Override
-	public void setDescription(String description) {
-		super.getValue(ATTR_DESCRIPTION).setValue(description);
-	}
-	
-	//TODO: mapping enum values
+	/**
+	 * Returns the value type.
+	 *
+	 * @return Value type is returned.
+	 */
 	public Integer getValueTypeEnum() {
-		return super.getValue(ATTR_VALUETYPE).getValue();
+		return getValue(ATTR_VALUE_TYPE).extract(); //TODO: mapping enum values
 	}
-	
 
+	/**
+	 * Returns the related {@link Unit} data item.
+	 *
+	 * @return Related {@code Unit} data item is returned.
+	 */
 	public Unit getUnit() {
-		return (Unit)super.references.get(Unit.class);
+		return getRelatedDataItem(Unit.class);
 	}
-	
+
+	/**
+	 * Returns the related {@link Quantity} data item.
+	 *
+	 * @return Related {@code Quantity} data item is returned.
+	 */
 	public Quantity getQuantity() {
-		return (Quantity)super.references.get(Quantity.class);
-	}	
-	
-	public ChannelInfo getChannelDataInfo() {
-		return (ChannelInfo)super.references.get(ChannelInfo.class);
+		return getRelatedDataItem(Quantity.class);
 	}
-	
+
+	/**
+	 * Returns the {@link Statistics} of the underlying channel values.
+	 *
+	 * @return The {@code Statistics} item is returned.
+	 */
 	public Statistics getStatistics() {
-		return this.statistics;
+		return statistics;
 	}
+
 }

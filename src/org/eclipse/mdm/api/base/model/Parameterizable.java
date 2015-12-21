@@ -6,30 +6,19 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.mdm.api.base.query;
+package org.eclipse.mdm.api.base.model;
 
 /**
- * Join enumeration.
+ * The {@link Measurement} and {@link Channel} data item types implement this
+ * interface to indicate the availability of {@link ParameterSet}s.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Query
+ * @see Measurement
+ * @see Channel
+ * @see ParameterSet
  */
-public enum Join {
-
-	// ======================================================================
-	// Enumerations
-	// ======================================================================
-
-	/**
-	 * Enforces an inner join.
-	 */
-	INNER,
-
-	/**
-	 * Enforces an outer join.
-	 */
-	OUTER
+public interface Parameterizable extends DataItem {
 
 }

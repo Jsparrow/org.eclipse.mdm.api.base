@@ -8,52 +8,58 @@
 
 package org.eclipse.mdm.api.base.model;
 
-import java.util.Date;
 import java.util.Map;
 
-import org.eclipse.mdm.api.base.marker.ContextDescribable;
-import org.eclipse.mdm.api.base.marker.Deletable;
-import org.eclipse.mdm.api.base.marker.Derived;
-import org.eclipse.mdm.api.base.marker.Statable;
-import org.eclipse.mdm.api.base.marker.Tagable;
+/**
+ * Implementation of the test step data item type. A test step is an atomic
+ * measurement task as part of a {@link Test}. The boundary conditions do not
+ * change within a single test step, therefore every ordered test step has to
+ * be fully described. It may have relations to {@link ContextRoot}s, which
+ * contain the describing order data. Test steps may have a sort order in the
+ * context of their parent {@code Test}, indicating the desired execution
+ * order. The name of a test step should be chosen in a speaking way, because
+ * it is often used in different context, e.g. as a link between the
+ * measurement data from the device and the order in the database. Furthermore
+ * the name has to be unique under the parent {@code Test}. Children of a test
+ * step are {@link Measurement} data items.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ * @see Test
+ * @see Measurement
+ * @see ContextRoot
+ */
+public final class TestStep extends AbstractDataItem implements ContextDescribable, Datable, Deletable, Derived,
+Describable, FilesAttachable, Sortable, Statable, Tagable {
 
-public final class TestStep extends AbstractDataItem implements Describable, Datable, FilesAttachable, Sortable, ContextDescribable, 
-	Deletable, Statable, Tagable, Derived {
+	// ======================================================================
+	// Class variables
+	// ======================================================================
 
+	/**
+	 * The {@link Test} parent type.
+	 */
+	public static final Class<Test> PARENT_TYPE_TEST = Test.class;
+
+	/**
+	 * The {@link Measurement} child type.
+	 */
 	public static final Class<Measurement> CHILD_TYPE_MEASUREMENT = Measurement.class;
-	
-	private TestStep(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> references) {
-		super(uri, values, references);
-	}
 
-	@Override
-	public Integer getSortIndex() {
-		return super.getValue(ATTR_SORTINDEX).getValue();
-	}
+	// ======================================================================
+	// Class variables
+	// ======================================================================
 
-	@Override
-	public void setSortIndex(Integer sortIndex) {
-		super.getValue(ATTR_SORTINDEX).setValue(sortIndex);
-	}	
-
-	@Override
-	public Date getDateCreated() {
-		return super.getValue(ATTR_DATECREATED).getValue();
-	}
-
-	@Override
-	public void setDateCreated(Date date) {
-		super.getValue(ATTR_DATECREATED).setValue(date);
-	}
-
-	@Override
-	public String getDescription() {
-		return super.getValue(ATTR_DESCRIPTION).getValue();
-	}
-
-	@Override
-	public void setDescription(String description) {
-		super.getValue(ATTR_DESCRIPTION).setValue(description);		
+	/**
+	 * Constructor.
+	 *
+	 * @param values This data item's values.
+	 * @param uri The data item identifier.
+	 * @param relatedDataItems Related data item instances.
+	 */
+	private TestStep(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> relatedDataItems) {
+		super(values, uri, relatedDataItems);
 	}
 
 }

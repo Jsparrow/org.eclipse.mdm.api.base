@@ -6,30 +6,31 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.mdm.api.base.query;
+package org.eclipse.mdm.api.base.model;
 
 /**
- * Join enumeration.
+ * This is the axis type enumeration as defined in the ASAM ODS NVH model.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Query
+ * @see Channel
  */
-public enum Join {
-
-	// ======================================================================
-	// Enumerations
-	// ======================================================================
+public enum AxisType {
 
 	/**
-	 * Enforces an inner join.
+	 * A {@link Channel} with of this type may be displayed as the x-axis.
 	 */
-	INNER,
+	X_AXIS,
 
 	/**
-	 * Enforces an outer join.
+	 * A {@link Channel} with of this type may be displayed as the y-axis.
 	 */
-	OUTER
+	Y_AXIS,
+
+	/**
+	 * A {@link Channel} with of this type may be displayed as the x- or y-axis.
+	 */
+	BOTH
 
 }

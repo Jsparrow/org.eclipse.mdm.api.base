@@ -6,30 +6,16 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.mdm.api.base.query;
+package org.eclipse.mdm.api.base.model;
 
 /**
- * Join enumeration.
+ * Each modeled {@link DataItem} implements this interface to indicate that
+ * tags can be attached to it.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Query
  */
-public enum Join {
-
-	// ======================================================================
-	// Enumerations
-	// ======================================================================
-
-	/**
-	 * Enforces an inner join.
-	 */
-	INNER,
-
-	/**
-	 * Enforces an outer join.
-	 */
-	OUTER
+public interface Tagable extends DataItem {
 
 }

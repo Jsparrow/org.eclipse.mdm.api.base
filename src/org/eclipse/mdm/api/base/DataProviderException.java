@@ -8,15 +8,41 @@
 
 package org.eclipse.mdm.api.base;
 
+/**
+ * Thrown to indicate (dis-)connect errors with a data source.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ */
 public class DataProviderException extends Exception {
+
+	// ======================================================================
+	// Class variables
+	// ======================================================================
 
 	private static final long serialVersionUID = -1299685705186484972L;
 
+	// ======================================================================
+	// Constructors
+	// ======================================================================
+
+	/**
+	 * Constructor.
+	 *
+	 * @param message The error message.
+	 */
 	public DataProviderException(String message) {
 		super(message);
 	}
-	
-	public DataProviderException(String message, Throwable t) {
-		super(message, t);
+
+	/**
+	 * Constructor.
+	 *
+	 * @param message The error message.
+	 * @param throwable The origin cause.
+	 */
+	public DataProviderException(String message, Throwable throwable) {
+		super(message, throwable);
 	}
+
 }

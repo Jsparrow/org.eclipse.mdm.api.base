@@ -8,29 +8,64 @@
 
 package org.eclipse.mdm.api.base.query;
 
-import java.util.List;
-
+import org.eclipse.mdm.api.base.model.ContextType;
 import org.eclipse.mdm.api.base.model.DataItem;
 
+/**
+ * Provides access to any modeled {@link Entity} within an underlying application
+ * model. A {@link Query}, created by this service, may use those entities to
+ * access the corresponding records.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ * @see Entity
+ * @see Query
+ */
 public interface QueryService {
-	
+
+	// ======================================================================
+	// Public methods
+	// ======================================================================
+
+	/**
+	 * Creates a new and empty {@link Query}.
+	 *
+	 * @return Created {@code Query} is returned.
+	 */
 	Query createQuery();
-	
-	SearchQuery getSearchQuery(String name);
-	
+
+	/**
+	 * Returns the {@link Entity} associated with passed {@link DataItem}
+	 * type.
+	 *
+	 * @param type Used as identifier.
+	 * @return {@link Entity} associated with given {@code DataItem} type is
+	 * 		returned.
+	 * @throws IllegalArgumentException Thrown if {@code Entity} for given
+	 * 		type does not exist.
+	 */
 	Entity getEntity(Class<? extends DataItem> type);
-	
-	@Deprecated
+
+	/**
+	 * Returns the {@link Entity} associated with given {@link ContextType}.
+	 *
+	 * @param contextType Used as identifier.
+	 * @return {@code Entity} associated with given {@code ContextType} is
+	 * 		returned.
+	 * @throws IllegalArgumentException Thrown if {@code Entity} with given
+	 * 		{@code ContextType} does not exist.
+	 */
+	Entity getEntity(ContextType contextType);
+
+	/**
+	 * Returns the {@link Entity} identified by passed name.
+	 *
+	 * @param name Used as identifier.
+	 * @return {@code Entity} with passed name is returned.
+	 * @throws IllegalArgumentException Thrown if {@code Entity} with given
+	 * 		name does not exist.
+	 */
 	Entity getEntity(String name);
-	
-	Attribute getAttribute(Class<? extends DataItem> type, String name);
-	
-	Relation getRelation(Entity source, Entity target);
-	
-	List<Relation> getRelations(Entity source, Relationship relationType);
-	
-	List<Relation> getRelations(Entity source);
-	
-	void clear();
-	
+
 }

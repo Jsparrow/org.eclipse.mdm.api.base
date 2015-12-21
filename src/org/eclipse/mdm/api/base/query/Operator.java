@@ -8,11 +8,44 @@
 
 package org.eclipse.mdm.api.base.query;
 
+/**
+ * The operator enumeration.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ * @see Condition
+ * @see Filter
+ */
 public enum Operator {
-	
+
+	// ======================================================================
+	// Enumerations
+	// ======================================================================
+
+	/**
+	 * Left parenthesis.
+	 */
 	OPEN,
+
+	/**
+	 * Right parenthesis.
+	 */
 	CLOSE,
+
+	/**
+	 * Logical conjunction.
+	 */
 	AND,
+
+	/**
+	 *Logical disjunction.
+	 */
 	OR,
+
+	/**
+	 * Logical Negation.
+	 */
 	NOT
+
 }

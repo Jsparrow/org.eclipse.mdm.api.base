@@ -8,72 +8,32 @@
 
 package org.eclipse.mdm.api.base.model;
 
-import java.util.Collections;
 import java.util.Map;
 
-public final class Environment implements DataItem {
-	
-	private final URI uri;
-	private final Map<String, Value> values;
-	private final Map<String, Value> context;
-	
-	private Environment(Map<String, Value> values, Map<String, Value> context) {
-		this.values = values;
-		this.context = context;
-		this.uri = new URI(getName(), Environment.class.getSimpleName(), (long)values.remove(ATTR_ID).getValue());
-	}
+/**
+ * Implementation of the environment data item type. The {@link Environment}
+ * data item is a singleton within a connected data provider and represents
+ * the underlying data source.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ */
+public final class Environment extends AbstractDataItem {
 
-	@Override
-	public URI getURI() {
-		return uri;
-	}
+	// ======================================================================
+	// Constructors
+	// ======================================================================
 
-	@Override
-	public String getName() {
-		return this.values.get(ATTR_NAME).getValue();
-	}
-
-	@Override
-	public void setName(String name) {
-		this.values.get(ATTR_NAME).setValue(name);
-	}
-
-	@Override
-	public MimeType getMimeType() {		
-		String mimeType = this.values.get(ATTR_MIMETYPE).getValue();
-		return new MimeType(mimeType);
-	}
-
-	@Override
-	public void setMimeType(MimeType mimeType) {
-		this.values.get(ATTR_NAME).setValue(mimeType.toString());		
-	}
-
-	@Override
-	public Value getValue(String name) {
-		return this.values.get(name);
-	}
-
-	@Override
-	public Map<String, Value> getValues() {
-		return Collections.unmodifiableMap(this.values);
-	}
-	
-	public Value getContextValue(String name) {
-		return getContextValue(name);
-	}
-	
-	public Map<String, Value> getContext() {
-		return Collections.unmodifiableMap(this.context);
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder(getURI().getTypeName()).append('(');
-		for(Value value : getValues().values()) {
-			sb.append(value.toString()).append(", ");
-		}
-		return sb.delete(sb.length()-2, sb.length()).append(')').toString();
+	/**
+	 * Constructor.
+	 *
+	 * @param values This data item's values.
+	 * @param uri The data item identifier.
+	 * @param relatedDataItems Related data item instances.
+	 */
+	private Environment(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> relatedDataItems) {
+		super(values, uri, relatedDataItems);
 	}
 
 }

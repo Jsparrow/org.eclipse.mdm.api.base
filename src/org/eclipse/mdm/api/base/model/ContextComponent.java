@@ -9,24 +9,46 @@
 package org.eclipse.mdm.api.base.model;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import org.eclipse.mdm.api.base.marker.Deletable;
-import org.eclipse.mdm.api.base.marker.Derived;
-
+/**
+ * Implementation of the context component data item type. Instances of this
+ * class are only provided / managed via the descriptive {@link ContextRoot}
+ * data item.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ * @see ContextRoot
+ */
 public final class ContextComponent extends AbstractDataItem implements Deletable, Derived {
 
+	// ======================================================================
+	// Constructors
+	// ======================================================================
 
-	private ContextComponent(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> references) {
-		super(uri, values, references);
+	/**
+	 * Constructor.
+	 *
+	 * @param values This data item's values.
+	 * @param uri The data item identifier.
+	 * @param relatedDataItems Related data item instances.
+	 */
+	private ContextComponent(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> relatedDataItems) {
+		super(values, uri, relatedDataItems);
 	}
 
+	// ======================================================================
+	// Public methods
+	// ======================================================================
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(getURI().getTypeName()).append('(');
-		for(Value value : getValues().values()) {
-			sb.append(value.toString()).append(", ");
-		}
-		return sb.delete(sb.length()-2, sb.length()).append(')').toString();
+		String prefix = new StringBuilder(getURI().getTypeName()).append('(').toString();
+		return getValues().values().stream().map(Value::toString).collect(Collectors.joining(", ", prefix, ")"));
 	}
-	
+
 }

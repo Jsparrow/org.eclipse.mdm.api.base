@@ -6,8 +6,12 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.mdm.api.base.marker;
+package org.eclipse.mdm.api.base.model;
 
-public interface Deletable {
+public enum MatrixMode {
+
+	CALCULATED,
+
+	STORAGE
 
 }

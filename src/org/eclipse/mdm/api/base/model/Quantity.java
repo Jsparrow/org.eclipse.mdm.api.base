@@ -8,51 +8,82 @@
 
 package org.eclipse.mdm.api.base.model;
 
-import java.util.Date;
 import java.util.Map;
 
-import org.eclipse.mdm.api.base.marker.Deletable;
+/**
+ * Implementation of the quantity data item type.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ * @see Unit
+ */
+public final class Quantity extends AbstractDataItem implements Copyable, Datable, Deletable, Describable {
 
-public final class Quantity extends AbstractDataItem implements Datable, Describable, Deletable {
+	// ======================================================================
+	// Class variables
+	// ======================================================================
 
-	public static final String ATTR_DEFAULT_VALUETYPE = "DefDataType";
-	
-	private Quantity(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> references) {
-		super(uri, values, references);
+	/**
+	 * The 'DefaultValueType' attribute name.
+	 */
+	public static final String ATTR_DEFAULT_VALUE_TYPE = "DefDataType";
+
+	// ======================================================================
+	// Constructors
+	// ======================================================================
+
+	/**
+	 * Constructor.
+	 *
+	 * @param values This data item's values.
+	 * @param uri The data item identifier.
+	 * @param relatedDataItems Related data item instances.
+	 */
+	private Quantity(Map<String, Value> values, URI uri, Map<Class<? extends DataItem>, DataItem> relatedDataItems) {
+		super(values, uri, relatedDataItems);
 	}
 
-	@Override
-	public String getDescription() {
-		return super.getValue(ATTR_DESCRIPTION).getValue();
-	}
+	// ======================================================================
+	// Public methods
+	// ======================================================================
 
-	@Override
-	public void setDescription(String description) {
-		super.getValue(ATTR_DESCRIPTION).setValue(description);
-	}
-
-	@Override
-	public Date getDateCreated() {
-		return super.getValue(ATTR_DATECREATED).getValue();
-	}
-
-	@Override
-	public void setDateCreated(Date date) {
-		super.getValue(ATTR_DATECREATED).setValue(date);		
-	}	
-	
+	/**
+	 * Returns the default value type for this quantity.
+	 *
+	 * @return Default value type is returned.
+	 */
 	//TODO: cast integer value to enumeration Value (ValueType)
-	public Integer getDefaultValueType() {
-		return super.getValue(ATTR_DEFAULT_VALUETYPE).getValue();
+	public Integer getDefaultValueTypeEnum() {
+		return getValue(ATTR_DEFAULT_VALUE_TYPE).extract();
 	}
-	
+
+	/**
+	 * Sets new default value type for this quantity.
+	 *
+	 * @param defaultValueType The new default value type.
+	 */
 	//TODO: same as above
-	public void setDefaultValueType(Integer enumValue) {
-		super.getValue(ATTR_DEFAULT_VALUETYPE).setValue(enumValue);
+	public void setDefaultValueTypeEnum(Integer defaultValueType) {
+		getValue(ATTR_DEFAULT_VALUE_TYPE).set(defaultValueType);
 	}
-	
+
+	/**
+	 * Returns the related default {@link Unit} data item for this quantity.
+	 *
+	 * @return Related default {@code Unit} data item is returned.
+	 */
 	public Unit getDefaultUnit() {
-		return (Unit)super.references.get(Unit.class);
+		return getRelatedDataItem(Unit.class);
 	}
-	
+
+	/**
+	 * Sets new related default {@link Unit} data item for this quantity.
+	 *
+	 * @param defaultUnit The new related default {@code Unit} data item.
+	 */
+	public void setDefaultUnit(Unit defaultUnit) {
+		setRelatedDataItem(defaultUnit);
+	}
+
 }

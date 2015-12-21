@@ -10,63 +10,119 @@ package org.eclipse.mdm.api.base.model;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-class AbstractDataItem implements DataItem {
-	
-	protected final Map<Class<? extends DataItem>, DataItem> references;
+/**
+ * This is a base implementation for modeled {@link DataItem}s. API consumers
+ * should never use this class in any way, instead the most common interface
+ * should be used (e.g.: {@link DataItem}, {@link ContextDescribable}, etc.).
+ * API producers should let their data item implementations extend this class.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ */
+public class AbstractDataItem implements DataItem {
 
+	// ======================================================================
+	// Instance variables
+	// ======================================================================
+
+	private final Map<Class<? extends DataItem>, DataItem> relatedDataItems;
 	private final Map<String, Value> values;
 	private final URI uri;
-	
-	protected AbstractDataItem(URI uri, Map<String, Value> values, Map<Class<? extends DataItem>, DataItem> references) {	
-		this.uri= uri;
+
+	// ======================================================================
+	// Constructors
+	// ======================================================================
+
+	/**
+	 * Constructor.
+	 *
+	 * @param values This data item's values.
+	 * @param uri The data item identifier.
+	 * @param relatedDataItems Related data item instances.
+	 */
+	protected AbstractDataItem(Map<String, Value> values, URI uri,
+			Map<Class<? extends DataItem>, DataItem> relatedDataItems) {
+		this.relatedDataItems = relatedDataItems;
 		this.values = values;
-		this.references = references;
-	}	
-	
+		this.uri = uri;
+	}
+
+	// ======================================================================
+	// Public methods
+	// ======================================================================
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public URI getURI() {
-		return this.uri;
-	}
-	
-	@Override
-	public String getName() {
-		return this.values.get(ATTR_NAME).getValue();
+		return uri;
 	}
 
-	@Override
-	public void setName(String name) {
-		this.values.get(ATTR_NAME).setValue(name);
-	}
-
-	@Override
-	public MimeType getMimeType() {		
-		String mimeType = this.values.get(ATTR_MIMETYPE).getValue();
-		return new MimeType(mimeType);
-	}
-
-	@Override
-	public void setMimeType(MimeType mimeType) {
-		this.values.get(ATTR_MIMETYPE).setValue(mimeType.toString());		
-	}
-
-	@Override
-	public Value getValue(String name) {
-		return this.values.get(name);
-	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Map<String, Value> getValues() {
-		return Collections.unmodifiableMap(this.values);
+		return Collections.unmodifiableMap(values);
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<Class<? extends DataItem>, DataItem> getRelatedDataItems() {
+		return Collections.unmodifiableMap(relatedDataItems);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append('(');
-		for(Value value : getValues().values()) {
-			sb.append(value.toString()).append(", ");
+		String prefix = new StringBuilder(getClass().getSimpleName()).append('(').toString();
+		return getValues().values().stream().map(Value::toString).collect(Collectors.joining(", ", prefix, ")"));
+	}
+
+	// ======================================================================
+	// Protected methods
+	// ======================================================================
+
+	/**
+	 * Returns the related data item identified by passed type.
+	 *
+	 * @param <T> The desired type of the related data item.
+	 * @param type The desired type of the related data item.
+	 * @return Returns the related data item or null, if none found.
+	 */
+	@SuppressWarnings("unchecked")
+	protected <T extends DataItem> T getRelatedDataItem(Class<T> type) {
+		return (T) relatedDataItems.get(type);
+	}
+
+	/**
+	 * Adds a missing or replaces an existing 1:1 relation for passed data item.
+	 * This relation is persisted as soon as this data item is.
+	 *
+	 * @param dataItem Related date item is not allowed to be null.
+	 * @throws IllegalArgumentException Thrown if if data item is null, from another
+	 * 		data source or it is not persisted (ID < 1).
+	 */
+	protected void setRelatedDataItem(DataItem dataItem) {
+		if(dataItem == null) {
+			throw new IllegalArgumentException("A related data item is not allowed to be null.");
+		} else if(getURI().getEnvironmentName().equals(dataItem.getURI().getEnvironmentName())) {
+			throw new IllegalArgumentException("It is not allowed to define a relation to a "
+					+ "data itom from another data source.");
+		} else if(dataItem.getURI().getID() <= 0) {
+			throw new IllegalArgumentException("Data item is not persisted.");
 		}
-		return sb.delete(sb.length()-2, sb.length()).append(')').toString();
-	}	
-	
+
+
+		relatedDataItems.put(dataItem.getClass(), dataItem);
+	}
+
 }
