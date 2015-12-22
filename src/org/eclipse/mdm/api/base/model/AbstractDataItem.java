@@ -114,7 +114,7 @@ public class AbstractDataItem implements DataItem {
 	protected void setRelatedDataItem(DataItem dataItem) {
 		if(dataItem == null) {
 			throw new IllegalArgumentException("A related data item is not allowed to be null.");
-		} else if(getURI().getEnvironmentName().equals(dataItem.getURI().getEnvironmentName())) {
+		} else if(!getURI().getEnvironmentName().equals(dataItem.getURI().getEnvironmentName())) {
 			throw new IllegalArgumentException("It is not allowed to define a relation to a "
 					+ "data itom from another data source.");
 		} else if(dataItem.getURI().getID() <= 0) {
