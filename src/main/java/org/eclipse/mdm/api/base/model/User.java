@@ -9,13 +9,13 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * Implementation of the user data item type.
+ * Implementation of the user entity type.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class User extends BaseDataItem implements Deletable, Describable {
+public final class User extends BaseEntity implements Deletable, Describable {
 
 	// ======================================================================
 	// Class variables
@@ -59,24 +59,6 @@ public final class User extends BaseDataItem implements Deletable, Describable {
 	// ======================================================================
 
 	/**
-	 * Returns the surname of this user.
-	 *
-	 * @return The surname is returned.
-	 */
-	public String getSurname() {
-		return getValue(ATTR_SURNAME).extract();
-	}
-
-	/**
-	 * Sets new surname for this user.
-	 *
-	 * @param surname The new surname.
-	 */
-	public void setSurname(String surname) {
-		getValue(ATTR_SURNAME).set(surname);
-	}
-
-	/**
 	 * Returns the given name of this user.
 	 *
 	 * @return The given name is returned.
@@ -92,6 +74,24 @@ public final class User extends BaseDataItem implements Deletable, Describable {
 	 */
 	public void setGivenName(String givenName) {
 		getValue(ATTR_GIVEN_NAME).set(givenName);
+	}
+
+	/**
+	 * Returns the surname of this user.
+	 *
+	 * @return The surname is returned.
+	 */
+	public String getSurname() {
+		return getValue(ATTR_SURNAME).extract();
+	}
+
+	/**
+	 * Sets new surname for this user.
+	 *
+	 * @param surname The new surname.
+	 */
+	public void setSurname(String surname) {
+		getValue(ATTR_SURNAME).set(surname);
 	}
 
 	/**

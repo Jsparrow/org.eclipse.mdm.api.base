@@ -9,12 +9,12 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * Unique identifier for {@link DataItem}s.
+ * Unique identifier for entities of any kind.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see DataItem
+ * @see Entity
  */
 public final class URI {
 
@@ -54,7 +54,7 @@ public final class URI {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder("mdmDataItem://");
+		StringBuilder sb = new StringBuilder("mdmDataItem://"); // TODO should we change this?!
 		sb.append(envName).append('/').append(typeName).append('/').append(id);
 		return sb.toString();
 	}

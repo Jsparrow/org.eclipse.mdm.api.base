@@ -21,9 +21,7 @@ import org.eclipse.mdm.api.base.model.Value;
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see EntityType
  * @see Attribute
- * @see Value
  */
 public final class Record {
 
@@ -100,8 +98,8 @@ public final class Record {
 	 */
 	public void addValue(Value value) {
 		if(values.put(value.getName(), value) != null) {
-			throw new IllegalArgumentException("Value with name '" + value.getName() + "' for entity type record '"
-					+ entityType + "' is already defined.");
+			throw new IllegalArgumentException("Value with name '" + value.getName() + "' for entity type '"
+					+ entityType + "' record is already defined.");
 		}
 	}
 

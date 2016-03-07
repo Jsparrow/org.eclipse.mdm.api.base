@@ -9,15 +9,14 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * Implementation of the environment data item type. The {@link Environment}
- * data item is a singleton within a connected data provider and represents
- * the underlying data source.
+ * Implementation of the environment entity type. The {@link Environment}
+ * is a singleton within a connected data source.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class Environment extends BaseDataItem {
+public final class Environment extends BaseEntity {
 
 	// ======================================================================
 	// Constructors

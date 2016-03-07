@@ -12,31 +12,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of the context root data item type. This is the root node of
+ * Implementation of the context root entity types. This is the root node of
  * the descriptive component structure for a {@link ContextType}. This element
  * is used for both, order and measured result description data. If it belongs
- * to an order description, then a relation to a {@link TestStep} data item
- * exists. Otherwise it represents the description of a measurement and
- * therefore has one ore more relations to {@link Measurement} data items. In
- * the <u>base application model</u> the component structure is provided as is.
- * An extension of the <u>base model</u> may define a template the structure of
- * contained {@link ContextComponent} and {@link ContextSensor} data items will
- * be restricted to. Additionally the names of all related {@code
- * ContextComponent} and {@code ContextSensor} data items must be unique.
+ * to an order description, then a relation to a {@link TestStep} exists.
+ * Otherwise it represents the description of a measurement and therefore has
+ * one ore more relations to {@link Measurement}s. In the base application
+ * model the component structure is provided as is. An extension of the base
+ * application model may define a template, the structure of contained {@link
+ * ContextComponent}s and {@link ContextSensor}s will be restricted to.
+ * Additionally the <b>names</b> of all related {@code ContextComponent}s have
+ * to be unique.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see TestStep
- * @see Measurement
- * @see ContextType
- * @see ContextComponent
- * @see ContextSensor
  */
-public final class ContextRoot extends BaseDataItem implements Deletable, Derived {
+public final class ContextRoot extends BaseEntity implements Deletable, Derived {
 
 	// ======================================================================
 	// Class variables
@@ -64,30 +60,58 @@ public final class ContextRoot extends BaseDataItem implements Deletable, Derive
 	// ======================================================================
 
 	/**
-	 * Returns the context type of this data item.
+	 * Returns the {@link ContextType} of this context root.
 	 *
-	 * @return The context type is returned.
+	 * @return The {@code ContextType} is returned.
 	 */
 	public ContextType getContextType() {
 		return contextType;
 	}
 
+	/**
+	 * Returns the {@link ContextComponent} identified by given name.
+	 *
+	 * @param name The name of the {@code ContextComponent}.
+	 * @return The {@code Optional} is empty if a {@code ContextComponent}
+	 * 		with given name does not exist.
+	 */
+	public Optional<ContextComponent> getContextComponent(String name) {
+		return getContextComponents().stream().filter(s -> s.getName().equals(name)).findAny();
+	}
+
+	/**
+	 * Returns all available {@link ContextComponent}s related to this context
+	 * root.
+	 *
+	 * @return The returned {@code List} is unmodifiable.
+	 */
 	public List<ContextComponent> getContextComponents() {
-		// TODO provide getter getContextComponent(String name)
 		return Collections.unmodifiableList(getCore().getChildren(ContextComponent.class));
 	}
 
+	/**
+	 * Removes given {@link ContextComponent} from this context root.
+	 *
+	 * @param contextComponent The {@code ContextComponent} that will be removed.
+	 * @return Returns {@code true} if this context root held given {@code
+	 * 		ContextComponent}.
+	 */
 	public boolean removeContextComponent(ContextComponent contextComponent) {
 		return getCore().removeChild(contextComponent);
 	}
 
+	/**
+	 * Returns all available {@link ContextSensor}s related to the {@link
+	 * ContextComponent}s, which are held by this context root.
+	 *
+	 * @return The returned {@code List} will always be empty if this context
+	 * 		root is of type {@link ContextType#UNITUNDERTEST} or {@link
+	 * 		ContextType#TESTSEQUENCE}.
+	 */
 	public List<ContextSensor> getContextSensors() {
-		if(ContextType.TESTEQUIPMENT == getContextType()) {
+		if(!getContextType().isTestEquipment()) {
 			return Collections.emptyList();
 		}
-
-		// TODO names of sensors unique per context root or context component?
-		// TODO provide getter getContextSensor(String name) ?!
 
 		return getContextComponents().stream().map(ContextComponent::getContextSensors)
 				.collect(ArrayList::new, List::addAll, List::addAll);

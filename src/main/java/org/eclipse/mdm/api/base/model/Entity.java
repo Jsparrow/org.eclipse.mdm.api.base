@@ -8,17 +8,16 @@
 
 package org.eclipse.mdm.api.base.model;
 
-import java.util.Collections;
 import java.util.Map;
 
 /**
- * This is the base interface for any modeled data item.
+ * This is the base interface for any modeled entity type.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface DataItem {
+public interface Entity {
 
 	// ======================================================================
 	// Class variables
@@ -44,7 +43,7 @@ public interface DataItem {
 	// ======================================================================
 
 	/**
-	 * Returns the {@link URI} of this data item, which is a unique identifier
+	 * Returns the {@link URI} of this entity, which is a unique identifier
 	 * within the data source.
 	 *
 	 * @return The returned {@code URI} is never null.
@@ -52,67 +51,65 @@ public interface DataItem {
 	URI getURI();
 
 	/**
-	 * Returns the name of this data item.
+	 * Returns the name of this entity.
 	 *
-	 * @return Name of this instance is returned.
+	 * @return The name is returned.
 	 */
 	default String getName() {
 		return getValue(ATTR_NAME).extract();
 	}
 
 	/**
-	 * Sets a new name for this data item.
+	 * Sets new name for this entity.
 	 *
-	 * @param name Passed name is not allowed to be null.
+	 * @param name The new name.
 	 */
 	default void setName(String name) {
 		getValue(ATTR_NAME).set(name);
 	}
 
 	/**
-	 * Returns the {@link MimeType} of this data item.
+	 * Returns the {@link MimeType} of this entity.
 	 *
-	 * @return The returned {@code MimeType} is never null.
+	 * @return The {@code MimeType} is returned.
 	 */
 	default MimeType getMimeType() {
 		return new MimeType(getValue(ATTR_MIMETYPE).extract());
 	}
 
 	/**
-	 * Sets a new {@link MimeType} for this data item.
+	 * Sets new {@link MimeType} for this entity.
 	 *
-	 * @param mimeType Passed {@code MimeType} is not allowed to be null.
+	 * @param mimeType The new {@code MimeType}.
 	 */
 	default void setMimeType(MimeType mimeType) {
 		getValue(ATTR_MIMETYPE).set(mimeType.toString());
 	}
 
 	/**
-	 * Returns the attribute value container associated with passed name.
+	 * Returns the {@link Value} container associated with given name.
 	 *
 	 * @param name Name of the attribute.
-	 * @return The value container or null if none found is returned.
-	 * @see Value
+	 * @return The {@code Value} container is returned.
 	 */
 	Value getValue(String name);
 
 	/**
-	 * Returns <i>all</i> attribute value containers of this data item
-	 * mapped by their name (no matter a value is valid or not).
+	 * Returns <i>all</i> {@link Value} containers of this entity mapped by
+	 * their name (no matter a value is valid or not).
 	 *
-	 * @return Returns an unmodifiable view of the internal map using
-	 * 		{@link Collections#unmodifiableMap(Map)}.
-	 * @see Value
+	 * @return Returned {@code Map} is unmodifiable.
 	 */
 	Map<String, Value> getValues();
 
 	// TODO JDoc - this should never ever be called by API consumers, this is for API producers only!
+	@Deprecated
 	Core getCore();
 
 	/**
-	 * Returns a human readable {@code String} representation of this data item.
+	 * Returns a human readable {@code String} representation of this entity.
 	 *
-	 * @return The {@code String} representation of this data item.
+	 * @return The {@code String} representation of this entity.
 	 */
 	@Override
 	String toString();

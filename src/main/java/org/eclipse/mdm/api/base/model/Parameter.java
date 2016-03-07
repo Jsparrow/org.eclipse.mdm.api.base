@@ -1,13 +1,15 @@
 package org.eclipse.mdm.api.base.model;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
- * Implementation of the parameter data item type. Instances of this class hold
- * a value in its {@code String} representation, which is converted upon request
- * and provided as a virtual {@link Value}. In turn a virtual {@code Value} with
- * an optional {@link Unit} may be provided to modify the internally stored
- * value, where its value type is allowed to be one of the following:
+ * Implementation of the parameter entity type. Instances of this class hold a
+ * value in its {@code String} representation, which is converted upon request
+ * and provided as a virtual {@link Value}. The returned {@code Value} is for
+ * displaying purposes only. To change the value, held by this parameter, one
+ * of its {@code setXYValue(XY)} methods has to be used. {@link ValueType}s
+ * supported by this parameter are listed below:
  *
  * <ul>
  * 	<li>{@link ValueType#STRING}</li>
@@ -28,7 +30,18 @@ import java.util.Optional;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see ParameterSet
  * @see #getVirtualValue()
- * @see #setVirtualValue(Value, Optional)
+ * @see #setObjectValue(Object, Optional)
+ * @see #setStringValue(String)
+ * @see #setDateValue(LocalDateTime)
+ * @see #setBooleanValue(Boolean)
+ * @see #setByteValue(Byte, Optional)
+ * @see #setShortValue(Short, Optional)
+ * @see #setIntegerValue(Integer, Optional)
+ * @see #setLongValue(Long, Optional)
+ * @see #setFloatValue(Float, Optional)
+ * @see #setDoubleValue(Double, Optional)
+ * @see #setFloatComplexValue(FloatComplex, Optional)
+ * @see #setDoubleComplexValue(DoubleComplex, Optional)
  */
 public final class Parameter extends BaseParameter {
 

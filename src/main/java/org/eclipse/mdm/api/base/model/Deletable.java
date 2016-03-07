@@ -9,13 +9,13 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * This interface is used to indicate that implementing data items are allowed
- * to be deleted.
+ * This interface is used to indicate that implementing entity types are
+ * allowed to be deleted.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface Deletable extends DataItem {
+public interface Deletable extends Entity {
 
 }

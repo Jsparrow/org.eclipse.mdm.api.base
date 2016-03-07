@@ -9,13 +9,13 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * This interface is used to indicate that implementing data items are allowed
- * to be copied.
+ * This interface is used to indicate that implementing entity types are
+ * allowed to be copied.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface Copyable extends DataItem {
+public interface Copyable extends Entity {
 
 }

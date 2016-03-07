@@ -35,6 +35,41 @@ public enum AxisType {
 	/**
 	 * A {@link Channel} of this type may be displayed as the x- or y-axis.
 	 */
-	XY_AXIS
+	XY_AXIS;
+
+
+	// ======================================================================
+	// Public methods
+	// ======================================================================
+
+	/**
+	 * Returns true if this axis type is {@link #X_AXIS}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
+	public boolean isXAxis() {
+		return X_AXIS == this;
+	}
+
+	/**
+	 * Returns true if this axis type is {@link #Y_AXIS}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
+	public boolean isYAxis() {
+		return Y_AXIS == this;
+	}
+
+	/**
+	 * Returns true if this axis type is {@link #XY_AXIS}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
+	public boolean isXYAxis() {
+		return XY_AXIS == this;
+	}
 
 }

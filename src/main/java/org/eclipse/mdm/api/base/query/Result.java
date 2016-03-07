@@ -23,10 +23,6 @@ import org.eclipse.mdm.api.base.model.Value;
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see EntityType
- * @see Record
- * @see Attribute
- * @see Value
  */
 public final class Result implements Iterable<Record> {
 

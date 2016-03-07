@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Value
  */
 public enum ValueType {
 
@@ -141,27 +140,31 @@ public enum ValueType {
 
 	/**
 	 * A {@link Value} with this type contains a {@code byte[][]} value and
-	 * replaces {@code null} with an empty {@code byte[]} array.
+	 * replaces {@code null} with an empty {@code byte[][]} array.
 	 */
 	BYTE_STREAM_SEQUENCE(byte[][].class, new byte[0][]),
 
 	/**
-	 * TODO
+	 * A {@link Value} with this type contains a {@link FloatComplex} value
+	 * and does not replaces {@code null}.
 	 */
 	FLOAT_COMPLEX(FloatComplex.class, null),
 
 	/**
-	 * TODO
+	 * A {@link Value} with this type contains a {@code FloatComplex[]} value
+	 * and replaces {@code null} with an empty {@code FloatComplex[]} array.
 	 */
 	FLOAT_COMPLEX_SEQUENCE(FloatComplex[].class, new FloatComplex[0]),
 
 	/**
-	 * TODO
+	 * A {@link Value} with this type contains a {@link DoubleComplex} value
+	 * and does not replaces {@code null}.
 	 */
 	DOUBLE_COMPLEX(DoubleComplex.class, null),
 
 	/**
-	 * TODO
+	 * A {@link Value} with this type contains a {@code DoubleComplex[]} value
+	 * and replaces {@code null} with an empty {@code DoubleComplex[]} array.
 	 */
 	DOUBLE_COMPLEX_SEQUENCE(DoubleComplex[].class, new DoubleComplex[0]),
 
@@ -196,9 +199,6 @@ public enum ValueType {
 	 */
 	FILE_LINK_SEQUENCE(FileLink[].class, new FileLink[0]),
 
-	/**
-	 * TODO is this really a use case?!?
-	 */
 	@Deprecated BLOB(Object.class, null),
 
 	/**
@@ -229,7 +229,7 @@ public enum ValueType {
 	// ======================================================================
 
 	/**
-	 * Constructor - May only be used to {@link #ENUMERATION}, {@link
+	 * Constructor - May only be used to create {@link #ENUMERATION}, {@link
 	 * #ENUMERATION_SEQUENCE} or {@link #UNKNOWN} types.
 	 */
 	private ValueType() {
@@ -255,14 +255,32 @@ public enum ValueType {
 
 	/**
 	 * Creates a new {@link Value} initialized with given name. The {@code
+	 * Value}'s initial validity flag will be set to {@code true}, the unit
+	 * name will be omitted.
+	 *
+	 * <p><b>Note:</b> This method is only allowed to be called where {@link
+	 * #isEnumerationType()} returns {@code false}.
+	 *
+	 * @param name The name of the attribute.
+	 * @param input The initial value.
+	 * @return The created {@code Value} is returned.
+	 * @throws IllegalStateException Thrown if {@link #isEnumerationType()} returns
+	 * 		{@code true}.
+	 */
+	public Value createValue(String name, Object input) {
+		return create(name, "", true, input);
+	}
+
+	/**
+	 * Creates a new {@link Value} initialized with given name. The {@code
 	 * Value}'s initial validity flag will be set to {@code false}, the unit
 	 * name will be omitted. The initial value will be the one defined in {@link
 	 * #defaultValue}.
 	 *
-	 * <p><b>NOTE:</b> This method is only allowed to be called where {@link
+	 * <p><b>Note:</b> This method is only allowed to be called where {@link
 	 * #isEnumerationType()} returns {@code false}.
 	 *
-	 * @param name Name of the attribute.
+	 * @param name The name of the attribute.
 	 * @return The created {@code Value} is returned.
 	 * @throws IllegalStateException Thrown if {@link #isEnumerationType()} returns
 	 * 		{@code true}.
@@ -274,13 +292,13 @@ public enum ValueType {
 	/**
 	 * Creates a new {@link Value} initialized with given arguments.
 	 *
-	 * <p><b>NOTE:</b> This method is only allowed to be called where {@link
+	 * <p><b>Note:</b> This method is only allowed to be called where {@link
 	 * #isEnumerationType()} returns {@code false}.
 	 *
-	 * @param name Name of the attribute.
-	 * @param unit Unit name of the attribute.
-	 * @param valid Initial validity flag.
-	 * @param input Initial value.
+	 * @param name The name of the attribute.
+	 * @param unit The unit name of the attribute.
+	 * @param valid The initial validity flag.
+	 * @param input The initial value.
 	 * @return The created {@code Value} is returned.
 	 * @throws IllegalStateException Thrown if {@link #isEnumerationType()} returns
 	 * 		{@code true}.
@@ -300,12 +318,12 @@ public enum ValueType {
 	 * {@link #isSequence()} returns {@code false} otherwise an empty
 	 * array with given component type in enumClass is used.
 	 *
-	 * <p><b>NOTE:</b> This method is only allowed to be called where {@link
+	 * <p><b>Note:</b> This method is only allowed to be called where {@link
 	 * #isEnumerationType()} returns {@code true}.
 	 *
 	 * @param <E> Modeled enumeration type.
 	 * @param enumClass The enumeration class type will be used for validity checking.
-	 * @param name Name of the attribute.
+	 * @param name The name of the attribute.
 	 * @return The created {@code Value} is returned.
 	 * @throws IllegalStateException Thrown if {@link #isEnumerationType()} returns
 	 * 		{@code false}.
@@ -317,15 +335,15 @@ public enum ValueType {
 	/**
 	 * Creates a new {@link Value} initialized with given arguments.
 	 *
-	 * <p><b>NOTE:</b> This method is only allowed to be called where {@link
+	 * <p><b>Note:</b> This method is only allowed to be called where {@link
 	 * #isEnumerationType()} returns {@code true}.
 	 *
 	 * @param <E> Modeled enumeration type.
 	 * @param enumClass The enumeration class type will be used for validity checking.
-	 * @param name Name of the attribute.
-	 * @param unit Unit name of the attribute.
-	 * @param valid Initial validity flag.
-	 * @param input Initial value.
+	 * @param name The name of the attribute.
+	 * @param unit The unit name of the attribute.
+	 * @param valid The initial validity flag.
+	 * @param input The initial value.
 	 * @return The created {@code Value} is returned.
 	 * @throws IllegalStateException Thrown if {@link #isEnumerationType()} returns
 	 * 		{@code false}.
@@ -346,218 +364,609 @@ public enum ValueType {
 		throw new IllegalStateException("This value type is not an enumeration type.");
 	}
 
-	public static Value createStringValue(String name, String value) {
-		return STRING.create(name, "", true, value);
-	}
-
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #STRING}</li>
+	 * 	<li>{@link #STRING_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isStringType() {
 		return isString() || isStringSequence();
 	}
 
+	/**
+	 * Returns true if this value type is {@link #STRING}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isString() {
 		return STRING == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #STRING_SEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isStringSequence() {
 		return STRING_SEQUENCE == this;
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #DATE}</li>
+	 * 	<li>{@link #DATE_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isDateType() {
 		return isDate() || isDateSequence();
 	}
 
+	/**
+	 * Returns true if this value type is {@link #DATE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isDate() {
 		return DATE == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #DATE_SEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isDateSequence() {
 		return DATE_SEQUENCE == this;
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #BOOLEAN}</li>
+	 * 	<li>{@link #BOOLEAN_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isBooleanType() {
 		return isBoolean() || isBooleanSequence();
 	}
 
+	/**
+	 * Returns true if this value type is {@link #BOOLEAN}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isBoolean() {
 		return BOOLEAN == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #BOOLEAN_SEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isBooleanSequence() {
 		return BOOLEAN_SEQUENCE == this;
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #BYTE}</li>
+	 * 	<li>{@link #BYTE_SEQUENCE}</li>
+	 * 	<li>{@link #SHORT}</li>
+	 * 	<li>{@link #SHORT_SEQUENCE}</li>
+	 * 	<li>{@link #INTEGER}</li>
+	 * 	<li>{@link #INTEGER_SEQUENCE}</li>
+	 * 	<li>{@link #LONG}</li>
+	 * 	<li>{@link #LONG_SEQUENCE}</li>
+	 * 	<li>{@link #FLOAT}</li>
+	 * 	<li>{@link #FLOAT_SEQUENCE}</li>
+	 * 	<li>{@link #DOUBLE}</li>
+	 * 	<li>{@link #DOUBLE_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isNumericalType() {
 		return isAnyIntegerType() || isAnyFloatType();
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #BYTE}</li>
+	 * 	<li>{@link #BYTE_SEQUENCE}</li>
+	 * 	<li>{@link #SHORT}</li>
+	 * 	<li>{@link #SHORT_SEQUENCE}</li>
+	 * 	<li>{@link #INTEGER}</li>
+	 * 	<li>{@link #INTEGER_SEQUENCE}</li>
+	 * 	<li>{@link #LONG}</li>
+	 * 	<li>{@link #LONG_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isAnyIntegerType() {
 		return isByteType() || isShortType() || isIntegerType() || isLongType();
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #BYTE}</li>
+	 * 	<li>{@link #BYTE_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isByteType() {
 		return isByte() || isByteSequence();
 	}
 
+	/**
+	 * Returns true if this value type is {@link #BYTE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isByte() {
 		return BYTE == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #BYTE_SEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isByteSequence() {
 		return BYTE_SEQUENCE == this;
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #SHORT}</li>
+	 * 	<li>{@link #SHORT_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isShortType() {
 		return isShort() || isShortSequence();
 	}
 
+	/**
+	 * Returns true if this value type is {@link #SHORT}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isShort() {
 		return SHORT == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #SHORT_SEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isShortSequence() {
 		return SHORT_SEQUENCE == this;
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #INTEGER}</li>
+	 * 	<li>{@link #INTEGER_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isIntegerType() {
 		return isInteger() || isIntegerSequence();
 	}
 
+	/**
+	 * Returns true if this value type is {@link #INTEGER}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isInteger() {
 		return INTEGER == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #INTEGER_SEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isIntegerSequence() {
 		return INTEGER_SEQUENCE == this;
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #LONG}</li>
+	 * 	<li>{@link #LONG_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isLongType() {
 		return isLong() || isLongSequence();
 	}
 
+	/**
+	 * Returns true if this value type is {@link #LONG}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isLong() {
 		return LONG == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #LONG_SEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isLongSequence() {
 		return LONG_SEQUENCE == this;
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #FLOAT}</li>
+	 * 	<li>{@link #FLOAT_SEQUENCE}</li>
+	 * 	<li>{@link #DOUBLE}</li>
+	 * 	<li>{@link #DOUBLE_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isAnyFloatType() {
 		return isFloatType() || isDoubleType();
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #FLOAT}</li>
+	 * 	<li>{@link #FLOAT_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isFloatType() {
 		return isFloat() || isFloatSequence();
 	}
 
+	/**
+	 * Returns true if this value type is {@link #FLOAT}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isFloat() {
 		return FLOAT == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #FLOAT_SEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isFloatSequence() {
 		return FLOAT_SEQUENCE == this;
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #DOUBLE}</li>
+	 * 	<li>{@link #DOUBLE_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isDoubleType() {
 		return isDouble() || isDoubleSequence();
 	}
 
+	/**
+	 * Returns true if this value type is {@link #DOUBLE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isDouble() {
 		return DOUBLE == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #DOUBLE_SEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isDoubleSequence() {
 		return DOUBLE_SEQUENCE == this;
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #BYTE_STREAM}</li>
+	 * 	<li>{@link #BYTE_STREAM_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isByteStreamType() {
 		return isByteStream() || isByteStreamSequence();
 	}
 
+	/**
+	 * Returns true if this value type is {@link #BYTE_STREAM}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isByteStream() {
 		return BYTE_STREAM == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #BYTE_STREAM_SEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isByteStreamSequence() {
 		return BYTE_STREAM_SEQUENCE == this;
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #FLOAT_COMPLEX}</li>
+	 * 	<li>{@link #FLOAT_COMPLEX_SEQUENCE}</li>
+	 * 	<li>{@link #DOUBLE_COMPLEX}</li>
+	 * 	<li>{@link #DOUBLE_COMPLEX_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isComplexType() {
 		return isFloatComplexType() || isDoubleComplexType();
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #FLOAT_COMPLEX}</li>
+	 * 	<li>{@link #FLOAT_COMPLEX_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isFloatComplexType() {
 		return isFloatComplex() || isFloatComplexSequence();
 	}
 
+	/**
+	 * Returns true if this value type is {@link #FLOAT_COMPLEX}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isFloatComplex() {
 		return FLOAT_COMPLEX == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #FLOAT_COMPLEX_SEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isFloatComplexSequence() {
 		return FLOAT_COMPLEX_SEQUENCE == this;
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #DOUBLE_COMPLEX}</li>
+	 * 	<li>{@link #DOUBLE_COMPLEX_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isDoubleComplexType() {
 		return isDoubleComplex() || isDoubleComplexSequence();
 	}
 
+	/**
+	 * Returns true if this value type is {@link #DOUBLE_COMPLEX}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isDoubleComplex() {
 		return DOUBLE_COMPLEX == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #DOUBLE_COMPLEX_SEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isDoubleComplexSequence() {
 		return DOUBLE_COMPLEX_SEQUENCE == this;
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #ENUMERATION}</li>
+	 * 	<li>{@link #ENUMERATION_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isEnumerationType() {
 		return isEnumeration() || isEnumerationSequence();
 	}
 
+	/**
+	 * Returns true if this value type is {@link #ENUMERATION}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isEnumeration() {
 		return ENUMERATION == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #ENUMERATION_SEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isEnumerationSequence() {
 		return ENUMERATION_SEQUENCE == this;
 	}
 
+	/**
+	 * Returns true if this value type is one of the following:
+	 *
+	 * <ul>
+	 * 	<li>{@link #FILE_LINK}</li>
+	 * 	<li>{@link #FILE_LINK_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
+	 */
 	public boolean isFileLinkType() {
 		return isFileLink() || isFileLinkSequence();
 	}
 
+	/**
+	 * Returns true if this value type is {@link #FILE_LINK}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isFileLink() {
 		return FILE_LINK == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #FILE_LINK_SEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isFileLinkSequence() {
 		return FILE_LINK_SEQUENCE == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #BLOB}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isBlob() {
 		return BLOB == this;
 	}
 
+	/**
+	 * Returns true if this value type is {@link #UNKNOWN}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
 	public boolean isUnknown() {
 		return UNKNOWN == this;
 	}
 
 	/**
-	 * Checks whether this instance is a sequence value type.
+	 * Returns true if this value type is one of the following:
 	 *
-	 * @return True is returned if this instance is a sequence value type.
+	 * <ul>
+	 * 	<li>{@link #STRING_SEQUENCE}</li>
+	 * 	<li>{@link #DATE_SEQUENCE}</li>
+	 * 	<li>{@link #BOOLEAN_SEQUENCE}</li>
+	 * 	<li>{@link #BYTE_SEQUENCE}</li>
+	 * 	<li>{@link #SHORT_SEQUENCE}</li>
+	 * 	<li>{@link #INTEGER_SEQUENCE}</li>
+	 * 	<li>{@link #LONG_SEQUENCE}</li>
+	 * 	<li>{@link #FLOAT_SEQUENCE}</li>
+	 * 	<li>{@link #DOUBLE_SEQUENCE}</li>
+	 * 	<li>{@link #BYTE_STREAM_SEQUENCE}</li>
+	 * 	<li>{@link #FLOAT_COMPLEX_SEQUENCE}</li>
+	 * 	<li>{@link #DOUBLE_COMPLEX_SEQUENCE}</li>
+	 * 	<li>{@link #ENUMERATION_SEQUENCE}</li>
+	 * 	<li>{@link #FILE_LINK_SEQUENCE}</li>
+	 * </ul>
+	 *
+	 * @return Returns {@code true} in the cases listed above.
 	 */
 	public boolean isSequence() {
 		return name().endsWith("SEQUENCE");
 	}
 
 	/**
-	 * If this instance represents a sequence value type, then itself is
-	 * returned, otherwise its sequence value type counterpart is returned.
+	 * Returns the sequence version of this value type. This method returns
+	 * itself, if this value type is a sequence type.
 	 *
-	 * @return The returned value type is in either case a sequence value type.
-	 * @throws IllegalArgumentException Thrown if a sequence counterpart does
-	 * 		not exist.
+	 * @return The sequence version of this value type is returned.
 	 */
 	public ValueType toSequenceType() {
 		if(isSequence()) {
@@ -567,13 +976,17 @@ public enum ValueType {
 		return ValueType.valueOf(name() + "_SEQUENCE");
 	}
 
+	// ======================================================================
+	// Package methods
+	// ======================================================================
+
 	/**
-	 * If this instance represents a sequence value type, then its single value
-	 * type counterpart is returned, otherwise this instance is returned.
+	 * Returns the scalar version of this value type. This method returns
+	 * itself, if this value type is a scalar type.
 	 *
-	 * @return The returned value type is in either case a single value type.
+	 * @return The sequence version of this value type is returned.
 	 */
-	public ValueType toSingleType() {
+	ValueType toSingleType() {
 		if(isSequence()) {
 			return ValueType.valueOf(name().replace("_SEQUENCE", ""));
 		}

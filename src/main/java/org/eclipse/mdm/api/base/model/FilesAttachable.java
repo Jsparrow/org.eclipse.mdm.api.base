@@ -9,18 +9,15 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * This interface extends the {@link DataItem} interface and provides getter
- * and setter methods for the 'FileLinks' sequence field of a data item.
- *
- * TODO: This field may be used to remove or attach externally linked files
- * to a data item.
+ * This interface extends the {@link Entity} interface and provides getter
+ * and setter methods for the 'FileLinks' sequence field of an entity.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see FileLink
  */
-public interface FilesAttachable extends DataItem {
+public interface FilesAttachable extends Entity {
 
 	// ======================================================================
 	// Class variables

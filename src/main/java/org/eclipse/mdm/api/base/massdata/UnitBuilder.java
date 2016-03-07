@@ -8,16 +8,45 @@
 
 package org.eclipse.mdm.api.base.massdata;
 
+import org.eclipse.mdm.api.base.model.Channel;
 import org.eclipse.mdm.api.base.model.Unit;
 
+/**
+ * This builder allows to specify a source {@link Unit} which is different to
+ * the origin {@code Unit} of the underlying {@link Channel}.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ */
 public final class UnitBuilder extends WriteRequestFinalizer {
 
+	// ======================================================================
+	// Constructors
+	// ======================================================================
+
+	/**
+	 * Constructor.
+	 *
+	 *  @param writeRequest The {@link WriteRequest}, whose measured value's
+	 *  	source {@link Unit} may be defined.
+	 */
 	UnitBuilder(WriteRequest writeRequest) {
 		super(writeRequest);
 	}
 
-	public WriteRequestFinalizer targetUnit(Unit targetUnit) {
-		writeRequest.setTargetUnit(targetUnit);
+	// ======================================================================
+	// Public methods
+	// ======================================================================
+
+	/**
+	 * Sets a source {@link Unit} for the previously defined measured values.
+	 *
+	 * @param sourceUnit The source {@code Unit}.
+	 * @return The {@link WriteRequestFinalizer} is returned.
+	 */
+	public WriteRequestFinalizer sourceUnit(Unit sourceUnit) {
+		writeRequest.setSourceUnit(sourceUnit);
 		return this;
 	}
 

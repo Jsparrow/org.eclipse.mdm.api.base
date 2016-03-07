@@ -9,16 +9,16 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * This interface extends the {@link DataItem} interface and provides getter
- * and setter methods for the 'SortIndex' field of a data item. The value in
- * this field is the index of a data item relative to all other data items of
- * the same type under their shared parent.
+ * This interface extends the {@link Entity} interface and provides getter
+ * and setter methods for the 'SortIndex' field of an entity. The value in
+ * this field is the index of an entity relative to all other entities of
+ * the same type beneath their shared parent.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface Sortable extends DataItem {
+public interface Sortable extends Entity {
 
 	// ======================================================================
 	// Class variables
@@ -34,16 +34,16 @@ public interface Sortable extends DataItem {
 	// ======================================================================
 
 	/**
-	 * Returns the sort index of this data item.
+	 * Returns the sort index of this entity.
 	 *
-	 * @return The sort index to this data item is returned.
+	 * @return The sort index is returned.
 	 */
 	default Integer getSortIndex() {
 		return getValue(ATTR_SORT_INDEX).extract();
 	}
 
 	/**
-	 * Sets a new sort index for this data item.
+	 * Sets new sort index for this entity.
 	 *
 	 * @param sortIndex The new sort index.
 	 */

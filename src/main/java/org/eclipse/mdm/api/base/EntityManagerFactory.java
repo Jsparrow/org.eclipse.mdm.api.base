@@ -11,43 +11,36 @@ package org.eclipse.mdm.api.base;
 import java.util.List;
 
 import org.eclipse.mdm.api.base.model.Value;
+import org.eclipse.mdm.api.base.model.ValueType;
 
 /**
- * Takes connection parameters and produces a corresponding data provider. As
- * soon as the data provider is no longer required, it's connection should be
+ * Takes connection parameters and produces a corresponding entity manager. As
+ * soon as the entity manager is no longer required, its connection should be
  * closed by using this factory's disconnect method.
  *
- * @param <T> Type of the connected data provider.
- *
+ * @param <T> Type of the connected entity manager.
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see Value
  */
-public interface DataProviderFactory<T extends BaseDataProvider> {
+public interface EntityManagerFactory<T extends EntityManager> {
 
 	// ======================================================================
 	// Public methods
 	// ======================================================================
 
 	/**
-	 * Takes given connection parameters and creates a new data provider, which
+	 * Takes given connection parameters and creates a new entity manager, which
 	 * is connected with configured data source.
 	 *
 	 * @param connectionParameters The connection parameters.
-	 * @return The connected data provider is returned.
-	 * @throws DataProviderException Thrown if unable to connect to a data source.
+	 * @return The connected entity manager is returned.
+	 * @throws ConnectionException Thrown if unable to connect to a data source.
+	 * @see ValueType#createValue(String, Object)
+	 * @see ValueType
 	 * @see Value
 	 */
-	T connect(List<Value> connectionParameters) throws DataProviderException;
-
-	/**
-	 * Takes given data provider and ensures it's data source connection is
-	 * closed.
-	 *
-	 * @param dataProvider The data provider, whose connection will be closed.
-	 * @throws DataProviderException Thrown if unable to close the connection.
-	 */
-	void disconnect(T dataProvider) throws DataProviderException;
+	T connect(List<Value> connectionParameters) throws ConnectionException;
 
 }

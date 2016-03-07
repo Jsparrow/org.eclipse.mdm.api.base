@@ -9,13 +9,15 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * Each modeled {@link DataItem} implements this interface to indicate that it
+ * Each modeled {@link Entity} implements this interface to indicate that it
  * has a State.
+ *
+ * <p><b>Note:</b> State management is not part of the base application model.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface Statable extends DataItem {
+public interface Statable extends Entity {
 
 }

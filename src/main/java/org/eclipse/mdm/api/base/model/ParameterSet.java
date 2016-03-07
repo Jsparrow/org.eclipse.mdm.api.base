@@ -8,22 +8,21 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of the parameter set data item type. Instances of this class
- * group a set of further describing data stored in parameters. A parameter set
- * is attached either to a {@link Measurement} or {@link Channel} data item.
+ * Implementation of the parameter set entity type. Instances of this class
+ * group a set of further describing data stored in {@link Parameter}s.
+ * Parameter sets are attached either to a {@link Measurement} or {@link
+ * Channel}.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Measurement
- * @see Channel
- * @see Parameter
  */
-public final class ParameterSet extends BaseDataItem {
+public final class ParameterSet extends BaseEntity implements Deletable {
 
 	// ======================================================================
 	// Class variables
@@ -46,15 +45,31 @@ public final class ParameterSet extends BaseDataItem {
 	// Public methods
 	// ======================================================================
 
+	/**
+	 * Returns all available {@link Parameter}s related to this parameter set.
+	 *
+	 * @return The returned {@code List} is unmodifiable.
+	 */
 	public List<Parameter> getParameters() {
-		return getCore().getChildren(Parameter.class);
+		return Collections.unmodifiableList(getCore().getChildren(Parameter.class));
 	}
 
+	/**
+	 * Removes given {@link Parameter} from this parameter set.
+	 *
+	 * @param parameter The {@code Parameter} that will be removed.
+	 * @return Returns {@code true} if this parameter set held given {@code
+	 * 		Parameter}.
+	 */
 	public boolean removeParameter(Parameter parameter) {
 		return getCore().removeChild(parameter);
 	}
 
-	// TODO
+	/**
+	 * Returns the version of this parameter set.
+	 *
+	 * @return The version is returned.
+	 */
 	public String getVersion() {
 		return getValue(ATTR_VERSION).extract();
 	}
@@ -73,6 +88,11 @@ public final class ParameterSet extends BaseDataItem {
 	// Package methods
 	// ======================================================================
 
+	/**
+	 * Sets new version for this parameter set.
+	 *
+	 * @param version The new version.
+	 */
 	// TODO read only property
 	public void setVersion(String version) {
 		getValue(ATTR_VERSION).set(version);

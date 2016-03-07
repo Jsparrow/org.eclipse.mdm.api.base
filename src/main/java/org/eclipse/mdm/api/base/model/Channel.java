@@ -9,8 +9,8 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * Implementation of the channel data item type. Instances of this class are
- * based on {@link Quantity} data items.
+ * Implementation of the channel entity type. Entities of this type are based
+ * on {@link Quantity}s.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -19,9 +19,10 @@ package org.eclipse.mdm.api.base.model;
  * @see ChannelGroup
  * @see ContextSensor
  * @see ParameterSet
- * @see Quantity
  */
-public final class Channel extends BaseDataItem implements Deletable, Describable, Parameterizable {
+public final class Channel extends BaseEntity implements Deletable, Describable, Parameterizable {
+
+	// TODO Channel may have a relation to a sensor!
 
 	// ======================================================================
 	// Class variables
@@ -31,6 +32,32 @@ public final class Channel extends BaseDataItem implements Deletable, Describabl
 	 * The {@link Measurement} parent type.
 	 */
 	public static final Class<Measurement> PARENT_TYPE_MEASUREMENT = Measurement.class;
+
+	/**
+	 * The {@link ChannelGroup} parent type.
+	 */
+	public static final Class<ChannelGroup> PARENT_TYPE_CHANNELGROUP = ChannelGroup.class;
+
+	/**
+	 * The 'Minimum' attribute name.
+	 */
+	public static final String ATTR_MINIMUM = "Minimum";
+
+	/**
+	 * The 'Maximum' attribute name.
+	 */
+	public static final String ATTR_MAXIMUM = "Maximum";
+
+	/**
+	 * The 'Average' attribute name.
+	 */
+	public static final String ATTR_AVERAGE = "Average";
+
+	/**
+	 * The 'Deviation' attribute name.
+	 */
+	public static final String ATTR_DEVIATION = "Deviation";
+
 
 	/**
 	 * The 'ScalarType' attribute name.
@@ -53,18 +80,11 @@ public final class Channel extends BaseDataItem implements Deletable, Describabl
 	public static final String ATTR_TYPE_SIZE = "TypeSize";
 
 	// ======================================================================
-	// Instance variables
-	// ======================================================================
-
-	private final Statistics statistics;
-
-	// ======================================================================
 	// Constructors
 	// ======================================================================
 
 	public Channel(Core core) {
 		super(core);
-		statistics = new Statistics(core.getValues());
 	}
 
 	// ======================================================================
@@ -72,76 +92,129 @@ public final class Channel extends BaseDataItem implements Deletable, Describabl
 	// ======================================================================
 
 	/**
-	 * Returns the scalar value type.
+	 * Returns the minimum value of this statistics.
 	 *
-	 * @return Scalar value type is returned.
+	 * @return The minimum value is returned.
+	 */
+	public Double getMinimum() {
+		return getValue(ATTR_MINIMUM).extract();
+	}
+
+	/**
+	 * Sets new minimum for this statistics.
+	 *
+	 * @param minimum The new minimum value.
+	 */
+	public void setMinimum(Double minimum) {
+		getValue(ATTR_MINIMUM).set(minimum);
+	}
+
+	/**
+	 * Returns the maximum value of this statistics.
+	 *
+	 * @return The maximum value is returned.
+	 */
+	public Double getMaximum() {
+		return getValue(ATTR_MAXIMUM).extract();
+	}
+
+	/**
+	 * Sets new maximum for this statistics.
+	 *
+	 * @param maximum The new maximum value.
+	 */
+	public void setMaximum(Double maximum) {
+		getValue(ATTR_MAXIMUM).set(maximum);
+	}
+
+	/**
+	 * Returns the average value of this statistics.
+	 *
+	 * @return The average value is returned.
+	 */
+	public Double getAverage() {
+		return getValue(ATTR_AVERAGE).extract();
+	}
+
+	/**
+	 * Sets new average for this statistics.
+	 *
+	 * @param average The new average value.
+	 */
+	public void setAverage(Double average) {
+		getValue(ATTR_AVERAGE).set(average);
+	}
+
+	/**
+	 * Returns the deviation value of this statistics.
+	 *
+	 * @return The deviation value is returned.
+	 */
+	public Double getDeviation() {
+		return getValue(ATTR_DEVIATION).extract();
+	}
+
+	/**
+	 * Sets new deviation for this statistics.
+	 *
+	 * @param deviation The new deviation value.
+	 */
+	public void setDeviation(Double deviation) {
+		getValue(ATTR_DEVIATION).set(deviation);
+	}
+
+	/**
+	 * Returns the {@link ScalarType} of this channel.
+	 *
+	 * @return The {@code ScalarType} is returned.
 	 */
 	public ScalarType getScalarType() {
 		return getValue(ATTR_SCALAR_TYPE).extract();
 	}
 
 	/**
-	 * Sets new scalar type for this channel.
+	 * Returns the {@link Interpolation} of this channel.
 	 *
-	 * @param scalarType The new scalar type for this channel.
-	 */
-	// TODO it might be useful to change the scalar type in post processing ?!
-	public void setScalarType(ScalarType scalarType) {
-		getValue(ATTR_SCALAR_TYPE).set(scalarType);
-	}
-
-	/**
-	 * Returns the interpolation type.
-	 *
-	 * @return Interpolation type is returned.
+	 * @return The {@code Interpolation} is returned.
 	 */
 	public Interpolation getInterpolation() {
 		return getValue(ATTR_INTERPOLATION).extract();
 	}
 
 	/**
-	 * Returns the rank.
+	 * Returns the rank of this channel.
 	 *
-	 * @return Rank is returned.
+	 * @return The rank is returned.
 	 */
 	public Integer getRank() {
 		return getValue(ATTR_RANK).extract();
 	}
 
 	/**
-	 * Returns the type size.
+	 * Returns the type size of this channel.
 	 *
-	 * @return Type size is returned.
+	 * @return The type size is returned.
 	 */
 	public Integer getTypeSize() {
 		return getValue(ATTR_TYPE_SIZE).extract();
 	}
 
 	/**
-	 * Returns the related {@link Unit} data item.
+	 * Returns the related {@link Unit}.
 	 *
-	 * @return Related {@code Unit} data item is returned.
+	 * @return Related {@code Unit} is returned.
 	 */
 	public Unit getUnit() {
 		return getCore().getInfoRelation(Unit.class);
 	}
 
 	/**
-	 * Returns the related {@link Quantity} data item.
+	 * Returns the related {@link Quantity}.
 	 *
-	 * @return Related {@code Quantity} data item is returned.
+	 * @return Related {@code Quantity} is returned.
 	 */
 	public Quantity getQuantity() {
 		return getCore().getInfoRelation(Quantity.class);
-	}
-
-	/**
-	 * Returns the {@link Statistics} of the underlying channel values.
-	 *
-	 * @return The {@code Statistics} item is returned.
-	 */
-	public Statistics getStatistics() {
-		return statistics;
 	}
 
 	// ======================================================================
@@ -149,9 +222,25 @@ public final class Channel extends BaseDataItem implements Deletable, Describabl
 	// ======================================================================
 
 	/**
+	 * Sets new {@link ScalarType} for this channel.
+	 *
+	 * @param scalarType The new {@code ScalarType}.
+	 * @throws IllegalArgumentException Thrown if given {@code ScalarType} is
+	 * 		{@link ScalarType#UNKNOWN}.
+	 */
+	// TODO it might be useful to change the scalar type in post processing ?!
+	public void setScalarType(ScalarType scalarType) {
+		if(scalarType.isUnknown()) {
+			throw new IllegalArgumentException("Scalar type constant is not allowed to be '" + scalarType + "'.");
+		}
+
+		getValue(ATTR_SCALAR_TYPE).set(scalarType);
+	}
+
+	/**
 	 * Sets new interpolation for this channel.
 	 *
-	 * @param interpolation The new interpolation type for this channel.
+	 * @param interpolation The new {@code Interpolation}.
 	 */
 	// TODO Interpolation was completely hidden in the MDM4 API
 	public void setInterpolation(Interpolation interpolation) {
@@ -161,7 +250,7 @@ public final class Channel extends BaseDataItem implements Deletable, Describabl
 	/**
 	 * Sets new rank for this channel.
 	 *
-	 * @param rank The new rank for this channel.
+	 * @param rank The new rank.
 	 */
 	// TODO this is a read only property
 	public void setRank(Integer rank) {
@@ -171,7 +260,7 @@ public final class Channel extends BaseDataItem implements Deletable, Describabl
 	/**
 	 * Sets new type size for this channel.
 	 *
-	 * @param typeSize The new type size for this channel.
+	 * @param typeSize The new type size.
 	 */
 	// TODO this is a read only property too
 	public void setTypeSize(Integer typeSize) {

@@ -9,14 +9,14 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * This interface extends the {@link DataItem} interface and provides getter
- * and setter methods for the 'Description' field of a data item.
+ * This interface extends the {@link Entity} interface and provides getter
+ * and setter methods for the 'Description' field of an entity.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface Describable extends DataItem {
+public interface Describable extends Entity {
 
 	// ======================================================================
 	// Class variables
@@ -32,16 +32,16 @@ public interface Describable extends DataItem {
 	// ======================================================================
 
 	/**
-	 * Returns the description of this data item.
+	 * Returns the description of this entity.
 	 *
-	 * @return The description to this data item is returned.
+	 * @return The description is returned.
 	 */
 	default String getDescription() {
 		return getValue(ATTR_DESCRIPTION).extract();
 	}
 
 	/**
-	 * Sets a new description for this data item.
+	 * Sets new description for this entity.
 	 *
 	 * @param description The new description.
 	 */

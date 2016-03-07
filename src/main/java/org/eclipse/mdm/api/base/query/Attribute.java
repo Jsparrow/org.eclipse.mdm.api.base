@@ -19,6 +19,7 @@ import org.eclipse.mdm.api.base.model.ValueType;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see EntityType
  * @see ValueType
+ * @see Value
  */
 public interface Attribute {
 

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.mdm.api.base.model.Core;
-import org.eclipse.mdm.api.base.model.DataItem;
+import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.model.URI;
 import org.eclipse.mdm.api.base.model.Value;
 import org.eclipse.mdm.api.base.query.EntityType;
@@ -21,10 +21,10 @@ import org.eclipse.mdm.api.base.query.Record;
 
 public final class EntityCore implements Core {
 
-	private final Map<Class<? extends DataItem>, List<? extends DataItem>> currentChildren = new HashMap<>();
-	private final Map<Class<? extends DataItem>, List<? extends DataItem>> removedChildren = new HashMap<>();
+	private final Map<Class<? extends Entity>, List<? extends Entity>> currentChildren = new HashMap<>();
+	private final Map<Class<? extends Entity>, List<? extends Entity>> removedChildren = new HashMap<>();
 
-	private final Map<Class<? extends DataItem>, DataItem> currentInfoRelations = new HashMap<>();
+	private final Map<Class<? extends Entity>, Entity> currentInfoRelations = new HashMap<>();
 
 	private final Map<String, Value> values = new HashMap<>();
 
@@ -35,14 +35,14 @@ public final class EntityCore implements Core {
 	public EntityCore(Record record) {
 		setURI(record.createURI());
 		values.putAll(record.getValues());
-		values.remove(DataItem.ATTR_ID);
+		values.remove(Entity.ATTR_ID);
 
 		typeName = record.getEntityType().getName();
 	}
 
 	public EntityCore(EntityType entityType) {
 		values.putAll(entityType.createValues());
-		values.remove(DataItem.ATTR_ID);
+		values.remove(Entity.ATTR_ID);
 
 		typeName = entityType.getName();
 	}
@@ -60,7 +60,7 @@ public final class EntityCore implements Core {
 	@Override
 	public void setURI(URI uri) {
 		if(this.uri != null) {
-			throw new IllegalStateException("It is not allowed to replace the URI");
+			throw new IllegalStateException("It is not allowed to replace the URI.");
 		}
 
 		this.uri = uri;
@@ -72,17 +72,17 @@ public final class EntityCore implements Core {
 	}
 
 	@Override
-	public Map<Class<? extends DataItem>, DataItem> getInfoRelations() {
+	public Map<Class<? extends Entity>, Entity> getInfoRelations() {
 		return currentInfoRelations;
 	}
 
 	@Override
-	public Map<Class<? extends DataItem>, List<? extends DataItem>> getChildren() {
+	public Map<Class<? extends Entity>, List<? extends Entity>> getChildren() {
 		return currentChildren;
 	}
 
 	@Override
-	public Map<Class<? extends DataItem>, List<? extends DataItem>> getRemovedChildren() {
+	public Map<Class<? extends Entity>, List<? extends Entity>> getRemovedChildren() {
 		return removedChildren;
 	}
 

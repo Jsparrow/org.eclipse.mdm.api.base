@@ -9,16 +9,15 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * Implementation of the unit data item type. Units referring to the same
- * {@link PhysicalDimension} can be converted to each other by means of their
- * attribute values "Offset" and "Factor". Names of the units must be unique.
+ * Implementation of the unit entity type. Units referring to the same {@link
+ * PhysicalDimension} can be converted to each other by means of their attribute
+ * values "Offset" and "Factor". The names of the units have to be unique.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see PhysicalDimension
  */
-public final class Unit extends BaseDataItem implements Copyable, Datable, Deletable, Describable {
+public final class Unit extends BaseEntity implements Copyable, Datable, Deletable, Describable {
 
 	// ======================================================================
 	// Class variables
@@ -107,7 +106,7 @@ public final class Unit extends BaseDataItem implements Copyable, Datable, Delet
 	/**
 	 * Returns the factor, which allows to convert the decibel values back
 	 * into linear values. If the decibel flag is set to false, this method
-	 * should return 0. This is described in the ASAM NVH specification
+	 * should return 0, which is described in the ASAM NVH specification
 	 * (Chapter 11, 10.3).
 	 *
 	 * @return The decibel reference factor is returned.
@@ -119,9 +118,9 @@ public final class Unit extends BaseDataItem implements Copyable, Datable, Delet
 
 	/**
 	 * Changes the decibel status of this unit. The decibel flag is deduced from
-	 * passed reference factor. If the reference factor is finite, as returned
+	 * given reference factor. If the reference factor is finite, as returned
 	 * by {@link Float#isFinite(float)}, and not 0, then the decibel flag is set
-	 * to true and passed reference factor is taken. In any other case both, the
+	 * to true and given reference factor is taken. In any other case both, the
 	 * decibel flag and the reference factor, will be reset.
 	 *
 	 * @param dbReferenceFactor The new decibel reference factor.
@@ -139,19 +138,18 @@ public final class Unit extends BaseDataItem implements Copyable, Datable, Delet
 	}
 
 	/**
-	 * Returns the related default {@link PhysicalDimension} data item for
-	 * this unit.
+	 * Returns the {@link PhysicalDimension} of this unit.
 	 *
-	 * @return Related default {@code PhysicalDimension} data item is returned.
+	 * @return The {@code PhysicalDimension} is returned.
 	 */
 	public PhysicalDimension getPhysicalDimension() {
 		return getCore().getInfoRelation(PhysicalDimension.class);
 	}
 
 	/**
-	 * Sets new related default {@link PhysicalDimension} data item for this unit.
+	 * Sets new {@link PhysicalDimension} for this unit.
 	 *
-	 * @param physicalDimension The new related {@code PhysicalDimension} data item.
+	 * @param physicalDimension The new {@code PhysicalDimension}.
 	 */
 	public void setPhysicalDimension(PhysicalDimension physicalDimension) {
 		getCore().setInfoRelation(physicalDimension);

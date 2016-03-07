@@ -11,15 +11,15 @@ package org.eclipse.mdm.api.base.massdata;
 import org.eclipse.mdm.api.base.model.ScalarType;
 import org.eclipse.mdm.api.base.model.SequenceRepresentation;
 
-public final class WriteRequestBuilder extends MeasuredValuesBuilder {
+public final class WriteRequestBuilder extends ValuesBuilder {
 
 	WriteRequestBuilder(WriteRequest writeRequest) {
 		super(writeRequest);
 	}
 
-	public MeasuredValuesAnyTypeBuilder explicit() {
+	public AnyTypeValuesBuilder explicit() {
 		writeRequest.setSequenceRepresentation(SequenceRepresentation.EXPLICIT);
-		return new MeasuredValuesAnyTypeBuilder(writeRequest);
+		return new AnyTypeValuesBuilder(writeRequest);
 	}
 
 	public UnitBuilder implicitConstant(ScalarType scalarType, double offset) {
@@ -41,7 +41,7 @@ public final class WriteRequestBuilder extends MeasuredValuesBuilder {
 		} else {
 			throw new IllegalArgumentException("Scalar type '" + scalarType + "' is not supported.");
 		}
-		createMeasuredValues(scalarType, values);
+		createValues(scalarType, values);
 
 		return new UnitBuilder(writeRequest);
 	}
@@ -65,7 +65,7 @@ public final class WriteRequestBuilder extends MeasuredValuesBuilder {
 		} else {
 			throw new IllegalArgumentException("Scalar type '" + scalarType + "' is not supported.");
 		}
-		createMeasuredValues(scalarType, values);
+		createValues(scalarType, values);
 
 		return new UnitIndependentBuilder(writeRequest);
 	}
@@ -89,37 +89,43 @@ public final class WriteRequestBuilder extends MeasuredValuesBuilder {
 		} else {
 			throw new IllegalArgumentException("Scalar type '" + scalarType + "' is not supported.");
 		}
-		createMeasuredValues(scalarType, values);
+		createValues(scalarType, values);
 
 		// NOTE: if it ever should be required to make a channel of this type
 		// an independent one, then return an UnitIndependentBuilder instead!
 		return new UnitBuilder(writeRequest);
 	}
 
-	public MeasuredValuesComplexNumericalBuilder rawLinear(double offset, double factor) {
+	public ComplexNumericalValuesBuilder rawLinear(double offset, double factor) {
 		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_LINEAR);
 		writeRequest.setGenerationParameters(new double[] { offset, factor });
-		return new MeasuredValuesComplexNumericalBuilder(writeRequest);
+		return new ComplexNumericalValuesBuilder(writeRequest);
 	}
 
-	public MeasuredValuesComplexNumericalBuilder rawPolynomial(double... coefficients) {
-		// TODO int grade (> 0), coefficients.length == grade
-		if(coefficients == null || coefficients.length < 2) {
-			throw new IllegalArgumentException("At least 2 coefficients must be provided");
+	public ComplexNumericalValuesBuilder rawPolynomial(int grade, double... coefficients) {
+		if(grade < 1) {
+			throw new IllegalArgumentException("Grade must be greater than or at least equal to 1.");
+		} else if(coefficients == null || coefficients.length != grade) {
+			throw new IllegalArgumentException("Either coefficients are missing or their length is not "
+					+ "equal to given grade.");
 		}
 
 		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_POLYNOMIAL);
-		writeRequest.setGenerationParameters(coefficients);
+
+		double[] generationParameters = new double[grade + 1];
+		generationParameters[0] = grade;
+		System.arraycopy(coefficients, 0, generationParameters, 1, grade);
+		writeRequest.setGenerationParameters(generationParameters);
 
 		// TODO: currently it is possible to define such a channel as independent
 		// should we prevent this?!
-		return new MeasuredValuesComplexNumericalBuilder(writeRequest);
+		return new ComplexNumericalValuesBuilder(writeRequest);
 	}
 
-	public MeasuredValuesComplexNumericalBuilder rawLinearCalibrated(double offset, double factor, double calibration) {
+	public ComplexNumericalValuesBuilder rawLinearCalibrated(double offset, double factor, double calibration) {
 		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_LINEAR_CALIBRATED);
 		writeRequest.setGenerationParameters(new double[] { offset, factor, calibration });
-		return new MeasuredValuesComplexNumericalBuilder(writeRequest);
+		return new ComplexNumericalValuesBuilder(writeRequest);
 	}
 
 	// ##########################################################################################################################################
@@ -129,7 +135,7 @@ public final class WriteRequestBuilder extends MeasuredValuesBuilder {
 		// TODO new builder for external component structure for all types
 		// subsequent builder should route to independency builder for sortable types (byte, short, int, long, float, double, date)
 		// see #explicit()
-		throw new IllegalStateException();
+		throw new UnsupportedOperationException("Not implemented.");
 	}
 
 	public Object rawLinearExternal(double offset, double factor) {
@@ -139,20 +145,28 @@ public final class WriteRequestBuilder extends MeasuredValuesBuilder {
 		// TODO new builder for external component structure for numerical, non complex, types
 		// subsequent builder should route to independency builder
 		// see #rawLinear(offset, factor)
-		throw new IllegalStateException();
+		throw new UnsupportedOperationException("Not implemented.");
 	}
 
-	public Object rawPolynomialExternal(double... coefficients) {
-		if(coefficients == null || coefficients.length < 2) {
-			throw new IllegalArgumentException("At least 2 coefficients must be provided");
+	public Object rawPolynomialExternal(int grade, double... coefficients) {
+		if(grade < 1) {
+			throw new IllegalArgumentException("Grade must be greater than or at least equal to 1.");
+		} else if(coefficients == null || coefficients.length != grade) {
+			throw new IllegalArgumentException("Either coefficients are missing or their length is not "
+					+ "equal to given grade.");
 		}
 
 		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_POLYNOMIAL_EXTERNAL);
-		writeRequest.setGenerationParameters(coefficients);
+
+		double[] generationParameters = new double[grade + 1];
+		generationParameters[0] = grade;
+		System.arraycopy(coefficients, 0, generationParameters, 1, grade);
+		writeRequest.setGenerationParameters(generationParameters);
+
 		// TODO new builder for external component structure for numerical, non complex, types
 		// subsequent builder should route to independency builder (or should this be preventd!?)
 		// see #rawLinear(offset, factor)
-		throw new IllegalStateException();
+		throw new UnsupportedOperationException("Not implemented.");
 	}
 
 	public Object rawLinearCalibratedExternal(double offset, double factor, double calibration) {
@@ -162,7 +176,7 @@ public final class WriteRequestBuilder extends MeasuredValuesBuilder {
 		// TODO new builder for external component structure for numerical, non complex, types
 		// subsequent builder should route to independency builder
 		// see #rawLinear(offset, factor)
-		throw new IllegalStateException();
+		throw new UnsupportedOperationException("Not implemented.");
 	}
 
 }

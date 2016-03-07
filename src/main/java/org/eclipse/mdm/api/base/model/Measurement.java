@@ -11,33 +11,29 @@ package org.eclipse.mdm.api.base.model;
 import java.time.LocalDateTime;
 
 /**
- * Implementation of the measurement data item type. The measurement data item
- * holds data of a measurement or analysis. It is the linking point to the
+ * Implementation of the measurement entity type. The measurement entity holds
+ * data of a measurement or an analysis. It is the linking point to the
  * following related data:
  *
  * <ul>
  * 	<li>To ensure any persisted measurement can always be reinterpreted it,
- * 		always should have relations to {@link ContextRoot} data items, which
- * 		contain the description of the test run. All measurement data items
- * 		under the same parent {@link TestStep} should reference to the same
- * 		{@code ContextRoot} data items.</li>
- * 	<li>The results of a test run are accessible via the child data items of
- * 		type {@link ChannelGroup} and {@link Channel}.</li>
+ * 		always should have relations to {@link ContextRoot}s that contain
+ * 		the description of the test run. All measurement entities under the
+ * 		same parent {@link TestStep} must reference the same {@code
+ * 		ContextRoot}.</li>
+ * 	<li>The results of a test run are accessible via the children of type
+ * 		{@link ChannelGroup} and {@link Channel}.</li>
  * </ul>
- * The name of a measurement should be chosen in a speaking way. It has to be
- * unique under the parent {@code TestStep}.
  *
+ * The name of a measurement should be chosen in a speaking way. It has to be
+ * unique under the parent {@code TestStep}.<p>
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see TestStep
- * @see ContextRoot
- * @see ChannelGroup
- * @see Channel
  * @see ParameterSet
  */
-public final class Measurement extends BaseDataItem implements ContextDescribable, Derived, Describable, Datable,
+public final class Measurement extends BaseEntity implements ContextDescribable, Derived, Describable, Datable,
 FilesAttachable, Parameterizable, Statable, Tagable {
 
 	// ======================================================================
@@ -82,7 +78,7 @@ FilesAttachable, Parameterizable, Statable, Tagable {
 	// ======================================================================
 
 	/**
-	 * Returns the time stamp of the date when the measurement was started.
+	 * Returns the time stamp of the date when this measurement was started.
 	 *
 	 * @return Measurement execution start time stamp is returned.
 	 */
@@ -91,7 +87,7 @@ FilesAttachable, Parameterizable, Statable, Tagable {
 	}
 
 	/**
-	 * Sets a new time stamp for the date when the measurement was started.
+	 * Sets new time stamp for the date when this measurement was started.
 	 *
 	 * @param measurementBegin The new measurement start time stamp.
 	 */
@@ -100,7 +96,7 @@ FilesAttachable, Parameterizable, Statable, Tagable {
 	}
 
 	/**
-	 * Returns the time stamp of the date when the measurement was finished.
+	 * Returns the time stamp of the date when this measurement was finished.
 	 *
 	 * @return Measurement execution end time stamp is returned.
 	 */
@@ -109,9 +105,9 @@ FilesAttachable, Parameterizable, Statable, Tagable {
 	}
 
 	/**
-	 * Sets a new time stamp for the date when the measurement was finished.
+	 * Sets new time stamp for the date when this measurement was finished.
 	 *
-	 * @param measurementEnd The new measurement finish time stamp.
+	 * @param measurementEnd The new measurement execution end time stamp.
 	 */
 	public void setMeasurementEnd(LocalDateTime measurementEnd) {
 		getValue(ATTR_MEASUREMENT_END).set(measurementEnd);

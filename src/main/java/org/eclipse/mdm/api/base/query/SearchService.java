@@ -8,15 +8,17 @@
 
 package org.eclipse.mdm.api.base.query;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import org.eclipse.mdm.api.base.model.DataItem;
+import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.model.Value;
 
 /**
- * This search service uses given {@link DataItem} type to execute the
- * associated {@link SearchQuery}.
+ * This search service uses given {@link Entity} type to execute the associated
+ * {@link SearchQuery}.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -35,50 +37,48 @@ public interface SearchService {
 	// ======================================================================
 
 	/**
-	 * Returns all {@link DataItem} types this search service provides a
+	 * Returns all {@link Entity} types this search service provides a
 	 * predefined {@link SearchQuery} for.
 	 *
-	 * @return Returned {@code List} may be immutable.
+	 * @return The returned {@code List} with supported types may be immutable.
 	 */
-	List<Class<? extends DataItem>> listSearchableTypes();
+	List<Class<? extends Entity>> listSearchableTypes();
 
 	/**
 	 * Returns all {@link EntityType}s supported by the {@link SearchQuery}
-	 * associated with given {@link DataItem} type.
+	 * associated with given {@link Entity} type.
 	 *
-	 * @param type Used as identifier.
+	 * @param type Used as the {@code SearchQuery} identifier.
 	 * @return The returned {@code List} may be immutable.
 	 * @throws IllegalArgumentException Thrown if passed type is not associated
 	 * 		with a predefined {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 */
-	List<EntityType> listEntityTypes(Class<? extends DataItem> type);
+	List<EntityType> listEntityTypes(Class<? extends Entity> type);
 
 	/**
 	 * Returns the {@link Searchable}, which describes a hierarchical order of
 	 * the {@link EntityType}s supported by the {@link SearchQuery} associated
-	 * with given {@link DataItem} type.
+	 * with given {@link Entity} type.
 	 *
-	 * @param type Used as identifier.
+	 * @param type Used as the {@code SearchQuery} identifier.
 	 * @return The {@code Searchable} root is returned.
 	 * @throws IllegalArgumentException Thrown if passed type is not associated
 	 * 		with a predefined {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 */
-	Searchable getSearchableRoot(Class<? extends DataItem> type);
+	Searchable getSearchableRoot(Class<? extends Entity> type);
 
 	/**
-	 * Returns the distinct value sequence for passed {@link Attribute} and
-	 * {@link Filter}. Both must be fully supported by the {@link SearchQuery}
-	 * associated with given {@link DataItem} type. The returned value sequence
-	 * is intended to be used for building filter criteria.
+	 * Returns the distinct {@link Value} sequence for given {@link Attribute}.
+	 * The {@code Attribute} must be supported by the {@link SearchQuery}
+	 * associated with given {@link Entity} type. The returned {@code Value}
+	 * sequence is intended to be used for building filter criteria.
 	 *
-	 * @param type Used as identifier.
+	 * @param type Used as the {@code SearchQuery} identifier.
 	 * @param attribute The {@code Attribute} whose distinct values will be
 	 * 		queried.
-	 * @param filter The criteria sequence.
-	 * @return Distinct values, each boxed in a {@link Value}, collected in a
-	 * 		{@code List}.
+	 * @return A distinct {@code List} of all available {@code Value}s is returned.
 	 * @throws DataAccessException Thrown in case of errors while executing the
 	 * 		query or generating the distinct {@code Value} sequence.
 	 * @throws IllegalArgumentException Thrown if passed type is not associated
@@ -86,64 +86,190 @@ public interface SearchService {
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
 	 * @see #listEntityTypes(Class)
+	 * @see #getFilterValues(Class, Attribute, Filter)
 	 */
-	List<Value> getFilterValues(Class<? extends DataItem> type, Attribute attribute, Filter filter)
+	default List<Value> getFilterValues(Class<? extends Entity> type, Attribute attribute) throws DataAccessException {
+		return getFilterValues(type, attribute, Filter.and());
+	}
+
+	/**
+	 * Returns the distinct {@link Value} sequence for given {@link Attribute}
+	 * and {@link Filter}. Both must be fully supported by the {@link SearchQuery}
+	 * associated with given {@link Entity} type. The returned {@code Value}
+	 * sequence is intended to be used for building filter criteria.
+	 *
+	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param attribute The {@code Attribute} whose distinct values will be
+	 * 		queried.
+	 * @param filter The criteria sequence.
+	 * @return A distinct {@code List} of {@code Value}s is returned.
+	 * @throws DataAccessException Thrown in case of errors while executing the
+	 * 		query or generating the distinct {@code Value} sequence.
+	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * 		with a predefined {@code SearchQuery}.
+	 * @see #listSearchableTypes()
+	 * @see #getSearchableRoot(Class)
+	 * @see #listEntityTypes(Class)
+	 * @see #getFilterValues(Class, Attribute)
+	 */
+	List<Value> getFilterValues(Class<? extends Entity> type, Attribute attribute, Filter filter)
 			throws DataAccessException;
+
+	/**
+	 * Executes the associated {@link SearchQuery} with given {@link EntityType}s.
+	 * The {@code EntityType}s must be fully supported by the {@code SearchQuery}
+	 * associated with given {@link Entity} type. This method selects all {@link
+	 * Attribute}s of each given {@code EntityType}.
+	 *
+	 * <p><b>Note:</b> Related {@code Record}s may be merged according to the
+	 * cardinality of the associated {@link Relation}.
+	 *
+	 * @param <T> Type of the entities that will be generated for each result.
+	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param entityTypes Select statements will be added for all {@code Attribute}s
+	 * 		of each given {@code EntityType}.
+	 * @return All {@link Result}s are returned in a {@code Map}, which maps
+	 * 		entities to related {@link Record}s.
+	 * @throws DataAccessException Thrown in case of errors while executing the
+	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
+	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * 		with a predefined {@code SearchQuery}.
+	 * @see #listSearchableTypes()
+	 * @see #getSearchableRoot(Class)
+	 * @see #listEntityTypes(Class)
+	 * @see #fetch(Class, List)
+	 * @see Record#merge(Record)
+	 */
+	default <T extends Entity> Map<T, List<Record>> fetchComplete(Class<T> type, List<EntityType> entityTypes) throws DataAccessException {
+		return fetchComplete(type, entityTypes, Filter.and());
+	}
 
 	/**
 	 * Executes the associated {@link SearchQuery} with given {@link EntityType}s
-	 * and passed {@link Filter}. Both must be fully supported by the {@code
-	 * SearchQuery} associated with given {@link DataItem} type. This method
-	 * selects all {@link Attribute}s for each passed {@link EntityType}.
+	 * and {@link Filter}. Both must be fully supported by the {@code SearchQuery}
+	 * associated with given {@link Entity} type. This method selects all {@link
+	 * Attribute}s of each given {@code EntityType}.
 	 *
-	 * @param <T> Type of the {@code DataItem}s that will be generated for each
+	 * <p><b>Note:</b> Related {@code Record}s may be merged according to the
+	 * cardinality of the associated {@link Relation}.
+	 *
+	 * @param <T> Type of the entities that will be generated for each.
 	 * 		result.
-	 * @param type Used as identifier.
-	 * @param entityTypes For all {@code Attribute}s of each passed {@code EntityType}
-	 * 		select statements will be added.
+	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param entityTypes Select statements will be added for all {@code Attribute}s
+	 * 		of each given {@code EntityType}.
 	 * @param filter The criteria sequence.
 	 * @return All {@link Result}s are returned in a {@code Map}, which maps
-	 * 		{@code DataItem}s to related {@link Record}s. Note that related
-	 * 		{@code Record}s may be merged according to the cardinality of the
-	 * 		underlying relation.
+	 * 		entities to related {@link Record}s.
 	 * @throws DataAccessException Thrown in case of errors while executing the
 	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
 	 * @throws IllegalArgumentException Thrown if passed type is not associated
 	 * 		with a predefined {@code SearchQuery}.
-	 * @see #fetch(Class, List, Filter)
+	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
 	 * @see #listEntityTypes(Class)
+	 * @see #fetch(Class, List, Filter)
 	 * @see Record#merge(Record)
 	 */
-	<T extends DataItem> Map<T, List<Record>> fetchComplete(Class<T> type, List<EntityType> entityTypes, Filter filter)
+	<T extends Entity> Map<T, List<Record>> fetchComplete(Class<T> type, List<EntityType> entityTypes, Filter filter)
 			throws DataAccessException;
 
 	/**
-	 * Executes the associated {@link SearchQuery} with given {@link Attribute}s
-	 * and passed {@link Filter}. Both must be fully supported by the {@code
-	 * SearchQuery} associated with given {@link DataItem} type. This method
-	 * allows fine grained {@link Record} configuration.
+	 * Executes the associated {@link SearchQuery} and returns all available
+	 * instances of the specified {@link Entity} type.
 	 *
-	 * @param <T> Type of the {@code DataItem}s that will be generated for each
-	 * 		result.
-	 * @param type Used as identifier.
-	 * @param attributes For each {@code Attribute} a select statement will be
-	 * 		added.
-	 * @param filter The criteria sequence.
-	 * @return All {@code Result}s are returned in a {@code Map}, which maps
-	 * 		{@code DataItem}s to related {@code Record}s. Note that related
-	 * 		{@code Record}s may be merged according to the cardinality of the
-	 * 		underlying relation.
+	 * @param <T> Type of the entities that will be generated for each result.
+	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @return All available entities are returned in a {@code List}.
 	 * @throws DataAccessException Thrown in case of errors while executing the
 	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
 	 * @throws IllegalArgumentException Thrown if passed type is not associated
 	 * 		with a predefined {@code SearchQuery}.
-	 * @see #fetchComplete(Class, List, Filter)
+	 * @see #listSearchableTypes()
+	 * @see #fetch(Class, Filter)
+	 */
+	default <T extends Entity> List<T> fetch(Class<T> type) throws DataAccessException {
+		return fetch(type, Filter.and());
+	}
+
+	/**
+	 * Executes the associated {@link SearchQuery} with given {@link Filter}.
+	 * The {@code Filter} must be fully supported by the {@code SearchQuery}
+	 * associated with given {@link Entity} type.
+	 *
+	 * @param <T> Type of the entities that will be generated for each result.
+	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param filter The criteria sequence.
+	 * @return All matched entities are returned in a {@code List}.
+	 * @throws DataAccessException Thrown in case of errors while executing the
+	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
+	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * 		with a predefined {@code SearchQuery}.
+	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
 	 * @see #listEntityTypes(Class)
+	 * @see #fetch(Class)
+	 */
+	default <T extends Entity> List<T> fetch(Class<T> type, Filter filter) throws DataAccessException {
+		return fetch(type, Collections.emptyList(), filter).keySet().stream().collect(Collectors.toList());
+	}
+
+	/**
+	 * Executes the associated {@link SearchQuery} with given {@link Attribute}s.
+	 * The {@code Attribute}s must be fully supported by the {@code SearchQuery}
+	 * associated with given {@link Entity} type. This method allows fine
+	 * grained {@link Record} configuration.
+	 *
+	 * <p><b>Note:</b> Related {@code Record}s may be merged according to the
+	 * cardinality of the associated {@link Relation}.
+	 *
+	 * @param <T> Type of the entities that will be generated for each result.
+	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param attributes Select statements will be added for each {@code
+	 * 		Attribute}.
+	 * @return All {@link Result}s are returned in a {@code Map}, which maps
+	 * 		entities to related {@code Record}s.
+	 * @throws DataAccessException Thrown in case of errors while executing the
+	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
+	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * 		with a predefined {@code SearchQuery}.
+	 * @see #listSearchableTypes()
+	 * @see #getSearchableRoot(Class)
+	 * @see #listEntityTypes(Class)
+	 * @see #fetchComplete(Class, List)
 	 * @see Record#merge(Record)
 	 */
-	<T extends DataItem> Map<T, List<Record>> fetch(Class<T> type, List<Attribute> attributes, Filter filter)
+	default <T extends Entity> Map<T, List<Record>> fetch(Class<T> type, List<Attribute> attributes) throws DataAccessException {
+		return fetch(type, attributes, Filter.and());
+	}
+
+	/**
+	 * Executes the associated {@link SearchQuery} with given {@link Attribute}s
+	 * and {@link Filter}. Both must be fully supported by the {@code SearchQuery}
+	 * associated with given {@link Entity} type. This method allows fine
+	 * grained {@link Record} configuration.
+	 *
+	 * <p><b>Note:</b> Related {@code Record}s may be merged according to the
+	 * cardinality of the associated {@link Relation}.
+	 *
+	 * @param <T> Type of the entities that will be generated for each result.
+	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param attributes Select statements will be added for each {@code
+	 * 		Attribute}.
+	 * @param filter The criteria sequence.
+	 * @return All {@link Result}s are returned in a {@code Map}, which maps
+	 * 		entities to related {@code Record}s.
+	 * @throws DataAccessException Thrown in case of errors while executing the
+	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
+	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * 		with a predefined {@code SearchQuery}.
+	 * @see #listSearchableTypes()
+	 * @see #getSearchableRoot(Class)
+	 * @see #listEntityTypes(Class)
+	 * @see #fetchComplete(Class, List, Filter)
+	 * @see Record#merge(Record)
+	 */
+	<T extends Entity> Map<T, List<Record>> fetch(Class<T> type, List<Attribute> attributes, Filter filter)
 			throws DataAccessException;
 
 }

@@ -27,23 +27,6 @@ public final class MeasuredValues {
 
 	private final int length;
 
-
-	MeasuredValues(ScalarType scalarType, String name, String unit, Object values) {
-		this.name = name;
-		this.unit = unit == null  ? "" : unit;
-		this.scalarType = scalarType;
-		this.values = values;
-		flags = new boolean[0];
-
-		if(values == null) {
-			length = 0;
-			allValid = false;
-		} else {
-			length = Array.getLength(values);
-			allValid = length > 0;
-		}
-	}
-
 	MeasuredValues(ScalarType scalarType, String name, String unit, Object values, boolean[] flags) {
 		this.name = name;
 		this.unit = unit == null  ? "" : unit;
@@ -73,13 +56,7 @@ public final class MeasuredValues {
 		return allValid;
 	}
 
-	public Value createMeasuredValuesValue(String name) {
-		return scalarType.toValueType().create(name, unit, true, values);
-	}
-
-	public boolean[] getFlags() {
-		return flags.clone();
-	}
+	// TODO provide at least a very simple Object iterator!
 
 	public int getLength() {
 		// TODO maybe useful for validation when multiple requests for same channel group created?!

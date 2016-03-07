@@ -22,8 +22,6 @@ import java.util.stream.Stream;
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Condition
- * @see FilterItem
  * @see Query
  * @see SearchQuery
  * @see SearchService
@@ -54,17 +52,12 @@ public final class Filter implements Iterable<FilterItem> {
 	// Public methods
 	// ======================================================================
 
-	/**
-	 * Creates a new instance of this class as returned by {@link #and()} and adds
-	 * an ID {@link Condition} to it.
-	 *
-	 * @param entityType The {@link EntityType} whose ID condition will be applied.
-	 * @param id The instance ID.
-	 * @return A newly created filter is returned with the corresponding ID
-	 * 		{@code Condition}.
-	 */
-	public static Filter id(EntityType entityType, Long id) {
-		return and().add(Operation.EQUAL.create(entityType.getIDAttribute(), id));
+	public static Filter idOnly(EntityType entityType, Long id) {
+		return and().id(entityType, id);
+	}
+
+	public static Filter nameOnly(EntityType entityType, String pattern) {
+		return and().name(entityType, pattern);
 	}
 
 	/**
@@ -124,6 +117,19 @@ public final class Filter implements Iterable<FilterItem> {
 	 */
 	public Filter addAll(Condition... conditions) {
 		Arrays.stream(conditions).forEach(this::add);
+		return this;
+	}
+
+	public Filter id(EntityType entityType, Long id) {
+		add(Operation.EQUAL.create(entityType.getIDAttribute(), id));
+		return this;
+	}
+
+	// TODO docs: if pattern is "*", then it is safe to skip (it means get all...)
+	public Filter name(EntityType entityType, String pattern) {
+		if(!"*".equals(pattern)) {
+			add(Operation.LIKE.create(entityType.getNameAttribute(), pattern));
+		}
 		return this;
 	}
 

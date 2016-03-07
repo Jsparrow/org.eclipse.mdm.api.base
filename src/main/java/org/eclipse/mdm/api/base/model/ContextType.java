@@ -36,8 +36,42 @@ public enum ContextType {
 
 	/**
 	 * A {@link ContextRoot} of this type unites meta data of the used equipment
-	 * (hardware and sensors)
+	 * (hardware and sensors).
 	 */
-	TESTEQUIPMENT
+	TESTEQUIPMENT;
+
+	// ======================================================================
+	// Public methods
+	// ======================================================================
+
+	/**
+	 * Returns true if this context type is {@link #UNITUNDERTEST}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
+	public boolean isUnitUnderTest() {
+		return UNITUNDERTEST == this;
+	}
+
+	/**
+	 * Returns true if this context type is {@link #TESTSEQUENCE}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
+	public boolean isTestSequence() {
+		return TESTSEQUENCE == this;
+	}
+
+	/**
+	 * Returns true if this context type is {@link #TESTEQUIPMENT}.
+	 *
+	 * @return Returns {@code true} if this constant is the constant
+	 * 		described above.
+	 */
+	public boolean isTestEquipment() {
+		return TESTEQUIPMENT == this;
+	}
 
 }

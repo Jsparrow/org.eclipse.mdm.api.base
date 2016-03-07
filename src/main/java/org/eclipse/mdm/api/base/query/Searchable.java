@@ -11,13 +11,12 @@ package org.eclipse.mdm.api.base.query;
 import java.util.List;
 
 /**
- * A searchable is used to describe the hierarchical order of
- * {@link EntityType}s being used for searching.
+ * A searchable is used to describe the hierarchical order of {@link
+ * EntityType}s being used for searching.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see EntityType
  * @see SearchService
  * @see SearchQuery
  */

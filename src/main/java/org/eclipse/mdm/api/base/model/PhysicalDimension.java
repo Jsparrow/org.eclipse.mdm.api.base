@@ -9,19 +9,18 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * Implementation of the physical dimension data item type. Each {@link Unit}
- * must have a relation to an instance of this type. The attributes represent
- * the exponents of the seven SI base units and additionally the angle exponent
- * as defined in the ASAM NVH model. A {@code Unit} with a certain physical
- * dimension can be converted to all other units having the same relation.
- * Names of the physical dimensions must be unique.
+ * Implementation of the physical dimension entity type. Each {@link Unit} must
+ * have a relation to an instance of this type. The attributes represent the
+ * exponents of the seven SI base units and additionally the angle exponent as
+ * defined in the ASAM NVH model. A {@code Unit} with a certain physical
+ * dimension can be converted to all units having the same relation. Names of
+ * the physical dimensions have to be unique.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Unit
  */
-public final class PhysicalDimension extends BaseDataItem implements Copyable, Describable, Deletable {
+public final class PhysicalDimension extends BaseEntity implements Copyable, Describable, Deletable {
 
 	// ======================================================================
 	// Class variables

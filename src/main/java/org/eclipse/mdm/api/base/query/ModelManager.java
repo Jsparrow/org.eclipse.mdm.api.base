@@ -9,7 +9,7 @@
 package org.eclipse.mdm.api.base.query;
 
 import org.eclipse.mdm.api.base.model.ContextType;
-import org.eclipse.mdm.api.base.model.DataItem;
+import org.eclipse.mdm.api.base.model.Entity;
 
 /**
  * Provides access to any modeled {@link EntityType} within an underlying application
@@ -19,8 +19,6 @@ import org.eclipse.mdm.api.base.model.DataItem;
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see EntityType
- * @see Query
  */
 public interface ModelManager {
 
@@ -35,21 +33,21 @@ public interface ModelManager {
 	 */
 	Query createQuery();
 
-	default EntityType getEntityType(DataItem dataItem) {
-		return getEntityType(dataItem.getCore().getTypeName());
+	default EntityType getEntityType(Entity entity) {
+		return getEntityType(entity.getCore().getTypeName());
 	}
 
 	/**
-	 * Returns the {@link EntityType} associated with passed {@link DataItem}
+	 * Returns the {@link EntityType} associated with passed {@link Entity}
 	 * type.
 	 *
 	 * @param type Used as identifier.
-	 * @return {@code EntityType} associated with given {@code DataItem} type is
+	 * @return {@code EntityType} associated with given entity type is
 	 * 		returned.
 	 * @throws IllegalArgumentException Thrown if {@code EntityType} for given
 	 * 		type does not exist.
 	 */
-	EntityType getEntityType(Class<? extends DataItem> type);
+	EntityType getEntityType(Class<? extends Entity> type);
 
 	/**
 	 * Returns the {@link EntityType} associated with given {@link ContextType}.

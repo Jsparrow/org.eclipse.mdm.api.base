@@ -9,13 +9,13 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * Each modeled {@link DataItem} implements this interface to indicate that
+ * Each modeled {@link Entity} implements this interface to indicate that
  * tags can be attached to it.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface Tagable extends DataItem {
+public interface Tagable extends Entity {
 
 }

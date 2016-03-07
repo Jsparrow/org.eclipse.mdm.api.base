@@ -9,26 +9,23 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * Implementation of the test step data item type. A test step is an atomic
+ * Implementation of the test step entity type. A test step is an atomic
  * measurement task as part of a {@link Test}. The boundary conditions do not
  * change within a single test step, therefore every ordered test step has to
  * be fully described. It may have relations to {@link ContextRoot}s, which
  * contain the describing order data. Test steps may have a sort order in the
  * context of their parent {@code Test}, indicating the desired execution
  * order. The name of a test step should be chosen in a speaking way, because
- * it is often used in different context, e.g. as a link between the
+ * it is often used in different contexts, e.g. as a link between the
  * measurement data from the device and the order in the database. Furthermore
  * the name has to be unique under the parent {@code Test}. Children of a test
- * step are {@link Measurement} data items.
+ * step are {@link Measurement}s.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Test
- * @see Measurement
- * @see ContextRoot
  */
-public final class TestStep extends BaseDataItem implements ContextDescribable, Datable, Deletable, Derived,
+public final class TestStep extends BaseEntity implements ContextDescribable, Datable, Deletable, Derived,
 Describable, FilesAttachable, Sortable, Statable, Tagable {
 
 	// ======================================================================
@@ -62,10 +59,20 @@ Describable, FilesAttachable, Sortable, Statable, Tagable {
 	// Public methods
 	// ======================================================================
 
+	/**
+	 * Returns the optional flag of this test step.
+	 *
+	 * @return Returns the optional flag.
+	 */
 	public Boolean isOptional() {
 		return getValue(ATTR_OPTIONAL).extract();
 	}
 
+	/**
+	 * Sets new optional flag for this test step.
+	 *
+	 * @param optional The new optional flag.
+	 */
 	public void setOptional(Boolean optional) {
 		getValue(ATTR_OPTIONAL).set(optional);
 	}

@@ -49,7 +49,7 @@ public final class FloatComplex {
 	 * by one or more blanks. Furthermore both must be floating point numbers
 	 * that can be parsed by calling {@link Float#valueOf(String)}.
 	 *
-	 * @param s The string to be parsed.
+	 * @param s The {@code String} to be parsed.
 	 * @return The parsed {@link FloatComplex} value is returned.
 	 * @throws NumberFormatException Thrown if unable to parse the complex value.
 	 */

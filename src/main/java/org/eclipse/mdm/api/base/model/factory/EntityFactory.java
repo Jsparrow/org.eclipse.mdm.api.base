@@ -16,7 +16,7 @@ import org.eclipse.mdm.api.base.model.ChannelGroup;
 import org.eclipse.mdm.api.base.model.ContextRoot;
 import org.eclipse.mdm.api.base.model.ContextSensor;
 import org.eclipse.mdm.api.base.model.Core;
-import org.eclipse.mdm.api.base.model.DataItem;
+import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.model.Interpolation;
 import org.eclipse.mdm.api.base.model.Measurement;
 import org.eclipse.mdm.api.base.model.MimeType;
@@ -31,17 +31,16 @@ import org.eclipse.mdm.api.base.model.Test;
 import org.eclipse.mdm.api.base.model.TestStep;
 import org.eclipse.mdm.api.base.model.Unit;
 import org.eclipse.mdm.api.base.model.User;
-import org.eclipse.mdm.api.base.model.VersionState;
 import org.eclipse.mdm.api.base.query.DataAccessException;
 
-public abstract class BaseEntityFactory {
+public abstract class EntityFactory {
+
+	public Channel createChannel(Measurement measurement, Quantity quantity, Optional<ContextSensor> contextSensor) throws DataAccessException {
+		return createChannel(quantity.getDefaultChannelName(), measurement, quantity, contextSensor);
+	}
 
 	public Channel createChannel(String name, Measurement measurement, Quantity quantity, Optional<ContextSensor> contextSensor) throws DataAccessException {
 		// TODO a channel may have a relation to a sensor...
-		if(!quantity.getVersionState().isValid()) {
-			// TODO make sure given quantity was not modified
-			throw new IllegalArgumentException("Quantity must be in version state '" + VersionState.VALID + "'.");
-		}
 
 		Channel channel = new Channel(createCore(Channel.class));
 
@@ -55,6 +54,7 @@ public abstract class BaseEntityFactory {
 		channel.setInterpolation(Interpolation.NONE);
 		channel.setScalarType(quantity.getDefaultScalarType());
 		channel.setRank(quantity.getDefaultRank());
+		// TODO channel.setDimension omitted as done by MDM4 API
 		channel.setTypeSize(quantity.getDefaultTypeSize());
 
 		return create(channel, measurement);
@@ -74,7 +74,7 @@ public abstract class BaseEntityFactory {
 		return create(channelGroup, measurement);
 	}
 
-	//	public ContextComponent createContextComponent(String name, ContextRoot contextRoot) {
+	//	public ContextComponent createContextComponent(String name, EntityType entityType, ContextRoot contextRoot) {
 	//      // TODO: we need to know the entity type name
 	//      // in the base application model we do not have templates
 	//		throw new UnsupportedOperationException();
@@ -101,19 +101,21 @@ public abstract class BaseEntityFactory {
 		measurement.setMimeType(getDefaultMimeType(Measurement.class));
 		measurement.setDateCreated(LocalDateTime.now());
 
-		DataItem[] implicitlyRelated = new DataItem[contextRoots.length + 1];
+		Entity[] implicitlyRelated = new Entity[contextRoots.length + 1];
 		implicitlyRelated[0] = testStep;
 		System.arraycopy(contextRoots, 0, implicitlyRelated, 1, contextRoots.length);
 
 		return create(measurement, implicitlyRelated);
 	}
 
-	public Parameter createParameter(String name, ParameterSet parameterSet) throws DataAccessException {
+	// TODO document allowed types for value!
+	public Parameter createParameter(String name, Object value, Optional<Unit> unit, ParameterSet parameterSet) throws DataAccessException {
 		Parameter parameter = new Parameter(createCore(Parameter.class));
 
 		parameter.setName(name);
 		parameter.setMimeType(getDefaultMimeType(Parameter.class));
-		parameterSet.getParameters().add(parameter);
+		parameter.setObjectValue(value, unit);
+		parameterSet.getCore().addChild(parameter);
 
 		return create(parameter, parameterSet);
 	}
@@ -153,11 +155,10 @@ public abstract class BaseEntityFactory {
 		quantity.setMimeType(getDefaultMimeType(Quantity.class));
 		quantity.setDateCreated(LocalDateTime.now());
 		quantity.setDefaultRank(Integer.valueOf(1));
+		quantity.setDefaultDimension(new int[] { 0 });
 		quantity.setDefaultTypeSize(Integer.valueOf(1));
 		quantity.setDefaultChannelName(name);
 		quantity.setDefaultScalarType(ScalarType.FLOAT);
-		quantity.setVersion(Integer.valueOf(1));
-		quantity.setVersionState(VersionState.EDITABLE);
 
 		return create(quantity);
 	}
@@ -222,17 +223,20 @@ public abstract class BaseEntityFactory {
 		user.setMimeType(getDefaultMimeType(User.class));
 		user.setGivenName(givenName);
 		user.setSurname(surname);
+		// TODO user.setDepartment("");
+		// TODO user.setPhone("");
+		// TODO user.setMail("");
 
 		return create(user);
 	}
 
-	protected abstract Core createCore(Class<? extends DataItem> type);
+	protected abstract Core createCore(Class<? extends Entity> type);
 
-	protected abstract MimeType getDefaultMimeType(Class<? extends DataItem> type);
+	protected abstract MimeType getDefaultMimeType(Class<? extends Entity> type);
 
-	protected abstract <T extends DataItem> T create(T dataItem, DataItem... implicitlyRelated) throws DataAccessException;
+	protected abstract <T extends Entity> T create(T entity, Entity... implicitlyRelated) throws DataAccessException;
 
-	protected <T extends Sortable> Integer nextSortIndex(DataItem parent, Class<T> type) {
+	protected <T extends Sortable> Integer nextSortIndex(Entity parent, Class<T> type) {
 		// TODO highest of siblings + 10 (requires query execution!)
 		return Integer.valueOf(10);
 	}

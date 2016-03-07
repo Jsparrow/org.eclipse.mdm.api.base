@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.eclipse.mdm.api.base.model.DataItem;
+import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.model.Test;
 import org.eclipse.mdm.api.base.model.Value;
 
@@ -56,30 +56,30 @@ public interface EntityType {
 	 * Returns the ID {@link Attribute} of this entity type.
 	 *
 	 * @return The ID {@code Attribute} is returned.
-	 * @see DataItem#ATTR_ID
+	 * @see Entity#ATTR_ID
 	 */
 	default Attribute getIDAttribute() {
-		return getAttribute(DataItem.ATTR_ID);
+		return getAttribute(Entity.ATTR_ID);
 	}
 
 	/**
 	 * Returns the name {@link Attribute} of this entity type.
 	 *
 	 * @return The name {@code Attribute} is returned.
-	 * @see DataItem#ATTR_NAME
+	 * @see Entity#ATTR_NAME
 	 */
 	default Attribute getNameAttribute() {
-		return getAttribute(DataItem.ATTR_NAME);
+		return getAttribute(Entity.ATTR_NAME);
 	}
 
 	/**
 	 * Returns the mime type {@link Attribute} for this entity type.
 	 *
 	 * @return The mime type {@code Attribute} is returned.
-	 * @see DataItem#ATTR_MIMETYPE
+	 * @see Entity#ATTR_MIMETYPE
 	 */
 	default Attribute getMimeTypeAttribute() {
-		return getAttribute(DataItem.ATTR_MIMETYPE);
+		return getAttribute(Entity.ATTR_MIMETYPE);
 	}
 
 	/**

@@ -13,16 +13,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * This is a base implementation for modeled {@link DataItem}s. API consumers
- * should never use this class in any way, instead the most common interface
- * should be used (e.g.: {@link DataItem}, {@link ContextDescribable}, etc.).
- * API producers must let their data item implementations extend this class.
+ * This is a base implementation for modeled entities. API consumers should
+ * never use this class in any way, instead the most common interface should
+ * be used (e.g.: {@link Entity}, {@link ContextDescribable}, etc.). API
+ * producers must let their {@code Entity} implementations extend this class.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public abstract class BaseDataItem implements DataItem {
+public abstract class BaseEntity implements Entity {
 
 	// ======================================================================
 	// Instance variables
@@ -34,7 +34,7 @@ public abstract class BaseDataItem implements DataItem {
 	// Constructors
 	// ======================================================================
 
-	protected BaseDataItem(Core core) {
+	protected BaseEntity(Core core) {
 		this.core = core;
 	}
 
@@ -55,6 +55,7 @@ public abstract class BaseDataItem implements DataItem {
 	 */
 	@Override
 	public Value getValue(String name) {
+		// TODO core should never be available to the outer world -> unmodifiable wrapping can be omitted
 		return getCore().getValues().get(name);
 	}
 
@@ -80,7 +81,11 @@ public abstract class BaseDataItem implements DataItem {
 	// ======================================================================
 
 	@Override
-	// TODO JDoc this should never ever be called by API consumers, this is for API producers only!!!
+	@Deprecated
+	// TODO provide read only access to related entities
+	// - related info entities (unit, quantity, etc.)
+	// - children (added / removed)
+	// - mandatory / implicit (parent or other mandatory related entities (ContextRoot when creating a new measurement along existing siblings))
 	public final Core getCore() {
 		return core;
 	}

@@ -14,7 +14,7 @@ package org.eclipse.mdm.api.base;
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  */
-public class DataProviderException extends Exception {
+public class ConnectionException extends Exception {
 
 	// ======================================================================
 	// Class variables
@@ -31,7 +31,7 @@ public class DataProviderException extends Exception {
 	 *
 	 * @param message The error message.
 	 */
-	public DataProviderException(String message) {
+	public ConnectionException(String message) {
 		super(message);
 	}
 
@@ -41,7 +41,7 @@ public class DataProviderException extends Exception {
 	 * @param message The error message.
 	 * @param throwable The origin cause.
 	 */
-	public DataProviderException(String message, Throwable throwable) {
+	public ConnectionException(String message, Throwable throwable) {
 		super(message, throwable);
 	}
 

@@ -11,14 +11,14 @@ package org.eclipse.mdm.api.base.model;
 import java.time.LocalDateTime;
 
 /**
- * This interface extends the {@link DataItem} interface and provides getter
- * and setter methods for the 'DateCreated' field of a data item.
+ * This interface extends the {@link Entity} interface and provides getter
+ * and setter methods for the 'DateCreated' field of an entity.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface Datable extends DataItem {
+public interface Datable extends Entity {
 
 	// ======================================================================
 	// Class variables
@@ -34,7 +34,7 @@ public interface Datable extends DataItem {
 	// ======================================================================
 
 	/**
-	 * Returns the time stamp of the date when this data item was created.
+	 * Returns the creation time stamp of this entity.
 	 *
 	 * @return The creation time stamp is returned.
 	 */
@@ -43,7 +43,7 @@ public interface Datable extends DataItem {
 	}
 
 	/**
-	 * Sets a new time stamp as the creation date.
+	 * Set new creation time stamp for this entity.
 	 *
 	 * @param dateCreated The new creation time stamp.
 	 */

@@ -16,7 +16,7 @@ public class WriteRequestFinalizer {
 		this.writeRequest = writeRequest;
 	}
 
-	public WriteRequest get() {
+	public WriteRequest build() {
 		return writeRequest;
 	}
 

@@ -14,11 +14,11 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * Implementation of an abstract parameter which holds a value with one of
- * the supported {@link ValueType} types listed below. The value is internally
- * stored in its {@code String} representation. Any modeled data items with such
- * a use case should extends this class. API consumers should never use this
- * class in any way, instead the implementation of this class has to be used.
+ * Implementation of an abstract parameter which holds a value with one of the
+ * supported {@link ValueType}s listed below. The value is internally stored in
+ * its {@code String} representation. Any modeled entity with such a use case
+ * should extends this class. API consumers should never use this class in any
+ * way, instead the implementations of this class have to be used.
  *
  * <ul>
  * 	<li>{@link ValueType#STRING}</li>
@@ -38,9 +38,20 @@ import java.util.function.Function;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see #getVirtualValue()
- * @see #setVirtualValue(Value, Optional)
+ * @see #setObjectValue(Object, Optional)
+ * @see #setStringValue(String)
+ * @see #setDateValue(LocalDateTime)
+ * @see #setBooleanValue(Boolean)
+ * @see #setByteValue(Byte, Optional)
+ * @see #setShortValue(Short, Optional)
+ * @see #setIntegerValue(Integer, Optional)
+ * @see #setLongValue(Long, Optional)
+ * @see #setFloatValue(Float, Optional)
+ * @see #setDoubleValue(Double, Optional)
+ * @see #setFloatComplexValue(FloatComplex, Optional)
+ * @see #setDoubleComplexValue(DoubleComplex, Optional)
  */
-public abstract class BaseParameter extends BaseDataItem implements Deletable {
+public abstract class BaseParameter extends BaseEntity implements Deletable {
 
 	// ======================================================================
 	// Class variables
@@ -71,10 +82,10 @@ public abstract class BaseParameter extends BaseDataItem implements Deletable {
 
 	/**
 	 * Creates a virtual representation of this parameter's value. This is done
-	 * by converting the internally stored {@code String} value to type specified
-	 * by this parameter's {@link ScalarType}, which is mapped to one of the
-	 * supported {@link ValueType}s listed below. The name of the returned
-	 * {@link Value} is the name of this parameter.
+	 * by converting the internally stored {@code String} value to type
+	 * specified by this parameter's {@link ValueType} (the allowed types are
+	 * listed below). The name of the returned virtual {@link Value} is the name
+	 * of this parameter.
 	 *
 	 * <ul>
 	 * 	<li>{@link ValueType#STRING}</li>
@@ -90,11 +101,11 @@ public abstract class BaseParameter extends BaseDataItem implements Deletable {
 	 * 	<li>{@link ValueType#DOUBLE_COMPLEX}</li>
 	 * </ul>
 	 *
-	 * @return The created {@link Value} with the converted value is returned.
-	 * @throws IllegalStateException Thrown if it is not possible to map the
-	 * 		internal {@code ScalarType} to the corresponding {@code ValueType}.
+	 * <p><b>Note:</b> The returned value is a virtual one and hence intended for
+	 * displaying purposes only. To change this parameter's value one of its
+	 * {@code setXYValue} methods has to be used.
 	 *
-	 * ################ see TODO in the last else block!
+	 * @return The created {@code Value} with the converted value is returned.
 	 */
 	public Value getVirtualValue() {
 		Function<String, Object> typeConverter;
@@ -123,8 +134,7 @@ public abstract class BaseParameter extends BaseDataItem implements Deletable {
 		} else if(scalarType.isDoubleComplex()) {
 			typeConverter = DoubleComplex::valueOf;
 		} else {
-			// TODO should we return a value of type UNKNOWN?! -> no exception would be raised!
-			throw new IllegalStateException("Stored scalar type '" + scalarType + "' is not supported.");
+			return ValueType.UNKNOWN.create(getName());
 		}
 
 		Value parameterValue = getParameterValue();
@@ -133,65 +143,206 @@ public abstract class BaseParameter extends BaseDataItem implements Deletable {
 	}
 
 	/**
-	 * Takes given virtual {@link Value}, converts its {@link ValueType} to the
-	 * corresponding {@link ScalarType} and stores the contained value in its
-	 * {@code String} representation. The {@code ValueType} of the virtual
-	 * {@code Value} may be one of the following:
+	 * Takes given value and determines its type. Finally value and the optional
+	 * {@code Unit} are passed to the corresponding {@code setXYValue(XY)} method
+	 * as listed below. The value is allowed to be an instance of the following
+	 * types: {@code String}, {@code LocalDateTime}, {@code Boolean}, {@code Byte},
+	 * {@code Short}, {@code Integer}, {@code Long}, {@code Float}, {@code Double},
+	 * {@code FloatComplex} and {@code DoubleComplex}.
 	 *
-	 * <ul>
-	 * 	<li>{@link ValueType#STRING}</li>
-	 * 	<li>{@link ValueType#DATE}</li>
-	 * 	<li>{@link ValueType#BOOLEAN}</li>
-	 * 	<li>{@link ValueType#BYTE}</li>
-	 * 	<li>{@link ValueType#SHORT}</li>
-	 * 	<li>{@link ValueType#INTEGER}</li>
-	 * 	<li>{@link ValueType#LONG}</li>
-	 * 	<li>{@link ValueType#FLOAT}</li>
-	 * 	<li>{@link ValueType#DOUBLE}</li>
-	 * 	<li>{@link ValueType#FLOAT_COMPLEX}</li>
-	 * 	<li>{@link ValueType#DOUBLE_COMPLEX}</li>
-	 * </ul>
+	 * <p><b>Note:</b> If the given value is an instance of {@code String}, {@code
+	 * LocalDateTime} or a {@code Boolean}, then the given unit is ignored.
 	 *
-	 * @param value The virtual {@code Value} will be internally stored in its
-	 * 		{@code String} representation.
-	 * @param unit If the {@code Optional} is not empty, then a relation will be
-	 * 		set to this {@code Unit}. Otherwise any existing relation to a {@code
-	 * 		Unit} will be removed.
-	 * @throws IllegalArgumentException Thrown if the {@code ValueType} of given
-	 * 		{@code Value} is not supported.
+	 * @param value The new value for this parameter is not allowed to be null.
+	 * @param unit The optionally related {@code Unit}.
+	 * @throws IllegalArgumentException Thrown if the given value is not supported.
+	 * @see #setStringValue(String)
+	 * @see #setDateValue(LocalDateTime)
+	 * @see #setBooleanValue(Boolean)
+	 * @see #setByteValue(Byte, Optional)
+	 * @see #setShortValue(Short, Optional)
+	 * @see #setIntegerValue(Integer, Optional)
+	 * @see #setLongValue(Long, Optional)
+	 * @see #setFloatValue(Float, Optional)
+	 * @see #setDoubleValue(Double, Optional)
+	 * @see #setFloatComplexValue(FloatComplex, Optional)
+	 * @see #setDoubleComplexValue(DoubleComplex, Optional)
 	 */
-	public void setVirtualValue(Value value, Optional<Unit> unit) {
-		ValueType valueType = value.getValueType();
-		Function<Object, String> stringConverter = Object::toString;
-
-		if(valueType.isString()) {
-			setScalarType(ScalarType.STRING);
-		} else if(valueType.isDate()) {
-			setScalarType(ScalarType.DATE);
-			stringConverter = v -> ((LocalDateTime)v).format(LOCAL_DATE_TIME_FORMATTER);
-		} else if(valueType.isBoolean()) {
-			setScalarType(ScalarType.BOOLEAN);
-		} else if(valueType.isByte()) {
-			setScalarType(ScalarType.BYTE);
-		} else if(valueType.isShort()) {
-			setScalarType(ScalarType.SHORT);
-		} else if(valueType.isInteger()) {
-			setScalarType(ScalarType.INTEGER);
-		} else if(valueType.isLong()) {
-			setScalarType(ScalarType.LONG);
-		} else if(valueType.isFloat()) {
-			setScalarType(ScalarType.FLOAT);
-		} else if(valueType.isDouble()) {
-			setScalarType(ScalarType.DOUBLE);
-		} else if(valueType.isFloatComplex()) {
-			setScalarType(ScalarType.FLOAT_COMPLEX);
-		} else if(valueType.isDoubleComplex()) {
-			setScalarType(ScalarType.DOUBLE_COMPLEX);
+	public void setObjectValue(Object value, Optional<Unit> unit) {
+		if(value instanceof String) {
+			setStringValue((String) value);
+		} else if(value instanceof LocalDateTime) {
+			setDateValue((LocalDateTime) value);
+		} else if(value instanceof Boolean) {
+			setBooleanValue((Boolean) value);
+		} else if(value instanceof Byte) {
+			setByteValue((Byte) value, unit);
+		} else if(value instanceof Short) {
+			setShortValue((Short) value, unit);
+		} else if(value instanceof Integer) {
+			setIntegerValue((Integer) value, unit);
+		} else if(value instanceof Long) {
+			setLongValue((Long) value, unit);
+		} else if(value instanceof Float) {
+			setFloatValue((Float) value, unit);
+		} else if(value instanceof Double) {
+			setDoubleValue((Double) value, unit);
+		} else if(value instanceof FloatComplex) {
+			setFloatComplexValue((FloatComplex) value, unit);
+		} else if(value instanceof DoubleComplex) {
+			setDoubleComplexValue((DoubleComplex) value, unit);
 		} else {
-			throw new IllegalArgumentException("Given value type '" + valueType + "' is not supported.");
+			throw new IllegalArgumentException("Value '" + value + "' of type '" + value.getClass().getSimpleName()
+					+ "' is not supported.");
 		}
+	}
 
-		getParameterValue().set(value.isValid() ? stringConverter.apply(value.extract()) : "");
+	/**
+	 * Replaces current value with given {@code String} value. Any existing
+	 * relation to a {@link Unit} will be removed.
+	 *
+	 * @param value The new value for this parameter.
+	 */
+	public void setStringValue(String value) {
+		setScalarType(ScalarType.STRING);
+		getParameterValue().set(value);
+		setUnit(Optional.empty());
+	}
+
+	/**
+	 * Replaces current value with the {@code String} representation of given
+	 * {@code LocalDateTime}. Any existing relation to a {@link Unit} will be
+	 * removed.
+	 *
+	 * @param value The new value for this parameter.
+	 */
+	public void setDateValue(LocalDateTime value) {
+		setScalarType(ScalarType.DATE);
+		getParameterValue().set(value.format(LOCAL_DATE_TIME_FORMATTER));
+		setUnit(Optional.empty());
+	}
+
+	/**
+	 * Replaces current value with the {@code String} representation of given
+	 * {@code Boolean}. Any existing relation to a {@link Unit} will be removed.
+	 *
+	 * @param value The new value for this parameter.
+	 */
+	public void setBooleanValue(Boolean value) {
+		setScalarType(ScalarType.BOOLEAN);
+		getParameterValue().set(value.toString());
+		setUnit(Optional.empty());
+	}
+
+	/**
+	 * Replaces current value with the {@code String} representation of given
+	 * {@code Byte}. Any existing relation to a {@link Unit} will be replaced
+	 * with the given one.
+	 *
+	 * @param value The new value for this parameter.
+	 * @param unit The relation to a unit is optional.
+	 */
+	public void setByteValue(Byte value, Optional<Unit> unit) {
+		setScalarType(ScalarType.BYTE);
+		getParameterValue().set(value.toString());
+		setUnit(unit);
+	}
+
+	/**
+	 * Replaces current value with the {@code String} representation of given
+	 * {@code Short}. Any existing relation to a {@link Unit} will be replaced
+	 * with the given one.
+	 *
+	 * @param value The new value for this parameter.
+	 * @param unit The relation to a unit is optional.
+	 */
+	public void setShortValue(Short value, Optional<Unit> unit) {
+		setScalarType(ScalarType.SHORT);
+		getParameterValue().set(value.toString());
+		setUnit(unit);
+	}
+
+	/**
+	 * Replaces current value with the {@code String} representation of given
+	 * {@code Integer}. Any existing relation to a {@link Unit} will be replaced
+	 * with the given one.
+	 *
+	 * @param value The new value for this parameter.
+	 * @param unit The relation to a unit is optional.
+	 */
+	public void setIntegerValue(Integer value, Optional<Unit> unit) {
+		setScalarType(ScalarType.INTEGER);
+		getParameterValue().set(value.toString());
+		setUnit(unit);
+	}
+
+	/**
+	 * Replaces current value with the {@code String} representation of given
+	 * {@code Long}. Any existing relation to a {@link Unit} will be replaced
+	 * with the given one.
+	 *
+	 * @param value The new value for this parameter.
+	 * @param unit The relation to a unit is optional.
+	 */
+	public void setLongValue(Long value, Optional<Unit> unit) {
+		setScalarType(ScalarType.LONG);
+		getParameterValue().set(value.toString());
+		setUnit(unit);
+	}
+
+	/**
+	 * Replaces current value with the {@code String} representation of given
+	 * {@code Float}. Any existing relation to a {@link Unit} will be replaced
+	 * with the given one.
+	 *
+	 * @param value The new value for this parameter.
+	 * @param unit The relation to a unit is optional.
+	 */
+	public void setFloatValue(Float value, Optional<Unit> unit) {
+		setScalarType(ScalarType.FLOAT);
+		getParameterValue().set(value.toString());
+		setUnit(unit);
+	}
+
+	/**
+	 * Replaces current value with the {@code String} representation of given
+	 * {@code Double}. Any existing relation to a {@link Unit} will be replaced
+	 * with the given one.
+	 *
+	 * @param value The new value for this parameter.
+	 * @param unit The relation to a unit is optional.
+	 */
+	public void setDoubleValue(Double value, Optional<Unit> unit) {
+		setScalarType(ScalarType.DOUBLE);
+		getParameterValue().set(value.toString());
+		setUnit(unit);
+	}
+
+	/**
+	 * Replaces current value with the {@code String} representation of given
+	 * {@code FloatComplex}. Any existing relation to a {@link Unit} will be
+	 * replaced with the given one.
+	 *
+	 * @param value The new value for this parameter.
+	 * @param unit The relation to a unit is optional.
+	 */
+	public void setFloatComplexValue(FloatComplex value, Optional<Unit> unit) {
+		setScalarType(ScalarType.FLOAT_COMPLEX);
+		getParameterValue().set(value.toString());
+		setUnit(unit);
+	}
+
+	/**
+	 * Replaces current value with the {@code String} representation of given
+	 * {@code DoubleComplex}. Any existing relation to a {@link Unit} will be
+	 * replaced with the given one.
+	 *
+	 * @param value The new value for this parameter.
+	 * @param unit The relation to a unit is optional.
+	 */
+	public void setDoubleComplexValue(DoubleComplex value, Optional<Unit> unit) {
+		setScalarType(ScalarType.DOUBLE_COMPLEX);
+		getParameterValue().set(value.toString());
 		setUnit(unit);
 	}
 
@@ -200,8 +351,9 @@ public abstract class BaseParameter extends BaseDataItem implements Deletable {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append("(value = ");
+		StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append("(name = ").append(getName());
 
+		sb.append(", value = ");
 		Value parameterValue = getParameterValue();
 		if(parameterValue.isValid()) {
 			sb.append((String) getParameterValue().extract());
@@ -240,15 +392,15 @@ public abstract class BaseParameter extends BaseDataItem implements Deletable {
 	/**
 	 * Sets new scalar type for this parameter.
 	 *
-	 * @param scalarType The new scalar type of this parameter.
+	 * @param scalarType The new {@code ScalarType}.
 	 */
 	private void setScalarType(ScalarType scalarType) {
 		getValue(attrScalarType).set(scalarType);
 	}
 
 	/**
-	 * Returns the name of the related {@link Unit} data item. If no {@code Unit}
-	 * is related, an empty {@code String} is returned instead.
+	 * Returns the name of the related {@link Unit}. If no {@code Unit} is
+	 * related, an empty {@code String} is returned instead.
 	 *
 	 * @return The name of the related {@code Unit} is returned or an empty
 	 * 		{@code String}.
@@ -263,7 +415,7 @@ public abstract class BaseParameter extends BaseDataItem implements Deletable {
 	}
 
 	/**
-	 * Returns an optionally related {@link Unit} data item.
+	 * Returns an optionally related {@link Unit}.
 	 *
 	 * @return The returned {@code Optional} is empty if no {@code Unit} is
 	 * 		related.

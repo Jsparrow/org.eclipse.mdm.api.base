@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Provides methods to easily build queries by adding select, join, group and
- * order by statements. Finally an optional {@link Filter} may be given to
+ * Provides methods to easily build queries by adding select, join, group by
+ * and order by statements. Finally an optional {@link Filter} may be given to
  * select data that match specified criteria.
  *
  * @since 1.0.0
@@ -25,7 +25,6 @@ import java.util.Optional;
  * @see Aggregation
  * @see Relation
  * @see Join
- * @see Filter
  * @see Result
  */
 public interface Query {
@@ -105,7 +104,7 @@ public interface Query {
 	 * @return This query is returned.
 	 */
 	default Query select(List<Attribute> attributes) {
-		attributes.stream().forEach(this::select);
+		attributes.forEach(this::select);
 		return this;
 	}
 
@@ -182,7 +181,7 @@ public interface Query {
 	 * @return This query is returned.
 	 */
 	default Query join(List<Relation> relations) {
-		relations.stream().forEach(this::join);
+		relations.forEach(this::join);
 		return this;
 	}
 
@@ -227,7 +226,7 @@ public interface Query {
 	 * @return This query is returned.
 	 */
 	default Query group(List<Attribute> attributes) {
-		attributes.stream().forEach(this::group);
+		attributes.forEach(this::group);
 		return this;
 	}
 
@@ -260,7 +259,7 @@ public interface Query {
 	 * @return This query is returned.
 	 */
 	default Query order(List<Attribute> attributes) {
-		attributes.stream().forEach(this::order);
+		attributes.forEach(this::order);
 		return this;
 	}
 

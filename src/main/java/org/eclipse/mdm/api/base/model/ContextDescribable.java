@@ -9,7 +9,7 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * The {@link TestStep} and {@link Measurement} data item types implement this
+ * {@link TestStep} and {@link Measurement} entity types implement this
  * interface to indicate the availability of descriptive context data.
  *
  * @since 1.0.0
@@ -18,9 +18,7 @@ package org.eclipse.mdm.api.base.model;
  * @see ContextRoot
  * @see ContextComponent
  * @see ContextSensor
- * @see TestStep
- * @see Measurement
  */
-public interface ContextDescribable extends DataItem {
+public interface ContextDescribable extends Entity {
 
 }

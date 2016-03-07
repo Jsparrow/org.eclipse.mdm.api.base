@@ -9,16 +9,15 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * Implementation of the quantity data item type. {@link Channel} data items are
- * based on instances of this class.
+ * Implementation of the quantity entity type. {@link Channel}s are based on
+ * entities of this type. Each quantity has a relation to a default {@link
+ * Unit}.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Unit
- * @see Channel
  */
-public final class Quantity extends BaseDataItem implements Copyable, Datable, Deletable, Describable, Versionable {
+public final class Quantity extends BaseEntity implements Copyable, Datable, Deletable, Describable {
 
 	// ======================================================================
 	// Class variables
@@ -28,6 +27,11 @@ public final class Quantity extends BaseDataItem implements Copyable, Datable, D
 	 * The 'DefaultRank' attribute name.
 	 */
 	public static final String ATTR_DEFAULT_RANK = "DefaultRank";
+
+	/**
+	 * The 'DefaultDimension' attribute name.
+	 */
+	public static final String ATTR_DEFAULT_DIMENSION = "DefDimension";
 
 	/**
 	 * The 'DefaultTypeSize' attribute name.
@@ -56,56 +60,119 @@ public final class Quantity extends BaseDataItem implements Copyable, Datable, D
 	// Public methods
 	// ======================================================================
 
+	/**
+	 * Returns the default rank of this quantity.
+	 *
+	 * @return The default rank is returned.
+	 */
 	public Integer getDefaultRank() {
 		return getValue(ATTR_DEFAULT_RANK).extract();
 	}
 
+	/**
+	 * Sets new default rank for this quantity.
+	 *
+	 * @param defaultRank The new default rank.
+	 */
 	public void setDefaultRank(Integer defaultRank) {
 		getValue(ATTR_DEFAULT_RANK).set(defaultRank);
 	}
 
+	/**
+	 * Returns the default dimension of this quantity.
+	 *
+	 * @return The default dimension is returned.
+	 */
+	public int[] getDefaultDimension() {
+		return getValue(ATTR_DEFAULT_DIMENSION).extract();
+	}
+
+	/**
+	 * Sets new default dimension for this quantity.
+	 *
+	 * @param defaultDimension The new default dimension.
+	 */
+	public void setDefaultDimension(int[] defaultDimension) {
+		getValue(ATTR_DEFAULT_DIMENSION).set(defaultDimension);
+	}
+
+	/**
+	 * Returns the default type size of this quantity.
+	 *
+	 * @return The default type size is returned.
+	 */
 	public Integer getDefaultTypeSize() {
 		return getValue(ATTR_DEFAULT_TYPE_SIZE).extract();
 	}
 
+	/**
+	 * Sets new default type size for this quantity.
+	 *
+	 * @param defaultTypeSize The new default type size.
+	 */
 	public void setDefaultTypeSize(Integer defaultTypeSize) {
 		getValue(ATTR_DEFAULT_TYPE_SIZE).set(defaultTypeSize);
 	}
 
+	/**
+	 * Returns the default {@link Channel} name of this quantity.
+	 *
+	 * @return The default {@code Channel} name is returned.
+	 */
 	public String getDefaultChannelName() {
 		return getValue(ATTR_DEFAULT_CHANNEL_NAME).extract();
 	}
 
+	/**
+	 * Sets new default {@link Channel} name for this quantity.
+	 *
+	 * @param defaultChannelName The new default {@code Channel} name.
+	 */
 	public void setDefaultChannelName(String defaultChannelName) {
 		getValue(ATTR_DEFAULT_CHANNEL_NAME).set(defaultChannelName);
 	}
 
+	/**
+	 * Returns the default {@link ScalarType} of this quantity.
+	 *
+	 * @return The default {@code ScalarType} is returned.
+	 */
 	public ScalarType getDefaultScalarType() {
 		return getValue(ATTR_DEFAULT_SCALAR_TYPE).extract();
 	}
 
-	public void setDefaultScalarType(ScalarType scalarType) {
-		if(scalarType.isUnknown()) {
-			throw new IllegalArgumentException("Scalar type constant is not allowed to be '" + scalarType + "'.");
+	/**
+	 * Sets new default {@link ScalarType} for this quantity.
+	 *
+	 * @param defaultScalarType The new default {@code ScalarType}.
+	 * @throws IllegalArgumentException Thrown if given {@code ScalarType} is
+	 * 		{@link ScalarType#UNKNOWN}.
+	 */
+	public void setDefaultScalarType(ScalarType defaultScalarType) {
+		if(defaultScalarType.isUnknown()) {
+			throw new IllegalArgumentException("Default scalar type constant is not allowed to be '"
+					+ defaultScalarType + "'.");
 		}
-		getValue(ATTR_DEFAULT_SCALAR_TYPE).set(scalarType);
+
+		getValue(ATTR_DEFAULT_SCALAR_TYPE).set(defaultScalarType);
 	}
 
+	/**
+	 * Returns the default {@link Unit} of this quantity.
+	 *
+	 * @return The default {@code Unit} is returned.
+	 */
 	public Unit getDefaultUnit() {
 		return getCore().getInfoRelation(Unit.class);
 	}
 
+	/**
+	 * Sets new default {@link Unit} for this quantity.
+	 *
+	 * @param defaultUnit The new default {@code Unit}.
+	 */
 	public void setDefaultUnit(Unit defaultUnit) {
 		getCore().setInfoRelation(defaultUnit);
-	}
-
-	// ======================================================================
-	// Package methods
-	// ======================================================================
-
-	@Deprecated // TODO this one belongs to the Versionable interface (would be visible to the outer world)
-	public void setVersion(Integer version) {
-		getValue(ATTR_VERSION).set(version);
 	}
 
 }

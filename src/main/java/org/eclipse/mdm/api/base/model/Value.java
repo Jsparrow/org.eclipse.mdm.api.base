@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see ValueType
  */
 public final class Value {
 

@@ -9,18 +9,14 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * Implementation of the channel group data item type. It belongs to exactly
- * one a {@link Measurement} and groups a set of its {@link Channel}s. The
- * length of an associated {@code Channel}'s value sequence is the same as
- * returned by {@link #getNumberOfValues()}.
+ * Implementation of the channel group entity type. It belongs to exactly one
+ * {@link Measurement} and groups a set of its {@link Channel}s.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Measurement
- * @see Channel
  */
-public final class ChannelGroup extends BaseDataItem implements Deletable, Derived {
+public final class ChannelGroup extends BaseEntity implements Deletable, Derived {
 
 	// ======================================================================
 	// Class variables
@@ -54,9 +50,9 @@ public final class ChannelGroup extends BaseDataItem implements Deletable, Deriv
 	// ======================================================================
 
 	/**
-	 * Returns the number of values, which is exactly the length of each associated {@link Channel}.
+	 * Returns the number of measured values of each related {@link Channel}.
 	 *
-	 * @return The number of values per {@code Channel} is returned.
+	 * @return The number of measured values per {@code Channel} is returned.
 	 */
 	public Integer getNumberOfValues() {
 		return getValue(ATTR_NUMBER_OF_VALUES).extract();

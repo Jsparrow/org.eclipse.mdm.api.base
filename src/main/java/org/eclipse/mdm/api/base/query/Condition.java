@@ -9,7 +9,6 @@
 package org.eclipse.mdm.api.base.query;
 
 import org.eclipse.mdm.api.base.model.Value;
-import org.eclipse.mdm.api.base.model.ValueType;
 
 /**
  * Describes a filter condition.
@@ -18,7 +17,6 @@ import org.eclipse.mdm.api.base.model.ValueType;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see Attribute
- * @see ValueType
  * @see Operation
  */
 public final class Condition {

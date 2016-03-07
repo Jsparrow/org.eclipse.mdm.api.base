@@ -8,6 +8,14 @@
 
 package org.eclipse.mdm.api.base.model;
 
+/**
+ * The type specification of mass data stored in external files.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ * @see Channel
+ */
 public enum TypeSpecification {
 
 	// ======================================================================

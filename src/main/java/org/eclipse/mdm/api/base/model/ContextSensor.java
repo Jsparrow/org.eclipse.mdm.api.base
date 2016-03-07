@@ -11,17 +11,15 @@ package org.eclipse.mdm.api.base.model;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of the context sensor data item type. Instances of this
- * class are only provided / managed via the descriptive {@link ContextRoot}
- * data item.
+ * Implementation of the context sensor entity types. Instances of this class
+ * are only provided / managed via the owning {@link ContextComponent}. A
+ * context sensor may be related to a {@link Channel}.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see ContextRoot
- * @see Channel
  */
-public final class ContextSensor extends BaseDataItem implements Deletable, Derived {
+public final class ContextSensor extends BaseEntity implements Deletable, Derived, Sortable {
 
 	// ======================================================================
 	// Constructors

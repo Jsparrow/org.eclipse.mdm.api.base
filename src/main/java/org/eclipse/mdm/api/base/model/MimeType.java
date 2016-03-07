@@ -11,12 +11,12 @@ package org.eclipse.mdm.api.base.model;
 import java.util.Locale;
 
 /**
- * Class provides easy to use type comparison methods.
+ * Class provides easy to use MIME type comparison methods.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see DataItem
+ * @see Entity
  */
 public final class MimeType {
 
@@ -33,10 +33,10 @@ public final class MimeType {
 	/**
 	 * Constructor.
 	 *
-	 * @param mimeType passed type is not allowed to be null.
+	 * @param mimeType The MIME type will be changed to lower case.
 	 */
 	public MimeType(String mimeType) {
-		this.internal = mimeType.toLowerCase(Locale.ROOT);
+		internal = mimeType.toLowerCase(Locale.ROOT);
 	}
 
 	// ======================================================================
@@ -44,8 +44,8 @@ public final class MimeType {
 	// ======================================================================
 
 	/**
-	 * Checks whether passed {@code MimeType} is either the same as or a sub
-	 * type of this instance. See the following examples:
+	 * Checks whether given {@code MimeType} is either the same as or a sub
+	 * type of this MIME type. See the following examples:
 	 *
 	 * <pre> {@code
 	 * MimeType type = new MimeType("application/x-asam.aomeasurement");
@@ -57,8 +57,8 @@ public final class MimeType {
 	 * }</pre>
 	 *
 	 * @param mimeType The checked type.
-	 * @return Returns true if either this instance and passed type are the
-	 * 		same or the passed one is a sub type of this instance.
+	 * @return Returns true if either this MIME type and given one are the
+	 * 		same or the given one is a sub type of this MIME type.
 	 */
 	public boolean isParentOf(MimeType mimeType) {
 		return mimeType != null && mimeType.compareString().startsWith(compareString());
@@ -73,8 +73,8 @@ public final class MimeType {
 	}
 
 	/**
-	 * Checks whether passed {@code Object} represents the same type as
-	 * this instance.
+	 * Checks whether given {@code Object} represents the same type as this
+	 * MIME type.
 	 *
 	 * <pre> {@code
 	 * MimeType type = new MimeType("application/x-asam.aomeasurement");
@@ -88,8 +88,8 @@ public final class MimeType {
 	 * }</pre>
 	 *
 	 * @param object The checked object.
-	 * @return True if passed object is of type {@code MimeType} and
-	 * 		represents the same type as this instance.
+	 * @return True if given object is of type {@code MimeType} and
+	 * 		represents exactly the same type as this  MIME type.
 	 */
 	@Override
 	public boolean equals(Object object) {
@@ -101,9 +101,9 @@ public final class MimeType {
 	}
 
 	/**
-	 * Returns the type {@code String}.
+	 * Returns the MIME type.
 	 *
-	 * @return The type in lower case is returned.
+	 * @return The MIME type is returned in lower case.
 	 */
 	@Override
 	public String toString() {
