@@ -10,6 +10,8 @@ package org.eclipse.mdm.api.base;
 
 import java.util.List;
 
+import javax.ejb.Local;
+
 import org.eclipse.mdm.api.base.model.Value;
 import org.eclipse.mdm.api.base.model.ValueType;
 
@@ -24,6 +26,7 @@ import org.eclipse.mdm.api.base.model.ValueType;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see Value
  */
+@Local
 public interface EntityManagerFactory<T extends EntityManager> {
 
 	// ======================================================================

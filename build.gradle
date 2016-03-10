@@ -3,5 +3,11 @@ apply plugin: 'maven'
 apply plugin: 'eclipse'
 
 repositories {
-    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+
+    //Java Enterprise Beans
+    compile 'javax.ejb:javax.ejb-api:3.2'
 }
