@@ -1,7 +1,6 @@
 package org.eclipse.mdm.api.base.model;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 /**
  * Implementation of the parameter entity type. Instances of this class hold a
@@ -30,18 +29,18 @@ import java.util.Optional;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see ParameterSet
  * @see #getVirtualValue()
- * @see #setObjectValue(Object, Optional)
+ * @see #setObjectValue(Object, Unit)
  * @see #setStringValue(String)
  * @see #setDateValue(LocalDateTime)
  * @see #setBooleanValue(Boolean)
- * @see #setByteValue(Byte, Optional)
- * @see #setShortValue(Short, Optional)
- * @see #setIntegerValue(Integer, Optional)
- * @see #setLongValue(Long, Optional)
- * @see #setFloatValue(Float, Optional)
- * @see #setDoubleValue(Double, Optional)
- * @see #setFloatComplexValue(FloatComplex, Optional)
- * @see #setDoubleComplexValue(DoubleComplex, Optional)
+ * @see #setByteValue(Byte, Unit)
+ * @see #setShortValue(Short, Unit)
+ * @see #setIntegerValue(Integer, Unit)
+ * @see #setLongValue(Long, Unit)
+ * @see #setFloatValue(Float, Unit)
+ * @see #setDoubleValue(Double, Unit)
+ * @see #setFloatComplexValue(FloatComplex, Unit)
+ * @see #setDoubleComplexValue(DoubleComplex, Unit)
  */
 public final class Parameter extends BaseParameter {
 
@@ -63,7 +62,12 @@ public final class Parameter extends BaseParameter {
 	// Constructors
 	// ======================================================================
 
-	public Parameter(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	Parameter(EntityCore core) {
 		super(ATTR_SCALAR_TYPE, ATTR_VALUE, core);
 	}
 

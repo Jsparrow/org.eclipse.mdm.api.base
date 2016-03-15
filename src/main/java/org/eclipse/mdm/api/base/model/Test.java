@@ -41,7 +41,12 @@ FilesAttachable, Tagable, Statable {
 	// Constructors
 	// ======================================================================
 
-	public Test(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	Test(EntityCore core) {
 		super(core);
 	}
 

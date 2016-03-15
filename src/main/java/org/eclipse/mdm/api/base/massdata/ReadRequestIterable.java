@@ -8,21 +8,25 @@
 
 package org.eclipse.mdm.api.base.massdata;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
- * This class provides a terminal {@link WriteRequest} build operation to
- * retrieve the configured {@code WriteRequest}.
+ * This is an read request iterable for comfortable processing of subsequent
+ * {@link ReadRequest}s
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public class WriteRequestFinalizer {
+public final class ReadRequestIterable implements Iterable<ReadRequest>, Iterator<ReadRequest> {
 
 	// ======================================================================
-	// Constructors
+	// Instance variables
 	// ======================================================================
 
-	final WriteRequest writeRequest;
+	private ReadRequest readRequest;
+	private int count;
 
 	// ======================================================================
 	// Constructors
@@ -31,23 +35,44 @@ public class WriteRequestFinalizer {
 	/**
 	 * Constructor.
 	 *
-	 * @param writeRequest The configured {@link WriteRequest}.
+	 * @param readRequest The {@link ReadRequest}.
 	 */
-	WriteRequestFinalizer(WriteRequest writeRequest) {
-		this.writeRequest = writeRequest;
+	ReadRequestIterable(ReadRequest readRequest) {
+		this.readRequest = readRequest;
 	}
 
 	// ======================================================================
-	// Constructors
+	// Public methods
 	// ======================================================================
 
 	/**
-	 * Returns the configured {@link WriteRequest}.
-	 *
-	 * @return The configured {@code WriteRequest} is returned.
+	 * {@inheritDoc}
 	 */
-	public final WriteRequest build() {
-		return writeRequest;
+	@Override
+	public boolean hasNext() {
+		return count == 0 || readRequest.hasNext();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ReadRequest next() {
+		if(hasNext()) {
+			readRequest = count == 0 ? readRequest : new ReadRequest(readRequest);
+			count++;
+			return readRequest;
+		}
+
+		throw new NoSuchElementException("Subsequent read request is not available.");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Iterator<ReadRequest> iterator() {
+		return this;
 	}
 
 }

@@ -13,13 +13,12 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.mdm.api.base.massdata.ReadRequest;
-import org.eclipse.mdm.api.base.massdata.WriteRequest;
 import org.eclipse.mdm.api.base.model.Channel;
 import org.eclipse.mdm.api.base.model.ContextDescribable;
 import org.eclipse.mdm.api.base.model.ContextRoot;
 import org.eclipse.mdm.api.base.model.ContextType;
-import org.eclipse.mdm.api.base.model.Deletable;
 import org.eclipse.mdm.api.base.model.Entity;
+import org.eclipse.mdm.api.base.model.EntityFactory;
 import org.eclipse.mdm.api.base.model.Environment;
 import org.eclipse.mdm.api.base.model.MeasuredValues;
 import org.eclipse.mdm.api.base.model.Measurement;
@@ -28,7 +27,6 @@ import org.eclipse.mdm.api.base.model.Parameterizable;
 import org.eclipse.mdm.api.base.model.TestStep;
 import org.eclipse.mdm.api.base.model.URI;
 import org.eclipse.mdm.api.base.model.User;
-import org.eclipse.mdm.api.base.model.factory.EntityFactory;
 import org.eclipse.mdm.api.base.query.DataAccessException;
 import org.eclipse.mdm.api.base.query.ModelManager;
 import org.eclipse.mdm.api.base.query.SearchService;
@@ -50,12 +48,10 @@ public interface EntityManager {
 	/**
 	 * The returned service creates new entities.
 	 *
-	 * @param transactionID TODO
 	 * @return {@code Optional} is empty if no such service is available.
-	 * @throws DataAccessException Thrown if a transaction with given ID does not exist.
 	 * @see EntityFactory
 	 */
-	default Optional<EntityFactory> getEntityFactory(String transactionID) throws DataAccessException {
+	default Optional<EntityFactory> getEntityFactory() {
 		return Optional.empty();
 	}
 
@@ -114,22 +110,6 @@ public interface EntityManager {
 	<T extends Entity> Optional<T> load(URI uri) throws DataAccessException;
 
 	/**
-	 * Loads the parent entity for given child. Each modeled entity provides
-	 * public fields for available parent entity types e.g.:
-	 *
-	 * <pre>{@code
-	 * Optional<Test> parentTest = entityManager.findParent(testStep, TestStep.PARENT_TYPE_TEST);
-	 * }</pre>
-	 *
-	 * @param <T> The desired parent type.
-	 * @param child The child entity.
-	 * @param parentType The desired parent entity type.
-	 * @return {@code Optional} is empty if parent entity could not be found.
-	 * @throws DataAccessException Thrown if unable to retrieve parent entity.
-	 */
-	<T extends Entity> Optional<T> loadParent(Entity child, Class<T> parentType) throws DataAccessException;
-
-	/**
 	 * Loads all available entities of given type. This method is useful while
 	 * working with types whose amount is known to be fairly small (e.g.:
 	 * {@code Unit}, {@code Quantity}, etc.). If a type is given where thousand
@@ -146,10 +126,10 @@ public interface EntityManager {
 	 * @param type Type of the returned entities.
 	 * @return Entities are returned in a {@code List}.
 	 * @throws DataAccessException Thrown if unable to retrieve the entities.
-	 * @see #load(Class, String)
+	 * @see #loadAll(Class, String)
 	 */
-	default <T extends Entity> List<T> load(Class<T> type) throws DataAccessException {
-		return load(type, "*");
+	default <T extends Entity> List<T> loadAll(Class<T> type) throws DataAccessException {
+		return loadAll(type, "*");
 	}
 
 	/**
@@ -173,9 +153,25 @@ public interface EntityManager {
 	 * 		for a sequence of matching characters.
 	 * @return Matched entities are returned in a {@code List}.
 	 * @throws DataAccessException Thrown if unable to retrieve the entities.
-	 * @see #load(Class)
+	 * @see #loadAll(Class)
 	 */
-	<T extends Entity> List<T> load(Class<T> type, String pattern) throws DataAccessException;
+	<T extends Entity> List<T> loadAll(Class<T> type, String pattern) throws DataAccessException;
+
+	/**
+	 * Loads the parent entity for given child. Each modeled entity provides
+	 * public fields for available parent entity types e.g.:
+	 *
+	 * <pre>{@code
+	 * Optional<Test> parentTest = entityManager.findParent(testStep, TestStep.PARENT_TYPE_TEST);
+	 * }</pre>
+	 *
+	 * @param <T> The desired parent type.
+	 * @param child The child entity.
+	 * @param parentType The desired parent entity type.
+	 * @return {@code Optional} is empty if parent entity could not be found.
+	 * @throws DataAccessException Thrown if unable to retrieve parent entity.
+	 */
+	<T extends Entity> Optional<T> loadParent(Entity child, Class<T> parentType) throws DataAccessException;
 
 	/**
 	 * Loads all related children of given type for given parent entity. Each
@@ -224,7 +220,7 @@ public interface EntityManager {
 	 * @param contextDescribable Either a {@link TestStep} or {@link Measurement}.
 	 * @param contextTypes The requested context types. If omitted, all types are
 	 * 		be loaded.
-	 * @return The ordered contexts for passed {@code TestStep} or the measured ones
+	 * @return The ordered contexts for given {@code TestStep} or the measured ones
 	 * 		for {@code Measurement} are returned in a {@code Map}.
 	 * @throws DataAccessException Thrown if unable to retrieve the {@code
 	 * 		ContextRoot}s.
@@ -260,34 +256,29 @@ public interface EntityManager {
 	List<ParameterSet> loadParameterSets(Parameterizable parameterizable, String pattern) throws DataAccessException;
 
 	/**
-	 * Retrieves the {@link MeasuredValues} as specified by the passed {@link ReadRequest}.
+	 * Retrieves the {@link MeasuredValues} as specified by the given {@link ReadRequest}.
 	 *
 	 * @param readRequest Provides all required informations to process the request.
 	 * @return Returns the {@code MeasuredValues} in a {@code List} as specified in the
-	 * 		passed {@code ReadRequest}.
+	 * 		given {@code ReadRequest}.
 	 * @throws DataAccessException Thrown if unable to access the measured values.
 	 */
 	List<MeasuredValues> readMeasuredValues(ReadRequest readRequest) throws DataAccessException;
 
 	/**
-	 * Creates {@link MeasuredValues} as specified by the passed {@link WriteRequest}s.
+	 * Creates a new {@link Transaction} for modifying access.
 	 *
-	 * @param transactionID TODO
-	 * @param writeRequests Provides all required informations to process the request.
-	 * @throws DataAccessException Thrown if unable to create specified measured values.
+	 * @return A new {@code Transaction} is returned.
+	 * @throws DataAccessException Thrown if unable to create a new {@code Transaction}.
 	 */
-	void writeMeasuredValues(String transactionID, List<WriteRequest> writeRequests) throws DataAccessException;
+	Transaction startTransaction() throws DataAccessException;
 
-	String startTransaction() throws DataAccessException;
-
-	void commitTransaction(String transactionID) throws DataAccessException;
-
-	void abortTransaction(String transactionID) throws DataAccessException;
-
-	<T extends Entity> void update(String transactionID, List<T> entities) throws DataAccessException;
-
-	<T extends Deletable> List<URI> delete(String transactionID, List<T> entities) throws DataAccessException;
-
+	/**
+	 * Closes the connection to the underlying data source.
+	 *
+	 * @throws ConnectionException Thrown in case of errors while closing the
+	 * 		connection.
+	 */
 	void close() throws ConnectionException;
 
 }

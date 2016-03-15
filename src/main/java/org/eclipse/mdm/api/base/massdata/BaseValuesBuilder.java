@@ -13,14 +13,13 @@ import java.lang.reflect.Array;
 import org.eclipse.mdm.api.base.model.ScalarType;
 
 /**
- * TODO
- * This is a base values builder withvarious protected
+ * This is a base values builder provides methods for configuring values.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-abstract class ValuesBuilder {
+abstract class BaseValuesBuilder {
 
 	// ======================================================================
 	// Instance variables
@@ -38,7 +37,7 @@ abstract class ValuesBuilder {
 	 * @param writeRequest The {@link WriteRequest} given values and
 	 * 		corresponding {@link ScalarType} will be applied to.
 	 */
-	ValuesBuilder(WriteRequest writeRequest) {
+	BaseValuesBuilder(WriteRequest writeRequest) {
 		this.writeRequest = writeRequest;
 	}
 

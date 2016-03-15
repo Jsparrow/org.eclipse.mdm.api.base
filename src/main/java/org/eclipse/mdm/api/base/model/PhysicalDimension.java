@@ -70,7 +70,12 @@ public final class PhysicalDimension extends BaseEntity implements Copyable, Des
 	// Constructors
 	// ======================================================================
 
-	public PhysicalDimension(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	PhysicalDimension(EntityCore core) {
 		super(core);
 	}
 

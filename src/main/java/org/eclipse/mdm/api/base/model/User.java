@@ -50,7 +50,12 @@ public final class User extends BaseEntity implements Deletable, Describable {
 	// Constructors
 	// ======================================================================
 
-	public User(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	User(EntityCore core) {
 		super(core);
 	}
 
@@ -147,6 +152,5 @@ public final class User extends BaseEntity implements Deletable, Describable {
 	public void setMail(String eMail) {
 		getValue(ATTR_EMAIL).set(eMail);
 	}
-
 
 }

@@ -8,6 +8,7 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,13 +29,18 @@ public abstract class BaseEntity implements Entity {
 	// Instance variables
 	// ======================================================================
 
-	private final Core core;
+	private final EntityCore core;
 
 	// ======================================================================
 	// Constructors
 	// ======================================================================
 
-	protected BaseEntity(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	protected BaseEntity(EntityCore core) {
 		this.core = core;
 	}
 
@@ -46,7 +52,7 @@ public abstract class BaseEntity implements Entity {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public URI getURI() {
+	public final URI getURI() {
 		return getCore().getURI();
 	}
 
@@ -54,8 +60,7 @@ public abstract class BaseEntity implements Entity {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Value getValue(String name) {
-		// TODO core should never be available to the outer world -> unmodifiable wrapping can be omitted
+	public final Value getValue(String name) {
 		return getCore().getValues().get(name);
 	}
 
@@ -63,8 +68,37 @@ public abstract class BaseEntity implements Entity {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String, Value> getValues() {
+	public final Map<String, Value> getValues() {
 		return Collections.unmodifiableMap(getCore().getValues());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Collection<Entity> getInfoRelations() {
+		return Collections.unmodifiableCollection(getCore().getInfoRelations().values());
+	}
+
+	//	/**
+	//	 * {@inheritDoc}
+	//	 */
+	//	@Override
+	//	public Map<Class<? extends Entity>, List<? extends Entity>> getChildren() {
+	//		return Collections.unmodifiableMap(getCore().getChildren());
+	//	}
+	//
+	//	/**
+	//	 * {@inheritDoc}
+	//	 */
+	//	@Override
+	//	public Map<Class<? extends Entity>, List<? extends Entity>> getRemovedChildren() {
+	//		return Collections.unmodifiableMap(getCore().getRemovedChildren());
+	//	}
+
+	@Override
+	public Collection<Entity> getImplicitRelations() {
+		return Collections.unmodifiableCollection(getCore().getImplicitRelations().values());
 	}
 
 	/**
@@ -80,13 +114,12 @@ public abstract class BaseEntity implements Entity {
 	// Protected methods
 	// ======================================================================
 
-	@Override
-	@Deprecated
-	// TODO provide read only access to related entities
-	// - related info entities (unit, quantity, etc.)
-	// - children (added / removed)
-	// - mandatory / implicit (parent or other mandatory related entities (ContextRoot when creating a new measurement along existing siblings))
-	public final Core getCore() {
+	/**
+	 * Returns the internally stored {@link EntityCore}.
+	 *
+	 * @return The {@link EntityCore} is returned.
+	 */
+	protected EntityCore getCore() {
 		return core;
 	}
 

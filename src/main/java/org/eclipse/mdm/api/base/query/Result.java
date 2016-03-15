@@ -37,10 +37,10 @@ public final class Result implements Iterable<Record> {
 	// ======================================================================
 
 	/**
-	 * Adds passed {@link Record} to this result.
+	 * Adds given {@link Record} to this result.
 	 *
 	 * @param record {@code Record} that will be added.
-	 * @throws IllegalArgumentException Thrown if passed {@code Record}
+	 * @throws IllegalArgumentException Thrown if given {@code Record}
 	 * 		overwrites an existing one.
 	 */
 	public void addRecord(Record record) {
@@ -51,10 +51,10 @@ public final class Result implements Iterable<Record> {
 	}
 
 	/**
-	 * Returns the {@link Record} associated with passed {@link EntityType}.
+	 * Returns the {@link Record} associated with given {@link EntityType}.
 	 *
 	 * @param entityType Used as identifier.
-	 * @return The {@code Record} associated with passed {@code EntityType} is returned.
+	 * @return The {@code Record} associated with given {@code EntityType} is returned.
 	 * @throws IllegalArgumentException Thrown if associated {@code Record}
 	 * 		does not exist.
 	 */
@@ -68,11 +68,11 @@ public final class Result implements Iterable<Record> {
 	}
 
 	/**
-	 * Removes the {@link Record} associated with passed {@link EntityType} from
+	 * Removes the {@link Record} associated with given {@link EntityType} from
 	 * this result and returns it.
 	 *
 	 * @param entityType Used as identifier.
-	 * @return The removed {@code Record} associated with passed {@code EntityType}
+	 * @return The removed {@code Record} associated with given {@code EntityType}
 	 * 		is returned.
 	 * @throws IllegalArgumentException Thrown if associated {@code Record}
 	 * 		does not exists.
@@ -87,7 +87,7 @@ public final class Result implements Iterable<Record> {
 	}
 
 	/**
-	 * Returns the {@link Value} container associated with passed {@link Attribute}.
+	 * Returns the {@link Value} container associated with given {@link Attribute}.
 	 *
 	 * @param attribute Used as identifier to find the associated {@code Value}.
 	 * @return Associated {@code Value} is returned.
@@ -97,13 +97,13 @@ public final class Result implements Iterable<Record> {
 	}
 
 	/**
-	 * Merges passed result with this instance. To be able to do so, the passed
+	 * Merges given result with this instance. To be able to do so, the given
 	 * result must be compatible with this result. Results are compatible if
 	 * the subset of {@link Record}s is the same.
 	 *
 	 * @param result The result that will be merged with this instance.
 	 * @return A new result with merged {@code Record}s is returned.
-	 * @throws IllegalArgumentException Thrown if passed result is not compatible.
+	 * @throws IllegalArgumentException Thrown if given result is not compatible.
 	 */
 	public Result merge(Result result) {
 		if(records.size() != result.records.size()) {
@@ -135,7 +135,6 @@ public final class Result implements Iterable<Record> {
 		return new StringBuilder("Result(records = ").append(records.values()).append(')').toString();
 	}
 
-	@Deprecated // TODO replace in a more readable and understandable way...
 	public List<Record> retainAll(List<EntityType> entityTypes) {
 		Iterator<Entry<EntityType, Record>> recordIterator = records.entrySet().iterator();
 		List<Record> removedRecords = new ArrayList<>();

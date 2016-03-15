@@ -199,7 +199,10 @@ public enum ValueType {
 	 */
 	FILE_LINK_SEQUENCE(FileLink[].class, new FileLink[0]),
 
-	@Deprecated BLOB(Object.class, null),
+	/**
+	 * TODO ...
+	 */
+	BLOB(Object.class, null),
 
 	/**
 	 * A {@link Value} with this type contains a {@link Object} value and

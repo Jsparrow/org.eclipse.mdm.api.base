@@ -8,6 +8,7 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -46,7 +47,8 @@ public interface Entity {
 	 * Returns the {@link URI} of this entity, which is a unique identifier
 	 * within the data source.
 	 *
-	 * @return The returned {@code URI} is never null.
+	 * @return The returned {@code URI} is never null, but if this entity is
+	 * 		not yet made permanent, then its ID will be {@code 0}.
 	 */
 	URI getURI();
 
@@ -102,9 +104,44 @@ public interface Entity {
 	 */
 	Map<String, Value> getValues();
 
-	// TODO JDoc - this should never ever be called by API consumers, this is for API producers only!
-	@Deprecated
-	Core getCore();
+	/**
+	 * Returns all 'INFO' related entities.
+	 *
+	 * <p><b>Note:</b> This method is intended to be used by API providers.
+	 *
+	 * @return The returned {@code Collection} is unmodifiable.
+	 */
+	Collection<Entity> getInfoRelations();
+
+	//	/**
+	//	 * Returns all currently available children of this entity.
+	//	 *
+	//	 * <p><b>Note:</b> This method is intended to be used by API providers.
+	//	 *
+	//	 * @return Returned {@code Map} is unmodifiable.
+	//	 */
+	//	Map<Class<? extends Entity>, List<? extends Entity>> getChildren();
+	//
+	//	/**
+	//	 * Returns all removed children of this entity. These entities will be
+	//	 * implicitly removed once this entity is updated.
+	//	 *
+	//	 * <p><b>Note:</b> This method is intended to be used by API providers.
+	//	 *
+	//	 * @return Returned {@code Map} is unmodifiable.
+	//	 */
+	//	Map<Class<? extends Entity>, List<? extends Entity>> getRemovedChildren();
+
+	/**
+	 * Returns all implicitly related entities. This usually is a parent entity
+	 * or other related entities that have to be written once this entity is
+	 * written.
+	 *
+	 * <p><b>Note:</b> This method is intended to be used by API providers.
+	 *
+	 * @return The returned {@code Collection} is unmodifiable.
+	 */
+	Collection<Entity> getImplicitRelations();
 
 	/**
 	 * Returns a human readable {@code String} representation of this entity.

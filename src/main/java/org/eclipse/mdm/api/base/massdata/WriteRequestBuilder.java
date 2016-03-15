@@ -11,17 +11,64 @@ package org.eclipse.mdm.api.base.massdata;
 import org.eclipse.mdm.api.base.model.ScalarType;
 import org.eclipse.mdm.api.base.model.SequenceRepresentation;
 
-public final class WriteRequestBuilder extends ValuesBuilder {
+/**
+ * Builds measured values write request configurations.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ */
+public final class WriteRequestBuilder extends BaseValuesBuilder {
+
+	// ======================================================================
+	// Constructors
+	// ======================================================================
 
 	WriteRequestBuilder(WriteRequest writeRequest) {
 		super(writeRequest);
 	}
 
+	// ======================================================================
+	// Public methods
+	// ======================================================================
+
+	/**
+	 * Configures the {@link WriteRequest} to create an explicit sequence of
+	 * measured values.
+	 *
+	 * @return An {@link AnyTypeValuesBuilder} is returned.
+	 * @see SequenceRepresentation#EXPLICIT
+	 */
 	public AnyTypeValuesBuilder explicit() {
 		writeRequest.setSequenceRepresentation(SequenceRepresentation.EXPLICIT);
 		return new AnyTypeValuesBuilder(writeRequest);
 	}
 
+	/**
+	 * Configures the {@link WriteRequest} to create an implicit constant
+	 * sequence of measured values. An implicit sequence allows only
+	 * numerical {@link ScalarType}s as listed below:
+	 *
+	 * <ul>
+	 * 	<li>{@link ScalarType#BYTE}</li>
+	 * 	<li>{@link ScalarType#SHORT}</li>
+	 * 	<li>{@link ScalarType#INTEGER}</li>
+	 * 	<li>{@link ScalarType#LONG}</li>
+	 * 	<li>{@link ScalarType#FLOAT}</li>
+	 * 	<li>{@link ScalarType#DOUBLE}</li>
+	 * </ul>
+	 *
+	 * <p><b>Note:</b> Given offset will be cast to an assignment compatible
+	 * type.
+	 *
+	 * @param scalarType The {@code ScalarType} of each single measured value
+	 * 		in the sequence.
+	 * @param offset The constant value.
+	 * @return An {@link UnitBuilder} is returned.
+	 * @throws IllegalArgumentException Thrown if given {@code ScalarType} is
+	 * 		not supported.
+	 * @see SequenceRepresentation#IMPLICIT_CONSTANT
+	 */
 	public UnitBuilder implicitConstant(ScalarType scalarType, double offset) {
 		writeRequest.setSequenceRepresentation(SequenceRepresentation.IMPLICIT_CONSTANT);
 
@@ -46,6 +93,32 @@ public final class WriteRequestBuilder extends ValuesBuilder {
 		return new UnitBuilder(writeRequest);
 	}
 
+	/**
+	 * Configures the {@link WriteRequest} to create an implicit linear
+	 * sequence of measured values. An implicit sequence allows only
+	 * numerical {@link ScalarType}s as listed below:
+	 *
+	 * <ul>
+	 * 	<li>{@link ScalarType#BYTE}</li>
+	 * 	<li>{@link ScalarType#SHORT}</li>
+	 * 	<li>{@link ScalarType#INTEGER}</li>
+	 * 	<li>{@link ScalarType#LONG}</li>
+	 * 	<li>{@link ScalarType#FLOAT}</li>
+	 * 	<li>{@link ScalarType#DOUBLE}</li>
+	 * </ul>
+	 *
+	 * <p><b>Note:</b> Given start and increment will be cast to an assignment
+	 * compatible type.
+	 *
+	 * @param scalarType The {@code ScalarType} of each single measured value
+	 * 		in the sequence.
+	 * @param start The start value of the line.
+	 * @param increment The gradient of the line.
+	 * @return An {@link UnitIndependentBuilder} is returned.
+	 * @throws IllegalArgumentException Thrown if given {@code ScalarType} is
+	 * 		not supported.
+	 * @see SequenceRepresentation#IMPLICIT_LINEAR
+	 */
 	public UnitIndependentBuilder implicitLinear(ScalarType scalarType, double start, double increment) {
 		writeRequest.setSequenceRepresentation(SequenceRepresentation.IMPLICIT_LINEAR);
 
@@ -70,6 +143,33 @@ public final class WriteRequestBuilder extends ValuesBuilder {
 		return new UnitIndependentBuilder(writeRequest);
 	}
 
+	/**
+	 * Configures the {@link WriteRequest} to create an implicit saw sequence
+	 * of measured values. An implicit sequence allows only numerical {@link
+	 * ScalarType}s as listed below:
+	 *
+	 * <ul>
+	 * 	<li>{@link ScalarType#BYTE}</li>
+	 * 	<li>{@link ScalarType#SHORT}</li>
+	 * 	<li>{@link ScalarType#INTEGER}</li>
+	 * 	<li>{@link ScalarType#LONG}</li>
+	 * 	<li>{@link ScalarType#FLOAT}</li>
+	 * 	<li>{@link ScalarType#DOUBLE}</li>
+	 * </ul>
+	 *
+	 * <p><b>Note:</b> Given start, increment and valuesPerSaw will be cast to
+	 * an assignment compatible type.
+	 *
+	 * @param scalarType The {@code ScalarType} of each single measured value
+	 * 		in the sequence.
+	 * @param start The start value of each saw cycle.
+	 * @param increment The increment.
+	 * @param valuesPerSaw The number of values per saw.
+	 * @return An {@link UnitBuilder} is returned.
+	 * @throws IllegalArgumentException Thrown if given {@code ScalarType} is
+	 * 		not supported.
+	 * @see SequenceRepresentation#IMPLICIT_SAW
+	 */
 	public UnitBuilder implicitSaw(ScalarType scalarType, double start, double increment, double valuesPerSaw) {
 		writeRequest.setSequenceRepresentation(SequenceRepresentation.IMPLICIT_SAW);
 
@@ -96,25 +196,42 @@ public final class WriteRequestBuilder extends ValuesBuilder {
 		return new UnitBuilder(writeRequest);
 	}
 
+	/**
+	 * Configures the {@link WriteRequest} to create a raw linear sequence of
+	 * measured values.
+	 *
+	 * @param offset The offset for each value.
+	 * @param factor The factor for each value.
+	 * @return A {@link ComplexNumericalValuesBuilder} is returned.
+	 * @see SequenceRepresentation#RAW_LINEAR
+	 */
 	public ComplexNumericalValuesBuilder rawLinear(double offset, double factor) {
 		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_LINEAR);
 		writeRequest.setGenerationParameters(new double[] { offset, factor });
 		return new ComplexNumericalValuesBuilder(writeRequest);
 	}
 
-	public ComplexNumericalValuesBuilder rawPolynomial(int grade, double... coefficients) {
-		if(grade < 1) {
-			throw new IllegalArgumentException("Grade must be greater than or at least equal to 1.");
-		} else if(coefficients == null || coefficients.length != grade) {
-			throw new IllegalArgumentException("Either coefficients are missing or their length is not "
-					+ "equal to given grade.");
+	/**
+	 * Configures the {@link WriteRequest} to create a raw polynomial sequence of
+	 * measured values.
+	 *
+	 * @param coefficients At least 2 coefficients must be provided.
+	 * @return A {@link ComplexNumericalValuesBuilder} is returned.
+	 * @throws IllegalArgumentException Thrown if coefficients are missing or
+	 * 		their length is less than 2.
+	 * @see SequenceRepresentation#RAW_POLYNOMIAL
+	 */
+	public ComplexNumericalValuesBuilder rawPolynomial(double... coefficients) {
+		if(coefficients == null || coefficients.length < 2) {
+			throw new IllegalArgumentException("Coefficients either missing or their length is "
+					+ "inconsitent with given grade");
 		}
 
 		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_POLYNOMIAL);
 
-		double[] generationParameters = new double[grade + 1];
-		generationParameters[0] = grade;
-		System.arraycopy(coefficients, 0, generationParameters, 1, grade);
+		double[] generationParameters = new double[coefficients.length + 1];
+		generationParameters[0] = coefficients.length - 1;
+		System.arraycopy(coefficients, 0, generationParameters, 1, coefficients.length);
 		writeRequest.setGenerationParameters(generationParameters);
 
 		// TODO: currently it is possible to define such a channel as independent
@@ -122,61 +239,66 @@ public final class WriteRequestBuilder extends ValuesBuilder {
 		return new ComplexNumericalValuesBuilder(writeRequest);
 	}
 
+	/**
+	 * Configures the {@link WriteRequest} to create a raw linear calibrated
+	 * sequence of measured values.
+	 *
+	 * @param offset The offset for each value.
+	 * @param factor The factor for each value.
+	 * @param calibration The calibration factor.
+	 * @return A {@link ComplexNumericalValuesBuilder} is returned.
+	 * @see SequenceRepresentation#RAW_LINEAR_CALIBRATED
+	 */
 	public ComplexNumericalValuesBuilder rawLinearCalibrated(double offset, double factor, double calibration) {
 		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_LINEAR_CALIBRATED);
 		writeRequest.setGenerationParameters(new double[] { offset, factor, calibration });
 		return new ComplexNumericalValuesBuilder(writeRequest);
 	}
 
-	// ##########################################################################################################################################
-
-	public Object explicitExternal() {
-		writeRequest.setSequenceRepresentation(SequenceRepresentation.EXPLICIT_EXTERNAL);
-		// TODO new builder for external component structure for all types
-		// subsequent builder should route to independency builder for sortable types (byte, short, int, long, float, double, date)
-		// see #explicit()
-		throw new UnsupportedOperationException("Not implemented.");
-	}
-
-	public Object rawLinearExternal(double offset, double factor) {
-		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_LINEAR_EXTERNAL);
-		writeRequest.setGenerationParameters(new double[] { offset, factor });
-
-		// TODO new builder for external component structure for numerical, non complex, types
-		// subsequent builder should route to independency builder
-		// see #rawLinear(offset, factor)
-		throw new UnsupportedOperationException("Not implemented.");
-	}
-
-	public Object rawPolynomialExternal(int grade, double... coefficients) {
-		if(grade < 1) {
-			throw new IllegalArgumentException("Grade must be greater than or at least equal to 1.");
-		} else if(coefficients == null || coefficients.length != grade) {
-			throw new IllegalArgumentException("Either coefficients are missing or their length is not "
-					+ "equal to given grade.");
-		}
-
-		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_POLYNOMIAL_EXTERNAL);
-
-		double[] generationParameters = new double[grade + 1];
-		generationParameters[0] = grade;
-		System.arraycopy(coefficients, 0, generationParameters, 1, grade);
-		writeRequest.setGenerationParameters(generationParameters);
-
-		// TODO new builder for external component structure for numerical, non complex, types
-		// subsequent builder should route to independency builder (or should this be preventd!?)
-		// see #rawLinear(offset, factor)
-		throw new UnsupportedOperationException("Not implemented.");
-	}
-
-	public Object rawLinearCalibratedExternal(double offset, double factor, double calibration) {
-		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_LINEAR_CALIBRATED_EXTERNAL);
-		writeRequest.setGenerationParameters(new double[] { offset, factor, calibration });
-
-		// TODO new builder for external component structure for numerical, non complex, types
-		// subsequent builder should route to independency builder
-		// see #rawLinear(offset, factor)
-		throw new UnsupportedOperationException("Not implemented.");
-	}
+	//	public Object explicitExternal() {
+	//		writeRequest.setSequenceRepresentation(SequenceRepresentation.EXPLICIT_EXTERNAL);
+	//		// TODO new builder for external component structure for all types
+	//		// subsequent builder should route to independency builder for sortable types (byte, short, int, long, float, double, date)
+	//		// see #explicit()
+	//		throw new UnsupportedOperationException("Not implemented.");
+	//	}
+	//
+	//	public Object rawLinearExternal(double offset, double factor) {
+	//		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_LINEAR_EXTERNAL);
+	//		writeRequest.setGenerationParameters(new double[] { offset, factor });
+	//
+	//		// TODO new builder for external component structure for numerical, non complex, types
+	//		// subsequent builder should route to independency builder
+	//		// see #rawLinear(offset, factor)
+	//		throw new UnsupportedOperationException("Not implemented.");
+	//	}
+	//
+	//	public Object rawPolynomialExternal(double... coefficients) {
+	//		if(coefficients == null || coefficients.length < 2) {
+	//			throw new IllegalArgumentException("Coefficients either missing or their length is "
+	//					+ "inconsitent with given grade");
+	//		}
+	//		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_POLYNOMIAL_EXTERNAL);
+	//
+	//		double[] generationParameters = new double[coefficients.length + 1];
+	//		generationParameters[0] = coefficients.length - 1;
+	//		System.arraycopy(coefficients, 0, generationParameters, 1, coefficients.length);
+	//		writeRequest.setGenerationParameters(generationParameters);
+	//
+	//		// TODO new builder for external component structure for numerical, non complex, types
+	//		// subsequent builder should route to independency builder (or should this be preventd!?)
+	//		// see #rawLinear(offset, factor)
+	//		throw new UnsupportedOperationException("Not implemented.");
+	//	}
+	//
+	//	public Object rawLinearCalibratedExternal(double offset, double factor, double calibration) {
+	//		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_LINEAR_CALIBRATED_EXTERNAL);
+	//		writeRequest.setGenerationParameters(new double[] { offset, factor, calibration });
+	//
+	//		// TODO new builder for external component structure for numerical, non complex, types
+	//		// subsequent builder should route to independency builder
+	//		// see #rawLinear(offset, factor)
+	//		throw new UnsupportedOperationException("Not implemented.");
+	//	}
 
 }

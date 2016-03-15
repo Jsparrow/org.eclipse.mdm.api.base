@@ -98,6 +98,4 @@ public enum TypeSpecification {
 
 	BIT_FLOAT_BEO
 
-	// TODO: map from type to scalar type!
-
 }

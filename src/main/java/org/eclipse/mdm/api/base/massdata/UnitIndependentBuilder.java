@@ -35,7 +35,7 @@ import org.eclipse.mdm.api.base.model.Unit;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public class UnitIndependentBuilder extends IndependentBuilder {
+public final class UnitIndependentBuilder extends IndependentBuilder {
 
 	// ======================================================================
 	// Constructors

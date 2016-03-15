@@ -137,14 +137,14 @@ public final class Value {
 
 	/**
 	 * Replaces currently stored value with the given one. If {@code null} is
-	 * passed, then a well defined default value is used instead and the
+	 * given, then a well defined default value is used instead and the
 	 * validity flag is automatically set to {@code false}.
 	 *
 	 * @param input The new value must be an instance of the type defined in
 	 * 		{@link ValueType#type} or in case of an enumeration type an
 	 * 		appropriate enumeration constant or array thereof.
 	 * @throws IllegalArgumentException Thrown if an incompatible value is
-	 * 		passed.
+	 * 		given.
 	 */
 	public void set(Object input) {
 		if(input == null) {
@@ -161,8 +161,8 @@ public final class Value {
 	}
 
 	/**
-	 * Merges passed value container with this instance. To be able to do so,
-	 * the passed value container must be compatible with this one. Value
+	 * Merges given value container with this instance. To be able to do so,
+	 * the given value container must be compatible with this one. Value
 	 * containers are compatible if the their name, unit and {@link ValueType}
 	 * is equal. If the stored values or the validity flags do not match, then
 	 * both values are discarded and {@code null} is taken as the initial
@@ -170,7 +170,7 @@ public final class Value {
 	 *
 	 * @param value The value container that will be merged with this instance.
 	 * @return A new value container with merged value is returned.
-	 * @throws IllegalArgumentException Thrown if passed value container is not
+	 * @throws IllegalArgumentException Thrown if given value container is not
 	 * 		compatible.
 	 */
 	public Value merge(Value value) {

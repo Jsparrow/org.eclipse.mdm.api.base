@@ -8,15 +8,12 @@
 
 package org.eclipse.mdm.api.base;
 
-import java.util.List;
+import java.util.Map;
 
 import org.eclipse.mdm.api.base.model.Value;
-import org.eclipse.mdm.api.base.model.ValueType;
 
 /**
- * Takes connection parameters and produces a corresponding entity manager. As
- * soon as the entity manager is no longer required, its connection should be
- * closed by using this factory's disconnect method.
+ * Takes connection parameters and produces a corresponding entity manager.
  *
  * @param <T> Type of the connected entity manager.
  * @since 1.0.0
@@ -32,15 +29,12 @@ public interface EntityManagerFactory<T extends EntityManager> {
 
 	/**
 	 * Takes given connection parameters and creates a new entity manager, which
-	 * is connected with configured data source.
+	 * is permanently connected with configured data source.
 	 *
 	 * @param connectionParameters The connection parameters.
 	 * @return The connected entity manager is returned.
 	 * @throws ConnectionException Thrown if unable to connect to a data source.
-	 * @see ValueType#createValue(String, Object)
-	 * @see ValueType
-	 * @see Value
 	 */
-	T connect(List<Value> connectionParameters) throws ConnectionException;
+	T connect(Map<String, String> connectionParameters) throws ConnectionException;
 
 }

@@ -33,12 +33,18 @@ public interface ModelManager {
 	 */
 	Query createQuery();
 
+	/**
+	 * Returns the {@link EntityType} associated with given {@link Entity}.
+	 *
+	 * @param entity Its type name is used as identifier.
+	 * @return {@code EntityType} associated with given entity is returned.
+	 */
 	default EntityType getEntityType(Entity entity) {
-		return getEntityType(entity.getCore().getTypeName());
+		return getEntityType(entity.getURI().getTypeName());
 	}
 
 	/**
-	 * Returns the {@link EntityType} associated with passed {@link Entity}
+	 * Returns the {@link EntityType} associated with given {@link Entity}
 	 * type.
 	 *
 	 * @param type Used as identifier.
@@ -61,10 +67,10 @@ public interface ModelManager {
 	EntityType getEntityType(ContextType contextType);
 
 	/**
-	 * Returns the {@link EntityType} identified by passed name.
+	 * Returns the {@link EntityType} identified by given name.
 	 *
 	 * @param name Used as identifier.
-	 * @return {@code EntityType} with passed name is returned.
+	 * @return {@code EntityType} with given name is returned.
 	 * @throws IllegalArgumentException Thrown if {@code EntityType} with given
 	 * 		name does not exist.
 	 */

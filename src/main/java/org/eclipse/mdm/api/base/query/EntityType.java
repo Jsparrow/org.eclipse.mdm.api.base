@@ -34,8 +34,11 @@ public interface EntityType {
 	// Public methods
 	// ======================================================================
 
-	// TODO JDoc define a proper name
-	// this is the name of the data source and not the name of this entity type!
+	/**
+	 * Returns the name of the data source.
+	 *
+	 * @return Name of the data source is returned.
+	 */
 	String getSourceName();
 
 	/**
@@ -83,12 +86,12 @@ public interface EntityType {
 	}
 
 	/**
-	 * Returns the {@link Attribute} associated with passed name.
+	 * Returns the {@link Attribute} associated with given name.
 	 *
 	 * @param name The {@code Attribute} identifier.
 	 * @return The associated {@code Attribute} is returned.
 	 * @throws IllegalArgumentException Thrown if an {@code Attribute} with
-	 * 		passed name does not exist.
+	 * 		given name does not exist.
 	 */
 	Attribute getAttribute(String name);
 
@@ -128,7 +131,7 @@ public interface EntityType {
 	List<Relation> getInfoRelations();
 
 	/**
-	 * Returns all {@link Relation}s whose relationship is of the passed type.
+	 * Returns all {@link Relation}s whose relationship is of the given type.
 	 *
 	 * @param relationship The relationship type.
 	 * @return The returned {@code List} may be immutable.

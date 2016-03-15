@@ -13,10 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-@Deprecated // This should never ever be accessible - the base entity should wrap it!
-public interface Core {
-
-	String getTypeName();
+public interface EntityCore {
 
 	URI getURI();
 
@@ -32,6 +29,10 @@ public interface Core {
 	}
 
 	default void setInfoRelation(Entity entity) {
+		Long id = entity.getURI().getID();
+		if(id.longValue() < 1) {
+			throw new IllegalArgumentException("Entity '" + entity + "' is not persisted.");
+		}
 		getInfoRelations().put(entity.getClass(), entity);
 	}
 
@@ -63,6 +64,16 @@ public interface Core {
 		}
 
 		return removed;
+	}
+
+	Map<String, Entity> getImplicitRelations();
+
+	default void setImplicitRelation(Entity entity) {
+		Long id = entity.getURI().getID();
+		if(id.longValue() < 1) {
+			throw new IllegalArgumentException("Entity '" + entity + "' is not persisted.");
+		}
+		getImplicitRelations().put(entity.getURI().getTypeName(), entity);
 	}
 
 }

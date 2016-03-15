@@ -111,7 +111,9 @@ public enum ScalarType {
 	 */
 	FILE_LINK(ValueType.FILE_LINK_SEQUENCE, FileLink.class),
 
-	@Deprecated
+	/**
+	 * TODO ...
+	 */
 	BLOB(ValueType.BLOB, Object.class),
 
 	/**

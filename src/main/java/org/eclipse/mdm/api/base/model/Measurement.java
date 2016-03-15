@@ -69,7 +69,12 @@ FilesAttachable, Parameterizable, Statable, Tagable {
 	// Constructors
 	// ======================================================================
 
-	public Measurement(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	Measurement(EntityCore core) {
 		super(core);
 	}
 

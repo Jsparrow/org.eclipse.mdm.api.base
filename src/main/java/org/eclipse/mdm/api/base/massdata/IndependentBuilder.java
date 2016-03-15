@@ -58,7 +58,7 @@ public class IndependentBuilder extends WriteRequestFinalizer {
 	 *
 	 * @return The {@link WriteRequestFinalizer} is returned.
 	 */
-	public WriteRequestFinalizer independent() {
+	public final WriteRequestFinalizer independent() {
 		writeRequest.setIndependent(true);
 		return this;
 	}
