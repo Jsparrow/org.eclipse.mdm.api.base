@@ -50,9 +50,14 @@ public final class ContextRoot extends BaseEntity implements Deletable, Derived 
 	// Constructors
 	// ======================================================================
 
-	public ContextRoot(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	ContextRoot(EntityCore core) {
 		super(core);
-		contextType = ContextType.valueOf(core.getTypeName().toUpperCase(Locale.ROOT));
+		contextType = ContextType.valueOf(core.getURI().getTypeName().toUpperCase(Locale.ROOT));
 	}
 
 	// ======================================================================
@@ -118,11 +123,29 @@ public final class ContextRoot extends BaseEntity implements Deletable, Derived 
 	}
 
 	/**
+	 * Returns the version of this context root.
+	 *
+	 * @return The version is returned.
+	 */
+	public String getVersion() {
+		return getValue(ATTR_VERSION).extract();
+	}
+
+	/**
+	 * Sets new version for this context root.
+	 *
+	 * @param version The new version.
+	 */
+	public void setVersion(String version) {
+		getValue(ATTR_VERSION).set(version);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(getCore().getTypeName()).append('(');
+		StringBuilder sb = new StringBuilder(getURI().getTypeName()).append('(');
 		sb.append(getValues().values().stream().map(Value::toString).collect(Collectors.joining(", ")));
 
 		List<ContextComponent> contextComponents = getContextComponents();
@@ -135,26 +158,6 @@ public final class ContextRoot extends BaseEntity implements Deletable, Derived 
 		}
 
 		return sb.append(')').toString();
-	}
-
-	// ======================================================================
-	// Package methods
-	// ======================================================================
-
-	// TODO JDoc
-	void setVersion(String version) {
-		// TODO
-		// MDM 4 initilaizes this field with an "1" for the insert statement
-		// Immediatley after the execution of the insert statement the instance ID
-		// is known and written back with an update statement!
-		//
-		// The base attribute 'version' is meant for storing different versions of the same instance; these
-		// may keep their name and may be distinguished from each other by their version only. Note
-		// that there is no semantic specification for the version string given by ASAM ODS. It is up to
-		// the user to create meaningful version strings, and applications evaluating the version string
-		// must adapt to the user-defined semantic.
-
-		getValue(ATTR_VERSION).set(version);
 	}
 
 }

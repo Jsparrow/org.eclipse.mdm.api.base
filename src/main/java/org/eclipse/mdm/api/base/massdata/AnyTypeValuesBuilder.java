@@ -42,7 +42,7 @@ import org.eclipse.mdm.api.base.model.ScalarType;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public class AnyTypeValuesBuilder extends ComplexNumericalValuesBuilder {
+public final class AnyTypeValuesBuilder extends ComplexNumericalValuesBuilder {
 
 	// ======================================================================
 	// Constructors

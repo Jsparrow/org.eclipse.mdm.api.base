@@ -36,13 +36,12 @@ public interface FilesAttachable extends Entity {
 	 * TODO ...
 	 */
 
-	@Deprecated
-	default FileLink[] getFileLinks() {
-		return getValue(ATTR_FILE_LINKS).extract();
-	}
-	@Deprecated
-	default void setFileLinks(FileLink[] fileLinks) {
-		getValue(ATTR_FILE_LINKS).set(fileLinks);
-	}
+	//	default FileLink[] getFileLinks() {
+	//		return getValue(ATTR_FILE_LINKS).extract();
+	//	}
+	//
+	//	default void setFileLinks(FileLink[] fileLinks) {
+	//		getValue(ATTR_FILE_LINKS).set(fileLinks);
+	//	}
 
 }

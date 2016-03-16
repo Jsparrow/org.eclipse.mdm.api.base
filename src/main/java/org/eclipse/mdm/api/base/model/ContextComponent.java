@@ -30,7 +30,12 @@ public final class ContextComponent extends BaseEntity implements Deletable, Der
 	// Constructors
 	// ======================================================================
 
-	public ContextComponent(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	ContextComponent(EntityCore core) {
 		super(core);
 	}
 
@@ -75,7 +80,7 @@ public final class ContextComponent extends BaseEntity implements Deletable, Der
 	 */
 	@Override
 	public String toString() {
-		String prefix = new StringBuilder(getCore().getTypeName()).append('(').toString();
+		String prefix = new StringBuilder(getURI().getTypeName()).append('(').toString();
 		return getValues().values().stream().map(Value::toString).collect(Collectors.joining(", ", prefix, ")"));
 	}
 

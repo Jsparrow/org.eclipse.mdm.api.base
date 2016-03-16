@@ -41,7 +41,12 @@ public final class ChannelGroup extends BaseEntity implements Deletable, Derived
 	// Constructors
 	// ======================================================================
 
-	public ChannelGroup(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	ChannelGroup(EntityCore core) {
 		super(core);
 	}
 
@@ -56,6 +61,15 @@ public final class ChannelGroup extends BaseEntity implements Deletable, Derived
 	 */
 	public Integer getNumberOfValues() {
 		return getValue(ATTR_NUMBER_OF_VALUES).extract();
+	}
+
+	/**
+	 * Sets new number of values for this channel group.
+	 *
+	 * @param numberOfValues The new number of values.
+	 */
+	public void setNumberOfValues(Integer numberOfValues) {
+		getValue(ATTR_NUMBER_OF_VALUES).set(numberOfValues);
 	}
 
 }

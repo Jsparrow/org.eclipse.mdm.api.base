@@ -50,7 +50,7 @@ public interface SearchService {
 	 *
 	 * @param type Used as the {@code SearchQuery} identifier.
 	 * @return The returned {@code List} may be immutable.
-	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * @throws IllegalArgumentException Thrown if given type is not associated
 	 * 		with a predefined {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 */
@@ -63,7 +63,7 @@ public interface SearchService {
 	 *
 	 * @param type Used as the {@code SearchQuery} identifier.
 	 * @return The {@code Searchable} root is returned.
-	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * @throws IllegalArgumentException Thrown if given type is not associated
 	 * 		with a predefined {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 */
@@ -81,7 +81,7 @@ public interface SearchService {
 	 * @return A distinct {@code List} of all available {@code Value}s is returned.
 	 * @throws DataAccessException Thrown in case of errors while executing the
 	 * 		query or generating the distinct {@code Value} sequence.
-	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * @throws IllegalArgumentException Thrown if given type is not associated
 	 * 		with a predefined {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
@@ -105,7 +105,7 @@ public interface SearchService {
 	 * @return A distinct {@code List} of {@code Value}s is returned.
 	 * @throws DataAccessException Thrown in case of errors while executing the
 	 * 		query or generating the distinct {@code Value} sequence.
-	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * @throws IllegalArgumentException Thrown if given type is not associated
 	 * 		with a predefined {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
@@ -132,7 +132,7 @@ public interface SearchService {
 	 * 		entities to related {@link Record}s.
 	 * @throws DataAccessException Thrown in case of errors while executing the
 	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
-	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * @throws IllegalArgumentException Thrown if given type is not associated
 	 * 		with a predefined {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
@@ -163,7 +163,7 @@ public interface SearchService {
 	 * 		entities to related {@link Record}s.
 	 * @throws DataAccessException Thrown in case of errors while executing the
 	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
-	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * @throws IllegalArgumentException Thrown if given type is not associated
 	 * 		with a predefined {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
@@ -183,7 +183,7 @@ public interface SearchService {
 	 * @return All available entities are returned in a {@code List}.
 	 * @throws DataAccessException Thrown in case of errors while executing the
 	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
-	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * @throws IllegalArgumentException Thrown if given type is not associated
 	 * 		with a predefined {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #fetch(Class, Filter)
@@ -203,7 +203,7 @@ public interface SearchService {
 	 * @return All matched entities are returned in a {@code List}.
 	 * @throws DataAccessException Thrown in case of errors while executing the
 	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
-	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * @throws IllegalArgumentException Thrown if given type is not associated
 	 * 		with a predefined {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
@@ -231,7 +231,7 @@ public interface SearchService {
 	 * 		entities to related {@code Record}s.
 	 * @throws DataAccessException Thrown in case of errors while executing the
 	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
-	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * @throws IllegalArgumentException Thrown if given type is not associated
 	 * 		with a predefined {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
@@ -261,7 +261,7 @@ public interface SearchService {
 	 * 		entities to related {@code Record}s.
 	 * @throws DataAccessException Thrown in case of errors while executing the
 	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
-	 * @throws IllegalArgumentException Thrown if passed type is not associated
+	 * @throws IllegalArgumentException Thrown if given type is not associated
 	 * 		with a predefined {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)

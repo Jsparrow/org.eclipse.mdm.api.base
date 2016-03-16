@@ -47,7 +47,12 @@ public final class Unit extends BaseEntity implements Copyable, Datable, Deletab
 	// Constructors
 	// ======================================================================
 
-	public Unit(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	Unit(EntityCore core) {
 		super(core);
 	}
 

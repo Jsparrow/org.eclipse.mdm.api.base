@@ -95,18 +95,6 @@ public final class ReadRequestBuilder {
 	}
 
 	/**
-	 * Configures the {@link ReadRequest} to load all measured values of each
-	 * configured {@link Channel}.
-	 *
-	 * @return This builder is returned.
-	 */
-	public ReadRequestBuilder allValues() {
-		readRequest.setStartIndex(0);
-		readRequest.setRequestSize(0);
-		return this;
-	}
-
-	/**
 	 * Configures the number of values that will be loaded per {@link Channel}.
 	 *
 	 * <p><b>Note:</b> If the request size is zero, then all available measured
@@ -141,8 +129,30 @@ public final class ReadRequestBuilder {
 		return this;
 	}
 
-	public ReadRequest build() {
+	/**
+	 * Configures the {@link ReadRequest} to load all measured values of each
+	 * configured {@link Channel} and returns the configured {@code
+	 * ReadRequest}.
+	 *
+	 * <p><b>Note:</b> Before calling this the {@code Channel}s whose measured
+	 * values have to be loaded must be configured.
+	 *
+	 * @return This builder is returned.
+	 */
+	public ReadRequest allValues() {
+		readRequest.setStartIndex(0);
+		readRequest.setRequestSize(0);
 		return readRequest;
+	}
+
+	/**
+	 * Returns an {@link ReadRequestIterable} to iterate over all available
+	 * {@link ReadRequest}s.
+	 *
+	 * @return The {@code ReadRequestIterable} is returned.
+	 */
+	public ReadRequestIterable createIterable() {
+		return new ReadRequestIterable(readRequest);
 	}
 
 }

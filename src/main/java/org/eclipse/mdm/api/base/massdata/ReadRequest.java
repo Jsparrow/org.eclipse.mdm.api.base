@@ -11,7 +11,6 @@ package org.eclipse.mdm.api.base.massdata;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import org.eclipse.mdm.api.base.model.Channel;
 import org.eclipse.mdm.api.base.model.ChannelGroup;
@@ -24,7 +23,7 @@ import org.eclipse.mdm.api.base.model.Unit;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public class ReadRequest {
+public final class ReadRequest {
 
 	// ======================================================================
 	// Instance variables
@@ -45,23 +44,24 @@ public class ReadRequest {
 	/**
 	 * Constructor.
 	 *
-	 * @param channelGroup The {@link ChannelGroup} is the source entity to
-	 * 		access measured values.
+	 * @param readRequest The previous {@link ReadRequest}.
 	 */
-	private ReadRequest(ChannelGroup channelGroup) {
-		this.channelGroup = channelGroup;
+	ReadRequest(ReadRequest readRequest) {
+		this(readRequest.getChannelGroup());
+		channels.putAll(readRequest.getChannels());
+		loadAllChannels = readRequest.loadAllChannels;
+		requestSize = readRequest.getRequestSize();
+		startIndex = readRequest.getStartIndex() + readRequest.getRequestSize();
 	}
 
 	/**
 	 * Constructor.
 	 *
-	 * @param readRequest The previous {@link ReadRequest}.
+	 * @param channelGroup The {@link ChannelGroup} is the source entity to
+	 * 		access measured values.
 	 */
-	private ReadRequest(ReadRequest readRequest) {
-		this(readRequest.getChannelGroup());
-		channels.putAll(readRequest.getChannels());
-		requestSize = readRequest.getRequestSize();
-		startIndex = readRequest.getStartIndex() + readRequest.getRequestSize();
+	private ReadRequest(ChannelGroup channelGroup) {
+		this.channelGroup = channelGroup;
 	}
 
 	// ======================================================================
@@ -123,11 +123,9 @@ public class ReadRequest {
 	}
 
 	/**
-	 * Returns the number of values that are loaded per {@link Channel} per
-	 * request. The next sequence of values may be retrieved with the request
-	 * returned by calling {@link #next()} on this request.
+	 * Returns the number of values that are loaded per {@link Channel} .
 	 *
-	 * @return The number of values per {@code Channel} per request is returned.
+	 * @return The number of values per {@code Channel} per is returned.
 	 */
 	public int getRequestSize() {
 		return requestSize;
@@ -144,21 +142,6 @@ public class ReadRequest {
 		return startIndex;
 	}
 
-	/**
-	 * Creates a subsequent request with an adjusted start index as long as
-	 * there more values to retrieve.
-	 *
-	 * @return The {@code Optional} is empty, if there are no more values to
-	 * 		retrieve.
-	 */
-	public Optional<ReadRequest> next() {
-		if(getStartIndex() + getRequestSize() < getChannelGroup().getNumberOfValues().intValue()) {
-			return Optional.of(new ReadRequest(this));
-		}
-
-		return Optional.empty();
-	}
-
 	// ======================================================================
 	// Package methods
 	// ======================================================================
@@ -173,7 +156,6 @@ public class ReadRequest {
 	void addChannel(Channel channel) {
 		addChannel(channel, channel.getUnit());
 	}
-
 
 	/**
 	 * Adds a new {@link Channel} whose measured values have to be loaded. The
@@ -196,6 +178,7 @@ public class ReadRequest {
 	 */
 	void loadAllChannels() {
 		loadAllChannels = true;
+		channels.clear();
 	}
 
 	/**
@@ -218,6 +201,15 @@ public class ReadRequest {
 	 */
 	void setStartIndex(int startIndex) {
 		this.startIndex = startIndex;
+	}
+
+	/**
+	 * Checks whether there are still more values to retrieve.
+	 *
+	 * @return Returns true if there are more values to retrieve.
+	 */
+	boolean hasNext() {
+		return getStartIndex() + getRequestSize() < getChannelGroup().getNumberOfValues().intValue();
 	}
 
 }

@@ -25,7 +25,12 @@ public final class ContextSensor extends BaseEntity implements Deletable, Derive
 	// Constructors
 	// ======================================================================
 
-	public ContextSensor(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	ContextSensor(EntityCore core) {
 		super(core);
 	}
 
@@ -38,7 +43,7 @@ public final class ContextSensor extends BaseEntity implements Deletable, Derive
 	 */
 	@Override
 	public String toString() {
-		String prefix = new StringBuilder(getCore().getTypeName()).append('(').toString();
+		String prefix = new StringBuilder(getURI().getTypeName()).append('(').toString();
 		return getValues().values().stream().map(Value::toString).collect(Collectors.joining(", ", prefix, ")"));
 	}
 

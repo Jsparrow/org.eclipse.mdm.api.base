@@ -31,7 +31,7 @@ import org.eclipse.mdm.api.base.model.ScalarType;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public class NumericalValuesBuilder extends ValuesBuilder {
+public class NumericalValuesBuilder extends BaseValuesBuilder {
 
 	// ======================================================================
 	// Constructors
@@ -58,7 +58,7 @@ public class NumericalValuesBuilder extends ValuesBuilder {
 	 * @param values The {@code byte} array sequence.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
-	public UnitIndependentBuilder byteValues(byte[] values) {
+	public final UnitIndependentBuilder byteValues(byte[] values) {
 		createValues(ScalarType.BYTE, values);
 		return new UnitIndependentBuilder(writeRequest);
 	}
@@ -71,7 +71,7 @@ public class NumericalValuesBuilder extends ValuesBuilder {
 	 * @param flags The validity flags for each {@code byte} value.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
-	public UnitIndependentBuilder byteValues(byte[] values, boolean[] flags) {
+	public final UnitIndependentBuilder byteValues(byte[] values, boolean[] flags) {
 		createValues(ScalarType.BYTE, values, flags);
 		return new UnitIndependentBuilder(writeRequest);
 	}
@@ -83,7 +83,7 @@ public class NumericalValuesBuilder extends ValuesBuilder {
 	 * @param values The {@code short} array sequence.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
-	public UnitIndependentBuilder shortValues(short[] values) {
+	public final UnitIndependentBuilder shortValues(short[] values) {
 		createValues(ScalarType.SHORT, values);
 		return new UnitIndependentBuilder(writeRequest);
 	}
@@ -96,7 +96,7 @@ public class NumericalValuesBuilder extends ValuesBuilder {
 	 * @param flags The validity flags for each {@code short} value.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
-	public UnitIndependentBuilder shortValues(short[] values, boolean[] flags) {
+	public final UnitIndependentBuilder shortValues(short[] values, boolean[] flags) {
 		createValues(ScalarType.SHORT, values, flags);
 		return new UnitIndependentBuilder(writeRequest);
 	}
@@ -108,7 +108,7 @@ public class NumericalValuesBuilder extends ValuesBuilder {
 	 * @param values The {@code int} array sequence.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
-	public UnitIndependentBuilder integerValues(int[] values) {
+	public final UnitIndependentBuilder integerValues(int[] values) {
 		createValues(ScalarType.INTEGER, values);
 		return new UnitIndependentBuilder(writeRequest);
 	}
@@ -121,7 +121,7 @@ public class NumericalValuesBuilder extends ValuesBuilder {
 	 * @param flags The validity flags for each {@code int} value.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
-	public UnitIndependentBuilder integerValues(int[] values, boolean[] flags) {
+	public final UnitIndependentBuilder integerValues(int[] values, boolean[] flags) {
 		createValues(ScalarType.INTEGER, values, flags);
 		return new UnitIndependentBuilder(writeRequest);
 	}
@@ -133,7 +133,7 @@ public class NumericalValuesBuilder extends ValuesBuilder {
 	 * @param values The {@code long} array sequence.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
-	public UnitIndependentBuilder longValues(long[] values) {
+	public final UnitIndependentBuilder longValues(long[] values) {
 		createValues(ScalarType.LONG, values);
 		return new UnitIndependentBuilder(writeRequest);
 	}
@@ -146,7 +146,7 @@ public class NumericalValuesBuilder extends ValuesBuilder {
 	 * @param flags The validity flags for each {@code long} value.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
-	public UnitIndependentBuilder longValues(long[] values, boolean[] flags) {
+	public final UnitIndependentBuilder longValues(long[] values, boolean[] flags) {
 		createValues(ScalarType.LONG, values, flags);
 		return new UnitIndependentBuilder(writeRequest);
 	}
@@ -158,7 +158,7 @@ public class NumericalValuesBuilder extends ValuesBuilder {
 	 * @param values The {@code float} array sequence.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
-	public UnitIndependentBuilder floatValues(float[] values) {
+	public final UnitIndependentBuilder floatValues(float[] values) {
 		createValues(ScalarType.FLOAT, values);
 		return new UnitIndependentBuilder(writeRequest);
 	}
@@ -171,7 +171,7 @@ public class NumericalValuesBuilder extends ValuesBuilder {
 	 * @param flags The validity flags for each {@code float} value.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
-	public UnitIndependentBuilder floatValues(float[] values, boolean[] flags) {
+	public final UnitIndependentBuilder floatValues(float[] values, boolean[] flags) {
 		createValues(ScalarType.FLOAT, values, flags);
 		return new UnitIndependentBuilder(writeRequest);
 	}
@@ -183,7 +183,7 @@ public class NumericalValuesBuilder extends ValuesBuilder {
 	 * @param values The {@code double} array sequence.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
-	public UnitIndependentBuilder doubleValues(double[] values) {
+	public final UnitIndependentBuilder doubleValues(double[] values) {
 		createValues(ScalarType.DOUBLE, values);
 		return new UnitIndependentBuilder(writeRequest);
 	}
@@ -196,7 +196,7 @@ public class NumericalValuesBuilder extends ValuesBuilder {
 	 * @param flags The validity flags for each {@code double} value.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
-	public UnitIndependentBuilder doubleValues(double[] values, boolean[] flags) {
+	public final UnitIndependentBuilder doubleValues(double[] values, boolean[] flags) {
 		createValues(ScalarType.DOUBLE, values, flags);
 		return new UnitIndependentBuilder(writeRequest);
 	}

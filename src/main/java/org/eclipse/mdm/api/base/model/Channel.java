@@ -83,7 +83,12 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	// Constructors
 	// ======================================================================
 
-	public Channel(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	Channel(EntityCore core) {
 		super(core);
 	}
 
@@ -92,7 +97,7 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	// ======================================================================
 
 	/**
-	 * Returns the minimum value of this statistics.
+	 * Returns the minimum value of this channel.
 	 *
 	 * @return The minimum value is returned.
 	 */
@@ -101,7 +106,7 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	}
 
 	/**
-	 * Sets new minimum for this statistics.
+	 * Sets new minimum value for this channel.
 	 *
 	 * @param minimum The new minimum value.
 	 */
@@ -110,7 +115,7 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	}
 
 	/**
-	 * Returns the maximum value of this statistics.
+	 * Returns the maximum value of this channel.
 	 *
 	 * @return The maximum value is returned.
 	 */
@@ -119,7 +124,7 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	}
 
 	/**
-	 * Sets new maximum for this statistics.
+	 * Sets new maximum value for this channel.
 	 *
 	 * @param maximum The new maximum value.
 	 */
@@ -128,7 +133,7 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	}
 
 	/**
-	 * Returns the average value of this statistics.
+	 * Returns the average value of this channel.
 	 *
 	 * @return The average value is returned.
 	 */
@@ -137,7 +142,7 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	}
 
 	/**
-	 * Sets new average for this statistics.
+	 * Sets new average value for this channel.
 	 *
 	 * @param average The new average value.
 	 */
@@ -146,7 +151,7 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	}
 
 	/**
-	 * Returns the deviation value of this statistics.
+	 * Returns the deviation value of this channel.
 	 *
 	 * @return The deviation value is returned.
 	 */
@@ -155,7 +160,7 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	}
 
 	/**
-	 * Sets new deviation for this statistics.
+	 * Sets new deviation value for this channel.
 	 *
 	 * @param deviation The new deviation value.
 	 */
@@ -173,12 +178,36 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	}
 
 	/**
+	 * Sets new {@link ScalarType} for this channel.
+	 *
+	 * @param scalarType The new {@code ScalarType}.
+	 * @throws IllegalArgumentException Thrown if given {@code ScalarType} is
+	 * 		{@link ScalarType#UNKNOWN}.
+	 */
+	public void setScalarType(ScalarType scalarType) {
+		if(scalarType.isUnknown()) {
+			throw new IllegalArgumentException("Scalar type constant is not allowed to be '" + scalarType + "'.");
+		}
+
+		getValue(ATTR_SCALAR_TYPE).set(scalarType);
+	}
+
+	/**
 	 * Returns the {@link Interpolation} of this channel.
 	 *
 	 * @return The {@code Interpolation} is returned.
 	 */
 	public Interpolation getInterpolation() {
 		return getValue(ATTR_INTERPOLATION).extract();
+	}
+
+	/**
+	 * Sets new interpolation for this channel.
+	 *
+	 * @param interpolation The new {@code Interpolation}.
+	 */
+	public void setInterpolation(Interpolation interpolation) {
+		getValue(ATTR_INTERPOLATION).set(interpolation);
 	}
 
 	/**
@@ -191,12 +220,30 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	}
 
 	/**
+	 * Sets new rank for this channel.
+	 *
+	 * @param rank The new rank.
+	 */
+	public void setRank(Integer rank) {
+		getValue(ATTR_RANK).set(rank);
+	}
+
+	/**
 	 * Returns the type size of this channel.
 	 *
 	 * @return The type size is returned.
 	 */
 	public Integer getTypeSize() {
 		return getValue(ATTR_TYPE_SIZE).extract();
+	}
+
+	/**
+	 * Sets new type size for this channel.
+	 *
+	 * @param typeSize The new type size.
+	 */
+	public void setTypeSize(Integer typeSize) {
+		getValue(ATTR_TYPE_SIZE).set(typeSize);
 	}
 
 	/**
@@ -215,56 +262,6 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	 */
 	public Quantity getQuantity() {
 		return getCore().getInfoRelation(Quantity.class);
-	}
-
-	// ======================================================================
-	// Package methods
-	// ======================================================================
-
-	/**
-	 * Sets new {@link ScalarType} for this channel.
-	 *
-	 * @param scalarType The new {@code ScalarType}.
-	 * @throws IllegalArgumentException Thrown if given {@code ScalarType} is
-	 * 		{@link ScalarType#UNKNOWN}.
-	 */
-	// TODO it might be useful to change the scalar type in post processing ?!
-	public void setScalarType(ScalarType scalarType) {
-		if(scalarType.isUnknown()) {
-			throw new IllegalArgumentException("Scalar type constant is not allowed to be '" + scalarType + "'.");
-		}
-
-		getValue(ATTR_SCALAR_TYPE).set(scalarType);
-	}
-
-	/**
-	 * Sets new interpolation for this channel.
-	 *
-	 * @param interpolation The new {@code Interpolation}.
-	 */
-	// TODO Interpolation was completely hidden in the MDM4 API
-	public void setInterpolation(Interpolation interpolation) {
-		getValue(ATTR_INTERPOLATION).set(interpolation);
-	}
-
-	/**
-	 * Sets new rank for this channel.
-	 *
-	 * @param rank The new rank.
-	 */
-	// TODO this is a read only property
-	public void setRank(Integer rank) {
-		getValue(ATTR_RANK).set(rank);
-	}
-
-	/**
-	 * Sets new type size for this channel.
-	 *
-	 * @param typeSize The new type size.
-	 */
-	// TODO this is a read only property too
-	public void setTypeSize(Integer typeSize) {
-		getValue(ATTR_TYPE_SIZE).set(typeSize);
 	}
 
 }

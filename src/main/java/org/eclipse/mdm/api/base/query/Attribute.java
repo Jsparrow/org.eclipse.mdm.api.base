@@ -94,6 +94,14 @@ public interface Attribute {
 		return createValue(unit, true, input);
 	}
 
+	/**
+	 * Creates a new sequence {@link Value} with given unit name and initial
+	 * value.
+	 *
+	 * @param unit The name of unit.
+	 * @param input The initial value.
+	 * @return Created {@code Value} is returned.
+	 */
 	default Value createValueSeq(String unit, Object input) {
 		ValueType valueType = getValueType().toSequenceType();
 		if(valueType.isEnumerationType()) {

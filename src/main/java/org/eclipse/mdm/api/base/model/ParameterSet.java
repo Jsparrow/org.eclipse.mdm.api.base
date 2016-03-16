@@ -37,7 +37,12 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	// Constructors
 	// ======================================================================
 
-	public ParameterSet(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	ParameterSet(EntityCore core) {
 		super(core);
 	}
 
@@ -75,6 +80,15 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	}
 
 	/**
+	 * Sets new version for this parameter set.
+	 *
+	 * @param version The new version.
+	 */
+	public void setVersion(String version) {
+		getValue(ATTR_VERSION).set(version);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -82,20 +96,6 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 		StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append('(');
 		sb.append(getValues().values().stream().map(Value::toString).collect(Collectors.joining(", ")));
 		return sb.append(", parameters =").append(getParameters()).append(')').toString();
-	}
-
-	// ======================================================================
-	// Package methods
-	// ======================================================================
-
-	/**
-	 * Sets new version for this parameter set.
-	 *
-	 * @param version The new version.
-	 */
-	// TODO read only property
-	public void setVersion(String version) {
-		getValue(ATTR_VERSION).set(version);
 	}
 
 }

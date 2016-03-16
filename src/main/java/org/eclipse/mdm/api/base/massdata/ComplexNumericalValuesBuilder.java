@@ -63,7 +63,7 @@ public class ComplexNumericalValuesBuilder extends NumericalValuesBuilder {
 	 * @param values The {@code FloatComplex} array sequence.
 	 * @return The {@link UnitBuilder} is returned.
 	 */
-	public UnitBuilder floatComplexValues(FloatComplex[] values) {
+	public final UnitBuilder floatComplexValues(FloatComplex[] values) {
 		createValues(ScalarType.FLOAT_COMPLEX, values);
 		return new UnitBuilder(writeRequest);
 	}
@@ -76,7 +76,7 @@ public class ComplexNumericalValuesBuilder extends NumericalValuesBuilder {
 	 * @param flags The validity flags for each {@code FloatComplex} value.
 	 * @return The {@link UnitBuilder} is returned.
 	 */
-	public UnitBuilder floatComplexValues(FloatComplex[] values, boolean[] flags) {
+	public final UnitBuilder floatComplexValues(FloatComplex[] values, boolean[] flags) {
 		createValues(ScalarType.FLOAT_COMPLEX, values, flags);
 		return new UnitBuilder(writeRequest);
 	}
@@ -89,7 +89,7 @@ public class ComplexNumericalValuesBuilder extends NumericalValuesBuilder {
 	 * @param values The {@code DoubleComplex} array sequence.
 	 * @return The {@link UnitBuilder} is returned.
 	 */
-	public UnitBuilder doubleComplexValues(DoubleComplex[] values) {
+	public final UnitBuilder doubleComplexValues(DoubleComplex[] values) {
 		createValues(ScalarType.DOUBLE_COMPLEX, values);
 		return new UnitBuilder(writeRequest);
 	}
@@ -102,7 +102,7 @@ public class ComplexNumericalValuesBuilder extends NumericalValuesBuilder {
 	 * @param flags The validity flags for each {@code DoubleComplex} value.
 	 * @return The {@link UnitBuilder} is returned.
 	 */
-	public UnitBuilder doubleComplexValues(DoubleComplex[] values, boolean[] flags) {
+	public final UnitBuilder doubleComplexValues(DoubleComplex[] values, boolean[] flags) {
 		createValues(ScalarType.DOUBLE_COMPLEX, values, flags);
 		return new UnitBuilder(writeRequest);
 	}

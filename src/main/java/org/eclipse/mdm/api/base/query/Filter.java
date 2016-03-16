@@ -134,7 +134,7 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * Adds passed {@link Condition} to this filter's {@link FilterItem} sequence.
+	 * Adds given {@link Condition} to this filter's {@link FilterItem} sequence.
 	 *
 	 * @param condition {@code Condition} that will be added.
 	 * @return Returns this filter.
@@ -146,7 +146,7 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * Merges all passed filters with this filter.
+	 * Merges all given filters with this filter.
 	 *
 	 * @param filters Filters that will be merged.
 	 * @return Returns this filter.
@@ -158,7 +158,7 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * Merges all passed filters with this filter.
+	 * Merges all given filters with this filter.
 	 *
 	 * @param filters Filters that will be merged.
 	 * @return Returns this filter.
@@ -170,7 +170,7 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * The {@link FilterItem}s of the passed filter are added to this filter.
+	 * The {@link FilterItem}s of the given filter are added to this filter.
 	 * If required, then parenthesis are implicitly added as shown in the
 	 * example below:
 	 *

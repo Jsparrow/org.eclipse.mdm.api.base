@@ -9,7 +9,7 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * The sequence representation to describe the mass data storage type.
+ * The sequence representation to describe the storage type of measured values.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -23,7 +23,8 @@ public enum SequenceRepresentation {
 	// ======================================================================
 
 	/**
-	 * Mass data is stored as is and values are therefore immediately available.
+	 * Measured values are stored as is and values are therefore immediately
+	 * available.
 	 */
 	EXPLICIT,
 
@@ -72,8 +73,8 @@ public enum SequenceRepresentation {
 	RAW_POLYNOMIAL,
 
 	/**
-	 * Mass data is stored as is in an external file and values are therefore
-	 * immediately available.
+	 * Measured values are stored as is in an external file and values are
+	 * therefore immediately available.
 	 */
 	EXPLICIT_EXTERNAL,
 

@@ -34,20 +34,20 @@ public interface Query {
 	// ======================================================================
 
 	/**
-	 * Checks whether passed {@link EntityType} will be queried in any way (select
-	 * or join).
+	 * Checks whether given {@link EntityType} will be queried in any way
+	 * (select or join).
 	 *
 	 * @param entityType The checked {@code EntityType}.
-	 * @return True if passed {@code EntityType} will be queried.
+	 * @return True if given {@code EntityType} will be queried.
 	 */
 	boolean isQueried(EntityType entityType);
 
 	/**
-	 * Adds select statements for all {@link Attribute}s of each passed
+	 * Adds select statements for all {@link Attribute}s of each given
 	 * {@link EntityType}.
 	 *
-	 * @param entityTypes The {@code Attribute}s of each {@code EntityType} will be
-	 * 		passed to {@link #select(List)}.
+	 * @param entityTypes The {@code Attribute}s of each {@code EntityType}
+	 * 		will be passed to {@link #select(List)}.
 	 * @return This query is returned.
 	 */
 	default Query selectAll(List<EntityType> entityTypes) {
@@ -56,11 +56,11 @@ public interface Query {
 	}
 
 	/**
-	 * Adds select statements for all {@link Attribute}s of each passed
+	 * Adds select statements for all {@link Attribute}s of each given
 	 * {@link EntityType}.
 	 *
-	 * @param entityTypes The {@code Attribute}s of each {@code EntityType} will be
-	 * 		passed to {@link #select(List)}.
+	 * @param entityTypes The {@code Attribute}s of each {@code EntityType}
+	 * 		will be passed to {@link #select(List)}.
 	 * @return This query is returned.
 	 */
 	default Query selectAll(EntityType... entityTypes) {
@@ -69,11 +69,11 @@ public interface Query {
 	}
 
 	/**
-	 * Adds select statements for all {@link Attribute}s identified by passed
+	 * Adds select statements for all {@link Attribute}s identified by given
 	 * names at given {@link EntityType}.
 	 *
-	 * @param entityType The {@code EntityType} whose {@code Attribute}s will be passed
-	 * 		to {@link #select(Attribute)}.
+	 * @param entityType The {@code EntityType} whose {@code Attribute}s will
+	 * 		be passed to {@link #select(Attribute)}.
 	 * @param names The names of the {@code Attribute}s that have to be added.
 	 * @return This query is returned.
 	 * @see EntityType#getAttribute(String)
@@ -84,11 +84,11 @@ public interface Query {
 	}
 
 	/**
-	 * Adds a select statement for the ID {@link Attribute} of each passed
+	 * Adds a select statement for the ID {@link Attribute} of each given
 	 * {@link EntityType}.
 	 *
-	 * @param entityTypes The {@code EntityType}s whose ID {@code Attribute}s will be passed
-	 * 		to {@link #select(Attribute)}.
+	 * @param entityTypes The {@code EntityType}s whose ID {@code Attribute}s
+	 * 		will be passed to {@link #select(Attribute)}.
 	 * @return This query is returned.
 	 */
 	default Query selectID(EntityType... entityTypes) {
@@ -97,10 +97,10 @@ public interface Query {
 	}
 
 	/**
-	 * Adds a select statement for each passed {@link Attribute}.
+	 * Adds a select statement for each given {@link Attribute}.
 	 *
-	 * @param attributes Each passed {@code Attribute} will be passed to
-	 * 		{@link #select(Attribute)}.
+	 * @param attributes Each {@code Attribute} will be passed to {@link
+	 * 		#select(Attribute)}.
 	 * @return This query is returned.
 	 */
 	default Query select(List<Attribute> attributes) {
@@ -109,10 +109,10 @@ public interface Query {
 	}
 
 	/**
-	 * Adds a select statement for each passed {@link Attribute}.
+	 * Adds a select statement for each given {@link Attribute}.
 	 *
-	 * @param attributes Each passed {@code Attribute} will be passed to
-	 * 		{@link #select(Attribute)}.
+	 * @param attributes Each {@code Attribute} will be passed to {@link
+	 * 		#select(Attribute)}.
 	 * @return This query is returned.
 	 */
 	default Query select(Attribute... attributes) {
@@ -121,7 +121,7 @@ public interface Query {
 	}
 
 	/**
-	 * Adds a select statement for passed {@link Attribute}.
+	 * Adds a select statement for given {@link Attribute}.
 	 *
 	 * @param attribute {@code Attribute} will be passed to {@link
 	 * 		#select(Attribute, Aggregation)} with {@link Aggregation#NONE}.
@@ -132,7 +132,7 @@ public interface Query {
 	}
 
 	/**
-	 * Adds a select statement for passed {@link Attribute} with given {@link
+	 * Adds a select statement for given {@link Attribute} with given {@link
 	 * Aggregation} function.
 	 *
 	 * @param attribute {@code Attribute} will be passed to {@link
@@ -146,7 +146,7 @@ public interface Query {
 	}
 
 	/**
-	 * Adds a select statement for passed {@link Attribute} with given {@link
+	 * Adds a select statement for given {@link Attribute} with given {@link
 	 * Aggregation} function and unit.
 	 *
 	 * @param attribute The {@code Attribute} a select statement will be
@@ -162,10 +162,10 @@ public interface Query {
 	 * to each given target {@code EntityType} a join statement will be added.
 	 *
 	 * @param source The source {@code EntityType}.
-	 * @param targets The unambiguous {@code Relation} for each passed target
-	 * 		{@code EntityType} is retrieved from the source {@code EntityType}
-	 * 		using {@link EntityType#getRelation(EntityType)} and passed to
-	 * 		{@link #join(Relation)}.
+	 * @param targets The unambiguous {@code Relation} for each target {@code
+	 * 		EntityType} is retrieved from the source {@code EntityType} using
+	 * 		{@link EntityType#getRelation(EntityType)} and passed to {@link
+	 * 		#join(Relation)}.
 	 * @return This query is returned.
 	 */
 	default Query join(EntityType source, EntityType... targets) {
@@ -174,7 +174,7 @@ public interface Query {
 	}
 
 	/**
-	 * Adds a join statement for each passed {@link Relation}s.
+	 * Adds a join statement for each given {@link Relation}s.
 	 *
 	 * @param relations Each {@code Relation} will be passed to {@link
 	 * 		#join(Relation)}.
@@ -186,7 +186,7 @@ public interface Query {
 	}
 
 	/**
-	 * Adds a join statement for each passed {@link Relation}s.
+	 * Adds a join statement for each given {@link Relation}s.
 	 *
 	 * @param relations Each {@code Relation} will be passed to {@link
 	 * 		#join(Relation)}.
@@ -198,7 +198,7 @@ public interface Query {
 	}
 
 	/**
-	 * Adds a join statement for passed {@link Relation}.
+	 * Adds a join statement for given {@link Relation}.
 	 *
 	 * @param relation {@code Relation} will be passed to {@link
 	 * 		#join(Relation, Join)} with {@link Join#INNER}.
@@ -209,7 +209,7 @@ public interface Query {
 	}
 
 	/**
-	 * Adds a join statement for passed {@link Relation} with given {@link
+	 * Adds a join statement for given {@link Relation} with given {@link
 	 * Join} type.
 	 *
 	 * @param relation The {@code Relation} a join statement will be added for.
@@ -219,7 +219,7 @@ public interface Query {
 	Query join(Relation relation, Join join);
 
 	/**
-	 * Adds a group by statement for each passed {@link Attribute}.
+	 * Adds a group by statement for each given {@link Attribute}.
 	 *
 	 * @param attributes Each {@code Attribute} will be passed to {@link
 	 * 		#group(Attribute)}.
@@ -231,7 +231,7 @@ public interface Query {
 	}
 
 	/**
-	 * Adds a group by statement for each passed {@link Attribute}.
+	 * Adds a group by statement for each given {@link Attribute}.
 	 *
 	 * @param attributes Each {@code Attribute} will be passed to {@link
 	 * 		#group(Attribute)}.
@@ -243,7 +243,7 @@ public interface Query {
 	}
 
 	/**
-	 * Adds a group by statement for passed {@link Attribute}.
+	 * Adds a group by statement for given {@link Attribute}.
 	 *
 	 * @param attribute The {@code Attribute} a group by statement will be
 	 * 		added for.
@@ -252,7 +252,7 @@ public interface Query {
 	Query group(Attribute attribute);
 
 	/**
-	 * Adds an order by statement for each passed {@link Attribute}.
+	 * Adds an order by statement for each given {@link Attribute}.
 	 *
 	 * @param attributes Each {@code Attribute} will be passed to {@link
 	 * 		#order(Attribute)}.
@@ -264,7 +264,7 @@ public interface Query {
 	}
 
 	/**
-	 * Adds an order by statement for each passed {@link Attribute}.
+	 * Adds an order by statement for each given {@link Attribute}.
 	 *
 	 * @param attributes Each {@code Attribute} will be passed to {@link
 	 * 		#order(Attribute)}.
@@ -276,7 +276,7 @@ public interface Query {
 	}
 
 	/**
-	 * Adds an order by statement for passed {@link Attribute}.
+	 * Adds an order by statement for given {@link Attribute}.
 	 *
 	 * @param attribute The {@code Attribute} is passed to {@link
 	 * 		#order(Attribute, boolean)} with {@code ascending = true}.
@@ -287,7 +287,7 @@ public interface Query {
 	}
 
 	/**
-	 * Adds an order by statement for passed {@link Attribute} with given
+	 * Adds an order by statement for given {@link Attribute} with given
 	 * ascending flag.
 	 *
 	 * @param attribute The {@code Attribute} an order by statement will be
@@ -310,7 +310,7 @@ public interface Query {
 	}
 
 	/**
-	 * Executes this query with passed {@link Filter} and returns the {@link
+	 * Executes this query with given {@link Filter} and returns the {@link
 	 * Result}.
 	 *
 	 * @param filter The criteria sequence.
@@ -333,7 +333,7 @@ public interface Query {
 	}
 
 	/**
-	 * Executes this query with passed {@link Filter} and returns the {@link
+	 * Executes this query with given {@link Filter} and returns the {@link
 	 * Result}s.
 	 *
 	 * @param filter The criteria sequence.

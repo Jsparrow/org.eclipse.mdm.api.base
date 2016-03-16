@@ -51,7 +51,12 @@ Describable, FilesAttachable, Sortable, Statable, Tagable {
 	// Constructors
 	// ======================================================================
 
-	public TestStep(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	TestStep(EntityCore core) {
 		super(core);
 	}
 

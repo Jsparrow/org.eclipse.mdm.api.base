@@ -38,18 +38,18 @@ import java.util.function.Function;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see #getVirtualValue()
- * @see #setObjectValue(Object, Optional)
+ * @see #setObjectValue(Object, Unit)
  * @see #setStringValue(String)
  * @see #setDateValue(LocalDateTime)
  * @see #setBooleanValue(Boolean)
- * @see #setByteValue(Byte, Optional)
- * @see #setShortValue(Short, Optional)
- * @see #setIntegerValue(Integer, Optional)
- * @see #setLongValue(Long, Optional)
- * @see #setFloatValue(Float, Optional)
- * @see #setDoubleValue(Double, Optional)
- * @see #setFloatComplexValue(FloatComplex, Optional)
- * @see #setDoubleComplexValue(DoubleComplex, Optional)
+ * @see #setByteValue(Byte, Unit)
+ * @see #setShortValue(Short, Unit)
+ * @see #setIntegerValue(Integer, Unit)
+ * @see #setLongValue(Long, Unit)
+ * @see #setFloatValue(Float, Unit)
+ * @see #setDoubleValue(Double, Unit)
+ * @see #setFloatComplexValue(FloatComplex, Unit)
+ * @see #setDoubleComplexValue(DoubleComplex, Unit)
  */
 public abstract class BaseParameter extends BaseEntity implements Deletable {
 
@@ -70,7 +70,14 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	// Constructors
 	// ======================================================================
 
-	protected BaseParameter(String attrScalarType, String attrValue, Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param attrScalarType Name of the {@link ScalarType} attribute.
+	 * @param attrValue Name of the {@code String} value attribute.
+	 * @param core The {@link EntityCore}.
+	 */
+	protected BaseParameter(String attrScalarType, String attrValue, EntityCore core) {
 		super(core);
 		this.attrScalarType = attrScalarType;
 		this.attrValue = attrValue;
@@ -159,16 +166,16 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 * @see #setStringValue(String)
 	 * @see #setDateValue(LocalDateTime)
 	 * @see #setBooleanValue(Boolean)
-	 * @see #setByteValue(Byte, Optional)
-	 * @see #setShortValue(Short, Optional)
-	 * @see #setIntegerValue(Integer, Optional)
-	 * @see #setLongValue(Long, Optional)
-	 * @see #setFloatValue(Float, Optional)
-	 * @see #setDoubleValue(Double, Optional)
-	 * @see #setFloatComplexValue(FloatComplex, Optional)
-	 * @see #setDoubleComplexValue(DoubleComplex, Optional)
+	 * @see #setByteValue(Byte, Unit)
+	 * @see #setShortValue(Short, Unit)
+	 * @see #setIntegerValue(Integer, Unit)
+	 * @see #setLongValue(Long, Unit)
+	 * @see #setFloatValue(Float, Unit)
+	 * @see #setDoubleValue(Double, Unit)
+	 * @see #setFloatComplexValue(FloatComplex, Unit)
+	 * @see #setDoubleComplexValue(DoubleComplex, Unit)
 	 */
-	public void setObjectValue(Object value, Optional<Unit> unit) {
+	public void setObjectValue(Object value, Unit unit) {
 		if(value instanceof String) {
 			setStringValue((String) value);
 		} else if(value instanceof LocalDateTime) {
@@ -206,7 +213,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	public void setStringValue(String value) {
 		setScalarType(ScalarType.STRING);
 		getParameterValue().set(value);
-		setUnit(Optional.empty());
+		setUnit(null);
 	}
 
 	/**
@@ -219,7 +226,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	public void setDateValue(LocalDateTime value) {
 		setScalarType(ScalarType.DATE);
 		getParameterValue().set(value.format(LOCAL_DATE_TIME_FORMATTER));
-		setUnit(Optional.empty());
+		setUnit(null);
 	}
 
 	/**
@@ -231,7 +238,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	public void setBooleanValue(Boolean value) {
 		setScalarType(ScalarType.BOOLEAN);
 		getParameterValue().set(value.toString());
-		setUnit(Optional.empty());
+		setUnit(null);
 	}
 
 	/**
@@ -242,7 +249,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 * @param value The new value for this parameter.
 	 * @param unit The relation to a unit is optional.
 	 */
-	public void setByteValue(Byte value, Optional<Unit> unit) {
+	public void setByteValue(Byte value, Unit unit) {
 		setScalarType(ScalarType.BYTE);
 		getParameterValue().set(value.toString());
 		setUnit(unit);
@@ -256,7 +263,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 * @param value The new value for this parameter.
 	 * @param unit The relation to a unit is optional.
 	 */
-	public void setShortValue(Short value, Optional<Unit> unit) {
+	public void setShortValue(Short value, Unit unit) {
 		setScalarType(ScalarType.SHORT);
 		getParameterValue().set(value.toString());
 		setUnit(unit);
@@ -270,7 +277,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 * @param value The new value for this parameter.
 	 * @param unit The relation to a unit is optional.
 	 */
-	public void setIntegerValue(Integer value, Optional<Unit> unit) {
+	public void setIntegerValue(Integer value, Unit unit) {
 		setScalarType(ScalarType.INTEGER);
 		getParameterValue().set(value.toString());
 		setUnit(unit);
@@ -284,7 +291,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 * @param value The new value for this parameter.
 	 * @param unit The relation to a unit is optional.
 	 */
-	public void setLongValue(Long value, Optional<Unit> unit) {
+	public void setLongValue(Long value, Unit unit) {
 		setScalarType(ScalarType.LONG);
 		getParameterValue().set(value.toString());
 		setUnit(unit);
@@ -298,7 +305,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 * @param value The new value for this parameter.
 	 * @param unit The relation to a unit is optional.
 	 */
-	public void setFloatValue(Float value, Optional<Unit> unit) {
+	public void setFloatValue(Float value, Unit unit) {
 		setScalarType(ScalarType.FLOAT);
 		getParameterValue().set(value.toString());
 		setUnit(unit);
@@ -312,7 +319,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 * @param value The new value for this parameter.
 	 * @param unit The relation to a unit is optional.
 	 */
-	public void setDoubleValue(Double value, Optional<Unit> unit) {
+	public void setDoubleValue(Double value, Unit unit) {
 		setScalarType(ScalarType.DOUBLE);
 		getParameterValue().set(value.toString());
 		setUnit(unit);
@@ -326,7 +333,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 * @param value The new value for this parameter.
 	 * @param unit The relation to a unit is optional.
 	 */
-	public void setFloatComplexValue(FloatComplex value, Optional<Unit> unit) {
+	public void setFloatComplexValue(FloatComplex value, Unit unit) {
 		setScalarType(ScalarType.FLOAT_COMPLEX);
 		getParameterValue().set(value.toString());
 		setUnit(unit);
@@ -340,7 +347,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 * @param value The new value for this parameter.
 	 * @param unit The relation to a unit is optional.
 	 */
-	public void setDoubleComplexValue(DoubleComplex value, Optional<Unit> unit) {
+	public void setDoubleComplexValue(DoubleComplex value, Unit unit) {
 		setScalarType(ScalarType.DOUBLE_COMPLEX);
 		getParameterValue().set(value.toString());
 		setUnit(unit);
@@ -428,11 +435,11 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 * Replaces current {@link Unit} relation with the given one, if the {@code
 	 * Optional} is not empty. Otherwise any current relations is removed.
 	 *
-	 * @param unit The new {@code Unit}.
+	 * @param unit The new {@code Unit} may be {@code null}.
 	 */
-	private void setUnit(Optional<Unit> unit) {
-		if(unit.isPresent()) {
-			getCore().setInfoRelation(unit.get());
+	private void setUnit(Unit unit) {
+		if(unit == null) {
+			getCore().setInfoRelation(unit);
 		} else {
 			getCore().removeInfoRelation(Unit.class);
 		}

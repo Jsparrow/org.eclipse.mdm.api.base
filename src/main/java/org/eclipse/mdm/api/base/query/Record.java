@@ -90,10 +90,10 @@ public final class Record {
 	}
 
 	/**
-	 * Adds passed {@link Value} to this record.
+	 * Adds given {@link Value} to this record.
 	 *
 	 * @param value {@link Value} that will be added.
-	 * @throws IllegalArgumentException Thrown if passed {@code Value}
+	 * @throws IllegalArgumentException Thrown if given {@code Value}
 	 * 		overwrites an existing one.
 	 */
 	public void addValue(Value value) {
@@ -119,14 +119,14 @@ public final class Record {
 	// ======================================================================
 
 	/**
-	 * Merges passed record with this instance. To be able to do so, the passed
+	 * Merges given record with this instance. To be able to do so, the given
 	 * record must be compatible with this record. Records are compatible if
 	 * the underlying {@link EntityType} and the subset of {@link Value}s is the
 	 * same.
 	 *
 	 * @param record The record that will be merged with this instance.
 	 * @return A new record with merged {@code Value}s is returned.
-	 * @throws IllegalArgumentException Thrown if passed record is not compatible.
+	 * @throws IllegalArgumentException Thrown if given record is not compatible.
 	 */
 	Record merge(Record record) {
 		boolean entityTypeMissmatch = !getEntityType().equals(record.getEntityType());
@@ -141,11 +141,11 @@ public final class Record {
 	}
 
 	/**
-	 * Returns {@link Value} with passed name.
+	 * Returns {@link Value} with given name.
 	 *
 	 * @param name Used as identifier.
-	 * @return {@code Value} with passed name is returned.
-	 * @throws IllegalArgumentException Thrown if attribute with passed name is
+	 * @return {@code Value} with given name is returned.
+	 * @throws IllegalArgumentException Thrown if attribute with given name is
 	 * 		not contained.
 	 */
 	Value getValue(String name) {

@@ -52,7 +52,12 @@ public final class Quantity extends BaseEntity implements Copyable, Datable, Del
 	// Constructors
 	// ======================================================================
 
-	public Quantity(Core core) {
+	/**
+	 * Constructor.
+	 *
+	 * @param core The {@link EntityCore}.
+	 */
+	Quantity(EntityCore core) {
 		super(core);
 	}
 
