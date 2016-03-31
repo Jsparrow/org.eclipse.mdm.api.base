@@ -68,9 +68,9 @@ public interface EntityCore {
 
 	Map<String, Entity> getImplicitRelations();
 
-	default void setImplicitRelation(Entity entity) {
+	default void setImplicitRelation(Entity entity, boolean checkPersistance) {
 		Long id = entity.getURI().getID();
-		if(id.longValue() < 1) {
+		if(id.longValue() < 1 && checkPersistance) {
 			throw new IllegalArgumentException("Entity '" + entity + "' is not persisted.");
 		}
 		getImplicitRelations().put(entity.getURI().getTypeName(), entity);

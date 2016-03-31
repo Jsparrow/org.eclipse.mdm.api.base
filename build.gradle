@@ -1,9 +1,9 @@
-description = 'MDM API'
+description = 'MDM API - Base Model'
 group = 'org.eclipse.mdm'
 version = '1.0.0'
 
 apply plugin: 'java'
-apply plugin: 'maven' 
+apply plugin: 'maven'
 apply plugin: 'eclipse'
 
 repositories {

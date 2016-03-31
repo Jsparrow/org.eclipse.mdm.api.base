@@ -59,16 +59,22 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 		return Collections.unmodifiableList(getCore().getChildren(Parameter.class));
 	}
 
-	/**
-	 * Removes given {@link Parameter} from this parameter set.
-	 *
-	 * @param parameter The {@code Parameter} that will be removed.
-	 * @return Returns {@code true} if this parameter set held given {@code
-	 * 		Parameter}.
-	 */
-	public boolean removeParameter(Parameter parameter) {
-		return getCore().removeChild(parameter);
+	// TODO add method getParameter(String name);
+
+	void addParameter(Parameter parameter) {
+		getCore().addChild(parameter);
 	}
+
+	//	/**
+	//	 * Removes given {@link Parameter} from this parameter set.
+	//	 *
+	//	 * @param parameter The {@code Parameter} that will be removed.
+	//	 * @return Returns {@code true} if this parameter set held given {@code
+	//	 * 		Parameter}.
+	//	 */
+	//	public boolean removeParameter(Parameter parameter) {
+	//		return getCore().removeChild(parameter);
+	//	}
 
 	/**
 	 * Returns the version of this parameter set.

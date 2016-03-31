@@ -30,7 +30,7 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public Channel createChannel(String name, Measurement measurement, Quantity quantity) {
 		Channel channel = new Channel(createCore(Channel.class));
 
-		channel.getCore().setImplicitRelation(measurement);
+		channel.getCore().setImplicitRelation(measurement, true);
 
 		channel.getCore().setInfoRelation(quantity);
 		channel.getCore().setInfoRelation(quantity.getDefaultUnit());
@@ -60,7 +60,7 @@ public abstract class BaseEntityFactory implements EntityFactory {
 
 		ChannelGroup channelGroup = new ChannelGroup(createCore(ChannelGroup.class));
 
-		channelGroup.getCore().setImplicitRelation(measurement);
+		channelGroup.getCore().setImplicitRelation(measurement, true);
 
 		channelGroup.setName(name);
 		channelGroup.setMimeType(getDefaultMimeType(ChannelGroup.class));
@@ -76,7 +76,7 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public Measurement createMeasurement(String name, TestStep testStep) {
 		Measurement measurement = new Measurement(createCore(Measurement.class));
 
-		measurement.getCore().setImplicitRelation(testStep);
+		measurement.getCore().setImplicitRelation(testStep, true);
 		//		for(ContextRoot contextRoot : contextRoots) {
 		//			measurement.getCore().setImplicitRelation(contextRoot);
 		//		}
@@ -95,16 +95,20 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public Parameter createParameter(String name, Object value, Unit unit, ParameterSet parameterSet) {
 		Parameter parameter = new Parameter(createCore(Parameter.class));
 
-		parameter.getCore().setImplicitRelation(parameterSet);
+		parameter.getCore().setImplicitRelation(parameterSet, false);
 		if(unit != null) {
-			parameter.getCore().setImplicitRelation(unit);
+			parameter.getCore().setImplicitRelation(unit, true);
 		}
+
+		/*
+		 * TODO: make sure the name of the parameter is not already in use!!
+		 */
 
 		parameter.setName(name);
 		parameter.setMimeType(getDefaultMimeType(Parameter.class));
 		parameter.setObjectValue(value, unit);
 
-		parameterSet.getCore().addChild(parameter);
+		parameterSet.addParameter(parameter);
 
 		return parameter;
 	}
@@ -116,7 +120,7 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public ParameterSet createParameterSet(String name, String version, Parameterizable parameterizable) {
 		ParameterSet parameterSet = new ParameterSet(createCore(ParameterSet.class));
 
-		parameterSet.getCore().setImplicitRelation(parameterizable);
+		parameterSet.getCore().setImplicitRelation(parameterizable, true);
 
 		parameterSet.setName(name);
 		parameterSet.setMimeType(getDefaultMimeType(ParameterSet.class));
@@ -174,7 +178,7 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		Test test = new Test(createCore(Test.class));
 
 		if(responsiblePerson != null) {
-			test.getCore().setImplicitRelation(responsiblePerson);
+			test.getCore().setImplicitRelation(responsiblePerson, true);
 		}
 
 		/**
@@ -199,7 +203,7 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public TestStep createTestStep(String name, Test test) {
 		TestStep testStep = new TestStep(createCore(TestStep.class));
 
-		testStep.getCore().setImplicitRelation(test);
+		testStep.getCore().setImplicitRelation(test, true);
 
 		/**
 		 * TODO

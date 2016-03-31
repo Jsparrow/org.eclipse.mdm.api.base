@@ -979,17 +979,13 @@ public enum ValueType {
 		return ValueType.valueOf(name() + "_SEQUENCE");
 	}
 
-	// ======================================================================
-	// Package methods
-	// ======================================================================
-
 	/**
 	 * Returns the scalar version of this value type. This method returns
 	 * itself, if this value type is a scalar type.
 	 *
 	 * @return The sequence version of this value type is returned.
 	 */
-	ValueType toSingleType() {
+	public ValueType toSingleType() {
 		if(isSequence()) {
 			return ValueType.valueOf(name().replace("_SEQUENCE", ""));
 		}

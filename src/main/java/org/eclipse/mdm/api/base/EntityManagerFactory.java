@@ -12,8 +12,6 @@ import java.util.Map;
 
 import javax.ejb.Local;
 
-import org.eclipse.mdm.api.base.model.Value;
-
 /**
  * Takes connection parameters and produces a corresponding entity manager.
  *
@@ -21,7 +19,6 @@ import org.eclipse.mdm.api.base.model.Value;
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Value
  */
 @Local
 public interface EntityManagerFactory<T extends EntityManager> {
