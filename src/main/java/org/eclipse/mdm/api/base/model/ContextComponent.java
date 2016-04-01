@@ -65,14 +65,20 @@ public final class ContextComponent extends BaseEntity implements Deletable, Der
 	}
 
 	/**
-	 * Removes given {@code ContextSensor} from this context component.
+	 * Removes the {@link ContextSensor} identified by given name.
 	 *
-	 * @param contextSensor The {@code ContextSensor} that will be removed.
-	 * @return Returns {@code true} if this context component held given {@code
-	 * 		ContextSensor}.
+	 * @param name Name of the {@code ContextSensor} that have to be removed.
+	 * @return Returns {@code true} if the {@code ContextSensor} with given
+	 * 		name has been removed.
 	 */
-	public boolean removeContextSensor(ContextSensor contextSensor) {
-		return getCore().removeChild(contextSensor);
+	public boolean removeContextSensor(String name) {
+		Optional<ContextSensor> catalogSensor = getContextSensor(name);
+		if(catalogSensor.isPresent()) {
+			getCore().removeChild(catalogSensor.get());
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

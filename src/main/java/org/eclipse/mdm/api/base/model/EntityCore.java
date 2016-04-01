@@ -40,30 +40,27 @@ public interface EntityCore {
 		getInfoRelations().remove(type);
 	}
 
-	Map<Class<? extends Entity>, List<? extends Entity>> getChildren();
+	Map<Class<? extends Deletable>, List<? extends Deletable>> getChildren();
 
 	@SuppressWarnings("unchecked")
-	default <T extends Entity> List<T> getChildren(Class<T> type) {
+	default <T extends Deletable> List<T> getChildren(Class<T> type) {
 		return Collections.unmodifiableList((List<T>) getChildren().computeIfAbsent(type, k -> new ArrayList<>()));
 	}
 
-	Map<Class<? extends Entity>, List<? extends Entity>> getRemovedChildren();
+	Map<Class<? extends Deletable>, List<? extends Deletable>> getRemovedChildren();
 
 	@SuppressWarnings("unchecked")
-	default void addChild(Entity child) {
+	default void addChild(Deletable child) {
 		getRemovedChildren().getOrDefault(child.getClass(), new ArrayList<>()).remove(child);
-		((List<Entity>) getChildren().computeIfAbsent(child.getClass(), k -> new ArrayList<>())).add(child);
+		((List<Deletable>) getChildren().computeIfAbsent(child.getClass(), k -> new ArrayList<>())).add(child);
 	}
 
 	@SuppressWarnings("unchecked")
-	default boolean removeChild(Entity child) {
-		List<Entity> current = (List<Entity>) getChildren().getOrDefault(child.getClass(), new ArrayList<>());
-		boolean removed = current.remove(child);
-		if(removed) {
-			((List<Entity>) getRemovedChildren().computeIfAbsent(child.getClass(), k -> new ArrayList<>())).add(child);
+	default void removeChild(Deletable child) {
+		List<Deletable> current = (List<Deletable>) getChildren().getOrDefault(child.getClass(), new ArrayList<>());
+		if(current.remove(child)) {
+			((List<Deletable>) getRemovedChildren().computeIfAbsent(child.getClass(), k -> new ArrayList<>())).add(child);
 		}
-
-		return removed;
 	}
 
 	Map<String, Entity> getImplicitRelations();

@@ -270,7 +270,7 @@ public enum ValueType {
 	 * @throws IllegalStateException Thrown if {@link #isEnumerationType()} returns
 	 * 		{@code true}.
 	 */
-	public Value createValue(String name, Object input) {
+	public Value create(String name, Object input) {
 		return create(name, "", true, input);
 	}
 

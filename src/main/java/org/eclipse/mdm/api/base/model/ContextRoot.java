@@ -95,14 +95,20 @@ public final class ContextRoot extends BaseEntity implements Deletable, Derived 
 	}
 
 	/**
-	 * Removes given {@link ContextComponent} from this context root.
+	 * Removes the {@link ContextComponent} identified by given name.
 	 *
-	 * @param contextComponent The {@code ContextComponent} that will be removed.
-	 * @return Returns {@code true} if this context root held given {@code
-	 * 		ContextComponent}.
+	 * @param name Name of the {@code ContextComponent} that have to be removed.
+	 * @return Returns {@code true} if the {@code ContextComponent} with given
+	 * 		name has been removed.
 	 */
-	public boolean removeContextComponent(ContextComponent contextComponent) {
-		return getCore().removeChild(contextComponent);
+	public boolean removeContextComponent(String name) {
+		Optional<ContextComponent> contextComponent = getContextComponent(name);
+		if(contextComponent.isPresent()) {
+			getCore().removeChild(contextComponent.get());
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

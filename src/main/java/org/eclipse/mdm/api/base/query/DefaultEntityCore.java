@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.mdm.api.base.model.Deletable;
 import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.model.EntityCore;
 import org.eclipse.mdm.api.base.model.URI;
@@ -11,8 +12,8 @@ import org.eclipse.mdm.api.base.model.Value;
 
 public final class DefaultEntityCore implements EntityCore {
 
-	private final Map<Class<? extends Entity>, List<? extends Entity>> currentChildren = new HashMap<>();
-	private final Map<Class<? extends Entity>, List<? extends Entity>> removedChildren = new HashMap<>();
+	private final Map<Class<? extends Deletable>, List<? extends Deletable>> currentChildren = new HashMap<>();
+	private final Map<Class<? extends Deletable>, List<? extends Deletable>> removedChildren = new HashMap<>();
 
 	private final Map<Class<? extends Entity>, Entity> infoRelations = new HashMap<>();
 
@@ -56,12 +57,12 @@ public final class DefaultEntityCore implements EntityCore {
 	}
 
 	@Override
-	public Map<Class<? extends Entity>, List<? extends Entity>> getChildren() {
+	public Map<Class<? extends Deletable>, List<? extends Deletable>> getChildren() {
 		return currentChildren;
 	}
 
 	@Override
-	public Map<Class<? extends Entity>, List<? extends Entity>> getRemovedChildren() {
+	public Map<Class<? extends Deletable>, List<? extends Deletable>> getRemovedChildren() {
 		return removedChildren;
 	}
 

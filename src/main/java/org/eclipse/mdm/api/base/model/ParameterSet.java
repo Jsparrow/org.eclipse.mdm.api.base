@@ -10,6 +10,7 @@ package org.eclipse.mdm.api.base.model;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -51,6 +52,17 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	// ======================================================================
 
 	/**
+	 * Returns the {@link Parameter} identified by given name.
+	 *
+	 * @param name The name of the {@code Parameter}.
+	 * @return The {@code Optional} is empty if a {@code Parameter} with
+	 * 		given name does not exist.
+	 */
+	public Optional<Parameter> getParameter(String name) {
+		return getParameters().stream().filter(s -> s.getName().equals(name)).findAny();
+	}
+
+	/**
 	 * Returns all available {@link Parameter}s related to this parameter set.
 	 *
 	 * @return The returned {@code List} is unmodifiable.
@@ -59,22 +71,27 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 		return Collections.unmodifiableList(getCore().getChildren(Parameter.class));
 	}
 
-	// TODO add method getParameter(String name);
-
+	// TODO jdoc
 	void addParameter(Parameter parameter) {
 		getCore().addChild(parameter);
 	}
 
-	//	/**
-	//	 * Removes given {@link Parameter} from this parameter set.
-	//	 *
-	//	 * @param parameter The {@code Parameter} that will be removed.
-	//	 * @return Returns {@code true} if this parameter set held given {@code
-	//	 * 		Parameter}.
-	//	 */
-	//	public boolean removeParameter(Parameter parameter) {
-	//		return getCore().removeChild(parameter);
-	//	}
+	/**
+	 * Removes the {@link Parameter} identified by given name.
+	 *
+	 * @param name Name of the {@code Parameter} that have to be removed.
+	 * @return Returns {@code true} if the {@code Parameter} with given name
+	 * 		has been removed.
+	 */
+	public boolean removeParameter(String name) {
+		Optional<Parameter> parameter = getParameter(name);
+		if(parameter.isPresent()) {
+			getCore().removeChild(parameter.get());
+			return true;
+		}
+
+		return false;
+	}
 
 	/**
 	 * Returns the version of this parameter set.
