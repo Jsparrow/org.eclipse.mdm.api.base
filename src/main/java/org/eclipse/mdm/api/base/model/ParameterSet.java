@@ -59,7 +59,7 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	 * 		given name does not exist.
 	 */
 	public Optional<Parameter> getParameter(String name) {
-		return getParameters().stream().filter(s -> s.getName().equals(name)).findAny();
+		return getParameters().stream().filter(p -> p.getName().equals(name)).findAny();
 	}
 
 	/**

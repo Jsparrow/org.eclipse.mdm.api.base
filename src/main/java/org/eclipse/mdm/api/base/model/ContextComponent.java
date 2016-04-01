@@ -51,7 +51,7 @@ public final class ContextComponent extends BaseEntity implements Deletable, Der
 	 * 		given name does not exist.
 	 */
 	public Optional<ContextSensor> getContextSensor(String name) {
-		return getContextSensors().stream().filter(s -> s.getName().equals(name)).findAny();
+		return getContextSensors().stream().filter(cs -> cs.getName().equals(name)).findAny();
 	}
 
 	/**

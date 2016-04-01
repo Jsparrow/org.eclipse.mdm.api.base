@@ -81,7 +81,7 @@ public final class ContextRoot extends BaseEntity implements Deletable, Derived 
 	 * 		with given name does not exist.
 	 */
 	public Optional<ContextComponent> getContextComponent(String name) {
-		return getContextComponents().stream().filter(s -> s.getName().equals(name)).findAny();
+		return getContextComponents().stream().filter(cc -> cc.getName().equals(name)).findAny();
 	}
 
 	/**
