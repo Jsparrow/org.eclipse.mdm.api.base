@@ -77,9 +77,7 @@ public interface Transaction {
 	/**
 	 * Aborts (rollback) this transaction. Any changes made within this
 	 * transaction will be lost.
-	 *
-	 * @throws DataAccessException Thrown if unable to abort this transaction.
 	 */
-	void abort() throws DataAccessException;
+	void abort();
 
 }

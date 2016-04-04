@@ -113,25 +113,6 @@ public interface Entity {
 	 */
 	Collection<Entity> getInfoRelations();
 
-	//	/**
-	//	 * Returns all currently available children of this entity.
-	//	 *
-	//	 * <p><b>Note:</b> This method is intended to be used by API providers.
-	//	 *
-	//	 * @return Returned {@code Map} is unmodifiable.
-	//	 */
-	//	Map<Class<? extends Entity>, List<? extends Entity>> getChildren();
-	//
-	//	/**
-	//	 * Returns all removed children of this entity. These entities will be
-	//	 * implicitly removed once this entity is updated.
-	//	 *
-	//	 * <p><b>Note:</b> This method is intended to be used by API providers.
-	//	 *
-	//	 * @return Returned {@code Map} is unmodifiable.
-	//	 */
-	//	Map<Class<? extends Entity>, List<? extends Entity>> getRemovedChildren();
-
 	/**
 	 * Returns all implicitly related entities. This usually is a parent entity
 	 * or other related entities that have to be written once this entity is

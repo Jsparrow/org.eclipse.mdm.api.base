@@ -272,4 +272,17 @@ public interface SearchService {
 	<T extends Entity> Map<T, List<Record>> fetch(Class<T> type, List<Attribute> attributes, Filter filter)
 			throws DataAccessException;
 
+	default boolean isTextSearchAvailable() {
+		return false;
+	}
+
+	@SuppressWarnings("unchecked")
+	default <T extends Entity> List<T> fetch(Class<T> type, String query) throws DataAccessException {
+		return (List<T>) fetch(query).getOrDefault(type, Collections.emptyList());
+	}
+
+	default Map<Class<? extends Entity>, List<Entity>> fetch(String query) throws DataAccessException {
+		throw new UnsupportedOperationException();
+	}
+
 }
