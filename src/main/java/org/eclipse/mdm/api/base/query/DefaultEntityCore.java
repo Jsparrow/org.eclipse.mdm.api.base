@@ -27,6 +27,9 @@ public final class DefaultEntityCore implements EntityCore {
 		setURI(record.createURI());
 		values.putAll(record.getValues());
 		values.remove(Entity.ATTR_ID);
+
+		// remove any contained relation attributes
+		record.getEntityType().getRelations().stream().map(Relation::getName).forEach(values::remove);
 	}
 
 	public DefaultEntityCore(EntityType entityType) {

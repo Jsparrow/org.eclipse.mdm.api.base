@@ -53,6 +53,8 @@ public interface Relation {
 	 */
 	Relationship getRelationship();
 
+	Attribute getAttribute();
+
 	/**
 	 * Creates a new and empty {@link Value} with {@link ValueType#LONG}.
 	 *

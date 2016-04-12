@@ -51,6 +51,8 @@ public interface EntityType {
 	/**
 	 * Returns all {@link Attribute}s of this entity type.
 	 *
+	 * TODO: returns only attributes excluding foreign key attributes (relations)
+	 *
 	 * @return The returned {@code List} may be immutable.
 	 */
 	List<Attribute> getAttributes();
@@ -88,6 +90,8 @@ public interface EntityType {
 	/**
 	 * Returns the {@link Attribute} associated with given name.
 	 *
+	 * TODO: on miss a lookup for a foreign key (relation) attribute is done
+	 *
 	 * @param name The {@code Attribute} identifier.
 	 * @return The associated {@code Attribute} is returned.
 	 * @throws IllegalArgumentException Thrown if an {@code Attribute} with
@@ -112,7 +116,10 @@ public interface EntityType {
 	 *
 	 * @return {@code Optional} is empty if the {@code Relation} does not exist.
 	 */
+	@Deprecated // TODO this is wrong in case of template components!
 	Optional<Relation> getParentRelation();
+
+	List<Relation> getParentRelations();
 
 	/**
 	 * Returns all available child {@link Relation}s whose relationship is
@@ -140,6 +147,8 @@ public interface EntityType {
 
 	/**
 	 * Returns the unambiguous {@link Relation} to given target entity type.
+	 *
+	 * TODO: if an unambiguous relation does not exists it is tried find one within the parent relations
 	 *
 	 * @param target Used as identifier.
 	 * @return The associated {@code Relation} is returned.

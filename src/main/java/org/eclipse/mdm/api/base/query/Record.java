@@ -10,6 +10,7 @@ package org.eclipse.mdm.api.base.query;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.eclipse.mdm.api.base.model.URI;
 import org.eclipse.mdm.api.base.model.Value;
@@ -87,6 +88,15 @@ public final class Record {
 		}
 
 		return idValue.extract();
+	}
+
+	public Optional<Long> getID(Relation relation) {
+		Value idValue = getValues().get(relation.getName());
+		if(idValue == null) {
+			throw new IllegalStateException("Relation attribute '" + relation + "' was not selected.");
+		}
+
+		return Optional.ofNullable(idValue.isValid() ? idValue.extract() : null);
 	}
 
 	/**

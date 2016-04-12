@@ -32,8 +32,9 @@ public abstract class BaseEntityFactory implements EntityFactory {
 
 		channel.getCore().setImplicitRelation(measurement, true);
 
-		channel.getCore().setInfoRelation(quantity);
-		channel.getCore().setInfoRelation(quantity.getDefaultUnit());
+		channel.setQuantity(quantity);
+		channel.setUnit(quantity.getDefaultUnit());
+
 		//		if(contextSensor != null) {
 		//			channel.getCore().setInfoRelation(contextSensor);
 		//		}
@@ -156,7 +157,7 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public Quantity createQuantity(String name, Unit defaultUnit) {
 		Quantity quantity = new Quantity(createCore(Quantity.class));
 
-		quantity.getCore().setInfoRelation(defaultUnit);
+		quantity.setDefaultUnit(defaultUnit);
 
 		quantity.setName(name);
 		quantity.setMimeType(getDefaultMimeType(Quantity.class));
@@ -228,7 +229,7 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public Unit createUnit(String name, PhysicalDimension physicalDimension) {
 		Unit unit = new Unit(createCore(Unit.class));
 
-		unit.getCore().setInfoRelation(physicalDimension);
+		unit.setPhysicalDimension(physicalDimension);
 
 		unit.setName(name);
 		unit.setMimeType(getDefaultMimeType(Unit.class));
