@@ -148,7 +148,7 @@ public final class Unit extends BaseEntity implements Copyable, Datable, Deletab
 	 * @return The {@code PhysicalDimension} is returned.
 	 */
 	public PhysicalDimension getPhysicalDimension() {
-		return getCore().getInfoRelation(PhysicalDimension.class);
+		return getCore().getMutableStore().get(PhysicalDimension.class);
 	}
 
 	/**
@@ -157,7 +157,7 @@ public final class Unit extends BaseEntity implements Copyable, Datable, Deletab
 	 * @param physicalDimension The new {@code PhysicalDimension}.
 	 */
 	public void setPhysicalDimension(PhysicalDimension physicalDimension) {
-		getCore().setInfoRelation(physicalDimension);
+		getCore().getMutableStore().set(physicalDimension);
 	}
 
 }

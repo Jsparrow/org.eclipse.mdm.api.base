@@ -428,7 +428,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 * 		related.
 	 */
 	private Optional<Unit> getUnit() {
-		return Optional.ofNullable(getCore().getInfoRelation(Unit.class));
+		return Optional.ofNullable(getCore().getMutableStore().get(Unit.class));
 	}
 
 	/**
@@ -439,9 +439,9 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 */
 	private void setUnit(Unit unit) {
 		if(unit == null) {
-			getCore().setInfoRelation(unit);
+			getCore().getMutableStore().set(unit);
 		} else {
-			getCore().removeInfoRelation(Unit.class);
+			getCore().getMutableStore().remove(Unit.class);
 		}
 	}
 

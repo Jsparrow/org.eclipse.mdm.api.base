@@ -8,7 +8,6 @@
 
 package org.eclipse.mdm.api.base.model;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -61,7 +60,7 @@ public final class ContextComponent extends BaseEntity implements Deletable, Der
 	 * @return The returned {@code List} is unmodifiable.
 	 */
 	public List<ContextSensor> getContextSensors() {
-		return Collections.unmodifiableList(getCore().getChildren(ContextSensor.class));
+		return getCore().getChildrenStore().get(ContextSensor.class);
 	}
 
 	/**
@@ -74,7 +73,7 @@ public final class ContextComponent extends BaseEntity implements Deletable, Der
 	public boolean removeContextSensor(String name) {
 		Optional<ContextSensor> catalogSensor = getContextSensor(name);
 		if(catalogSensor.isPresent()) {
-			getCore().removeChild(catalogSensor.get());
+			getCore().getChildrenStore().remove(catalogSensor.get());
 			return true;
 		}
 

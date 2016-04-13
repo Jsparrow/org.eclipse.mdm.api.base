@@ -10,6 +10,9 @@ package org.eclipse.mdm.api.base.model;
 
 import java.time.LocalDateTime;
 
+import org.eclipse.mdm.api.base.model.EntityCore.ChildrenStore;
+import org.eclipse.mdm.api.base.model.EntityCore.EntityStore;
+
 /**
  * Implementation of an abstract entity factory which creates new entities.
  *
@@ -30,15 +33,16 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public Channel createChannel(String name, Measurement measurement, Quantity quantity) {
 		Channel channel = new Channel(createCore(Channel.class));
 
-		channel.getCore().setImplicitRelation(measurement, true);
-
-		channel.setQuantity(quantity);
-		channel.setUnit(quantity.getDefaultUnit());
+		// relations
+		getPermanentStore(channel).setParent(measurement, true);
+		getMutableStore(channel).set(quantity.getDefaultUnit());
+		getMutableStore(channel).set(quantity);
 
 		//		if(contextSensor != null) {
 		//			channel.getCore().setInfoRelation(contextSensor);
 		//		}
 
+		// properties
 		channel.setName(name);
 		channel.setMimeType(getDefaultMimeType(Channel.class));
 		channel.setDescription(quantity.getDescription());
@@ -61,8 +65,10 @@ public abstract class BaseEntityFactory implements EntityFactory {
 
 		ChannelGroup channelGroup = new ChannelGroup(createCore(ChannelGroup.class));
 
-		channelGroup.getCore().setImplicitRelation(measurement, true);
+		// relations
+		getPermanentStore(channelGroup).setParent(measurement, true);
 
+		// properties
 		channelGroup.setName(name);
 		channelGroup.setMimeType(getDefaultMimeType(ChannelGroup.class));
 		channelGroup.setNumberOfValues(Integer.valueOf(numberOfValues));
@@ -77,11 +83,13 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public Measurement createMeasurement(String name, TestStep testStep) {
 		Measurement measurement = new Measurement(createCore(Measurement.class));
 
-		measurement.getCore().setImplicitRelation(testStep, true);
+		// relations
+		getPermanentStore(measurement).setParent(testStep, true);
 		//		for(ContextRoot contextRoot : contextRoots) {
 		//			measurement.getCore().setImplicitRelation(contextRoot);
 		//		}
 
+		// properties
 		measurement.setName(name);
 		measurement.setMimeType(getDefaultMimeType(Measurement.class));
 		measurement.setDateCreated(LocalDateTime.now());
@@ -94,22 +102,20 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	 */
 	@Override
 	public Parameter createParameter(String name, Object value, Unit unit, ParameterSet parameterSet) {
-		Parameter parameter = new Parameter(createCore(Parameter.class));
-
-		parameter.getCore().setImplicitRelation(parameterSet, false);
-		if(unit != null) {
-			parameter.getCore().setImplicitRelation(unit, true);
+		if(parameterSet.getParameter(name).isPresent()) {
+			throw new IllegalArgumentException("Parameter with name '" + name + "' already exists.");
 		}
 
-		/*
-		 * TODO: make sure the name of the parameter is not already in use!!
-		 */
+		Parameter parameter = new Parameter(createCore(Parameter.class));
 
+		// relations
+		getPermanentStore(parameter).setParent(parameterSet, false);
+		getChildrenStore(parameterSet).add(parameter);
+
+		// properties
 		parameter.setName(name);
 		parameter.setMimeType(getDefaultMimeType(Parameter.class));
 		parameter.setObjectValue(value, unit);
-
-		parameterSet.addParameter(parameter);
 
 		return parameter;
 	}
@@ -121,8 +127,10 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public ParameterSet createParameterSet(String name, String version, Parameterizable parameterizable) {
 		ParameterSet parameterSet = new ParameterSet(createCore(ParameterSet.class));
 
-		parameterSet.getCore().setImplicitRelation(parameterizable, true);
+		// relations
+		getPermanentStore(parameterSet).setParent(parameterizable, true);
 
+		// properties
 		parameterSet.setName(name);
 		parameterSet.setMimeType(getDefaultMimeType(ParameterSet.class));
 		parameterSet.setVersion(version);
@@ -137,6 +145,7 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public PhysicalDimension createPhysicalDimension(String name) {
 		PhysicalDimension physicalDimension = new PhysicalDimension(createCore(PhysicalDimension.class));
 
+		// properties
 		physicalDimension.setName(name);
 		physicalDimension.setMimeType(getDefaultMimeType(PhysicalDimension.class));
 		physicalDimension.setLength(Integer.valueOf(0));
@@ -157,8 +166,10 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public Quantity createQuantity(String name, Unit defaultUnit) {
 		Quantity quantity = new Quantity(createCore(Quantity.class));
 
-		quantity.setDefaultUnit(defaultUnit);
+		// relations
+		getMutableStore(quantity).set(defaultUnit);
 
+		// properties
 		quantity.setName(name);
 		quantity.setMimeType(getDefaultMimeType(Quantity.class));
 		quantity.setDateCreated(LocalDateTime.now());
@@ -178,8 +189,10 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public Test createTest(String name, User responsiblePerson) {
 		Test test = new Test(createCore(Test.class));
 
+		// relations
 		if(responsiblePerson != null) {
-			test.getCore().setImplicitRelation(responsiblePerson, true);
+			// may be null if user entities are not available
+			getMutableStore(test).set(responsiblePerson);
 		}
 
 		/**
@@ -190,6 +203,7 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		 * ODS adapter should override and throw an IllStateException as soon as the default API is defined!
 		 */
 
+		// properties
 		test.setName(name);
 		test.setMimeType(getDefaultMimeType(Test.class));
 		test.setDateCreated(LocalDateTime.now());
@@ -204,7 +218,8 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public TestStep createTestStep(String name, Test test) {
 		TestStep testStep = new TestStep(createCore(TestStep.class));
 
-		testStep.getCore().setImplicitRelation(test, true);
+		// relations
+		getPermanentStore(testStep).setParent(test, true);
 
 		/**
 		 * TODO
@@ -213,11 +228,12 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		 * ODS adapter should override and throw an IllStateException as soon as the default API is defined!
 		 */
 
+		// properties
 		testStep.setName(name);
 		testStep.setMimeType(getDefaultMimeType(TestStep.class));
 		testStep.setDateCreated(LocalDateTime.now());
 		testStep.setOptional(Boolean.TRUE);
-		// testStep.setSortIndex(nextSortIndex(test, TestStep.class));
+		testStep.setSortIndex(Integer.valueOf(0)); // TODO
 
 		return testStep;
 	}
@@ -229,8 +245,10 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public Unit createUnit(String name, PhysicalDimension physicalDimension) {
 		Unit unit = new Unit(createCore(Unit.class));
 
-		unit.setPhysicalDimension(physicalDimension);
+		// relations
+		getMutableStore(unit).set(physicalDimension);
 
+		// properties
 		unit.setName(name);
 		unit.setMimeType(getDefaultMimeType(Unit.class));
 		unit.setOffset(Double.valueOf(0D));
@@ -247,6 +265,7 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	public User createUser(String name, String givenName, String surname) {
 		User user = new User(createCore(User.class));
 
+		// properties
 		user.setName(name);
 		user.setMimeType(getDefaultMimeType(User.class));
 		user.setGivenName(givenName);
@@ -261,6 +280,23 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	// ======================================================================
 	// Protected methods
 	// ======================================================================
+
+	protected final ChildrenStore getChildrenStore(BaseEntity entity) {
+		return getCore(entity).getChildrenStore();
+	}
+
+	protected final EntityStore getMutableStore(BaseEntity entity) {
+		return getCore(entity).getMutableStore();
+	}
+
+	protected final EntityStore getPermanentStore(BaseEntity entity) {
+		return getCore(entity).getPermanentStore();
+	}
+
+	@Deprecated
+	protected final EntityCore getCore(BaseEntity entity) {
+		return entity.getCore();
+	}
 
 	/**
 	 * Creates an {@link EntityCore} associated with given type.

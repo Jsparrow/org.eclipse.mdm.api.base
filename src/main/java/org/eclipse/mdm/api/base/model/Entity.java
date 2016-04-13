@@ -114,17 +114,6 @@ public interface Entity {
 	Collection<Entity> getInfoRelations();
 
 	/**
-	 * Returns all implicitly related entities. This usually is a parent entity
-	 * or other related entities that have to be written once this entity is
-	 * written.
-	 *
-	 * <p><b>Note:</b> This method is intended to be used by API providers.
-	 *
-	 * @return The returned {@code Collection} is unmodifiable.
-	 */
-	Collection<Entity> getImplicitRelations();
-
-	/**
 	 * Returns a human readable {@code String} representation of this entity.
 	 *
 	 * @return The {@code String} representation of this entity.

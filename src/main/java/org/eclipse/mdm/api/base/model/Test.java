@@ -62,7 +62,7 @@ FilesAttachable, Tagable, Statable {
 	 * 		specific!
 	 */
 	public Optional<User> getResponsiblePerson() {
-		return Optional.ofNullable(getCore().getInfoRelation(User.class));
+		return Optional.ofNullable(getCore().getMutableStore().get(User.class));
 	}
 
 	/**
@@ -71,7 +71,7 @@ FilesAttachable, Tagable, Statable {
 	 * @param responsiblePerson The new responsible person.
 	 */
 	public void setResponsiblePerson(User responsiblePerson) {
-		getCore().setInfoRelation(responsiblePerson);
+		getCore().getMutableStore().set(responsiblePerson);
 	}
 
 }

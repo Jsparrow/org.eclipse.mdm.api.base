@@ -91,7 +91,7 @@ public final class ContextRoot extends BaseEntity implements Deletable, Derived 
 	 * @return The returned {@code List} is unmodifiable.
 	 */
 	public List<ContextComponent> getContextComponents() {
-		return Collections.unmodifiableList(getCore().getChildren(ContextComponent.class));
+		return getCore().getChildrenStore().get(ContextComponent.class);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public final class ContextRoot extends BaseEntity implements Deletable, Derived 
 	public boolean removeContextComponent(String name) {
 		Optional<ContextComponent> contextComponent = getContextComponent(name);
 		if(contextComponent.isPresent()) {
-			getCore().removeChild(contextComponent.get());
+			getCore().getChildrenStore().remove(contextComponent.get());
 			return true;
 		}
 

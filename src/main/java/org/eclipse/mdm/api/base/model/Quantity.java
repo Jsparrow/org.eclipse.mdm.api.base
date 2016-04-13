@@ -168,7 +168,7 @@ public final class Quantity extends BaseEntity implements Copyable, Datable, Del
 	 * @return The default {@code Unit} is returned.
 	 */
 	public Unit getDefaultUnit() {
-		return getCore().getInfoRelation(Unit.class);
+		return getCore().getMutableStore().get(Unit.class);
 	}
 
 	/**
@@ -177,7 +177,7 @@ public final class Quantity extends BaseEntity implements Copyable, Datable, Del
 	 * @param defaultUnit The new default {@code Unit}.
 	 */
 	public void setDefaultUnit(Unit defaultUnit) {
-		getCore().setInfoRelation(defaultUnit);
+		getCore().getMutableStore().set(defaultUnit);
 	}
 
 }

@@ -1,10 +1,8 @@
 package org.eclipse.mdm.api.base.query;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.eclipse.mdm.api.base.model.Deletable;
 import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.model.EntityCore;
 import org.eclipse.mdm.api.base.model.URI;
@@ -12,12 +10,9 @@ import org.eclipse.mdm.api.base.model.Value;
 
 public final class DefaultEntityCore implements EntityCore {
 
-	private final Map<Class<? extends Deletable>, List<? extends Deletable>> currentChildren = new HashMap<>();
-	private final Map<Class<? extends Deletable>, List<? extends Deletable>> removedChildren = new HashMap<>();
-
-	private final Map<Class<? extends Entity>, Entity> infoRelations = new HashMap<>();
-
-	private final Map<String, Entity> implicitRelations = new HashMap<>();
+	private final EntityStore permanentEntityStorage = new EntityStore();
+	private final EntityStore mutableEntityStorage = new EntityStore();
+	private final ChildrenStore childrenStore = new ChildrenStore();
 
 	private final Map<String, Value> values = new HashMap<>();
 
@@ -55,23 +50,18 @@ public final class DefaultEntityCore implements EntityCore {
 	}
 
 	@Override
-	public Map<Class<? extends Entity>, Entity> getInfoRelations() {
-		return infoRelations;
+	public EntityStore getMutableStore() {
+		return mutableEntityStorage;
 	}
 
 	@Override
-	public Map<Class<? extends Deletable>, List<? extends Deletable>> getChildren() {
-		return currentChildren;
+	public EntityStore getPermanentStore() {
+		return permanentEntityStorage;
 	}
 
 	@Override
-	public Map<Class<? extends Deletable>, List<? extends Deletable>> getRemovedChildren() {
-		return removedChildren;
-	}
-
-	@Override
-	public Map<String, Entity> getImplicitRelations() {
-		return implicitRelations;
+	public ChildrenStore getChildrenStore() {
+		return childrenStore;
 	}
 
 }

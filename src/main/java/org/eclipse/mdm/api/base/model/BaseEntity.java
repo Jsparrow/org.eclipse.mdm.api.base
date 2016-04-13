@@ -77,28 +77,7 @@ public abstract class BaseEntity implements Entity {
 	 */
 	@Override
 	public Collection<Entity> getInfoRelations() {
-		return Collections.unmodifiableCollection(getCore().getInfoRelations().values());
-	}
-
-	//	/**
-	//	 * {@inheritDoc}
-	//	 */
-	//	@Override
-	//	public Map<Class<? extends Entity>, List<? extends Entity>> getChildren() {
-	//		return Collections.unmodifiableMap(getCore().getChildren());
-	//	}
-	//
-	//	/**
-	//	 * {@inheritDoc}
-	//	 */
-	//	@Override
-	//	public Map<Class<? extends Entity>, List<? extends Entity>> getRemovedChildren() {
-	//		return Collections.unmodifiableMap(getCore().getRemovedChildren());
-	//	}
-
-	@Override
-	public Collection<Entity> getImplicitRelations() {
-		return Collections.unmodifiableCollection(getCore().getImplicitRelations().values());
+		return Collections.unmodifiableCollection(getCore().getMutableStore().getAll());
 	}
 
 	/**

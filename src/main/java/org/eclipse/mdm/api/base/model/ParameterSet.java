@@ -8,7 +8,6 @@
 
 package org.eclipse.mdm.api.base.model;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -68,12 +67,7 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	 * @return The returned {@code List} is unmodifiable.
 	 */
 	public List<Parameter> getParameters() {
-		return Collections.unmodifiableList(getCore().getChildren(Parameter.class));
-	}
-
-	// TODO jdoc
-	void addParameter(Parameter parameter) {
-		getCore().addChild(parameter);
+		return getCore().getChildrenStore().get(Parameter.class);
 	}
 
 	/**
@@ -86,7 +80,7 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	public boolean removeParameter(String name) {
 		Optional<Parameter> parameter = getParameter(name);
 		if(parameter.isPresent()) {
-			getCore().removeChild(parameter.get());
+			getCore().getChildrenStore().remove(parameter.get());
 			return true;
 		}
 

@@ -252,11 +252,7 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	 * @return Related {@code Unit} is returned.
 	 */
 	public Unit getUnit() {
-		return getCore().getInfoRelation(Unit.class);
-	}
-
-	void setUnit(Unit unit) {
-		getCore().setInfoRelation(unit);
+		return getCore().getMutableStore().get(Unit.class);
 	}
 
 	/**
@@ -265,11 +261,7 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	 * @return Related {@code Quantity} is returned.
 	 */
 	public Quantity getQuantity() {
-		return getCore().getInfoRelation(Quantity.class);
-	}
-
-	void setQuantity(Quantity quantity) {
-		getCore().setInfoRelation(quantity);
+		return getCore().getMutableStore().get(Quantity.class);
 	}
 
 }
