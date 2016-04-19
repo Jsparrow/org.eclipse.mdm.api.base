@@ -12,7 +12,6 @@ repositories {
 }
 
 dependencies {
-
     //Java Enterprise Beans
-    compile 'javax.ejb:javax.ejb-api:3.2'
+    compile 'javax:javaee-api:7.0'
 }
