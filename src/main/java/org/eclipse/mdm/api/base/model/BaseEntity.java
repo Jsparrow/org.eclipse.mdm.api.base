@@ -77,7 +77,7 @@ public abstract class BaseEntity implements Entity {
 	 */
 	@Override
 	public Collection<Entity> getInfoRelations() {
-		return Collections.unmodifiableCollection(getCore().getMutableStore().getAll());
+		return Collections.unmodifiableCollection(getCore().getMutableStore().getCurrent());
 	}
 
 	/**

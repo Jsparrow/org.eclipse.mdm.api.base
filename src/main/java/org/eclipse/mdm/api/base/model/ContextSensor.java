@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class ContextSensor extends BaseEntity implements Deletable, Derived, Sortable {
+public final class ContextSensor extends BaseEntity implements Deletable, Derived, Sortable<ContextSensor> {
 
 	// ======================================================================
 	// Constructors

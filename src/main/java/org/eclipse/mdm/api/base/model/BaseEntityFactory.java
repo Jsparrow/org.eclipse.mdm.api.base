@@ -179,6 +179,10 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		quantity.setDefaultChannelName(name);
 		quantity.setDefaultScalarType(ScalarType.FLOAT);
 
+		// TODO we should check whether this property exists (seems to be a deprecated one..)
+		quantity.getValue("Version").set("1");
+		quantity.getValue("ValidFlag").set(VersionState.VALID);
+
 		return quantity;
 	}
 

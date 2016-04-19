@@ -18,7 +18,7 @@ package org.eclipse.mdm.api.base.model;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface Sortable extends Entity {
+public interface Sortable<T extends Sortable<T>> extends Entity, Comparable<T> {
 
 	// ======================================================================
 	// Class variables
@@ -49,6 +49,14 @@ public interface Sortable extends Entity {
 	 */
 	default void setSortIndex(Integer sortIndex) {
 		getValue(ATTR_SORT_INDEX).set(sortIndex);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	default int compareTo(T other) {
+		return getSortIndex().compareTo(other.getSortIndex());
 	}
 
 }

@@ -26,7 +26,7 @@ package org.eclipse.mdm.api.base.model;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
 public final class TestStep extends BaseEntity implements ContextDescribable, Datable, Deletable, Derived,
-Describable, FilesAttachable, Sortable, Statable, Tagable {
+Describable, FilesAttachable, Sortable<TestStep>, Statable, Tagable {
 
 	// ======================================================================
 	// Class variables
