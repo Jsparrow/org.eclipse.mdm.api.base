@@ -8,7 +8,6 @@
 
 package org.eclipse.mdm.api.base.model;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -70,14 +69,6 @@ public abstract class BaseEntity implements Entity {
 	@Override
 	public final Map<String, Value> getValues() {
 		return Collections.unmodifiableMap(getCore().getValues());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Collection<Entity> getInfoRelations() {
-		return Collections.unmodifiableCollection(getCore().getMutableStore().getCurrent());
 	}
 
 	/**

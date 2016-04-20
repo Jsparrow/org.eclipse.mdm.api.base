@@ -8,7 +8,6 @@
 
 package org.eclipse.mdm.api.base.model;
 
-import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -103,15 +102,6 @@ public interface Entity {
 	 * @return Returned {@code Map} is unmodifiable.
 	 */
 	Map<String, Value> getValues();
-
-	/**
-	 * Returns all 'INFO' related entities.
-	 *
-	 * <p><b>Note:</b> This method is intended to be used by API providers.
-	 *
-	 * @return The returned {@code Collection} is unmodifiable.
-	 */
-	Collection<Entity> getInfoRelations();
 
 	/**
 	 * Returns a human readable {@code String} representation of this entity.
