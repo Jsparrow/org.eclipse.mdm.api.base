@@ -8,8 +8,6 @@
 
 package org.eclipse.mdm.api.base.model;
 
-import java.util.stream.Collectors;
-
 /**
  * Implementation of the context sensor entity types. Instances of this class
  * are only provided / managed via the owning {@link ContextComponent}. A
@@ -32,19 +30,6 @@ public final class ContextSensor extends BaseEntity implements Deletable, Derive
 	 */
 	ContextSensor(EntityCore core) {
 		super(core);
-	}
-
-	// ======================================================================
-	// Public methods
-	// ======================================================================
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString() {
-		String prefix = new StringBuilder(getURI().getTypeName()).append('(').toString();
-		return getValues().values().stream().map(Value::toString).collect(Collectors.joining(", ", prefix, ")"));
 	}
 
 }

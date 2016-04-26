@@ -358,9 +358,9 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append("(name = ").append(getName());
+		StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append("(Name = ").append(getName());
 
-		sb.append(", value = ");
+		sb.append(", Value = ");
 		Value parameterValue = getParameterValue();
 		if(parameterValue.isValid()) {
 			sb.append((String) getParameterValue().extract());

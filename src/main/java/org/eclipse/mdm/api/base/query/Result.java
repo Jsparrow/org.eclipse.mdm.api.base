@@ -132,7 +132,7 @@ public final class Result implements Iterable<Record> {
 	 */
 	@Override
 	public String toString() {
-		return new StringBuilder("Result(records = ").append(records.values()).append(')').toString();
+		return new StringBuilder("Result(Records = ").append(records.values()).append(')').toString();
 	}
 
 	public List<Record> retainAll(List<EntityType> entityTypes) {

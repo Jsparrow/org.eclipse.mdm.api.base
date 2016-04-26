@@ -112,7 +112,7 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	public String toString() {
 		StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append('(');
 		sb.append(getValues().values().stream().map(Value::toString).collect(Collectors.joining(", ")));
-		return sb.append(", parameters =").append(getParameters()).append(')').toString();
+		return sb.append(", Parameters = ").append(getParameters()).append(')').toString();
 	}
 
 }

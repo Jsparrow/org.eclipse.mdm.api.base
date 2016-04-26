@@ -120,8 +120,8 @@ public final class Record {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder("Record(entityType = ").append(getEntityType());
-		return sb.append(", values = ").append(getValues().values()).append(')').toString();
+		StringBuilder sb = new StringBuilder("Record(EntityType = ").append(getEntityType());
+		return sb.append(", Values = ").append(getValues().values()).append(')').toString();
 	}
 
 	// ======================================================================

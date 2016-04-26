@@ -151,16 +151,13 @@ public final class ContextRoot extends BaseEntity implements Deletable, Derived 
 	 */
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(getURI().getTypeName()).append('(');
+		StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append('(');
+		sb.append("ContextType = ").append(getContextType()).append(", ");
 		sb.append(getValues().values().stream().map(Value::toString).collect(Collectors.joining(", ")));
 
 		List<ContextComponent> contextComponents = getContextComponents();
 		if(!contextComponents.isEmpty()) {
-			sb.append(", components = ").append(contextComponents);
-			List<ContextSensor> contextSensors = getContextSensors();
-			if(!contextSensors.isEmpty()) {
-				sb.append(", sensors = ").append(contextSensors);
-			}
+			sb.append(", ContextComponents = ").append(contextComponents);
 		}
 
 		return sb.append(')').toString();

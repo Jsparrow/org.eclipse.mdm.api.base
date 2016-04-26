@@ -171,14 +171,14 @@ public final class MeasuredValues {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder("MeasuredValues(channelName = ").append(getName());
-		sb.append(", scalarType = ").append(getScalarType());
+		StringBuilder sb = new StringBuilder("MeasuredValues(ChannelName = ").append(getName());
+		sb.append(", ScalarType = ").append(getScalarType());
 
 		if(!getUnit().isEmpty()) {
-			sb.append(", unit = ").append(getUnit());
+			sb.append(", Unit = ").append(getUnit());
 		}
 
-		sb.append(", values = [");
+		sb.append(", Values = [");
 		String notValidMarker = "XX";
 		if(getLength() > 10) {
 			sb.append(range(0, 5).mapToObj(i -> flags[i] ? readAt(values, i) : notValidMarker)

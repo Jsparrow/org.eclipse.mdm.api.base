@@ -85,8 +85,15 @@ public final class ContextComponent extends BaseEntity implements Deletable, Der
 	 */
 	@Override
 	public String toString() {
-		String prefix = new StringBuilder(getURI().getTypeName()).append('(').toString();
-		return getValues().values().stream().map(Value::toString).collect(Collectors.joining(", ", prefix, ")"));
+		StringBuilder sb = new StringBuilder(getClass().getSimpleName()).append('(');
+		sb.append(getValues().values().stream().map(Value::toString).collect(Collectors.joining(", ")));
+
+		List<ContextSensor> contextSensors = getContextSensors();
+		if(!contextSensors.isEmpty()) {
+			sb.append(", ContextSensors = ").append(contextSensors);
+		}
+
+		return sb.append(')').toString();
 	}
 
 }
