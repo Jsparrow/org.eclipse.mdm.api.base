@@ -176,7 +176,7 @@ public final class ReadRequest {
 	 * Configures this request to retrieve measured values of all related
 	 * {@link Channel}s.
 	 */
-	void loadAllChannels() {
+	void setLoadAllChannels() {
 		loadAllChannels = true;
 		channels.clear();
 	}

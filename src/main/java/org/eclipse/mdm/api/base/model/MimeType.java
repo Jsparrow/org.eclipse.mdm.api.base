@@ -93,11 +93,11 @@ public final class MimeType {
 	 */
 	@Override
 	public boolean equals(Object object) {
-		if(object == null || !(object instanceof MimeType)) {
-			return false;
+		if(object instanceof MimeType) {
+			return internal.equals(((MimeType) object).internal);
 		}
 
-		return internal.equals(((MimeType) object).internal);
+		return false;
 	}
 
 	/**

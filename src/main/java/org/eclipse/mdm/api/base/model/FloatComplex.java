@@ -22,8 +22,8 @@ public final class FloatComplex {
 	// Instance variables
 	// ======================================================================
 
-	private final float imaginary;
-	private final float real;
+	private final float re;
+	private final float im;
 
 	// ======================================================================
 	// Constructors
@@ -36,8 +36,8 @@ public final class FloatComplex {
 	 * @param imaginary The imaginary part.
 	 */
 	public FloatComplex(float real, float imaginary) {
-		this.imaginary = imaginary;
-		this.real = real;
+		re = real;
+		im = imaginary;
 	}
 
 	// ======================================================================
@@ -59,7 +59,7 @@ public final class FloatComplex {
 			throw new NumberFormatException("Unable to parse complex value.");
 		}
 
-		return new FloatComplex(Float.valueOf(values[0]), Float.valueOf(values[1]));
+		return new FloatComplex(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
 	}
 
 	/**
@@ -68,7 +68,7 @@ public final class FloatComplex {
 	 * @return The real part is returned.
 	 */
 	public float real() {
-		return real;
+		return re;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public final class FloatComplex {
 	 * @return The imaginary part is returned.
 	 */
 	public float imaginary() {
-		return imaginary;
+		return im;
 	}
 
 	/**

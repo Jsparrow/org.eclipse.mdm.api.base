@@ -44,7 +44,7 @@ public final class Condition {
 	Condition(Attribute attribute, Operation operation, String unit, Object input) {
 		this.attribute = attribute;
 		this.operation = operation;
-		value = operation.sequence ? attribute.createValueSeq(unit, input) : attribute.createValue(unit, input);
+		value = operation.requiresSequence() ? attribute.createValueSeq(unit, input) : attribute.createValue(unit, input);
 	}
 
 	// ======================================================================

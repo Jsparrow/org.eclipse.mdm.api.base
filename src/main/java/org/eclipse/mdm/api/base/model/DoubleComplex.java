@@ -22,8 +22,8 @@ public final class DoubleComplex {
 	// Instance variables
 	// ======================================================================
 
-	private final double imaginary;
-	private final double real;
+	private final double re;
+	private final double im;
 
 	// ======================================================================
 	// Constructors
@@ -36,8 +36,8 @@ public final class DoubleComplex {
 	 * @param imaginary The imaginary part.
 	 */
 	public DoubleComplex(double real, double imaginary) {
-		this.imaginary = imaginary;
-		this.real = real;
+		re = real;
+		im = imaginary;
 	}
 
 	// ======================================================================
@@ -59,7 +59,7 @@ public final class DoubleComplex {
 			throw new NumberFormatException("Unable to parse complex value.");
 		}
 
-		return new DoubleComplex(Double.valueOf(values[0]), Double.valueOf(values[1]));
+		return new DoubleComplex(Double.parseDouble(values[0]), Double.parseDouble(values[1]));
 	}
 
 	/**
@@ -68,7 +68,7 @@ public final class DoubleComplex {
 	 * @return The real part is returned.
 	 */
 	public double real() {
-		return real;
+		return re;
 	}
 
 	/**
@@ -77,7 +77,7 @@ public final class DoubleComplex {
 	 * @return The imaginary part is returned.
 	 */
 	public double imaginary() {
-		return imaginary;
+		return im;
 	}
 
 	/**

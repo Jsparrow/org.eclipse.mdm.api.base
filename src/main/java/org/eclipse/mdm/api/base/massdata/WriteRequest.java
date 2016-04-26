@@ -34,7 +34,7 @@ public final class WriteRequest {
 	private ScalarType rawScalarType;
 	private Object values;
 	private boolean allValid;
-	private boolean flags[];
+	private boolean[] flags;
 
 	private WriteRequest(ChannelGroup channelGroup, Channel channel, AxisType axisType) {
 		this.channelGroup = channelGroup;

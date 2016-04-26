@@ -22,7 +22,7 @@ public class WriteRequestFinalizer {
 	// Constructors
 	// ======================================================================
 
-	final WriteRequest writeRequest;
+	protected final WriteRequest writeRequest;
 
 	// ======================================================================
 	// Constructors

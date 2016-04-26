@@ -8,6 +8,8 @@
 
 package org.eclipse.mdm.api.base.query;
 
+import java.util.Arrays;
+
 import org.eclipse.mdm.api.base.model.ValueType;
 
 /**
@@ -60,12 +62,12 @@ public enum Operation {
 	/**
 	 * In set, value can be a sequence.
 	 */
-	IN_SET(true),
+	IN_SET,
 
 	/**
 	 * Not in set, value can be a sequence.
 	 */
-	NOT_IN_SET(true),
+	NOT_IN_SET,
 
 	/**
 	 * like, use  pattern matching, see Pattern for the
@@ -111,12 +113,12 @@ public enum Operation {
 	/**
 	 * In set, value can be a sequence. case insensitive for {@link ValueType#STRING}
 	 */
-	CASE_INSENSITIVE_IN_SET(true),
+	CASE_INSENSITIVE_IN_SET,
 
 	/**
 	 * Not in set, value can be a sequence. case insensitive for {@link ValueType#STRING}
 	 */
-	CASE_INSENSITIVE_NOT_IN_SET(true),
+	CASE_INSENSITIVE_NOT_IN_SET,
 
 	/**
 	 * like, use  pattern matching, see Pattern for the wildcard
@@ -144,34 +146,7 @@ public enum Operation {
 	 * the first two values given in 'value' (with 'attr', 'value' being
 	 * elements of the SelValue structure; 'value' must be of data type S_*).
 	 */
-	BETWEEN(true);
-
-	// ======================================================================
-	// Instance variables
-	// ======================================================================
-
-	boolean sequence;
-
-	// ======================================================================
-	// Constructors
-	// ======================================================================
-
-	/**
-	 * Constructor.
-	 *
-	 * @param sequence Flag indicates whether the corresponding {@link Operation}
-	 * 		requires a value sequence or a scalar value.
-	 */
-	private Operation(boolean sequence) {
-		this.sequence = sequence;
-	}
-
-	/**
-	 * Constructor.
-	 */
-	private Operation() {
-		sequence = false;
-	}
+	BETWEEN;
 
 	// ======================================================================
 	// Public methods
@@ -185,21 +160,29 @@ public enum Operation {
 	 * @return The created {@code Condition} is returned.
 	 */
 	public Condition create(Attribute attribute, Object value) {
-		return create(attribute, "", value);
+		return new Condition(attribute, this, "", value);
 	}
 
+	// ======================================================================
+	// Package methods
+	// ======================================================================
 
 	/**
-	 * Creates a new {@link Condition} for given {@link Attribute}, value and
-	 * unit.
+	 * Checks whether this operation requires a sequence value container. This is
+	 * the case for the following types:
 	 *
-	 * @param attribute The {@code Attribute} the condition will be applied to.
-	 * @param unit The unit name.
-	 * @param value The value.
-	 * @return The created {@code Condition} is returned.
+	 * <ul>
+	 * 	<li>{@link Operation#IN_SET}</li>
+	 * 	<li>{@link Operation#NOT_IN_SET}</li>
+	 * 	<li>{@link Operation#CASE_INSENSITIVE_IN_SET}</li>
+	 * 	<li>{@link Operation#CASE_INSENSITIVE_NOT_IN_SET}</li>
+	 * 	<li>{@link Operation#BETWEEN}</li>
+	 * </ul>
+	 *
+	 * @return True if this operation is one of those listed above.
 	 */
-	public Condition create(Attribute attribute, String unit, Object value) {
-		return new Condition(attribute, this, unit, value);
+	boolean requiresSequence() {
+		return Arrays.asList(IN_SET, NOT_IN_SET, CASE_INSENSITIVE_IN_SET, CASE_INSENSITIVE_NOT_IN_SET, BETWEEN).contains(this);
 	}
 
 }

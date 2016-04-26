@@ -45,7 +45,7 @@ public final class ReadRequestBuilder {
 	 * @return This builder is returned.
 	 */
 	public ReadRequestBuilder allChannels() {
-		readRequest.loadAllChannels();
+		readRequest.setLoadAllChannels();
 		return this;
 	}
 
