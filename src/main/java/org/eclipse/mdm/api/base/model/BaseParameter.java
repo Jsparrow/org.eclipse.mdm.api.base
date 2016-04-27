@@ -439,9 +439,9 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 */
 	private void setUnit(Unit unit) {
 		if(unit == null) {
-			getCore().getMutableStore().set(unit);
-		} else {
 			getCore().getMutableStore().remove(Unit.class);
+		} else {
+			getCore().getMutableStore().set(unit);
 		}
 	}
 
