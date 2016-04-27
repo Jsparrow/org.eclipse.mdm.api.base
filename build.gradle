@@ -12,14 +12,8 @@ version = '1.0.0'
 
 apply plugin: 'java'
 apply plugin: 'maven'
-apply plugin: 'eclipse'
 
 repositories {
     mavenLocal()
     mavenCentral()
-}
-
-dependencies {
-    //Java Enterprise Beans
-    compile 'javax:javaee-api:7.0'
 }

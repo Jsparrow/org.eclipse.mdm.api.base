@@ -10,8 +10,6 @@ package org.eclipse.mdm.api.base;
 
 import java.util.Map;
 
-import javax.ejb.Local;
-
 /**
  * Takes connection parameters and produces a corresponding entity manager.
  *
@@ -20,7 +18,6 @@ import javax.ejb.Local;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-@Local
 public interface EntityManagerFactory<T extends EntityManager> {
 
 	// ======================================================================
