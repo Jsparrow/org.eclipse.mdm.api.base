@@ -10,9 +10,11 @@ package org.eclipse.mdm.api.base.query;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -54,6 +56,10 @@ public final class Filter implements Iterable<FilterItem> {
 
 	public static Filter idOnly(EntityType entityType, Long id) {
 		return and().id(entityType, id);
+	}
+
+	public static Filter idsOnly(EntityType entityType, Collection<Long> ids) {
+		return Filter.and().ids(entityType, ids);
 	}
 
 	public static Filter nameOnly(EntityType entityType, String pattern) {
@@ -120,8 +126,22 @@ public final class Filter implements Iterable<FilterItem> {
 		return this;
 	}
 
+	// TODO docs
 	public Filter id(EntityType entityType, Long id) {
 		add(Operation.EQUAL.create(entityType.getIDAttribute(), id));
+		return this;
+	}
+
+	// TODO
+	public Filter ids(EntityType entityType, Collection<Long> ids) {
+		List<Long> distinctIDs = ids.stream().distinct().collect(Collectors.toList());
+		long[] unboxedIDs = new long[distinctIDs.size()];
+		int i = 0;
+		for(Long id : distinctIDs) {
+			unboxedIDs[i++] = id;
+		}
+
+		add(Operation.IN_SET.create(entityType.getIDAttribute(), unboxedIDs));
 		return this;
 	}
 
@@ -249,6 +269,11 @@ public final class Filter implements Iterable<FilterItem> {
 
 		filterItems.addFirst(FilterItem.NOT);
 		return this;
+	}
+
+	// TODO Java Doc
+	public boolean isEmtpty() {
+		return filterItems.isEmpty();
 	}
 
 	/**
