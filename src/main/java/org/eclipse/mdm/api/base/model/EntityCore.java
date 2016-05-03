@@ -24,6 +24,10 @@ public interface EntityCore {
 
 	Map<String, Value> getValues();
 
+	void hideValues(Collection<String> names);
+
+	Map<String, Value> getAllValues();
+
 	default void apply() {
 		// apply removed mutable entities
 		getMutableStore().apply();
@@ -40,6 +44,8 @@ public interface EntityCore {
 	// - write relations to entities that are not directly available via the entity
 	//   types API
 	EntityStore getPermanentStore();
+
+	// mutable().related(Unit.class);
 
 	ChildrenStore getChildrenStore();
 
@@ -162,8 +168,8 @@ public interface EntityCore {
 			}
 		}
 
+		@SuppressWarnings("unchecked")
 		public <T extends Deletable & Sortable<T>> void sort(Class<T> type, Comparator<T> comparator) {
-			@SuppressWarnings("unchecked")
 			List<T> children = (List<T>) current.get(type);
 			if(children != null) {
 				Collections.sort(children, comparator);

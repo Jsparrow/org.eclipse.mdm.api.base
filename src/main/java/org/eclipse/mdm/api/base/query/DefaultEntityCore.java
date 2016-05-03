@@ -8,6 +8,7 @@
 
 package org.eclipse.mdm.api.base.query;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ public final class DefaultEntityCore implements EntityCore {
 	private final ChildrenStore childrenStore = new ChildrenStore();
 
 	private final Map<String, Value> values = new HashMap<>();
+	private final Map<String, Value> hiddenValues = new HashMap<>();
 
 	private URI uri;
 
@@ -55,6 +57,31 @@ public final class DefaultEntityCore implements EntityCore {
 	@Override
 	public Map<String, Value> getValues() {
 		return values;
+	}
+
+	@Override
+	public void hideValues(Collection<String> names) {
+		if(names.isEmpty()) {
+			return;
+		}
+
+		for(String name : names) {
+			Value value = values.remove(name);
+			if(name != null) {
+				hiddenValues.put(name, value);
+			}
+		}
+	}
+
+	@Override
+	public Map<String, Value> getAllValues() {
+		if(hiddenValues.isEmpty()) {
+			return values;
+		}
+
+		Map<String, Value> allValues = new HashMap<>(values);
+		allValues.putAll(hiddenValues);
+		return allValues;
 	}
 
 	@Override
