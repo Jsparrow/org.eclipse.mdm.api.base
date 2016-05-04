@@ -18,6 +18,6 @@ package org.eclipse.mdm.api.base.model;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface Statable extends Entity {
+public interface StatusAttachable extends Entity {
 
 }

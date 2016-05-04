@@ -34,7 +34,7 @@ import java.time.LocalDateTime;
  * @see ParameterSet
  */
 public final class Measurement extends BaseEntity implements ContextDescribable, Derived, Describable, Datable,
-FilesAttachable, Parameterizable, Statable, Tagable {
+FilesAttachable, Parameterizable, Tagable {
 
 	// ======================================================================
 	// Class variables
