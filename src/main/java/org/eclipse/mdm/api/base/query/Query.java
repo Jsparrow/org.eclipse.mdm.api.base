@@ -135,27 +135,12 @@ public interface Query {
 	 * Adds a select statement for given {@link Attribute} with given {@link
 	 * Aggregation} function.
 	 *
-	 * @param attribute {@code Attribute} will be passed to {@link
-	 * 		#select(Attribute, Aggregation, String)} with given {@code
-	 * 		Aggregation} and an empty unit name.
-	 * @param aggregation The {@code Aggregation} that will be applied.
-	 * @return This query is returned.
-	 */
-	default Query select(Attribute attribute, Aggregation aggregation) {
-		return select(attribute, aggregation, "");
-	}
-
-	/**
-	 * Adds a select statement for given {@link Attribute} with given {@link
-	 * Aggregation} function and unit.
-	 *
 	 * @param attribute The {@code Attribute} a select statement will be
 	 * 		added for.
 	 * @param aggregation The {@code Aggregation} that will be applied.
-	 * @param unit Name of the unit the result values shall be returned in.
 	 * @return This query is returned.
 	 */
-	Query select(Attribute attribute, Aggregation aggregation, String unit);
+	Query select(Attribute attribute, Aggregation aggregation);
 
 	/**
 	 * For all unambiguous {@link Relation}s from the source {@link EntityType}
