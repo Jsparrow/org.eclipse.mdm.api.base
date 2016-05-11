@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.mdm.api.base.massdata.ReadRequest;
-import org.eclipse.mdm.api.base.model.Channel;
 import org.eclipse.mdm.api.base.model.ContextDescribable;
 import org.eclipse.mdm.api.base.model.ContextRoot;
 import org.eclipse.mdm.api.base.model.ContextType;
@@ -39,7 +38,7 @@ import org.eclipse.mdm.api.base.query.SearchService;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface EntityManager {
+public interface BaseEntityManager {
 
 	// ======================================================================
 	// Public methods

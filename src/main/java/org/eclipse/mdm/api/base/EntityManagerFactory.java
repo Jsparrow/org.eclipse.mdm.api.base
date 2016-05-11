@@ -18,7 +18,7 @@ import java.util.Map;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface EntityManagerFactory<T extends EntityManager> {
+public interface EntityManagerFactory<T extends BaseEntityManager> {
 
 	// ======================================================================
 	// Public methods
