@@ -93,4 +93,8 @@ public abstract class BaseEntity implements Entity {
 		return core;
 	}
 
+	protected static EntityCore getCore(Entity entity) {
+		return ((BaseEntity) entity).getCore();
+	}
+
 }
