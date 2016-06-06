@@ -1,13 +1,16 @@
 package org.eclipse.mdm.api.base.notification;
 
 /**
- * Manages the registrations to a notification service.
- *
+ * Manages registrations to a notification service.
+ * 
+ * @since 1.0.0
+ * @author Matthias Koller, Peak Solution GmbH
  */
 public interface NotificationManager {
 
 	/**
 	 * Registers a NotificationListener at the underlying notification service.
+	 * 
 	 * @param registrationName An unique name used for the registration.
 	 * @param filter A notification filter, specifying which events should be received by the listener.
 	 * @param listener A notification listener which is informed if new events are received.

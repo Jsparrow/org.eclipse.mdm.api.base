@@ -1,5 +1,11 @@
 package org.eclipse.mdm.api.base.notification;
 
+/**
+ * Thrown to indicate a errors concerning notifications.
+ *
+ * @since 1.0.0
+ * @author Matthias Koller, Peak Solution GmbH
+ */
 public class NotificationException extends Exception {
 
 	private static final long serialVersionUID = 4011877631559261716L;
