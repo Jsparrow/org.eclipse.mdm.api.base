@@ -85,4 +85,13 @@ public interface ModelManager {
 	 */
 	EntityType getEntityType(String name);
 
+	/**
+	 * Returns the {@link EntityType} identified by given ID.
+	 *
+	 * @param id Used as ID.
+	 * @return {@code EntityType} with given ID is returned.
+	 * @throws IllegalArgumentException Thrown if {@code EntityType} with given
+	 * 		ID does not exist.
+	 */
+	EntityType getEntityType(long id);
 }

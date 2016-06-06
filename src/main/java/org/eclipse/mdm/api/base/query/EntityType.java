@@ -47,6 +47,13 @@ public interface EntityType {
 	String getName();
 
 	/**
+	 * Returns the ID of this entity type.
+	 *
+	 * @return The ID is returned.
+	 */
+	long getId();
+	
+	/**
 	 * Returns all {@link Attribute}s of this entity type.
 	 *
 	 * <p><b>NOTE:</b> Relation attributes are <i>not</i> part of the
