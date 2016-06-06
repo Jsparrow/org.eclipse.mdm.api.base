@@ -50,7 +50,6 @@ public interface NotificationListener {
 	   * 
 	   * @param entities The entities related to the change. Empty if change was only relevant for entityType.
 	   * @param user The user who modified security information.
->>>>>>> af19c06 Added javadoc comments to notification interfaces
 	   */
 	  void securityModified(List<? extends Entity> entities, User user);
 }
