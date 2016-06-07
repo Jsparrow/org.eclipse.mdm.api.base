@@ -8,6 +8,8 @@
 
 package org.eclipse.mdm.api.base.query;
 
+import java.util.List;
+
 import org.eclipse.mdm.api.base.model.ContextType;
 import org.eclipse.mdm.api.base.model.Entity;
 
@@ -33,6 +35,8 @@ public interface ModelManager {
 	 */
 	Query createQuery();
 
+	List<EntityType> listEntityTypes();
+	
 	/**
 	 * Returns the {@link EntityType} associated with given {@link Entity}.
 	 *
