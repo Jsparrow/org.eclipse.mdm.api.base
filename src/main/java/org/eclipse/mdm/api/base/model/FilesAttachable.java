@@ -8,6 +8,10 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * This interface extends the {@link Entity} interface and provides getter
  * and setter methods for the 'FileLinks' sequence field of an entity.
@@ -32,16 +36,32 @@ public interface FilesAttachable extends Entity {
 	// Public methods
 	// ======================================================================
 
-	/*
-	 * TODO ...
-	 */
+	default FileLink[] getFileLinks() {
+		return ((FileLink[]) getValue(ATTR_FILE_LINKS).extract()).clone();
+	}
 
-	//	default FileLink[] getFileLinks() {
-	//		return getValue(ATTR_FILE_LINKS).extract();
-	//	}
-	//
-	//	default void setFileLinks(FileLink[] fileLinks) {
-	//		getValue(ATTR_FILE_LINKS).set(fileLinks);
-	//	}
+	default void setFileLinks(FileLink[] fileLinks) {
+		getValue(ATTR_FILE_LINKS).set(fileLinks);
+	}
+
+	default boolean addFileLink(FileLink fileLink) {
+		FileLink[] fileLinks = getFileLinks();
+		if(Arrays.stream(fileLinks).filter(fl -> FileLink.areEqual(fl, fileLink)).findAny().isPresent()) {
+			return false;
+		}
+
+		FileLink[] newFileLinks = new FileLink[fileLinks.length + 1];
+		System.arraycopy(fileLinks, 0, newFileLinks, 0, fileLinks.length);
+		newFileLinks[fileLinks.length] = fileLink;
+		setFileLinks(newFileLinks);
+		return true;
+	}
+
+	default boolean removeFileLink(FileLink fileLink) {
+		List<FileLink> fileLinks = new ArrayList<>(Arrays.asList(getFileLinks()));
+		boolean removed = fileLinks.remove(fileLink);
+		setFileLinks(fileLinks.toArray(new FileLink[fileLinks.size()]));
+		return removed;
+	}
 
 }

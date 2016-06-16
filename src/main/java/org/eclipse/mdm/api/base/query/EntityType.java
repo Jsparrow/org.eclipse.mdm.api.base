@@ -10,12 +10,10 @@ package org.eclipse.mdm.api.base.query;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.eclipse.mdm.api.base.model.Entity;
-import org.eclipse.mdm.api.base.model.Test;
 import org.eclipse.mdm.api.base.model.Value;
 
 /**
@@ -105,19 +103,6 @@ public interface EntityType {
 	 * @return The returned {@code List} may be immutable.
 	 */
 	List<Relation> getRelations();
-
-	/**
-	 * Returns the {@link Relation} to a parent entity type whose relationship
-	 * is {@link Relationship#FATHER_CHILD}.
-	 *
-	 * <p><b>Note:</b> Due to the extensibility of the application model such
-	 * a usually mandatory relation may exist only within the extended model
-	 * (e.g.: parent relation of a {@link Test}).
-	 *
-	 * @return {@code Optional} is empty if the {@code Relation} does not exist.
-	 */
-	@Deprecated // TODO this is wrong in case of template components!
-	Optional<Relation> getParentRelation();
 
 	List<Relation> getParentRelations();
 

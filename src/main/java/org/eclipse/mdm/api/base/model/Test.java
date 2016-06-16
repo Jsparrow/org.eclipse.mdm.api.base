@@ -25,7 +25,7 @@ import java.util.Optional;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class Test extends BaseEntity implements Datable, Deletable, Derived, Describable,
+public final class Test extends BaseEntity implements Datable, Deletable, Describable,
 FilesAttachable, Tagable, StatusAttachable {
 
 	// ======================================================================
@@ -44,9 +44,9 @@ FilesAttachable, Tagable, StatusAttachable {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link EntityCore}.
+	 * @param core The {@link Core}.
 	 */
-	Test(EntityCore core) {
+	Test(Core core) {
 		super(core);
 	}
 

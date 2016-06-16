@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class ContextComponent extends BaseEntity implements Deletable, Derived {
+public final class ContextComponent extends BaseEntity implements Deletable {
 
 	// ======================================================================
 	// Constructors
@@ -32,9 +32,9 @@ public final class ContextComponent extends BaseEntity implements Deletable, Der
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link EntityCore}.
+	 * @param core The {@link Core}.
 	 */
-	ContextComponent(EntityCore core) {
+	ContextComponent(Core core) {
 		super(core);
 	}
 
@@ -50,7 +50,7 @@ public final class ContextComponent extends BaseEntity implements Deletable, Der
 	 * 		given name does not exist.
 	 */
 	public Optional<ContextSensor> getContextSensor(String name) {
-		return getContextSensors().stream().filter(cs -> cs.getName().equals(name)).findAny();
+		return getContextSensors().stream().filter(cs -> cs.nameMatches(name)).findAny();
 	}
 
 	/**

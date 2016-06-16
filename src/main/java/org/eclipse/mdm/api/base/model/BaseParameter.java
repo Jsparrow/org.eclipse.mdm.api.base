@@ -75,9 +75,9 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 *
 	 * @param attrScalarType Name of the {@link ScalarType} attribute.
 	 * @param attrValue Name of the {@code String} value attribute.
-	 * @param core The {@link EntityCore}.
+	 * @param core The {@link Core}.
 	 */
-	protected BaseParameter(String attrScalarType, String attrValue, EntityCore core) {
+	protected BaseParameter(String attrScalarType, String attrValue, Core core) {
 		super(core);
 		this.attrScalarType = attrScalarType;
 		this.attrValue = attrValue;
@@ -367,7 +367,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 		}
 
 		Optional<Unit> unit = getUnit();
-		if(unit != null) {
+		if(unit.isPresent()) {
 			sb.append(" [").append(unit.get().getName()).append(']');
 		}
 

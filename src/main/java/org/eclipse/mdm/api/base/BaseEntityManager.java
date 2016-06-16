@@ -21,8 +21,6 @@ import org.eclipse.mdm.api.base.model.EntityFactory;
 import org.eclipse.mdm.api.base.model.Environment;
 import org.eclipse.mdm.api.base.model.MeasuredValues;
 import org.eclipse.mdm.api.base.model.Measurement;
-import org.eclipse.mdm.api.base.model.ParameterSet;
-import org.eclipse.mdm.api.base.model.Parameterizable;
 import org.eclipse.mdm.api.base.model.TestStep;
 import org.eclipse.mdm.api.base.model.URI;
 import org.eclipse.mdm.api.base.model.User;
@@ -97,16 +95,19 @@ public interface BaseEntityManager {
 		return Optional.empty();
 	}
 
+	<T extends Entity> T load(Class<T> entityClass, Long instanceID) throws DataAccessException;
+
 	/**
 	 * Loads the entity identified by given {@link URI}.
 	 *
 	 * @param <T> The expected entity type.
 	 * @param uri The entity identifier.
-	 * @return {@code Optional} is empty if the entity could not be found.
+	 * @return The {@link Entity} is returned.
 	 * @throws DataAccessException Thrown if unable to retrieve the {@code Entity}.
 	 * @see URI
 	 */
-	<T extends Entity> Optional<T> load(URI uri) throws DataAccessException;
+	@Deprecated
+	<T extends Entity> T load(URI uri) throws DataAccessException;
 
 	/**
 	 * Loads all available entities of given type. This method is useful while
@@ -122,13 +123,13 @@ public interface BaseEntityManager {
 	 * }</pre>
 	 *
 	 * @param <T> The desired type.
-	 * @param type Type of the returned entities.
+	 * @param entityClass Type of the returned entities.
 	 * @return Entities are returned in a {@code List}.
 	 * @throws DataAccessException Thrown if unable to retrieve the entities.
 	 * @see #loadAll(Class, String)
 	 */
-	default <T extends Entity> List<T> loadAll(Class<T> type) throws DataAccessException {
-		return loadAll(type, "*");
+	default <T extends Entity> List<T> loadAll(Class<T> entityClass) throws DataAccessException {
+		return loadAll(entityClass, "*");
 	}
 
 	/**
@@ -146,7 +147,7 @@ public interface BaseEntityManager {
 	 * }</pre>
 	 *
 	 * @param <T> The desired type.
-	 * @param type Type of the returned entities.
+	 * @param entityClass Type of the returned entities.
 	 * @param pattern Is always case sensitive and may contain wildcard
 	 * 		characters as follows: "?" for one matching character and "*"
 	 * 		for a sequence of matching characters.
@@ -154,7 +155,7 @@ public interface BaseEntityManager {
 	 * @throws DataAccessException Thrown if unable to retrieve the entities.
 	 * @see #loadAll(Class)
 	 */
-	<T extends Entity> List<T> loadAll(Class<T> type, String pattern) throws DataAccessException;
+	<T extends Entity> List<T> loadAll(Class<T> entityClass, String pattern) throws DataAccessException;
 
 	/**
 	 * Loads the parent entity for given child. Each modeled entity provides
@@ -166,11 +167,11 @@ public interface BaseEntityManager {
 	 *
 	 * @param <T> The desired parent type.
 	 * @param child The child entity.
-	 * @param parentType The desired parent entity type.
+	 * @param entityClass The desired parent entity type.
 	 * @return {@code Optional} is empty if parent entity could not be found.
 	 * @throws DataAccessException Thrown if unable to retrieve parent entity.
 	 */
-	<T extends Entity> Optional<T> loadParent(Entity child, Class<T> parentType) throws DataAccessException;
+	<T extends Entity> Optional<T> loadParent(Entity child, Class<T> entityClass) throws DataAccessException;
 
 	/**
 	 * Loads all related children of given type for given parent entity. Each
@@ -183,13 +184,13 @@ public interface BaseEntityManager {
 	 *
 	 * @param <T> The desired child type.
 	 * @param parent The parent entity.
-	 * @param childType The desired child entity type.
+	 * @param entityClass The desired child entity type.
 	 * @return Related child entities are returned in a {@code List}.
 	 * @throws DataAccessException Thrown if unable to retrieve the children.
 	 * @see #loadChildren(Entity, Class, String)
 	 */
-	default <T extends Entity> List<T> loadChildren(Entity parent, Class<T> childType) throws DataAccessException {
-		return loadChildren(parent, childType, "*");
+	default <T extends Entity> List<T> loadChildren(Entity parent, Class<T> entityClass) throws DataAccessException {
+		return loadChildren(parent, entityClass, "*");
 	}
 
 	/**
@@ -203,7 +204,7 @@ public interface BaseEntityManager {
 	 *
 	 * @param <T> The desired child type.
 	 * @param parent The parent entity.
-	 * @param childType The desired child entity type.
+	 * @param entityClass The desired child entity type.
 	 * @param pattern Is always case sensitive and may contain wildcard
 	 * 		characters as follows: "?" for one matching character and "*"
 	 * 		for a sequence of matching characters.
@@ -211,7 +212,9 @@ public interface BaseEntityManager {
 	 * @throws DataAccessException Thrown if unable to retrieve the children.
 	 * @see #loadChildren(Entity, Class)
 	 */
-	<T extends Entity> List<T> loadChildren(Entity parent, Class<T> childType, String pattern) throws DataAccessException;
+	<T extends Entity> List<T> loadChildren(Entity parent, Class<T> entityClass, String pattern) throws DataAccessException;
+
+	List<ContextType> loadContextTypes(ContextDescribable contextDescribable) throws DataAccessException;
 
 	/**
 	 * Loads the requested {@link ContextRoot}s for given {@link ContextDescribable}.
@@ -227,32 +230,6 @@ public interface BaseEntityManager {
 	 */
 	Map<ContextType, ContextRoot> loadContexts(ContextDescribable contextDescribable, ContextType... contextTypes)
 			throws DataAccessException;
-
-	/**
-	 * Loads all related {@link ParameterSet}s for given {@link Parameterizable}.
-	 *
-	 * @param parameterizable Either a {@link Measurement} or {@link Channel}.
-	 * @return Returns all related {@code ParameterSet}s in a {@code List}.
-	 * @throws DataAccessException Thrown if unable to retrieve the {@code ParameterSet}s.
-	 * @see #loadParameterSets(Parameterizable, String)
-	 */
-	default List<ParameterSet> loadParameterSets(Parameterizable parameterizable) throws DataAccessException {
-		return loadParameterSets(parameterizable, "*");
-	}
-
-	/**
-	 * Loads all {@link ParameterSet}s whose name fulfills given pattern and
-	 * are related to given {@link Parameterizable}.
-	 *
-	 * @param parameterizable Either a {@link Measurement} or {@link Channel}.
-	 * @param pattern Is always case sensitive and may contain wildcard
-	 * 		characters as follows: "?" for one matching character and "*"
-	 * 		for a sequence of matching characters.
-	 * @return Returns all matched {@code ParameterSet}s in a {@code List}.
-	 * @throws DataAccessException Thrown if unable to retrieve the {@code ParameterSet}s.
-	 * @see #loadParameterSets(Parameterizable)
-	 */
-	List<ParameterSet> loadParameterSets(Parameterizable parameterizable, String pattern) throws DataAccessException;
 
 	/**
 	 * Retrieves the {@link MeasuredValues} as specified by the given {@link ReadRequest}.

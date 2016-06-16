@@ -25,9 +25,9 @@ public final class Environment extends BaseEntity {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link EntityCore}.
+	 * @param core The {@link Core}.
 	 */
-	Environment(EntityCore core) {
+	Environment(Core core) {
 		super(core);
 	}
 

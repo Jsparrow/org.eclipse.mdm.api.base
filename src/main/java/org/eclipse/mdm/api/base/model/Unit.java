@@ -17,7 +17,7 @@ package org.eclipse.mdm.api.base.model;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class Unit extends BaseEntity implements Copyable, Datable, Deletable, Describable {
+public final class Unit extends BaseEntity implements Datable, Deletable, Describable {
 
 	// ======================================================================
 	// Class variables
@@ -50,9 +50,9 @@ public final class Unit extends BaseEntity implements Copyable, Datable, Deletab
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link EntityCore}.
+	 * @param core The {@link Core}.
 	 */
-	Unit(EntityCore core) {
+	Unit(Core core) {
 		super(core);
 	}
 

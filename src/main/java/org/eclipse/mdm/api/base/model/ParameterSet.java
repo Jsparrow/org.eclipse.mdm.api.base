@@ -29,6 +29,16 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	// ======================================================================
 
 	/**
+	 * The {@link Measurement} parent type.
+	 */
+	public static final Class<Measurement> PARENT_TYPE_MEASUREMENT = Measurement.class;
+
+	/**
+	 * The {@link ChannelGroup} parent type.
+	 */
+	public static final Class<Channel> PARENT_TYPE_CHANNEL = Channel.class;
+
+	/**
 	 * The 'Version' attribute name.
 	 */
 	public static final String ATTR_VERSION = "Version";
@@ -40,9 +50,9 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link EntityCore}.
+	 * @param core The {@link Core}.
 	 */
-	ParameterSet(EntityCore core) {
+	ParameterSet(Core core) {
 		super(core);
 	}
 
@@ -58,7 +68,7 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	 * 		given name does not exist.
 	 */
 	public Optional<Parameter> getParameter(String name) {
-		return getParameters().stream().filter(p -> p.getName().equals(name)).findAny();
+		return getParameters().stream().filter(p -> p.nameMatches(name)).findAny();
 	}
 
 	/**

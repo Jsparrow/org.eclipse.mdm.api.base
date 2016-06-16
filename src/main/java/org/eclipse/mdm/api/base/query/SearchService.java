@@ -48,26 +48,26 @@ public interface SearchService {
 	 * Returns all {@link EntityType}s supported by the {@link SearchQuery}
 	 * associated with given {@link Entity} type.
 	 *
-	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param entityClass Used as the {@code SearchQuery} identifier.
 	 * @return The returned {@code List} may be immutable.
 	 * @throws IllegalArgumentException Thrown if given type is not associated
 	 * 		with a predefined {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 */
-	List<EntityType> listEntityTypes(Class<? extends Entity> type);
+	List<EntityType> listEntityTypes(Class<? extends Entity> entityClass);
 
 	/**
 	 * Returns the {@link Searchable}, which describes a hierarchical order of
 	 * the {@link EntityType}s supported by the {@link SearchQuery} associated
 	 * with given {@link Entity} type.
 	 *
-	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param entityClass Used as the {@code SearchQuery} identifier.
 	 * @return The {@code Searchable} root is returned.
 	 * @throws IllegalArgumentException Thrown if given type is not associated
 	 * 		with a predefined {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 */
-	Searchable getSearchableRoot(Class<? extends Entity> type);
+	Searchable getSearchableRoot(Class<? extends Entity> entityClass);
 
 	/**
 	 * Returns the distinct {@link Value} sequence for given {@link Attribute}.
@@ -75,7 +75,7 @@ public interface SearchService {
 	 * associated with given {@link Entity} type. The returned {@code Value}
 	 * sequence is intended to be used for building filter criteria.
 	 *
-	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param entityClass Used as the {@code SearchQuery} identifier.
 	 * @param attribute The {@code Attribute} whose distinct values will be
 	 * 		queried.
 	 * @return A distinct {@code List} of all available {@code Value}s is returned.
@@ -88,8 +88,8 @@ public interface SearchService {
 	 * @see #listEntityTypes(Class)
 	 * @see #getFilterValues(Class, Attribute, Filter)
 	 */
-	default List<Value> getFilterValues(Class<? extends Entity> type, Attribute attribute) throws DataAccessException {
-		return getFilterValues(type, attribute, Filter.and());
+	default List<Value> getFilterValues(Class<? extends Entity> entityClass, Attribute attribute) throws DataAccessException {
+		return getFilterValues(entityClass, attribute, Filter.and());
 	}
 
 	/**
@@ -98,7 +98,7 @@ public interface SearchService {
 	 * associated with given {@link Entity} type. The returned {@code Value}
 	 * sequence is intended to be used for building filter criteria.
 	 *
-	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param entityClass Used as the {@code SearchQuery} identifier.
 	 * @param attribute The {@code Attribute} whose distinct values will be
 	 * 		queried.
 	 * @param filter The criteria sequence.
@@ -112,7 +112,7 @@ public interface SearchService {
 	 * @see #listEntityTypes(Class)
 	 * @see #getFilterValues(Class, Attribute)
 	 */
-	List<Value> getFilterValues(Class<? extends Entity> type, Attribute attribute, Filter filter)
+	List<Value> getFilterValues(Class<? extends Entity> entityClass, Attribute attribute, Filter filter)
 			throws DataAccessException;
 
 	/**
@@ -125,7 +125,7 @@ public interface SearchService {
 	 * cardinality of the associated {@link Relation}.
 	 *
 	 * @param <T> Type of the entities that will be generated for each result.
-	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param entityCass Used as the {@code SearchQuery} identifier.
 	 * @param entityTypes Select statements will be added for all {@code Attribute}s
 	 * 		of each given {@code EntityType}.
 	 * @return All {@link Result}s are returned in a {@code Map}, which maps
@@ -140,8 +140,8 @@ public interface SearchService {
 	 * @see #fetch(Class, List)
 	 * @see Record#merge(Record)
 	 */
-	default <T extends Entity> Map<T, List<Record>> fetchComplete(Class<T> type, List<EntityType> entityTypes) throws DataAccessException {
-		return fetchComplete(type, entityTypes, Filter.and());
+	default <T extends Entity> Map<T, List<Record>> fetchComplete(Class<T> entityCass, List<EntityType> entityTypes) throws DataAccessException {
+		return fetchComplete(entityCass, entityTypes, Filter.and());
 	}
 
 	/**
@@ -155,7 +155,7 @@ public interface SearchService {
 	 *
 	 * @param <T> Type of the entities that will be generated for each.
 	 * 		result.
-	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param entityClass Used as the {@code SearchQuery} identifier.
 	 * @param entityTypes Select statements will be added for all {@code Attribute}s
 	 * 		of each given {@code EntityType}.
 	 * @param filter The criteria sequence.
@@ -171,7 +171,7 @@ public interface SearchService {
 	 * @see #fetch(Class, List, Filter)
 	 * @see Record#merge(Record)
 	 */
-	<T extends Entity> Map<T, List<Record>> fetchComplete(Class<T> type, List<EntityType> entityTypes, Filter filter)
+	<T extends Entity> Map<T, List<Record>> fetchComplete(Class<T> entityClass, List<EntityType> entityTypes, Filter filter)
 			throws DataAccessException;
 
 	/**
@@ -179,7 +179,7 @@ public interface SearchService {
 	 * instances of the specified {@link Entity} type.
 	 *
 	 * @param <T> Type of the entities that will be generated for each result.
-	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param entityClass Used as the {@code SearchQuery} identifier.
 	 * @return All available entities are returned in a {@code List}.
 	 * @throws DataAccessException Thrown in case of errors while executing the
 	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
@@ -188,8 +188,8 @@ public interface SearchService {
 	 * @see #listSearchableTypes()
 	 * @see #fetch(Class, Filter)
 	 */
-	default <T extends Entity> List<T> fetch(Class<T> type) throws DataAccessException {
-		return fetch(type, Filter.and());
+	default <T extends Entity> List<T> fetch(Class<T> entityClass) throws DataAccessException {
+		return fetch(entityClass, Filter.and());
 	}
 
 	/**
@@ -198,7 +198,7 @@ public interface SearchService {
 	 * associated with given {@link Entity} type.
 	 *
 	 * @param <T> Type of the entities that will be generated for each result.
-	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param entityClass Used as the {@code SearchQuery} identifier.
 	 * @param filter The criteria sequence.
 	 * @return All matched entities are returned in a {@code List}.
 	 * @throws DataAccessException Thrown in case of errors while executing the
@@ -210,8 +210,8 @@ public interface SearchService {
 	 * @see #listEntityTypes(Class)
 	 * @see #fetch(Class)
 	 */
-	default <T extends Entity> List<T> fetch(Class<T> type, Filter filter) throws DataAccessException {
-		return fetch(type, Collections.emptyList(), filter).keySet().stream().collect(Collectors.toList());
+	default <T extends Entity> List<T> fetch(Class<T> entityClass, Filter filter) throws DataAccessException {
+		return fetch(entityClass, Collections.emptyList(), filter).keySet().stream().collect(Collectors.toList());
 	}
 
 	/**
@@ -224,7 +224,7 @@ public interface SearchService {
 	 * cardinality of the associated {@link Relation}.
 	 *
 	 * @param <T> Type of the entities that will be generated for each result.
-	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param entityClass Used as the {@code SearchQuery} identifier.
 	 * @param attributes Select statements will be added for each {@code
 	 * 		Attribute}.
 	 * @return All {@link Result}s are returned in a {@code Map}, which maps
@@ -239,8 +239,8 @@ public interface SearchService {
 	 * @see #fetchComplete(Class, List)
 	 * @see Record#merge(Record)
 	 */
-	default <T extends Entity> Map<T, List<Record>> fetch(Class<T> type, List<Attribute> attributes) throws DataAccessException {
-		return fetch(type, attributes, Filter.and());
+	default <T extends Entity> Map<T, List<Record>> fetch(Class<T> entityClass, List<Attribute> attributes) throws DataAccessException {
+		return fetch(entityClass, attributes, Filter.and());
 	}
 
 	/**
@@ -253,7 +253,7 @@ public interface SearchService {
 	 * cardinality of the associated {@link Relation}.
 	 *
 	 * @param <T> Type of the entities that will be generated for each result.
-	 * @param type Used as the {@code SearchQuery} identifier.
+	 * @param entityClass Used as the {@code SearchQuery} identifier.
 	 * @param attributes Select statements will be added for each {@code
 	 * 		Attribute}.
 	 * @param filter The criteria sequence.
@@ -269,7 +269,7 @@ public interface SearchService {
 	 * @see #fetchComplete(Class, List, Filter)
 	 * @see Record#merge(Record)
 	 */
-	<T extends Entity> Map<T, List<Record>> fetch(Class<T> type, List<Attribute> attributes, Filter filter)
+	<T extends Entity> Map<T, List<Record>> fetch(Class<T> entityClass, List<Attribute> attributes, Filter filter)
 			throws DataAccessException;
 
 	default boolean isTextSearchAvailable() {
@@ -277,8 +277,8 @@ public interface SearchService {
 	}
 
 	@SuppressWarnings("unchecked")
-	default <T extends Entity> List<T> fetch(Class<T> type, String query) throws DataAccessException {
-		return (List<T>) fetch(query).getOrDefault(type, Collections.emptyList());
+	default <T extends Entity> List<T> fetch(Class<T> entityClass, String query) throws DataAccessException {
+		return (List<T>) fetch(query).getOrDefault(entityClass, Collections.emptyList());
 	}
 
 	default Map<Class<? extends Entity>, List<Entity>> fetch(String query) throws DataAccessException {

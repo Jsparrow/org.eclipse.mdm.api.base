@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see Entity
  */
+@Deprecated // is it possible to remove this class?!
 public final class URI {
 
 	// ======================================================================

@@ -53,9 +53,9 @@ public final class User extends BaseEntity implements Deletable, Describable {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link EntityCore}.
+	 * @param core The {@link Core}.
 	 */
-	User(EntityCore core) {
+	User(Core core) {
 		super(core);
 	}
 

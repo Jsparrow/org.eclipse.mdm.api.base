@@ -28,7 +28,7 @@ public abstract class BaseEntity implements Entity {
 	// Instance variables
 	// ======================================================================
 
-	private final EntityCore core;
+	private final Core core;
 
 	// ======================================================================
 	// Constructors
@@ -37,15 +37,30 @@ public abstract class BaseEntity implements Entity {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link EntityCore}.
+	 * @param core The {@link Core}.
 	 */
-	protected BaseEntity(EntityCore core) {
+	protected BaseEntity(Core core) {
 		this.core = core;
 	}
 
 	// ======================================================================
 	// Public methods
 	// ======================================================================
+
+	@Override
+	public String getSourceName() {
+		return getCore().getSourceName();
+	}
+
+	@Override
+	public String getTypeName() {
+		return getCore().getTypeName();
+	}
+
+	@Override
+	public Long getID() {
+		return getCore().getID();
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -85,15 +100,15 @@ public abstract class BaseEntity implements Entity {
 	// ======================================================================
 
 	/**
-	 * Returns the internally stored {@link EntityCore}.
+	 * Returns the internally stored {@link Core}.
 	 *
-	 * @return The {@link EntityCore} is returned.
+	 * @return The {@link Core} is returned.
 	 */
-	protected EntityCore getCore() {
+	protected Core getCore() {
 		return core;
 	}
 
-	protected static EntityCore getCore(Entity entity) {
+	protected static Core getCore(Entity entity) {
 		return ((BaseEntity) entity).getCore();
 	}
 

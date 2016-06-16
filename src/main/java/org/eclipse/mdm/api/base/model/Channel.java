@@ -20,7 +20,7 @@ package org.eclipse.mdm.api.base.model;
  * @see ContextSensor
  * @see ParameterSet
  */
-public final class Channel extends BaseEntity implements Deletable, Describable, Parameterizable {
+public final class Channel extends BaseEntity implements Deletable, Describable {
 
 	// TODO Channel may have a relation to a sensor!
 
@@ -37,6 +37,11 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	 * The {@link ChannelGroup} parent type.
 	 */
 	public static final Class<ChannelGroup> PARENT_TYPE_CHANNELGROUP = ChannelGroup.class;
+
+	/**
+	 * The {@link ParameterSet} child type.
+	 */
+	public static final Class<ParameterSet> CHILD_TYPE_PARAMETERSET = ParameterSet.class;
 
 	/**
 	 * The 'Minimum' attribute name.
@@ -86,9 +91,9 @@ public final class Channel extends BaseEntity implements Deletable, Describable,
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link EntityCore}.
+	 * @param core The {@link Core}.
 	 */
-	Channel(EntityCore core) {
+	Channel(Core core) {
 		super(core);
 	}
 

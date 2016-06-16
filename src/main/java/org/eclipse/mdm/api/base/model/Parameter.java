@@ -73,9 +73,9 @@ public final class Parameter extends BaseParameter {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link EntityCore}.
+	 * @param core The {@link Core}.
 	 */
-	Parameter(EntityCore core) {
+	Parameter(Core core) {
 		super(ATTR_SCALAR_TYPE, ATTR_VALUE, core);
 	}
 

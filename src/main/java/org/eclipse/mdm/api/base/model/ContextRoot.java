@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class ContextRoot extends BaseEntity implements Deletable, Derived {
+public final class ContextRoot extends BaseEntity implements Deletable {
 
 	// ======================================================================
 	// Class variables
@@ -53,11 +53,11 @@ public final class ContextRoot extends BaseEntity implements Deletable, Derived 
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link EntityCore}.
+	 * @param core The {@link Core}.
 	 */
-	ContextRoot(EntityCore core) {
+	ContextRoot(Core core) {
 		super(core);
-		contextType = ContextType.valueOf(core.getURI().getTypeName().toUpperCase(Locale.ROOT));
+		contextType = ContextType.valueOf(core.getTypeName().toUpperCase(Locale.ROOT));
 	}
 
 	// ======================================================================
@@ -81,7 +81,7 @@ public final class ContextRoot extends BaseEntity implements Deletable, Derived 
 	 * 		with given name does not exist.
 	 */
 	public Optional<ContextComponent> getContextComponent(String name) {
-		return getContextComponents().stream().filter(cc -> cc.getName().equals(name)).findAny();
+		return getContextComponents().stream().filter(cc -> cc.nameMatches(name)).findAny();
 	}
 
 	/**

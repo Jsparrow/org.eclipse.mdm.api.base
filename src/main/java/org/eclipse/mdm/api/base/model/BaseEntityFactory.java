@@ -9,9 +9,11 @@
 package org.eclipse.mdm.api.base.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
-import org.eclipse.mdm.api.base.model.EntityCore.ChildrenStore;
-import org.eclipse.mdm.api.base.model.EntityCore.EntityStore;
+import org.eclipse.mdm.api.base.model.Core.ChildrenStore;
+import org.eclipse.mdm.api.base.model.Core.EntityStore;
 
 /**
  * Implementation of an abstract entity factory which creates new entities.
@@ -34,7 +36,8 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		Channel channel = new Channel(createCore(Channel.class));
 
 		// relations
-		getPermanentStore(channel).setParent(measurement, true);
+		getPermanentStore(channel).set(measurement);
+		getChildrenStore(measurement).add(channel);
 		getMutableStore(channel).set(quantity.getDefaultUnit());
 		getMutableStore(channel).set(quantity);
 
@@ -44,7 +47,6 @@ public abstract class BaseEntityFactory implements EntityFactory {
 
 		// properties
 		channel.setName(name);
-		channel.setMimeType(getDefaultMimeType(Channel.class));
 		channel.setDescription(quantity.getDescription());
 		channel.setInterpolation(Interpolation.NONE);
 		channel.setScalarType(quantity.getDefaultScalarType());
@@ -66,11 +68,11 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		ChannelGroup channelGroup = new ChannelGroup(createCore(ChannelGroup.class));
 
 		// relations
-		getPermanentStore(channelGroup).setParent(measurement, true);
+		getPermanentStore(channelGroup).set(measurement);
+		getChildrenStore(measurement).add(channelGroup);
 
 		// properties
 		channelGroup.setName(name);
-		channelGroup.setMimeType(getDefaultMimeType(ChannelGroup.class));
 		channelGroup.setNumberOfValues(Integer.valueOf(numberOfValues));
 
 		return channelGroup;
@@ -84,14 +86,16 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		Measurement measurement = new Measurement(createCore(Measurement.class));
 
 		// relations
-		getPermanentStore(measurement).setParent(testStep, true);
+		getPermanentStore(measurement).set(testStep);
+		getChildrenStore(testStep).add(measurement);
+
+		// TODO
 		//		for(ContextRoot contextRoot : contextRoots) {
 		//			measurement.getCore().setImplicitRelation(contextRoot);
 		//		}
 
 		// properties
 		measurement.setName(name);
-		measurement.setMimeType(getDefaultMimeType(Measurement.class));
 		measurement.setDateCreated(LocalDateTime.now());
 
 		return measurement;
@@ -109,30 +113,39 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		Parameter parameter = new Parameter(createCore(Parameter.class));
 
 		// relations
-		getPermanentStore(parameter).setParent(parameterSet, false);
+		getPermanentStore(parameter).set(parameterSet);
 		getChildrenStore(parameterSet).add(parameter);
 
 		// properties
 		parameter.setName(name);
-		parameter.setMimeType(getDefaultMimeType(Parameter.class));
 		parameter.setObjectValue(value, unit);
 
 		return parameter;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ParameterSet createParameterSet(String name, String version, Parameterizable parameterizable) {
+	public ParameterSet createParameterSet(String name, String version, Measurement measurement) {
 		ParameterSet parameterSet = new ParameterSet(createCore(ParameterSet.class));
 
 		// relations
-		getPermanentStore(parameterSet).setParent(parameterizable, true);
+		getPermanentStore(parameterSet).set(measurement);
+		getChildrenStore(measurement).add(parameterSet);
 
 		// properties
 		parameterSet.setName(name);
-		parameterSet.setMimeType(getDefaultMimeType(ParameterSet.class));
+		parameterSet.setVersion(version);
+
+		return parameterSet;
+	}
+
+	public ParameterSet createParameterSet(String name, String version, Channel channel) {
+		ParameterSet parameterSet = new ParameterSet(createCore(ParameterSet.class));
+
+		// relations
+		getPermanentStore(parameterSet).set(channel);
+		getChildrenStore(channel).add(parameterSet);
+
+		// properties
+		parameterSet.setName(name);
 		parameterSet.setVersion(version);
 
 		return parameterSet;
@@ -147,7 +160,6 @@ public abstract class BaseEntityFactory implements EntityFactory {
 
 		// properties
 		physicalDimension.setName(name);
-		physicalDimension.setMimeType(getDefaultMimeType(PhysicalDimension.class));
 		physicalDimension.setLength(Integer.valueOf(0));
 		physicalDimension.setMass(Integer.valueOf(0));
 		physicalDimension.setTime(Integer.valueOf(0));
@@ -171,7 +183,6 @@ public abstract class BaseEntityFactory implements EntityFactory {
 
 		// properties
 		quantity.setName(name);
-		quantity.setMimeType(getDefaultMimeType(Quantity.class));
 		quantity.setDateCreated(LocalDateTime.now());
 		quantity.setDefaultRank(Integer.valueOf(1));
 		quantity.setDefaultDimension(new int[] { 0 });
@@ -209,7 +220,6 @@ public abstract class BaseEntityFactory implements EntityFactory {
 
 		// properties
 		test.setName(name);
-		test.setMimeType(getDefaultMimeType(Test.class));
 		test.setDateCreated(LocalDateTime.now());
 
 		return test;
@@ -223,7 +233,8 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		TestStep testStep = new TestStep(createCore(TestStep.class));
 
 		// relations
-		getPermanentStore(testStep).setParent(test, true);
+		getPermanentStore(testStep).set(test);
+		getChildrenStore(test).add(testStep);
 
 		/**
 		 * TODO
@@ -234,7 +245,6 @@ public abstract class BaseEntityFactory implements EntityFactory {
 
 		// properties
 		testStep.setName(name);
-		testStep.setMimeType(getDefaultMimeType(TestStep.class));
 		testStep.setDateCreated(LocalDateTime.now());
 		testStep.setOptional(Boolean.TRUE);
 		testStep.setSortIndex(Integer.valueOf(0)); // TODO
@@ -254,7 +264,6 @@ public abstract class BaseEntityFactory implements EntityFactory {
 
 		// properties
 		unit.setName(name);
-		unit.setMimeType(getDefaultMimeType(Unit.class));
 		unit.setOffset(Double.valueOf(0D));
 		unit.setFactor(Double.valueOf(1D));
 		unit.setDB(Float.valueOf(0F));
@@ -271,12 +280,8 @@ public abstract class BaseEntityFactory implements EntityFactory {
 
 		// properties
 		user.setName(name);
-		user.setMimeType(getDefaultMimeType(User.class));
 		user.setGivenName(givenName);
 		user.setSurname(surname);
-		// user.setDepartment("");
-		// user.setPhone("");
-		// user.setMail("");
 
 		return user;
 	}
@@ -284,6 +289,11 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	// ======================================================================
 	// Protected methods
 	// ======================================================================
+
+	protected final Integer nextIndex(List<? extends Sortable> sortables) {
+		Optional<Integer> maxIndex = sortables.stream().max(Sortable.COMPARATOR).map(Sortable::getSortIndex);
+		return Integer.valueOf(maxIndex.isPresent() ? maxIndex.get().intValue() + 1 : 1);
+	}
 
 	protected final ChildrenStore getChildrenStore(BaseEntity entity) {
 		return getCore(entity).getChildrenStore();
@@ -298,25 +308,12 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	}
 
 	@Deprecated
-	protected final EntityCore getCore(BaseEntity entity) {
+	protected final Core getCore(BaseEntity entity) {
 		return entity.getCore();
 	}
 
-	/**
-	 * Creates an {@link EntityCore} associated with given type.
-	 *
-	 * @param type The type of the entity.
-	 * @return A new {@code EntityCore} is returned.
-	 */
-	protected abstract EntityCore createCore(Class<? extends Entity> type);
+	protected abstract <T extends Entity> Core createCore(Class<T> entityClass);
 
-	/**
-	 * Creates a default {@link MimeType} for given type.
-	 *
-	 * @param type The type of the entity.
-	 * @return A default {@code MimeType} is returned.
-	 */
-	protected abstract MimeType getDefaultMimeType(Class<? extends Entity> type);
-
+	protected abstract <T extends Entity> Core createCore(Class<T> entityClass, ContextType contextType);
 
 }

@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.eclipse.mdm.api.base.model.Value;
 
@@ -35,6 +34,11 @@ public final class Result implements Iterable<Record> {
 	// ======================================================================
 	// Public methods
 	// ======================================================================
+
+	// TODO
+	public List<Record> getRecords() {
+		return new ArrayList<>(records.values());
+	}
 
 	/**
 	 * Adds given {@link Record} to this result.
@@ -133,22 +137,6 @@ public final class Result implements Iterable<Record> {
 	@Override
 	public String toString() {
 		return new StringBuilder("Result(Records = ").append(records.values()).append(')').toString();
-	}
-
-	public List<Record> retainAll(List<EntityType> entityTypes) {
-		Iterator<Entry<EntityType, Record>> recordIterator = records.entrySet().iterator();
-		List<Record> removedRecords = new ArrayList<>();
-
-		while(recordIterator.hasNext()) {
-			Entry<EntityType, Record> entry = recordIterator.next();
-
-			if(!entityTypes.contains(entry.getKey())) {
-				recordIterator.remove();
-				removedRecords.add(entry.getValue());
-			}
-		}
-
-		return removedRecords;
 	}
 
 }

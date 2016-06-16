@@ -8,6 +8,7 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import java.util.Comparator;
 import java.util.Map;
 
 /**
@@ -22,6 +23,8 @@ public interface Entity {
 	// ======================================================================
 	// Class variables
 	// ======================================================================
+
+	static final Comparator<Entity> COMPARATOR = Comparator.comparing(Entity::getName);
 
 	/**
 	 * The 'MimeType' attribute name.
@@ -49,7 +52,14 @@ public interface Entity {
 	 * @return The returned {@code URI} is never null, but if this entity is
 	 * 		not yet made permanent, then its ID will be {@code 0}.
 	 */
+	@Deprecated
 	URI getURI();
+
+	String getSourceName();
+
+	String getTypeName();
+
+	Long getID();
 
 	/**
 	 * Returns the name of this entity.
@@ -110,5 +120,9 @@ public interface Entity {
 	 */
 	@Override
 	String toString();
+
+	default boolean nameMatches(String name) {
+		return getName().equals(name);
+	}
 
 }

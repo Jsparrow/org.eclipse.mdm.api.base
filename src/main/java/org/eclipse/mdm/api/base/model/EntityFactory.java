@@ -104,17 +104,9 @@ public interface EntityFactory {
 	 */
 	Parameter createParameter(String name, Object value, Unit unit, ParameterSet parameterSet);
 
-	/**
-	 * Creates a new {@link ParameterSet}.
-	 *
-	 * @param name Name of the created {@code ParameterSet}.
-	 * @param version The version of the created {@code Parameter}.
-	 * @param parameterizable A parent {@link Measurement} or {@link Channel}.
-	 * @return The created {@code ParameterSet} is returned.
-	 * @throws IllegalArgumentException Thrown if a related entity is not yet
-	 * 		persisted.
-	 */
-	ParameterSet createParameterSet(String name, String version, Parameterizable parameterizable);
+	ParameterSet createParameterSet(String name, String version, Measurement measurement);
+
+	ParameterSet createParameterSet(String name, String version, Channel channel);
 
 	/**
 	 * Creates a new {@link PhysicalDimension}.

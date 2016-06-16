@@ -158,8 +158,8 @@ public final class WriteRequest {
 	void setSourceUnit(Unit sourceUnit) {
 		Unit targetUnit = getChannel().getUnit();
 
-		if(!targetUnit.getName().equals(sourceUnit.getName())) {
-			if(!targetUnit.getPhysicalDimension().getName().equals(sourceUnit.getPhysicalDimension().getName())) {
+		if(!targetUnit.nameMatches(sourceUnit.getName())) {
+			if(!targetUnit.getPhysicalDimension().nameMatches(sourceUnit.getPhysicalDimension().getName())) {
 				// conversion is not possible!
 				//
 				// different physical dimensions -> replace Unit of channel with given sourceUnit!

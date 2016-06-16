@@ -9,13 +9,11 @@
 package org.eclipse.mdm.api.base;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.mdm.api.base.massdata.WriteRequest;
 import org.eclipse.mdm.api.base.model.Deletable;
 import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.model.MeasuredValues;
-import org.eclipse.mdm.api.base.model.URI;
 import org.eclipse.mdm.api.base.query.DataAccessException;
 
 /**
@@ -26,6 +24,10 @@ import org.eclipse.mdm.api.base.query.DataAccessException;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
 public interface Transaction {
+
+	// TODO: it should be possible to a attach a listener
+	// -> progress notification updates while uploading files
+	// -> any other useful informations?!
 
 	/**
 	 * Persists given entities and implicitly updates their {@link URI} IDs.
@@ -52,11 +54,10 @@ public interface Transaction {
 	 *
 	 * @param <T> Most common type of the given entities.
 	 * @param entities Entities that will be deleted (including their children).
-	 * @return {@code List} contains {@link URI}s of all deleted entities.
 	 * @throws DataAccessException Thrown in case of errors while deleting
 	 * 		entities.
 	 */
-	<T extends Deletable> List<URI> delete(Collection<T> entities) throws DataAccessException;
+	<T extends Deletable> void delete(Collection<T> entities) throws DataAccessException;
 
 	/**
 	 * Creates {@link MeasuredValues} as specified by the given {@link WriteRequest}s.

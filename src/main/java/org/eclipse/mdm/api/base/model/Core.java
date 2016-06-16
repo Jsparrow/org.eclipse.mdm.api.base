@@ -16,10 +16,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public interface EntityCore {
+public interface Core {
 
+	String getSourceName();
+
+	String getTypeName();
+
+	Long getID();
+
+	@Deprecated
 	URI getURI();
 
+	void setID(Long instanceID);
+
+	@Deprecated
 	void setURI(URI uri);
 
 	Map<String, Value> getValues();
@@ -49,10 +59,6 @@ public interface EntityCore {
 
 	ChildrenStore getChildrenStore();
 
-	// TODO: persistence checks should be completely removed here
-	// before an entity is created or updated, all of it's related
-	// entities - mandatory or not - have to be checked to ensure
-	// that each of them have are already persistent
 	public static final class EntityStore {
 
 		private final Map<String, Entity> current = new HashMap<>(0);
@@ -66,17 +72,11 @@ public interface EntityCore {
 			return Collections.unmodifiableCollection(removed.values());
 		}
 
-		@SuppressWarnings("unchecked")
-		public <T extends Entity> T get(Class<T> type) {
-			return (T) current.get(type.getSimpleName());
+		public <T extends Entity> T get(Class<T> entityClass) {
+			return entityClass.cast(current.get(entityClass.getSimpleName()));
 		}
 
 		public void set(Entity entity) {
-			Long id = entity.getURI().getID();
-			if(id.longValue() < 1) {
-				throw new IllegalArgumentException("Entity '" + entity + "' is not persisted.");
-			}
-
 			String key = entity.getClass().getSimpleName();
 			Entity old = current.put(key, entity);
 			if(old != null) {
@@ -84,39 +84,19 @@ public interface EntityCore {
 			}
 		}
 
-		@Deprecated // this should not be required!
-		public void setParent(Entity entity, boolean checkPersistence) {
-			Long id = entity.getURI().getID();
-			if(id.longValue() < 1 && checkPersistence) {
-				throw new IllegalArgumentException("Entity '" + entity + "' is not persisted.");
-			}
-
-			String key = entity.getClass().getSimpleName();
-			Entity old = current.put(key, entity);
-			if(old != null) {
-				removed.put(key, old);
-			}
-		}
-
-		public void remove(Class<? extends Entity> type) {
-			String key = type.getSimpleName();
+		public void remove(Class<? extends Entity> entityClass) {
+			String key = entityClass.getSimpleName();
 			Entity old = current.remove(key);
 			if(old != null) {
 				removed.put(key, old);
 			}
 		}
 
-		@SuppressWarnings("unchecked")
-		public <T extends Entity> T get(Class<T> type, ContextType contextType) {
-			return (T) current.get(createContextTypeKey(type, contextType));
+		public <T extends Entity> T get(Class<T> entityClass, ContextType contextType) {
+			return entityClass.cast(current.get(createContextTypeKey(entityClass, contextType)));
 		}
 
 		public void set(Entity entity, ContextType contextType) {
-			Long id = entity.getURI().getID();
-			if(id.longValue() < 1) {
-				throw new IllegalArgumentException("Entity '" + entity + "' is not persisted.");
-			}
-
 			String key = createContextTypeKey(entity.getClass(), contextType);
 			Entity old = current.put(key, entity);
 			if(old != null) {
@@ -124,8 +104,8 @@ public interface EntityCore {
 			}
 		}
 
-		public void remove(Class<? extends Entity> type, ContextType contextType) {
-			String key = createContextTypeKey(type, contextType);
+		public void remove(Class<? extends Entity> entityClass, ContextType contextType) {
+			String key = createContextTypeKey(entityClass, contextType);
 			Entity old = current.remove(key);
 			if(old != null) {
 				removed.put(key, old);
@@ -136,8 +116,8 @@ public interface EntityCore {
 			removed.clear();
 		}
 
-		private static String createContextTypeKey(Class<? extends Entity> type, ContextType contextType) {
-			return type.getSimpleName() + '_' + contextType;
+		private static String createContextTypeKey(Class<? extends Entity> entityClass, ContextType contextType) {
+			return entityClass.getSimpleName() + '_' + contextType;
 		}
 
 	}
@@ -156,23 +136,15 @@ public interface EntityCore {
 		}
 
 		@SuppressWarnings("unchecked")
-		public <T extends Deletable> List<T> get(Class<T> type) {
-			return Collections.unmodifiableList((List<T>) current.computeIfAbsent(type, k -> new ArrayList<>()));
+		public <T extends Deletable> List<T> get(Class<T> entityClass) {
+			return Collections.unmodifiableList((List<T>) current.computeIfAbsent(entityClass, k -> new ArrayList<>()));
 		}
 
 		@SuppressWarnings("unchecked")
-		public <T extends Deletable & Sortable<T>> void sort(Class<T> type) {
-			List<T> children = (List<T>) current.get(type);
+		public <T extends Deletable> void sort(Class<T> entityClass, Comparator<? super T> comparator) {
+			List<T> children = (List<T>) current.get(entityClass);
 			if(children != null) {
-				Collections.sort(children);
-			}
-		}
-
-		@SuppressWarnings("unchecked")
-		public <T extends Deletable & Sortable<T>> void sort(Class<T> type, Comparator<T> comparator) {
-			List<T> children = (List<T>) current.get(type);
-			if(children != null) {
-				Collections.sort(children, comparator);
+				children.sort(comparator);
 			}
 		}
 
@@ -185,7 +157,7 @@ public interface EntityCore {
 		@SuppressWarnings("unchecked")
 		public void remove(Deletable child) {
 			List<Deletable> children = (List<Deletable>) current.getOrDefault(child.getClass(), new ArrayList<>());
-			if(children.remove(child) && child.getURI().getID() > 0) {
+			if(children.remove(child) && child.getID() > 0) {
 				((List<Deletable>) removed.computeIfAbsent(child.getClass(), k -> new ArrayList<>())).add(child);
 			}
 		}

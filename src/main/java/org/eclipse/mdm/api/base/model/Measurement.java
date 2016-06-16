@@ -33,8 +33,8 @@ import java.time.LocalDateTime;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see ParameterSet
  */
-public final class Measurement extends BaseEntity implements ContextDescribable, Derived, Describable, Datable,
-FilesAttachable, Parameterizable, Tagable {
+public final class Measurement extends BaseEntity implements ContextDescribable, Datable, Deletable, Describable,
+FilesAttachable, Tagable {
 
 	// ======================================================================
 	// Class variables
@@ -49,6 +49,11 @@ FilesAttachable, Parameterizable, Tagable {
 	 * The {@link ChannelGroup} child type.
 	 */
 	public static final Class<ChannelGroup> CHILD_TYPE_CHANNELGROUP = ChannelGroup.class;
+
+	/**
+	 * The {@link ParameterSet} child type.
+	 */
+	public static final Class<ParameterSet> CHILD_TYPE_PARAMETERSET = ParameterSet.class;
 
 	/**
 	 * The {@link Channel} child type.
@@ -72,9 +77,9 @@ FilesAttachable, Parameterizable, Tagable {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link EntityCore}.
+	 * @param core The {@link Core}.
 	 */
-	Measurement(EntityCore core) {
+	Measurement(Core core) {
 		super(core);
 	}
 

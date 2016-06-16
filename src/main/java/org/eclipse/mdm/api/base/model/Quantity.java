@@ -17,7 +17,7 @@ package org.eclipse.mdm.api.base.model;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class Quantity extends BaseEntity implements Copyable, Datable, Deletable, Describable {
+public final class Quantity extends BaseEntity implements Datable, Deletable, Describable {
 
 	// ======================================================================
 	// Class variables
@@ -55,9 +55,9 @@ public final class Quantity extends BaseEntity implements Copyable, Datable, Del
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link EntityCore}.
+	 * @param core The {@link Core}.
 	 */
-	Quantity(EntityCore core) {
+	Quantity(Core core) {
 		super(core);
 	}
 

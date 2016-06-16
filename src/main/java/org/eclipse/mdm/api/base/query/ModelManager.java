@@ -36,7 +36,7 @@ public interface ModelManager {
 	Query createQuery();
 
 	List<EntityType> listEntityTypes();
-	
+
 	/**
 	 * Returns the {@link EntityType} associated with given {@link Entity}.
 	 *
@@ -44,31 +44,23 @@ public interface ModelManager {
 	 * @return {@code EntityType} associated with given entity is returned.
 	 */
 	default EntityType getEntityType(Entity entity) {
-		return getEntityType(entity.getURI().getTypeName());
+		return getEntityType(entity.getTypeName());
 	}
 
 	/**
 	 * Returns the {@link EntityType} associated with given {@link Entity}
 	 * type.
 	 *
-	 * @param type Used as identifier.
+	 * @param entityClass Used as identifier.
 	 * @return {@code EntityType} associated with given entity type is
 	 * 		returned.
 	 * @throws IllegalArgumentException Thrown if {@code EntityType} for given
 	 * 		type does not exist.
 	 */
-	EntityType getEntityType(Class<? extends Entity> type);
+	EntityType getEntityType(Class<? extends Entity> entityClass);
 
-	/**
-	 * Returns the {@link EntityType} associated with given {@link ContextType}.
-	 *
-	 * @param contextType Used as identifier.
-	 * @return {@code EntityType} associated with given {@code ContextType} is
-	 * 		returned.
-	 * @throws IllegalArgumentException Thrown if {@code EntityType} with given
-	 * 		{@code ContextType} does not exist.
-	 */
-	EntityType getEntityType(ContextType contextType);
+	// TODO: IllegalArgumentException Thrown if {@code EntityType} for given type does not exist.
+	EntityType getEntityType(Class<? extends Entity> entityClass, ContextType contextType);
 
 	/**
 	 * Returns the {@link EntityType} identified by given name.
