@@ -140,7 +140,7 @@ public interface SearchService {
 	 * @see #fetch(Class, List)
 	 * @see Record#merge(Record)
 	 */
-	default <T extends Entity> Map<T, List<Record>> fetchComplete(Class<T> entityCass, List<EntityType> entityTypes) throws DataAccessException {
+	default <T extends Entity> Map<T, Result> fetchComplete(Class<T> entityCass, List<EntityType> entityTypes) throws DataAccessException {
 		return fetchComplete(entityCass, entityTypes, Filter.and());
 	}
 
@@ -171,7 +171,7 @@ public interface SearchService {
 	 * @see #fetch(Class, List, Filter)
 	 * @see Record#merge(Record)
 	 */
-	<T extends Entity> Map<T, List<Record>> fetchComplete(Class<T> entityClass, List<EntityType> entityTypes, Filter filter)
+	<T extends Entity> Map<T, Result> fetchComplete(Class<T> entityClass, List<EntityType> entityTypes, Filter filter)
 			throws DataAccessException;
 
 	/**
@@ -239,7 +239,7 @@ public interface SearchService {
 	 * @see #fetchComplete(Class, List)
 	 * @see Record#merge(Record)
 	 */
-	default <T extends Entity> Map<T, List<Record>> fetch(Class<T> entityClass, List<Attribute> attributes) throws DataAccessException {
+	default <T extends Entity> Map<T, Result> fetch(Class<T> entityClass, List<Attribute> attributes) throws DataAccessException {
 		return fetch(entityClass, attributes, Filter.and());
 	}
 
@@ -269,7 +269,7 @@ public interface SearchService {
 	 * @see #fetchComplete(Class, List, Filter)
 	 * @see Record#merge(Record)
 	 */
-	<T extends Entity> Map<T, List<Record>> fetch(Class<T> entityClass, List<Attribute> attributes, Filter filter)
+	<T extends Entity> Map<T, Result> fetch(Class<T> entityClass, List<Attribute> attributes, Filter filter)
 			throws DataAccessException;
 
 	default boolean isTextSearchAvailable() {
