@@ -74,6 +74,10 @@ public interface BaseEntityManager {
 		return Optional.empty();
 	}
 
+	default Optional<FileService> getFileService() {
+		return Optional.empty();
+	}
+
 	/**
 	 * Returns the {@link Environment} this entity manager is connected to.
 	 *
