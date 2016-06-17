@@ -45,16 +45,6 @@ public interface Entity {
 	// Public methods
 	// ======================================================================
 
-	/**
-	 * Returns the {@link URI} of this entity, which is a unique identifier
-	 * within the data source.
-	 *
-	 * @return The returned {@code URI} is never null, but if this entity is
-	 * 		not yet made permanent, then its ID will be {@code 0}.
-	 */
-	@Deprecated
-	URI getURI();
-
 	String getSourceName();
 
 	String getTypeName();

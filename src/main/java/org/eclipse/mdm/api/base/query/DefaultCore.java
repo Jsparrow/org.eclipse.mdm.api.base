@@ -12,9 +12,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.model.Core;
-import org.eclipse.mdm.api.base.model.URI;
+import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.model.Value;
 
 public final class DefaultCore implements Core {
@@ -30,10 +29,8 @@ public final class DefaultCore implements Core {
 	private final String typeName;
 
 	private Long instanceID;
-	private URI uri;
 
 	public DefaultCore(Record record) {
-		setURI(record.createURI());
 		setID(record.getID());
 		values.putAll(record.getValues());
 		values.remove(Entity.ATTR_ID);
@@ -50,8 +47,6 @@ public final class DefaultCore implements Core {
 		setID(Long.valueOf(0L));
 		values.putAll(entityType.createValues());
 		values.remove(Entity.ATTR_ID);
-
-		setURI(new URI(entityType.getSourceName(), entityType.getName(), 0L));
 
 		sourceName = entityType.getSourceName();
 		typeName = entityType.getName();
@@ -73,19 +68,8 @@ public final class DefaultCore implements Core {
 	}
 
 	@Override
-	public URI getURI() {
-		return uri;
-	}
-
-	@Override
 	public void setID(Long instanceID) {
 		this.instanceID = instanceID;
-	}
-
-	@Override
-	@Deprecated
-	public void setURI(URI uri) {
-		this.uri = uri;
 	}
 
 	@Override

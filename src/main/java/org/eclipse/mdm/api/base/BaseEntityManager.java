@@ -22,7 +22,6 @@ import org.eclipse.mdm.api.base.model.Environment;
 import org.eclipse.mdm.api.base.model.MeasuredValues;
 import org.eclipse.mdm.api.base.model.Measurement;
 import org.eclipse.mdm.api.base.model.TestStep;
-import org.eclipse.mdm.api.base.model.URI;
 import org.eclipse.mdm.api.base.model.User;
 import org.eclipse.mdm.api.base.query.DataAccessException;
 import org.eclipse.mdm.api.base.query.ModelManager;
@@ -100,18 +99,6 @@ public interface BaseEntityManager {
 	}
 
 	<T extends Entity> T load(Class<T> entityClass, Long instanceID) throws DataAccessException;
-
-	/**
-	 * Loads the entity identified by given {@link URI}.
-	 *
-	 * @param <T> The expected entity type.
-	 * @param uri The entity identifier.
-	 * @return The {@link Entity} is returned.
-	 * @throws DataAccessException Thrown if unable to retrieve the {@code Entity}.
-	 * @see URI
-	 */
-	@Deprecated
-	<T extends Entity> T load(URI uri) throws DataAccessException;
 
 	/**
 	 * Loads all available entities of given type. This method is useful while

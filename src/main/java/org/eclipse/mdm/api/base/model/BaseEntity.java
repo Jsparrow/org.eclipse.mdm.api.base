@@ -66,14 +66,6 @@ public abstract class BaseEntity implements Entity {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public final URI getURI() {
-		return getCore().getURI();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public final Value getValue(String name) {
 		return getCore().getValues().get(name);
 	}

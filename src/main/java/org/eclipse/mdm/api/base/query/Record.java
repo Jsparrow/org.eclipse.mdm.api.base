@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import org.eclipse.mdm.api.base.model.URI;
 import org.eclipse.mdm.api.base.model.Value;
 
 /**
@@ -49,11 +48,6 @@ public final class Record {
 	// ======================================================================
 	// Public methods
 	// ======================================================================
-
-	// TODO JDoc - only possible if ID attribute was selected
-	public URI createURI() {
-		return new URI(getEntityType().getSourceName(), getEntityType().getName(), getID());
-	}
 
 	/**
 	 * Returns the associated {@link EntityType}.

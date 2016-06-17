@@ -24,13 +24,7 @@ public interface Core {
 
 	Long getID();
 
-	@Deprecated
-	URI getURI();
-
 	void setID(Long instanceID);
-
-	@Deprecated
-	void setURI(URI uri);
 
 	Map<String, Value> getValues();
 
