@@ -25,8 +25,8 @@ public class NotificationException extends Exception {
 	 * @param message The error message.
 	 * @param throwable The origin cause.
 	 */
-	public NotificationException(String message, Throwable throwable) {
-		super(message, throwable);
+	public NotificationException(String message, Throwable cause) {
+		super(message, cause);
 	}
 
 }
