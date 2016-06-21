@@ -46,6 +46,7 @@ public final class FileLink {
 	public static FileLink newLocal(Path localPath) throws IOException {
 		String type = Files.probeContentType(localPath);
 		FileLink fileLink = new FileLink(null, new MimeType(type == null ? "application/octet-stream" : type));
+		fileLink.setLocalPath(localPath);
 		fileLink.setFileSize(Files.size(localPath));
 		return fileLink;
 	}
@@ -58,7 +59,7 @@ public final class FileLink {
 			// TODO ...
 			try {
 				return Paths.get(URLDecoder.decode(remotePath, StandardCharsets.UTF_8.name())).getFileName().toString();
-			} catch (UnsupportedEncodingException e) {
+			} catch(UnsupportedEncodingException e) {
 				// ignore
 			}
 		}
@@ -82,9 +83,9 @@ public final class FileLink {
 		return remotePath;
 	}
 
-	//	public void setRemotePath(String remotePath) {
-	//		this.remotePath = remotePath;
-	//	}
+	public void setRemotePath(String remotePath) {
+		this.remotePath = remotePath;
+	}
 
 	public String getDescription() {
 		return description;

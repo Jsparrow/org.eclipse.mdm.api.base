@@ -37,12 +37,12 @@ public interface FileService {
 	void download(Entity entity, Path target, FileLink fileLink, ProgressListener progressListener) throws IOException;
 
 	// TODO java doc: make sure this stream is closed when finished!
-	default InputStream createInputStream(Entity entity, FileLink fileLink) throws IOException {
-		return createInputStream(entity, fileLink, null);
+	default InputStream openStream(Entity entity, FileLink fileLink) throws IOException {
+		return openStream(entity, fileLink, null);
 	}
 
 	// TODO java doc: make sure this stream is closed when finished!
-	InputStream createInputStream(Entity entity, FileLink fileLink, ProgressListener progressListener) throws IOException;
+	InputStream openStream(Entity entity, FileLink fileLink, ProgressListener progressListener) throws IOException;
 
 	void loadSize(Entity entity, FileLink fileLink) throws IOException;
 
