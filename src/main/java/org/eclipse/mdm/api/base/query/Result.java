@@ -114,6 +114,10 @@ public final class Result implements Iterable<Record> {
 		return mergedResult;
 	}
 
+	public Stream<Record> stream() {
+		return StreamSupport.stream(spliterator(), false);
+	}
+
 	/**
 	 * Returns a sequential stream with this result as its source.
 	 *
