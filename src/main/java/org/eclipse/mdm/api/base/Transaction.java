@@ -30,7 +30,7 @@ public interface Transaction {
 	// -> any other useful informations?!
 
 	/**
-	 * Persists given entities and implicitly updates their {@link URI} IDs.
+	 * Persists given entities and implicitly updates their instance IDs.
 	 *
 	 * @param <T> Most common type of the given entities.
 	 * @param entities Entities that will be persisted.

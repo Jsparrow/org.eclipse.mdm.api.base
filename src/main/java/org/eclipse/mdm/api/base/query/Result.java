@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.eclipse.mdm.api.base.model.Value;
 
@@ -117,6 +119,10 @@ public final class Result implements Iterable<Record> {
 		Result mergedResult = new Result();
 		records.keySet().stream().forEach(e -> mergedResult.addRecord(getRecord(e).merge(result.getRecord(e))));
 		return mergedResult;
+	}
+
+	public Stream<Record> stream() {
+		return StreamSupport.stream(spliterator(), false);
 	}
 
 	/**
