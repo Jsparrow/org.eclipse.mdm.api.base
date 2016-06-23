@@ -18,6 +18,14 @@ import java.nio.file.Paths;
 
 public final class FileLink {
 
+	private enum State {
+		REMOTE,
+		LOCAL;
+
+	}
+
+	private final State state;
+
 	private String remotePath;
 	private MimeType mimeType;
 	private String description;
@@ -29,6 +37,26 @@ public final class FileLink {
 	private FileLink(String remotePath, MimeType mimeType) {
 		this.remotePath = remotePath;
 		this.mimeType = mimeType;
+
+		state = State.REMOTE;
+	}
+
+	private FileLink(Path localPath) throws IOException {
+		this.localPath = localPath;
+		String type = Files.probeContentType(localPath);
+		mimeType =  new MimeType(type == null ? "application/octet-stream" : type);
+		size = Files.size(localPath);
+
+		state = State.LOCAL;
+	}
+
+	FileLink(FileLink fileLink) {
+		remotePath = fileLink.remotePath;
+		mimeType = fileLink.mimeType;
+		description = fileLink.description;
+		localPath = fileLink.localPath;
+		size = fileLink.size;
+		state = fileLink.state;
 	}
 
 	public static FileLink newRemote(String remotePath, MimeType mimeType, String description) {
@@ -44,11 +72,7 @@ public final class FileLink {
 	}
 
 	public static FileLink newLocal(Path localPath) throws IOException {
-		String type = Files.probeContentType(localPath);
-		FileLink fileLink = new FileLink(null, new MimeType(type == null ? "application/octet-stream" : type));
-		fileLink.setLocalPath(localPath);
-		fileLink.setFileSize(Files.size(localPath));
-		return fileLink;
+		return new FileLink(localPath);
 	}
 
 	public String getFileName() {
@@ -76,6 +100,9 @@ public final class FileLink {
 	}
 
 	public void setLocalPath(Path localPath) {
+		if(State.LOCAL == state) {
+			throw new IllegalStateException("It is not allowed to replace an existing local path.");
+		}
 		this.localPath = localPath;
 	}
 
@@ -84,11 +111,14 @@ public final class FileLink {
 	}
 
 	public void setRemotePath(String remotePath) {
+		if(State.REMOTE == state) {
+			throw new IllegalStateException("It is not allowed to replace an existing remote path.");
+		}
 		this.remotePath = remotePath;
 	}
 
 	public String getDescription() {
-		return description;
+		return description == null ? "" : description;
 	}
 
 	public void setDescription(String description) {
@@ -100,7 +130,7 @@ public final class FileLink {
 	}
 
 	public boolean isRemote() {
-		return getRemotePath() != null;
+		return getRemotePath() != null && !getRemotePath().isEmpty();
 	}
 
 	public long getSize() {
@@ -113,6 +143,31 @@ public final class FileLink {
 
 	public void setFileSize(long size) {
 		this.size = size;
+	}
+
+	@Override
+	public int hashCode() {
+		if(State.LOCAL == state) {
+			return getLocalPath().hashCode();
+		}
+
+		return getRemotePath().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if(object instanceof FileLink) {
+			FileLink other = (FileLink) object;
+			if(state == other.state) {
+				if(State.LOCAL == state) {
+					return getLocalPath().equals(other.getLocalPath());
+				}
+
+				return getRemotePath().equals(other.getRemotePath());
+			}
+		}
+
+		return false;
 	}
 
 	@Override

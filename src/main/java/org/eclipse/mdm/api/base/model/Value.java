@@ -33,6 +33,9 @@ public final class Value {
 	private final String name;
 	private final String unit;
 
+	private boolean initialValid;
+	private Object initialValue;
+
 	private boolean valid;
 	private Object value;
 
@@ -59,6 +62,10 @@ public final class Value {
 		set(value);
 		// overwrite initial validity flag
 		setValid(valid);
+
+		// preserve initial values
+		initialValid = isValid();
+		initialValue = copy(extract());
 	}
 
 	private Value(Value origin, Object input) {
@@ -160,6 +167,12 @@ public final class Value {
 		}
 	}
 
+	//	@Deprecated // is this really usefull?!
+	//	public void reset() {
+	//		setValid(wasValid());
+	//		set(copy(extractInitial()));
+	//	}
+
 	/**
 	 * Merges given value container with this instance. To be able to do so,
 	 * the given value container must be compatible with this one. Value
@@ -181,7 +194,7 @@ public final class Value {
 			throw new IllegalArgumentException("Unable to merge, incompatible value passed.");
 		}
 
-		boolean equalValue = Objects.equals(extract(), value.extract());
+		boolean equalValue = Objects.deepEquals(extract(), value.extract());
 		boolean bothValid = isValid() && value.isValid();
 		return new Value(this, equalValue && bothValid ? extract() : null);
 	}
@@ -229,6 +242,24 @@ public final class Value {
 	// Package methods
 	// ======================================================================
 
+	boolean isModified() {
+		return wasValid() != isValid() || !Objects.deepEquals(extractInitial(), extract());
+	}
+
+	boolean wasValid() {
+		return initialValid;
+	}
+
+	@SuppressWarnings("unchecked")
+	<T> T extractInitial() {
+		return (T) initialValue;
+	}
+
+	void apply() {
+		initialValid = isValid();
+		initialValue = copy(extract());
+	}
+
 	static String readAt(Object array, int index) {
 		Object value = Array.get(array, index);
 		if(value != null && byte[].class.isInstance(value)) {
@@ -236,6 +267,41 @@ public final class Value {
 		}
 
 		return String.valueOf(value);
+	}
+
+	// ======================================================================
+	// Private methods
+	// ======================================================================
+
+	private static Object copy(Object value) {
+		if(value == null) {
+			return null;
+		}
+
+		Class<?> valueClass = value.getClass();
+		if(valueClass.isArray() && Array.getLength(value) > 0) {
+			int length = Array.getLength(value);
+			if(valueClass.getComponentType().isPrimitive()) {
+				Object copy = Array.newInstance(valueClass.getComponentType(), length);
+				System.arraycopy(value, 0, copy, 0, length);
+				return copy;
+			} else {
+				if(value instanceof byte[][]) {
+					byte[][] values = (byte[][]) value;
+					return Arrays.stream(values).map(v -> v.clone()).toArray(s -> values.clone());
+				} else if(value instanceof FileLink[]) {
+					FileLink[] values = (FileLink[]) value;
+					return Arrays.stream(values).map(FileLink::new).toArray(s -> values.clone());
+				} else {
+					return Arrays.copyOf((Object[]) value, length);
+				}
+			}
+		} else if(value instanceof FileLink) {
+			return new FileLink((FileLink) value);
+		}
+
+		// simple immutable value
+		return value;
 	}
 
 }

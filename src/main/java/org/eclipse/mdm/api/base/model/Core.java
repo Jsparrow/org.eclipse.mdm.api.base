@@ -9,12 +9,16 @@
 package org.eclipse.mdm.api.base.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public interface Core {
 
@@ -32,12 +36,53 @@ public interface Core {
 
 	Map<String, Value> getAllValues();
 
+	default List<FileLink> getAddedFileLinks() {
+		Predicate<FileLink> isRemote = FileLink::isRemote;
+
+		List<FileLink> fileLinks = getValues().values().stream()
+				.filter(v -> v.getValueType().isFileLink()).filter(Value::isValid)
+				.map(v -> (FileLink) v.extract()).filter(isRemote.negate())
+				.collect(Collectors.toList());
+
+		List<Value> values = getValues().values().stream()
+				.filter(v -> v.getValueType().isFileLinkSequence()).filter(Value::isValid)
+				.collect(Collectors.toList());
+
+		for(Value value : values) {
+			Arrays.stream((FileLink[]) value.extract()).filter(isRemote.negate()).forEach(fileLinks::add);
+		}
+
+		return fileLinks;
+	}
+
+	default List<FileLink> getRemovedFileLinks() {
+		Predicate<FileLink> isRemote = FileLink::isRemote;
+
+		List<FileLink> fileLinks = getValues().values().stream().filter(v -> v.getValueType().isFileLink())
+				.filter(Value::isModified).map(v -> (FileLink) v.extractInitial()).filter(Objects::nonNull)
+				.filter(isRemote).collect(Collectors.toList());
+
+		List<Value> values = getValues().values().stream()
+				.filter(v -> v.getValueType().isFileLinkSequence()).filter(Value::wasValid).filter(Value::isModified)
+				.collect(Collectors.toList());
+
+		for(Value value : values) {
+			List<FileLink> current = Arrays.asList((FileLink[]) value.extract());
+			Arrays.stream((FileLink[]) value.extractInitial()).filter(fl -> !current.contains(fl)).forEach(fileLinks::add);
+		}
+
+		return fileLinks;
+	}
+
 	default void apply() {
 		// apply removed mutable entities
 		getMutableStore().apply();
 
 		// apply removed children
 		getChildrenStore().apply();
+
+		// apply modified values
+		getValues().values().stream().filter(Value::isModified).forEach(Value::apply);
 	}
 
 	// mutable mostly at any time (templates are critical!)
