@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -58,8 +57,16 @@ public final class Filter implements Iterable<FilterItem> {
 		return and().id(entityType, id);
 	}
 
+	public static Filter idOnly(Relation relation, Long id) {
+		return and().id(relation, id);
+	}
+
 	public static Filter idsOnly(EntityType entityType, Collection<Long> ids) {
-		return Filter.and().ids(entityType, ids);
+		return and().ids(entityType, ids);
+	}
+
+	public static Filter idsOnly(Relation relation, Collection<Long> ids) {
+		return and().ids(relation, ids);
 	}
 
 	public static Filter nameOnly(EntityType entityType, String pattern) {
@@ -132,16 +139,22 @@ public final class Filter implements Iterable<FilterItem> {
 		return this;
 	}
 
+	public Filter id(Relation relation, Long id) {
+		add(Operation.EQUAL.create(relation.getAttribute(), id));
+		return this;
+	}
+
 	// TODO
 	public Filter ids(EntityType entityType, Collection<Long> ids) {
-		List<Long> distinctIDs = ids.stream().distinct().collect(Collectors.toList());
-		long[] unboxedIDs = new long[distinctIDs.size()];
-		int i = 0;
-		for(Long id : distinctIDs) {
-			unboxedIDs[i++] = id;
-		}
+		return ids(entityType.getIDAttribute(), ids);
+	}
 
-		add(Operation.IN_SET.create(entityType.getIDAttribute(), unboxedIDs));
+	public Filter ids(Relation relation, Collection<Long> ids) {
+		return ids(relation.getAttribute(), ids);
+	}
+
+	private Filter ids(Attribute attribute, Collection<Long> ids) {
+		add(Operation.IN_SET.create(attribute, ids.stream().distinct().mapToLong(Long::longValue).toArray()));
 		return this;
 	}
 

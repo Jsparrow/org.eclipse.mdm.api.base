@@ -123,6 +123,7 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		return parameter;
 	}
 
+	@Override
 	public ParameterSet createParameterSet(String name, String version, Measurement measurement) {
 		ParameterSet parameterSet = new ParameterSet(createCore(ParameterSet.class));
 
@@ -137,6 +138,7 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		return parameterSet;
 	}
 
+	@Override
 	public ParameterSet createParameterSet(String name, String version, Channel channel) {
 		ParameterSet parameterSet = new ParameterSet(createCore(ParameterSet.class));
 
@@ -229,6 +231,9 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	 * {@inheritDoc}
 	 */
 	@Override
+	// TODO if test already exists sortindex is set to -1
+	// as soon as test step is written with a negative sort index
+	// current max index is queried before test step fields are written
 	public TestStep createTestStep(String name, Test test) {
 		TestStep testStep = new TestStep(createCore(TestStep.class));
 
@@ -247,7 +252,12 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		testStep.setName(name);
 		testStep.setDateCreated(LocalDateTime.now());
 		testStep.setOptional(Boolean.TRUE);
-		testStep.setSortIndex(Integer.valueOf(0)); // TODO
+
+		if(test.getID() > 0) {
+			testStep.setSortIndex(Integer.valueOf(-1));
+		} else {
+			testStep.setSortIndex(nextIndex(getChildrenStore(test).get(TestStep.class)));
+		}
 
 		return testStep;
 	}
@@ -307,13 +317,12 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		return getCore(entity).getPermanentStore();
 	}
 
-	@Deprecated
-	protected final Core getCore(BaseEntity entity) {
-		return entity.getCore();
-	}
-
 	protected abstract <T extends Entity> Core createCore(Class<T> entityClass);
 
 	protected abstract <T extends Entity> Core createCore(Class<T> entityClass, ContextType contextType);
+
+	private final Core getCore(BaseEntity entity) {
+		return entity.getCore();
+	}
 
 }
