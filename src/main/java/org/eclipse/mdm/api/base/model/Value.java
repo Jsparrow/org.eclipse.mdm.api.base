@@ -11,6 +11,7 @@ package org.eclipse.mdm.api.base.model;
 import static java.util.stream.IntStream.range;
 
 import java.lang.reflect.Array;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -24,6 +25,12 @@ import java.util.stream.Collectors;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
 public final class Value {
+
+	// ======================================================================
+	// Class variables
+	// ======================================================================
+
+	public static final DateTimeFormatter LOCAL_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
 	// ======================================================================
 	// Instances variables

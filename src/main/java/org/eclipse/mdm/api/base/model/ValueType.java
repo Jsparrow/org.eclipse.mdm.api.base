@@ -219,7 +219,7 @@ public enum ValueType {
 	 * The type is used to check assignment compatibility of non {@code null}
 	 * values passed to {@link Value#set(Object)}.
 	 */
-	final Class<?> type;
+	public final Class<?> type;
 
 	/**
 	 * The default value will be used in {@link Value#set(Object)} to replace
