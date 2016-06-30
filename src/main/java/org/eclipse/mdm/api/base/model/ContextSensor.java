@@ -17,7 +17,7 @@ package org.eclipse.mdm.api.base.model;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class ContextSensor extends BaseEntity implements Deletable, Sortable {
+public final class ContextSensor extends BaseEntity implements Deletable {
 
 	// ======================================================================
 	// Constructors
