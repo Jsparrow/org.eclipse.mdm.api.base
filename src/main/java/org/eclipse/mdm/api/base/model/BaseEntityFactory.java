@@ -22,16 +22,36 @@ import org.eclipse.mdm.api.base.model.Core.EntityStore;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public abstract class BaseEntityFactory implements EntityFactory {
+public abstract class BaseEntityFactory {
 
 	// ======================================================================
 	// Public methods
 	// ======================================================================
 
 	/**
-	 * {@inheritDoc}
+	 * Creates a new {@link Channel}. The name of the returned {@code Channel}
+	 * is retrieved from given {@link Quantity}.
+	 *
+	 * @param measurement The parent {@link Measurement}.
+	 * @param quantity The {@code Quantity} is used for default initialization.
+	 * @return The created {@code Channel} is returned.
+	 * @throws IllegalArgumentException Thrown if a related entity is not yet
+	 * 		persisted.
 	 */
-	@Override
+	public Channel createChannel(Measurement measurement, Quantity quantity) {
+		return createChannel(quantity.getDefaultChannelName(), measurement, quantity);
+	}
+
+	/**
+	 * Creates a new {@link Channel}.
+	 *
+	 * @param name Name of the created {@code Channel}.
+	 * @param measurement The parent {@link Measurement}.
+	 * @param quantity The {@code Quantity} is used for default initialization.
+	 * @return The created {@code Channel} is returned.
+	 * @throws IllegalArgumentException Thrown if a related entity is not yet
+	 * 		persisted.
+	 */
 	public Channel createChannel(String name, Measurement measurement, Quantity quantity) {
 		Channel channel = new Channel(createCore(Channel.class));
 
@@ -57,9 +77,15 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Creates a new {@link ChannelGroup}.
+	 *
+	 * @param name Name of the created {@code ChannelGroup}.
+	 * @param numberOfValues The number of values per each related {@link Channel}.
+	 * @param measurement The parent {@link Measurement}.
+	 * @return The created {@code ChannelGroup} is returned.
+	 * @throws IllegalArgumentException Thrown if a related entity is not yet
+	 * 		persisted.
 	 */
-	@Override
 	public ChannelGroup createChannelGroup(String name, int numberOfValues, Measurement measurement) {
 		if(numberOfValues < 0) {
 			throw new IllegalArgumentException("Number of values must be equal or greater than 0.");
@@ -79,9 +105,14 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Creates a new {@link Measurement}.
+	 *
+	 * @param name Name of the created {@code Measurement}.
+	 * @param testStep The parent {@link TestStep}.
+	 * @return The created {@code Measurement} is returned.
+	 * @throws IllegalArgumentException Thrown if a related entity is not yet
+	 * 		persisted.
 	 */
-	@Override
 	public Measurement createMeasurement(String name, TestStep testStep) {
 		Measurement measurement = new Measurement(createCore(Measurement.class));
 
@@ -102,9 +133,17 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Creates a new {@link Parameter} with initialized with given value.
+	 *
+	 * @param name Name of the created {@code Parameter}.
+	 * @param value The value of the created {@code Parameter}.
+	 * @param unit An optionally related {@link Unit}.
+	 * @param parameterSet The parent {@link ParameterSet}.
+	 * @return The created {@code Parameter} is returned.
+	 * @throws IllegalArgumentException Thrown if a related entity is not yet
+	 * 		persisted.
+	 * @see Parameter#setObjectValue(Object, Unit)
 	 */
-	@Override
 	public Parameter createParameter(String name, Object value, Unit unit, ParameterSet parameterSet) {
 		if(parameterSet.getParameter(name).isPresent()) {
 			throw new IllegalArgumentException("Parameter with name '" + name + "' already exists.");
@@ -123,7 +162,6 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		return parameter;
 	}
 
-	@Override
 	public ParameterSet createParameterSet(String name, String version, Measurement measurement) {
 		ParameterSet parameterSet = new ParameterSet(createCore(ParameterSet.class));
 
@@ -138,7 +176,6 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		return parameterSet;
 	}
 
-	@Override
 	public ParameterSet createParameterSet(String name, String version, Channel channel) {
 		ParameterSet parameterSet = new ParameterSet(createCore(ParameterSet.class));
 
@@ -154,9 +191,11 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Creates a new {@link PhysicalDimension}.
+	 *
+	 * @param name Name of the created {@code PhysicalDimension}.
+	 * @return The created {@code PhysicalDimension} is returned.
 	 */
-	@Override
 	public PhysicalDimension createPhysicalDimension(String name) {
 		PhysicalDimension physicalDimension = new PhysicalDimension(createCore(PhysicalDimension.class));
 
@@ -174,9 +213,14 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Creates a new {@link Quantity}.
+	 *
+	 * @param name Name of the created {@code Quantity}.
+	 * @param defaultUnit The default {@link Unit}.
+	 * @return The created {@code Quantity} is returned.
+	 * @throws IllegalArgumentException Thrown if a related entity is not yet
+	 * 		persisted.
 	 */
-	@Override
 	public Quantity createQuantity(String name, Unit defaultUnit) {
 		Quantity quantity = new Quantity(createCore(Quantity.class));
 
@@ -200,16 +244,22 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Creates a new {@link Test} with a reference to the logged in {@link
+	 * User}, if there is one.
+	 *
+	 * @param name Name of the created {@code Test}.
+	 * @return The created {@code Test} is returned.
+	 * @throws IllegalArgumentException Thrown if a related entity is not yet
+	 * 		persisted.
 	 */
-	@Override
-	public Test createTest(String name, User responsiblePerson) {
+	public Test createTest(String name) {
 		Test test = new Test(createCore(Test.class));
 
 		// relations
-		if(responsiblePerson != null) {
+		Optional<User> responsiblePerson = getLoggedInUser();
+		if(responsiblePerson.isPresent()) {
 			// may be null if user entities are not available
-			getMutableStore(test).set(responsiblePerson);
+			getMutableStore(test).set(responsiblePerson.get());
 		}
 
 		/**
@@ -228,9 +278,14 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Creates a new {@link TestStep}.
+	 *
+	 * @param name Name of the created {@code TestStep}.
+	 * @param test The parent {@link Test}.
+	 * @return The created {@code TestStep} is returned.
+	 * @throws IllegalArgumentException Thrown if a related entity is not yet
+	 * 		persisted.
 	 */
-	@Override
 	// TODO if test already exists sortindex is set to -1
 	// as soon as test step is written with a negative sort index
 	// current max index is queried before test step fields are written
@@ -263,9 +318,14 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Creates a new {@link Unit}.
+	 *
+	 * @param name Name of the created {@code Unit}.
+	 * @param physicalDimension The {@link PhysicalDimension}.
+	 * @return The created {@code Unit} is returned.
+	 * @throws IllegalArgumentException Thrown if a related entity is not yet
+	 * 		persisted.
 	 */
-	@Override
 	public Unit createUnit(String name, PhysicalDimension physicalDimension) {
 		Unit unit = new Unit(createCore(Unit.class));
 
@@ -282,9 +342,13 @@ public abstract class BaseEntityFactory implements EntityFactory {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Creates a new {@link User}.
+	 *
+	 * @param name Name of the created {@code User}.
+	 * @param givenName Given name of the created {@code User}.
+	 * @param surname Surname of the created {@code User}.
+	 * @return The created {@code User} is returned.
 	 */
-	@Override
 	public User createUser(String name, String givenName, String surname) {
 		User user = new User(createCore(User.class));
 
@@ -317,12 +381,52 @@ public abstract class BaseEntityFactory implements EntityFactory {
 		return getCore(entity).getPermanentStore();
 	}
 
+	protected abstract Optional<User> getLoggedInUser();
+
 	protected abstract <T extends Entity> Core createCore(Class<T> entityClass);
 
 	protected abstract <T extends Entity> Core createCore(Class<T> entityClass, ContextType contextType);
 
-	private final Core getCore(BaseEntity entity) {
+	protected final Core getCore(BaseEntity entity) {
 		return entity.getCore();
 	}
+
+	// ######################################### CONTEXTS #########################################
+
+	protected ContextRoot createContextRoot(String name, ContextType contextType) {
+		ContextRoot contextRoot = new ContextRoot(createCore(ContextRoot.class, contextType));
+
+		// properties
+		contextRoot.setName(name);
+
+		return contextRoot;
+	}
+
+	protected ContextComponent createContextComponent(String name, ContextRoot contextRoot) {
+		ContextComponent contextComponent = new ContextComponent(createCore(name, ContextComponent.class));
+
+		// relations
+		getPermanentStore(contextComponent).set(contextRoot);
+		getChildrenStore(contextRoot).add(contextComponent);
+
+		// properties
+		contextComponent.setName(name);
+
+		return contextComponent;
+	}
+
+	protected ContextSensor createContextSensor(String name, ContextComponent contextComponent) {
+		ContextSensor contextSensor = new ContextSensor(createCore(name, ContextSensor.class));
+		// relations
+		getPermanentStore(contextSensor).set(contextComponent);
+		getChildrenStore(contextComponent).add(contextSensor);
+
+		// properties
+		contextSensor.setName(name);
+
+		return contextSensor;
+	}
+
+	protected abstract <T extends Entity> Core createCore(String name, Class<T> entityClass);
 
 }

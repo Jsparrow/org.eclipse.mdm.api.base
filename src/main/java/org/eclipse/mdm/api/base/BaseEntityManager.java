@@ -13,11 +13,11 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.mdm.api.base.massdata.ReadRequest;
+import org.eclipse.mdm.api.base.model.BaseEntityFactory;
 import org.eclipse.mdm.api.base.model.ContextDescribable;
 import org.eclipse.mdm.api.base.model.ContextRoot;
 import org.eclipse.mdm.api.base.model.ContextType;
 import org.eclipse.mdm.api.base.model.Entity;
-import org.eclipse.mdm.api.base.model.EntityFactory;
 import org.eclipse.mdm.api.base.model.Environment;
 import org.eclipse.mdm.api.base.model.MeasuredValues;
 import org.eclipse.mdm.api.base.model.Measurement;
@@ -31,11 +31,12 @@ import org.eclipse.mdm.api.base.query.SearchService;
  * Provides business layer CRUD operations and services (CREATE, READ, UPDATE,
  * INSERT).
  *
+ * @param <S> Concreted type of the provided entity factory.
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface BaseEntityManager {
+public interface BaseEntityManager<S extends BaseEntityFactory> {
 
 	// ======================================================================
 	// Public methods
@@ -44,10 +45,10 @@ public interface BaseEntityManager {
 	/**
 	 * The returned service creates new entities.
 	 *
+	 * @param <S> Concreted type of the provided entity factory.
 	 * @return {@code Optional} is empty if no such service is available.
-	 * @see EntityFactory
 	 */
-	default Optional<EntityFactory> getEntityFactory() {
+	default Optional<S> getEntityFactory() {
 		return Optional.empty();
 	}
 

@@ -10,6 +10,8 @@ package org.eclipse.mdm.api.base;
 
 import java.util.Map;
 
+import org.eclipse.mdm.api.base.model.BaseEntityFactory;
+
 /**
  * Takes connection parameters and produces a corresponding entity manager.
  *
@@ -18,7 +20,7 @@ import java.util.Map;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface EntityManagerFactory<T extends BaseEntityManager> {
+public interface EntityManagerFactory<T extends BaseEntityManager<? extends BaseEntityFactory>> {
 
 	// ======================================================================
 	// Public methods
