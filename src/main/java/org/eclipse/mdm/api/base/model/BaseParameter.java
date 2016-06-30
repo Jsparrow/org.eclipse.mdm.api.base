@@ -9,7 +9,6 @@
 package org.eclipse.mdm.api.base.model;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -52,12 +51,6 @@ import java.util.function.Function;
  * @see #setDoubleComplexValue(DoubleComplex, Unit)
  */
 public abstract class BaseParameter extends BaseEntity implements Deletable {
-
-	// ======================================================================
-	// Class variables
-	// ======================================================================
-
-	private static final DateTimeFormatter LOCAL_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
 	// ======================================================================
 	// Instance variables
@@ -121,7 +114,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 		if(scalarType.isString()) {
 			typeConverter = v -> v;
 		} else if(scalarType.isDate()) {
-			typeConverter = v -> LocalDateTime.parse(v, LOCAL_DATE_TIME_FORMATTER);
+			typeConverter = v -> LocalDateTime.parse(v, Value.LOCAL_DATE_TIME_FORMATTER);
 		} else if(scalarType.isBoolean()) {
 			typeConverter = Boolean::valueOf;
 		} else if(scalarType.isByte()) {
@@ -225,7 +218,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 */
 	public void setDateValue(LocalDateTime value) {
 		setScalarType(ScalarType.DATE);
-		getParameterValue().set(value.format(LOCAL_DATE_TIME_FORMATTER));
+		getParameterValue().set(value.format(Value.LOCAL_DATE_TIME_FORMATTER));
 		setUnit(null);
 	}
 
