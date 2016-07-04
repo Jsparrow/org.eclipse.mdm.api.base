@@ -35,11 +35,18 @@ public interface Attribute {
 	EntityType getEntityType();
 
 	/**
-	 * Returns the name of the attribute.
+	 * Returns the name of this attribute.
 	 *
 	 * @return The name is returned.
 	 */
 	String getName();
+
+	/**
+	 * Returns the unit name of this attribute.
+	 *
+	 * @return The unit name is returned.
+	 */
+	String getUnit();
 
 	/**
 	 * Returns the {@link ValueType} of this attribute.
