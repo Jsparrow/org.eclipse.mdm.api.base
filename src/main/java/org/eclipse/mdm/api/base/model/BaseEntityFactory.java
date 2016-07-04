@@ -109,21 +109,20 @@ public abstract class BaseEntityFactory {
 	 *
 	 * @param name Name of the created {@code Measurement}.
 	 * @param testStep The parent {@link TestStep}.
+	 * @param contextRoots TODO
 	 * @return The created {@code Measurement} is returned.
 	 * @throws IllegalArgumentException Thrown if a related entity is not yet
 	 * 		persisted.
 	 */
-	public Measurement createMeasurement(String name, TestStep testStep) {
+	public Measurement createMeasurement(String name, TestStep testStep, ContextRoot... contextRoots) {
 		Measurement measurement = new Measurement(createCore(Measurement.class));
 
 		// relations
 		getPermanentStore(measurement).set(testStep);
 		getChildrenStore(testStep).add(measurement);
-
-		// TODO
-		//		for(ContextRoot contextRoot : contextRoots) {
-		//			measurement.getCore().setImplicitRelation(contextRoot);
-		//		}
+		for(ContextRoot contextRoot : contextRoots) {
+			getMutableStore(measurement).set(contextRoot, contextRoot.getContextType());
+		}
 
 		// properties
 		measurement.setName(name);
@@ -204,6 +203,7 @@ public abstract class BaseEntityFactory {
 		physicalDimension.setLength(Integer.valueOf(0));
 		physicalDimension.setMass(Integer.valueOf(0));
 		physicalDimension.setTime(Integer.valueOf(0));
+		physicalDimension.setTemperature(Integer.valueOf(0));
 		physicalDimension.setCurrent(Integer.valueOf(0));
 		physicalDimension.setMolarAmount(Integer.valueOf(0));
 		physicalDimension.setLuminousIntensity(Integer.valueOf(0));
