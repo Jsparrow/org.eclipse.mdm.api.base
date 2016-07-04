@@ -414,17 +414,13 @@ public enum ScalarType {
 		return valueType;
 	}
 
-	// ======================================================================
-	// Package methods
-	// ======================================================================
-
 	/**
 	 * Returns the non sequence {@link ValueType} of the associated {@code
 	 * ValueType}.
 	 *
 	 * @return The non sequence {@code ValueType} is returned.
 	 */
-	ValueType toSingleValueType() {
+	public ValueType toSingleValueType() {
 		return valueType.toSingleType();
 	}
 

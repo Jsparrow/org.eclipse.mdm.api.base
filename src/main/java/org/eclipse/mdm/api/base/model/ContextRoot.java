@@ -163,4 +163,24 @@ public final class ContextRoot extends BaseEntity implements Deletable {
 		return sb.append(')').toString();
 	}
 
+	public static List<ContextRoot> of(TestStep testStep) {
+		return of((Entity) testStep);
+	}
+
+	public static List<ContextRoot> of(Measurement measurement) {
+		return of((Entity) measurement);
+	}
+
+	private static List<ContextRoot> of(Entity entity) {
+		List<ContextRoot> contextRoots = new ArrayList<>();
+		of(entity, ContextType.UNITUNDERTEST).ifPresent(contextRoots::add);
+		of(entity, ContextType.TESTSEQUENCE).ifPresent(contextRoots::add);
+		of(entity, ContextType.TESTEQUIPMENT).ifPresent(contextRoots::add);
+		return contextRoots;
+	}
+
+	private static Optional<ContextRoot> of(Entity entity, ContextType contextType) {
+		return Optional.ofNullable(getCore(entity).getMutableStore().get(ContextRoot.class, contextType));
+	}
+
 }
