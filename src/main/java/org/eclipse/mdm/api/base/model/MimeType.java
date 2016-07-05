@@ -43,6 +43,10 @@ public final class MimeType {
 	// Public methods
 	// ======================================================================
 
+	public MimeType addSubType(String name) {
+		return new MimeType(internal + '.' + name);
+	}
+
 	/**
 	 * Checks whether given {@code MimeType} is either the same as or a sub
 	 * type of this MIME type. See the following examples:
