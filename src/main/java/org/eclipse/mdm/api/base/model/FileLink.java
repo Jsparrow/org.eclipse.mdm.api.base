@@ -20,8 +20,7 @@ public final class FileLink {
 
 	private enum State {
 		REMOTE,
-		LOCAL;
-
+		LOCAL
 	}
 
 	private final State state;
@@ -46,6 +45,7 @@ public final class FileLink {
 		String type = Files.probeContentType(localPath);
 		mimeType =  new MimeType(type == null ? "application/octet-stream" : type);
 		size = Files.size(localPath);
+		description = localPath.getFileName().toString();
 
 		state = State.LOCAL;
 	}
@@ -65,13 +65,15 @@ public final class FileLink {
 		return fileLink;
 	}
 
-	public static FileLink newLocal(Path localPath, String description) throws IOException {
-		FileLink fileLink = newLocal(localPath);
-		fileLink.setDescription(description);
-		return fileLink;
-	}
-
 	public static FileLink newLocal(Path localPath) throws IOException {
+		if(Files.isDirectory(localPath)) {
+			throw new IllegalArgumentException("Local path is a directory.");
+		} else if(!Files.exists(localPath)) {
+			throw new IllegalArgumentException("Local path does not exist.");
+		} else if(!Files.isReadable(localPath)) {
+			throw new IllegalArgumentException("Local path is not readable.");
+		}
+
 		return new FileLink(localPath);
 	}
 
