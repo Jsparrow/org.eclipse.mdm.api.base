@@ -67,7 +67,11 @@ public abstract class BaseEntity implements Entity {
 	 */
 	@Override
 	public final Value getValue(String name) {
-		return getCore().getValues().get(name);
+		Value value = getCore().getValues().get(name);
+		if(value == null) {
+			throw new IllegalStateException("Value with name '" + name + "' does not exist");
+		}
+		return value;
 	}
 
 	/**
