@@ -394,12 +394,12 @@ public abstract class BaseEntityFactory {
 
 	// ######################################### CONTEXTS #########################################
 
-	protected ContextRoot createContextRoot(String name, Integer version, ContextType contextType) {
+	protected ContextRoot createContextRoot(String name, ContextType contextType) {
 		ContextRoot contextRoot = new ContextRoot(createCore(ContextRoot.class, contextType));
 
 		// properties
 		contextRoot.setName(name);
-		contextRoot.setVersion(String.valueOf(version));
+		contextRoot.setVersion(String.valueOf(0));
 		return contextRoot;
 	}
 
