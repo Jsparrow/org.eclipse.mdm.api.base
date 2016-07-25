@@ -336,8 +336,6 @@ public abstract class BaseEntityFactory {
 		unit.setName(name);
 		unit.setOffset(Double.valueOf(0D));
 		unit.setFactor(Double.valueOf(1D));
-		//TODO: check mdm5 model: db and db_ref.. does not exist at EPOS MDM5API model
-		//unit.setDB(Float.valueOf(0F));
 
 		return unit;
 	}
