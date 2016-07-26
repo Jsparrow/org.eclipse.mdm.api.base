@@ -17,13 +17,16 @@ import org.eclipse.mdm.api.base.model.MeasuredValues;
 import org.eclipse.mdm.api.base.query.DataAccessException;
 
 /**
- * Provides business layer CRUD operations (CREATE, READ, UPDATE, INSERT).
+ * Provides business layer write operations (CREATE, UPDATE, DELETE).
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
- * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
 public interface Transaction {
+
+	// ======================================================================
+	// Public methods
+	// ======================================================================
 
 	// TODO: it should be possible to a attach a listener
 	// -> progress notification updates while uploading files

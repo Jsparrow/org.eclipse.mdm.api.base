@@ -18,7 +18,6 @@ import org.eclipse.mdm.api.base.model.BaseEntityFactory;
  * @param <T> Type of the connected entity manager.
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
- * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
 public interface EntityManagerFactory<T extends BaseEntityManager<? extends BaseEntityFactory>> {
 

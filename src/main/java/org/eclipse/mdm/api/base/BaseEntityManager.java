@@ -31,7 +31,7 @@ import org.eclipse.mdm.api.base.query.SearchService;
  * Provides business layer CRUD operations and services (CREATE, READ, UPDATE,
  * INSERT).
  *
- * @param <S> Concreted type of the provided entity factory.
+ * @param <S> Concrete type of the provided entity factory.
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
@@ -74,6 +74,13 @@ public interface BaseEntityManager<S extends BaseEntityFactory> {
 		return Optional.empty();
 	}
 
+	/**
+	 * The returned service allows to download linked files from the file
+	 * storage.
+	 *
+	 * @return {@code Optional} is empty if no such service is available.
+	 * @see FileService
+	 */
 	default Optional<FileService> getFileService() {
 		return Optional.empty();
 	}
@@ -99,6 +106,15 @@ public interface BaseEntityManager<S extends BaseEntityFactory> {
 		return Optional.empty();
 	}
 
+	/**
+	 * Loads the entity identified by given entity class and its instance ID.
+	 *
+	 * @param <T>  The desired type.
+	 * @param entityClass Type of the returned entity.
+	 * @param instanceID The instance ID.
+	 * @return The entity with given instance ID is returned.
+	 * @throws DataAccessException Thrown if unable to retrieve the entity.
+	 */
 	<T extends Entity> T load(Class<T> entityClass, Long instanceID) throws DataAccessException;
 
 	/**
@@ -206,6 +222,17 @@ public interface BaseEntityManager<S extends BaseEntityFactory> {
 	 */
 	<T extends Entity> List<T> loadChildren(Entity parent, Class<T> entityClass, String pattern) throws DataAccessException;
 
+	/**
+	 * Queries available {@link ContextType} for given {@link
+	 * ContextDescribable}.
+	 *
+	 * @param contextDescribable Either a {@link TestStep} or a {@link
+	 * 		Measurement}
+	 * @return {@code List} contains the {@code ContextType} of each referenced
+	 * 		{@link ContextRoot}.
+	 * @throws DataAccessException Thrown if unable to query the available
+	 * 		{@code ContextType}s.
+	 */
 	List<ContextType> loadContextTypes(ContextDescribable contextDescribable) throws DataAccessException;
 
 	/**
