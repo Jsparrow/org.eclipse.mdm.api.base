@@ -51,14 +51,14 @@ public final class MimeType {
 	 * Checks whether given {@code MimeType} is either the same as or a sub
 	 * type of this MIME type. See the following examples:
 	 *
-	 * <pre> {@code
+	 * <pre>
 	 * MimeType type = new MimeType("application/x-asam.aomeasurement");
 	 * MimeType subType = new MimeType("application/x-asam.aomeasurement.subtype");
 	 *
 	 * type.isParentOf(subType);  // true
 	 * subType.isParentOf(type);  // false
 	 * type.isParentOf(type);     // true
-	 * }</pre>
+	 * </pre>
 	 *
 	 * @param mimeType The checked type.
 	 * @return Returns true if either this MIME type and given one are the
@@ -80,7 +80,7 @@ public final class MimeType {
 	 * Checks whether given {@code Object} represents the same type as this
 	 * MIME type.
 	 *
-	 * <pre> {@code
+	 * <pre>
 	 * MimeType type = new MimeType("application/x-asam.aomeasurement");
 	 * MimeType equalType = new MimeType("application/x-asam.aomeasurement");
 	 * MimeType subType = new MimeType("application/x-asam.aomeasurement.subtype");
@@ -89,7 +89,7 @@ public final class MimeType {
 	 * type.equals(equalType);   // true
 	 * subType.equals(type);     // false
 	 * type.equals(anotherType); // false
-	 * }</pre>
+	 * </pre>
 	 *
 	 * @param object The checked object.
 	 * @return True if given object is of type {@code MimeType} and

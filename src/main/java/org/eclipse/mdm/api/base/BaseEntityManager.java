@@ -45,7 +45,6 @@ public interface BaseEntityManager<S extends BaseEntityFactory> {
 	/**
 	 * The returned service creates new entities.
 	 *
-	 * @param <S> Concreted type of the provided entity factory.
 	 * @return {@code Optional} is empty if no such service is available.
 	 */
 	default Optional<S> getEntityFactory() {
@@ -149,7 +148,7 @@ public interface BaseEntityManager<S extends BaseEntityFactory> {
 	 * invocation might take its time to complete or even result in an exception
 	 * as soon as too many results are found:
 	 *
-	 * <pre> {@code
+	 * <pre>{@code
 	 * // retrieve all tests whose name starts with 'Example'
 	 * List<Test> tests = entityManager.get(Test.class, "Example*");
 	 * }</pre>

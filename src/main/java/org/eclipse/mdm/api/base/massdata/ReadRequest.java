@@ -72,7 +72,7 @@ public final class ReadRequest {
 	 * Creates a new {@link ReadRequestBuilder} with the given {@link
 	 * ChannelGroup} as the source entity for the requested measured values.
 	 *
-	 * <pre> {@code
+	 * <pre>
 	 * ReadRequest readRequest1 = ReadRequest.create(ChannelGroup)
 	 * 	.allChannels() // load values of all related channels
 	 * 	.allValues()   // load all values of each channel
@@ -82,7 +82,7 @@ public final class ReadRequest {
 	 * 	.channels(channel1, channel2) // load measured values of these channels
 	 * 	.requestSize(1_000)           // load 1000 values of each channel (default is 100_000)
 	 * 	.get();
-	 * }</pre>
+	 * </pre>
 	 *
 	 * @param channelGroup Used to access measured values.
 	 * @return Returns the {@link ReadRequestBuilder}.

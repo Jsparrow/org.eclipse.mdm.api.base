@@ -77,13 +77,13 @@ public final class Filter implements Iterable<FilterItem> {
 	 * Creates a new instance of this class that implicitly adds {@link Operator#AND}
 	 * {@code FilterItem}s between {@link Condition}s or merged filters.
 	 *
-	 * <pre> {@code
+	 * <pre>
 	 * Filter filter = Filter.and();
 	 * filter.add(conditionA);    // conditionA
 	 * filter.add(conditionB);    // conditionA AND conditionB
 	 * filter.invert();           // !(conditionA AND conditionB)
 	 * filter.merge(otherFilter); // !(conditionA AND conditionB) AND (otherFilter)
-	 * }</pre>
+	 * </pre>
 	 *
 	 * @return A newly created filter is returned.
 	 */
@@ -95,13 +95,13 @@ public final class Filter implements Iterable<FilterItem> {
 	 * Creates a new instance of this class that implicitly adds {@link Operator#OR}
 	 * {@code FilterItem}s between {@link Condition}s or merged filters.
 	 *
-	 * <pre> {@code
+	 * <pre>
 	 * Filter filter = Filter.or();
 	 * filter.add(conditionA);    // conditionA
 	 * filter.add(conditionB);    // conditionA OR conditionB
 	 * filter.invert();           // !(conditionA OR conditionB)
 	 * filter.merge(otherFilter); // !(conditionA OR conditionB) OR otherFilter
-	 * }</pre>
+	 * </pre>
 	 *
 	 * @return A newly created filter is returned.
 	 */
@@ -207,7 +207,7 @@ public final class Filter implements Iterable<FilterItem> {
 	 * If required, then parenthesis are implicitly added as shown in the
 	 * example below:
 	 *
-	 * <pre> {@code
+	 * <pre>
 	 * Filter filter1 = Filter.and();
 	 * Condition a = ...;
 	 * Condition b = ...;
@@ -221,7 +221,7 @@ public final class Filter implements Iterable<FilterItem> {
 	 *
 	 * Filter filter = Filter.or();
 	 * filter.merge(filter1, filter2); // (filter1) OR filter2
-	 * }</pre>
+	 * </pre>
 	 *
 	 * @param filter Filter that will be merged.
 	 * @return Returns this filter.
@@ -247,7 +247,7 @@ public final class Filter implements Iterable<FilterItem> {
 	 * Inverts this filter by prepending the {@link Operator#NOT} to the
 	 * {@link FilterItem} sequence as shown in the following examples:
 	 *
-	 * <pre> {@code
+	 * <pre>
 	 * // inverting an AND filter
 	 * Filter andFilter = Filter.and();
 	 * Condition a = ...;      // any condition
@@ -261,8 +261,8 @@ public final class Filter implements Iterable<FilterItem> {
 	 * Condition b = ...;     // another condition
 	 * orFilter.addAll(a, b); // a OR b
 	 * orFilter.invert();     // !(a OR b)
-	 * orFilter.invert();     // IllegalStateException -> filter is already inverted!
-	 * }</pre>
+	 * orFilter.invert();     // IllegalStateException -&gt; filter is already inverted!
+	 * </pre>
 	 *
 	 * @return Returns this filter.
 	 * @throws IllegalStateException Thrown either if the current set of

@@ -24,6 +24,11 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 	// Constructors
 	// ======================================================================
 
+	/**
+	 * Constructor.
+	 *
+	 * @param writeRequest The {@link WriteRequest} which will be configured.
+	 */
 	WriteRequestBuilder(WriteRequest writeRequest) {
 		super(writeRequest);
 	}

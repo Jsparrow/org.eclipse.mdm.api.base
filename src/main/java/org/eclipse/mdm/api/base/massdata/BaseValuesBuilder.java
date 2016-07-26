@@ -60,7 +60,6 @@ abstract class BaseValuesBuilder {
 
 		writeRequest.setRawScalarType(scalarType);
 		writeRequest.setValues(values);
-		writeRequest.setAllValid();
 	}
 
 	/**
@@ -80,8 +79,7 @@ abstract class BaseValuesBuilder {
 		}
 
 		writeRequest.setRawScalarType(scalarType);
-		writeRequest.setValues(values);
-		writeRequest.setFlags(flags);
+		writeRequest.setValues(values, flags);
 	}
 
 }

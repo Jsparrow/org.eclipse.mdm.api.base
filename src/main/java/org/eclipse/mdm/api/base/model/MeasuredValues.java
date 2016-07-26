@@ -119,14 +119,14 @@ public final class MeasuredValues {
 	/**
 	 * Returns a typed {@link ValueIterator}. Its usage is described below:
 	 *
-	 * <pre> {@code
+	 * <pre>
 	 * // assume the measuredValues().getScalarType() == ScalarType.BYTE
-	 * ValueIterator<Byte> valueIterator = measuredValues().iterator();
+	 * ValueIterator&lt;Byte&gt; valueIterator = measuredValues().iterator();
 	 * while(valueIterator.hasNext()) {
 	 * 	boolean isCurrentValid = valueIterator.isValid();
 	 * 	Byte currentValue = valueIterator.next();
 	 * }
-	 * }</pre>
+	 * </pre>
 	 *
 	 * @param <E> This type has to be derived from the {@link ScalarType} of
 	 * 		this measured values.

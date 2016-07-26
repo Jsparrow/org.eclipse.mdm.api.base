@@ -19,16 +19,26 @@ import org.eclipse.mdm.api.base.model.ScalarType;
 import org.eclipse.mdm.api.base.model.SequenceRepresentation;
 import org.eclipse.mdm.api.base.model.Unit;
 
+/**
+ * Holds required data to write mass data.
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
+ */
 public final class WriteRequest {
+
+	// ======================================================================
+	// Instance variables
+	// ======================================================================
 
 	private final List<ExternalComponent> externalComponents = new ArrayList<>();
 	private final ChannelGroup channelGroup;
 	private final Channel channel;
-
 	private final AxisType axisType;
 
 	private SequenceRepresentation sequenceRepresentation;
-	private double[] generationParameters = new double[0];
+	private double[] generationParameters;
 	private boolean independent;
 
 	private ScalarType rawScalarType;
@@ -36,48 +46,145 @@ public final class WriteRequest {
 	private boolean allValid;
 	private boolean[] flags;
 
+	// ======================================================================
+	// Constructors
+	// ======================================================================
+
+	/**
+	 * Constructor.
+	 *
+	 * @param channelGroup The {@link ChannelGroup} for this request.
+	 * @param channel The {@link Channel} specified mass data will be dedicated to.
+	 * @param axisType The {@link AxisType} of the written mass data.
+	 */
 	private WriteRequest(ChannelGroup channelGroup, Channel channel, AxisType axisType) {
 		this.channelGroup = channelGroup;
 		this.channel = channel;
 		this.axisType = axisType;
 	}
 
+	// ======================================================================
+	// Public methods
+	// ======================================================================
+
+	/**
+	 * Starts a new {@link WriteRequest} by returning a {@link WriteRequestBuilder}.
+	 *
+	 * @param channelGroup The {@link ChannelGroup} for this request.
+	 * @param channel The {@link Channel} specified mass data will be dedicated to.
+	 * @param axisType The {@link AxisType} of the written mass data.
+	 * @return A {@code WriteRequestBuilder} is returned.
+	 */
 	public static WriteRequestBuilder create(ChannelGroup channelGroup, Channel channel, AxisType axisType) {
 		return new WriteRequestBuilder(new WriteRequest(channelGroup, channel, axisType));
 	}
 
+	/**
+	 * Returns the {@link ChannelGroup} of this request.
+	 *
+	 * @return The {@code ChannelGroup} is returned.
+	 */
 	public ChannelGroup getChannelGroup() {
 		return channelGroup;
 	}
 
+	/**
+	 * Returns the {@link Channel} of this request.
+	 *
+	 * @return The {@code Channel} is returned.
+	 */
 	public Channel getChannel() {
 		return channel;
 	}
 
-	public SequenceRepresentation getSequenceRepresentation() {
-		return sequenceRepresentation;
-	}
-
+	/**
+	 * Returns the {@link AxisType} of this request.
+	 *
+	 * @return The {@code AxisType} is returned.
+	 */
 	public AxisType getAxisType() {
 		return axisType;
 	}
 
-	public double[] getGenerationParameters() {
-		return generationParameters.clone();
+	/**
+	 * Returns the {@link SequenceRepresentation} of this request.
+	 *
+	 * @return The {@code SequenceRepresentation} is returned.
+	 */
+	public SequenceRepresentation getSequenceRepresentation() {
+		return sequenceRepresentation;
 	}
 
+	/**
+	 * Returns the generation parameters of this request. The length of the
+	 * returned array depends on the {@link SequenceRepresentation} of this
+	 * request.
+	 *
+	 * <p><b>NOTE:</b> In case of an implicit sequence representation this
+	 * method will always return an empty array since these generation
+	 * parameters are correctly typed and stored as measured values.
+	 *
+	 * @return If none available, then an empty array is returned.
+	 */
+	public double[] getGenerationParameters() {
+		return generationParameters == null ? new double[0] : generationParameters.clone();
+	}
+
+	/**
+	 * Returns the independent flag of this request.
+	 *
+	 * @return Returns {@code true} if the measured values do not depend on
+	 * 		those of other {@link Channel}s within their common {@link
+	 * 		ChannelGroup}.
+	 */
 	public boolean isIndependent() {
 		return independent;
 	}
 
+	/**
+	 * Checks whether this request has measured values.
+	 *
+	 * @return Returns {@code true} if {@link
+	 * 		SequenceRepresentation#isExternal()} returns {@code false}.
+	 * @see #hasExternalComponents()
+	 */
 	public boolean hasValues() {
-		return values != null;
+		return !getSequenceRepresentation().isExternal();
 	}
 
+	/**
+	 * Returns the stored measured values.
+	 *
+	 * @return The measured values are returned.
+	 * @throws IllegalStateException Thrown if values are not available.
+	 */
+	public Object getValues() {
+		if(hasValues()) {
+			return values;
+		}
+
+		throw new IllegalStateException("Values are not available.");
+	}
+
+	/**
+	 * Checks whether this request has measured values, stored in externally
+	 * linked files.
+	 *
+	 * @return Returns {@code true} if {@link
+	 * 		SequenceRepresentation#isExternal()} returns {@code true}.
+	 * @see #hasValues()
+	 */
 	public boolean hasExternalComponents() {
-		return !externalComponents.isEmpty();
+		return getSequenceRepresentation().isExternal();
 	}
 
+	/**
+	 * Returns the configurations for measured values stored in externally
+	 * referenced files.
+
+	 * @return Returned {@code List} is unmodifiable.
+	 * @throws IllegalStateException Thrown if configurations are not available.
+	 */
 	public List<ExternalComponent> getExternalComponents() {
 		if(!hasExternalComponents()) {
 			throw new IllegalStateException("External components are not available.");
@@ -86,75 +193,102 @@ public final class WriteRequest {
 		return Collections.unmodifiableList(externalComponents);
 	}
 
-	public ScalarType getCalculatedScalarType() {
-		if(getSequenceRepresentation().isImplicit()) {
-			return getRawScalarType();
-		}
-
-		ScalarType rawScalarType = getRawScalarType();
-		boolean hasGenerationParameters = getGenerationParameters().length > 0;
-		boolean isIntegerType = rawScalarType.isIntegerType();
-
-		if(hasGenerationParameters && isIntegerType) {
-			return rawScalarType.isLong() ? ScalarType.DOUBLE : ScalarType.FLOAT;
-		}
-
-		return rawScalarType;
-	}
-
+	/**
+	 * Returns the {@link ScalarType} of the stored measured value sequence.
+	 *
+	 * @return The raw {@code ScalarType} is returned.
+	 */
 	public ScalarType getRawScalarType() {
 		return rawScalarType;
 	}
 
-	public Object getValues() {
-		if(!hasValues()) {
-			throw new IllegalStateException("Values are not available.");
+	/**
+	 * Returns the calculated {@link ScalarType} which reflects the final
+	 * {@code ScalarType} of the generated measured value sequence. If {@link
+	 * #getGenerationParameters()} returns a not empty array and {@link
+	 * #getRawScalarType()} is an integer type (byte, short, int, long), then
+	 * the returned {@code ScalarType} is bumped to the next suitable floating
+	 * point type as listed below:
+	 *
+	 * <ul>
+	 * 	<li>{@link ScalarType#BYTE} -&gt; {@link ScalarType#FLOAT}</li>
+	 * 	<li>{@link ScalarType#SHORT} -&gt; {@link ScalarType#FLOAT}</li>
+	 * 	<li>{@link ScalarType#INTEGER} -&gt; {@link ScalarType#FLOAT}</li>
+	 * 	<li>{@link ScalarType#LONG} -&gt; {@link ScalarType#DOUBLE}</li>
+	 * </ul>
+	 *
+	 * @return The calculated {@code ScalarType} is returned.
+	 */
+	public ScalarType getCalculatedScalarType() {
+		if(getGenerationParameters().length > 0 && getRawScalarType().isIntegerType()) {
+			return getRawScalarType().isLong() ? ScalarType.DOUBLE : ScalarType.FLOAT;
 		}
-		return values;
+
+		return getRawScalarType();
 	}
 
+	/**
+	 * Checks whether all measured values within the whole sequence are valid.
+	 * If this method returns {@code true}, then {@link #getFlags()} will
+	 * return an empty array.
+	 *
+	 * @return Returns {@code true} if all measured values are valid.
+	 * @see #getFlags()
+	 */
 	public boolean areAllValid() {
 		return allValid;
 	}
 
+	/**
+	 * Returns the validity flags sequence for the stored measured values.
+	 * If {@link #areAllValid()} returns {@code false} this method will
+	 * return an array with the same length as the measured values sequence,
+	 * where each flag indicates whether the corresponding measured value is
+	 * valid or not.
+	 *
+	 * @return The validity flags sequence is returned.
+	 * @see #allValid
+	 */
 	public boolean[] getFlags() {
 		return flags;
 	}
 
-	//	@Override
-	//	public String toString() {
-	//		StringBuilder sb = new StringBuilder("WriteRequest(channelGroup = ");
-	//
-	//		sb.append(getChannelGroup()).append(", channel = ").append(getChannel()).append(", axisType = ").append(getAxisType());
-	//		sb.append(", sequenceRepresentation = ").append(getSequenceRepresentation());
-	//
-	//		if(getGenerationParameters().length > 0) {
-	//			sb.append(", generationParameters = ").append(Arrays.toString(generationParameters));
-	//		}
-	//
-	//		sb.append(", independent = ").append(isIndependent());
-	//
-	//		if(hasValues()) {
-	//			sb.append(", measuredValues = ").append(getMeasuredValues());
-	//		} else if(hasExternalComponents()) {
-	//			sb.append(", externalComponents = ").append(getExternalComponents());
-	//		}
-	//
-	//		return sb.append(')').toString();
-	//	}
+	// ======================================================================
+	// Package methods
+	// ======================================================================
 
+	/**
+	 * Sets the {@link SequenceRepresentation} for this request.
+	 *
+	 * @param sequenceRepresentation The {@link SequenceRepresentation}.
+	 */
 	void setSequenceRepresentation(SequenceRepresentation sequenceRepresentation) {
 		this.sequenceRepresentation = sequenceRepresentation;
 	}
 
+	/**
+	 * Sets generation parameters for this request.
+	 *
+	 * @param generationParameters The generation parameters.
+	 */
 	void setGenerationParameters(double[] generationParameters) {
-		this.generationParameters = generationParameters;
+		this.generationParameters = generationParameters.clone();
 	}
 
-	void setIndependent(boolean independent) {
-		this.independent = independent;
+	/**
+	 * Sets the independent flag for this request.
+	 */
+	void setIndependent() {
+		independent = true;
 	}
 
+	/**
+	 * Triggers an adjustment of the generation parameters and modification
+	 * of the {@link SequenceRepresentation} of this request to match the
+	 * {@link Channel}s default {@link Unit}.
+	 *
+	 * @param sourceUnit The {@link Unit} of the measured values.
+	 */
 	void setSourceUnit(Unit sourceUnit) {
 		Unit targetUnit = getChannel().getUnit();
 
@@ -169,7 +303,6 @@ public final class WriteRequest {
 				// MeaQuantityImpl.addDataFromExternalComponentInUnit
 				//
 				// what to do?!
-				return;
 			}
 
 			// convert from source to target unit!
@@ -198,28 +331,67 @@ public final class WriteRequest {
 			//  should we do this implicitly within the WritRequest?!
 			// ==> implementation is central and adapter implementation independent!
 		}
+
+		throw new UnsupportedOperationException("Conversion between units is not implemented yet.");
 	}
 
+	/**
+	 * Sets the raw {@link ScalarType} for this request.
+	 *
+	 * @param rawScalarType The {@link ScalarType}.
+	 */
 	void setRawScalarType(ScalarType rawScalarType) {
 		this.rawScalarType = rawScalarType;
 	}
 
+	/**
+	 * Sets the measured values sequence where each value in the sequence is
+	 * expected to be valid.
+	 *
+	 * @param values The measured value sequence.
+	 * @throws IllegalStateException Thrown if {@link #hasValues()} returns
+	 * 		{@code false}.
+	 */
 	void setValues(Object values) {
-		this.values = values;
+		if(hasValues()) {
+			this.values = values;
+			allValid = true;
+		} else {
+			throw new IllegalStateException("Measured values stored in externally linked files expected.");
+		}
 	}
 
-	void setAllValid() {
-		allValid = true;
-		flags = new boolean[0];
+	/**
+	 * Sets the measured values sequence where each value's validity is
+	 * specified in the given flags array.
+	 *
+	 * @param values The measured value sequence.
+	 * @param flags The validity flag sequence.
+	 * @throws IllegalStateException Thrown if {@link #hasValues()} returns
+	 * 		{@code false}.
+	 */
+	void setValues(Object values, boolean[] flags) {
+		if(hasValues()) {
+			this.values = values;
+			this.flags = flags.clone();
+		} else {
+			throw new IllegalStateException("Measured values stored in externally linked files expected.");
+		}
 	}
 
-	void setFlags(boolean[] flags) {
-		allValid = false;
-		this.flags = flags.clone();
-	}
-
+	/**
+	 * Adds a configuration for measured values stored in externally linked files.
+	 *
+	 * @param externalComponent The new configuration.
+	 * @throws IllegalStateException Thrown if {@link #hasExternalComponents()}
+	 * 		returns {@code false}.
+	 */
 	void addExternalComponent(ExternalComponent externalComponent) {
-		externalComponents.add(externalComponent);
+		if(hasExternalComponents()) {
+			externalComponents.add(externalComponent);
+		} else {
+			throw new IllegalStateException("Measured values expected");
+		}
 	}
 
 }

@@ -19,7 +19,7 @@ package org.eclipse.mdm.api.base.massdata;
 public class WriteRequestFinalizer {
 
 	// ======================================================================
-	// Constructors
+	// Instance variables
 	// ======================================================================
 
 	protected final WriteRequest writeRequest;
@@ -38,7 +38,7 @@ public class WriteRequestFinalizer {
 	}
 
 	// ======================================================================
-	// Constructors
+	// Public methods
 	// ======================================================================
 
 	/**

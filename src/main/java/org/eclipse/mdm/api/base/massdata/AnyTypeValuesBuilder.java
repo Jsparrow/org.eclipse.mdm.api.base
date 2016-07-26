@@ -191,7 +191,7 @@ public final class AnyTypeValuesBuilder extends ComplexNumericalValuesBuilder {
 		return new WriteRequestFinalizer(writeRequest);
 	}
 
-	// TODO: is it possible to provide an blob for each row or is the blob for the whole column?!
+	// TODO: is it possible to provide a blob for each row or is the blob for the whole column?!
 	// we assume the latter - one blob for the whole column!
 	public WriteRequestFinalizer blobValue(Object values) {
 		createValues(ScalarType.BLOB, values);

@@ -109,7 +109,7 @@ public interface FileService {
 	 * stream should be consumed with a try-with-resources statement to ensure
 	 * the stream is closed properly, e.g:
 	 *
-	 * <pre> {@code
+	 * <pre>
 	 * try(InputStream is = openStream(entity, fileLink)) {
 	 * 	// do something useful
 	 * }
@@ -130,7 +130,7 @@ public interface FileService {
 	 * returned stream should be consumed with a try-with-resources statement to
 	 * ensure the stream is closed properly, e.g:
 	 *
-	 * <pre> {@code
+	 * <pre>
 	 * try(InputStream is = openStream(entity, fileLink)) {
 	 * 	// do something useful
 	 * }
