@@ -8,9 +8,6 @@
 
 package org.eclipse.mdm.api.base.model;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Implementation of the test step entity type. A test step is an atomic
  * measurement task as part of a {@link Test}. The boundary conditions do not
@@ -83,11 +80,6 @@ FilesAttachable, Sortable, StatusAttachable, Tagable {
 	 */
 	public void setOptional(Boolean optional) {
 		getValue(ATTR_OPTIONAL).set(optional);
-	}
-
-	// TODO newly created tests only!
-	public static List<TestStep> of(Test test) {
-		return Collections.unmodifiableList(getCore(test).getChildrenStore().get(TestStep.class));
 	}
 
 }

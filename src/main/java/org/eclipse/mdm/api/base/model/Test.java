@@ -8,6 +8,7 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -72,6 +73,24 @@ FilesAttachable, Tagable, StatusAttachable {
 	 */
 	public void setResponsiblePerson(User responsiblePerson) {
 		getCore().getMutableStore().set(responsiblePerson);
+	}
+
+	public Optional<TestStep> getCommissionedTestStep(String name) {
+		return getCommissionedTestSteps().stream().filter(ts -> ts.nameMatches(name)).findAny();
+	}
+
+	public List<TestStep> getCommissionedTestSteps() {
+		return getCore().getChildrenStore().get(TestStep.class);
+	}
+
+	public boolean removeCommissionedTestStep(String name) {
+		Optional<TestStep> testStep = getCommissionedTestStep(name);
+		if(testStep.isPresent()) {
+			getCore().getChildrenStore().remove(testStep.get());
+			return true;
+		}
+
+		return false;
 	}
 
 }
