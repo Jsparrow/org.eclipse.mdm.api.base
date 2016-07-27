@@ -69,26 +69,56 @@ public final class Environment extends BaseEntity implements Datable, Describabl
 	// Public methods
 	// ======================================================================
 
+	/**
+	 * Returns the max test level of this environment.
+	 *
+	 * @return The max test level is returned.
+	 */
 	public Integer getMaxTestLevel() {
 		return getValue(ATTR_MAX_TEST_LEVEL).extract();
 	}
 
+	/**
+	 * Returns the base model version of this environment.
+	 *
+	 * @return The base model version is returned.
+	 */
 	public String getBaseModelVersion() {
 		return getValue(ATTR_BASE_MODEL_VERSION).extract();
 	}
 
+	/**
+	 * Returns the application model version of this environment.
+	 *
+	 * @return The application model version is returned.
+	 */
 	public String getAppModelVersion() {
 		return getValue(ATTR_APP_MODEL_VERSION).extract();
 	}
 
+	/**
+	 * Returns the application model type of this environment.
+	 *
+	 * @return The application model type is returned.
+	 */
 	public String getAppModelType() {
 		return getValue(ATTR_APP_MODEL_TYPE).extract();
 	}
 
+	/**
+	 * Returns the time zone of this environment.
+	 *
+	 * @return The time zone is returned.
+	 */
 	public String getTimezone() {
 		return getValue(ATTR_TIMEZONE).extract();
 	}
 
+	/**
+	 * Returns the Meaning of aliases of this environment.
+	 *
+	 * @return The meaning of aliases are returned.
+	 */
 	public String[] getMeaningOfAliases() {
 		return getValue(ATTR_MEANING_OF_ALIASES).extract();
 	}

@@ -45,10 +45,26 @@ public interface Entity {
 	// Public methods
 	// ======================================================================
 
+	/**
+	 * Returns the name of the data source this entity was retrieved from.
+	 *
+	 * @return Name of the data source.
+	 */
 	String getSourceName();
 
+	/**
+	 * Returns the name of the entity type.
+	 *
+	 * @return Name of the entity type is returned.
+	 */
 	String getTypeName();
 
+	/**
+	 * Returns the instance ID or {@code 0} if this instance is not yet
+	 * persisted.
+	 *
+	 * @return The instance ID is returned.
+	 */
 	Long getID();
 
 	/**
@@ -111,6 +127,13 @@ public interface Entity {
 	@Override
 	String toString();
 
+	/**
+	 * Checks whether given name equals the name of this entity.
+	 *
+	 * @param name The checked name.
+	 * @return Returns {@code true} if given name equals the name of this
+	 * 		entity.
+	 */
 	default boolean nameMatches(String name) {
 		return getName().equals(name);
 	}

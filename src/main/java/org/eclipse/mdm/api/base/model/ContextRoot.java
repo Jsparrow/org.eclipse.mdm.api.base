@@ -163,24 +163,37 @@ public final class ContextRoot extends BaseEntity implements Deletable {
 		return sb.append(')').toString();
 	}
 
-	public static List<ContextRoot> of(TestStep testStep) {
-		return of((Entity) testStep);
-	}
-
-	public static List<ContextRoot> of(Measurement measurement) {
-		return of((Entity) measurement);
-	}
-
-	private static List<ContextRoot> of(Entity entity) {
+	/**
+	 * Convenience method to access the {@link ContextRoot}s of newly created
+	 * {@link ContextDescribable}.
+	 *
+	 * @param contextDescribable Either a {@link TestStep} or a {@link Measurement}.
+	 * @return The {@code ContextRoot}s are returned.
+	 */
+	public static List<ContextRoot> of(ContextDescribable contextDescribable) {
 		List<ContextRoot> contextRoots = new ArrayList<>();
-		of(entity, ContextType.UNITUNDERTEST).ifPresent(contextRoots::add);
-		of(entity, ContextType.TESTSEQUENCE).ifPresent(contextRoots::add);
-		of(entity, ContextType.TESTEQUIPMENT).ifPresent(contextRoots::add);
+		of(contextDescribable, ContextType.UNITUNDERTEST).ifPresent(contextRoots::add);
+		of(contextDescribable, ContextType.TESTSEQUENCE).ifPresent(contextRoots::add);
+		of(contextDescribable, ContextType.TESTEQUIPMENT).ifPresent(contextRoots::add);
 		return contextRoots;
 	}
 
-	private static Optional<ContextRoot> of(Entity entity, ContextType contextType) {
-		return Optional.ofNullable(getCore(entity).getMutableStore().get(ContextRoot.class, contextType));
+	// ======================================================================
+	// Private methods
+	// ======================================================================
+
+	/**
+	 * Returns the {@link ContextRoot} with given {@link ContextType} from
+	 * given {@link ContextDescribable}.
+	 *
+	 * @param contextDescribable Either a {@link TestStep} or a {@link
+	 * 		Measurement}.
+	 * @param contextType The requested {@code ContextType}.
+	 * @return {@code Optional} is empty if a {@code ContextRoot} with given
+	 * 		{@code ContextType} does not exist.
+	 */
+	private static Optional<ContextRoot> of(ContextDescribable contextDescribable, ContextType contextType) {
+		return Optional.ofNullable(getCore(contextDescribable).getMutableStore().get(ContextRoot.class, contextType));
 	}
 
 }

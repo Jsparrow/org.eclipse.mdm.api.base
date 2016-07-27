@@ -47,16 +47,25 @@ public abstract class BaseEntity implements Entity {
 	// Public methods
 	// ======================================================================
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getSourceName() {
 		return getCore().getSourceName();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getTypeName() {
 		return getCore().getTypeName();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Long getID() {
 		return getCore().getID();
@@ -104,6 +113,12 @@ public abstract class BaseEntity implements Entity {
 		return core;
 	}
 
+	/**
+	 * Convenience method to extract {@link Core} of given {@link Entity}.
+	 *
+	 * @param entity The {@code Entity} whose {@code Core} is required.
+	 * @return The {@code Core} is returned.
+	 */
 	protected static Core getCore(Entity entity) {
 		return ((BaseEntity) entity).getCore();
 	}

@@ -35,8 +35,6 @@ public abstract class BaseEntityFactory {
 	 * @param measurement The parent {@link Measurement}.
 	 * @param quantity The {@code Quantity} is used for default initialization.
 	 * @return The created {@code Channel} is returned.
-	 * @throws IllegalArgumentException Thrown if a related entity is not yet
-	 * 		persisted.
 	 */
 	public Channel createChannel(Measurement measurement, Quantity quantity) {
 		return createChannel(quantity.getDefaultChannelName(), measurement, quantity);
@@ -49,8 +47,6 @@ public abstract class BaseEntityFactory {
 	 * @param measurement The parent {@link Measurement}.
 	 * @param quantity The {@code Quantity} is used for default initialization.
 	 * @return The created {@code Channel} is returned.
-	 * @throws IllegalArgumentException Thrown if a related entity is not yet
-	 * 		persisted.
 	 */
 	public Channel createChannel(String name, Measurement measurement, Quantity quantity) {
 		Channel channel = new Channel(createCore(Channel.class));
@@ -83,8 +79,7 @@ public abstract class BaseEntityFactory {
 	 * @param numberOfValues The number of values per each related {@link Channel}.
 	 * @param measurement The parent {@link Measurement}.
 	 * @return The created {@code ChannelGroup} is returned.
-	 * @throws IllegalArgumentException Thrown if a related entity is not yet
-	 * 		persisted.
+	 * @throws IllegalArgumentException Thrown if numberOfValues is negative.
 	 */
 	public ChannelGroup createChannelGroup(String name, int numberOfValues, Measurement measurement) {
 		if(numberOfValues < 0) {
@@ -109,10 +104,8 @@ public abstract class BaseEntityFactory {
 	 *
 	 * @param name Name of the created {@code Measurement}.
 	 * @param testStep The parent {@link TestStep}.
-	 * @param contextRoots TODO
+	 * @param contextRoots {@link ContextRoot}s containing the descriptive data.
 	 * @return The created {@code Measurement} is returned.
-	 * @throws IllegalArgumentException Thrown if a related entity is not yet
-	 * 		persisted.
 	 */
 	public Measurement createMeasurement(String name, TestStep testStep, ContextRoot... contextRoots) {
 		Measurement measurement = new Measurement(createCore(Measurement.class));
@@ -139,8 +132,8 @@ public abstract class BaseEntityFactory {
 	 * @param unit An optionally related {@link Unit}.
 	 * @param parameterSet The parent {@link ParameterSet}.
 	 * @return The created {@code Parameter} is returned.
-	 * @throws IllegalArgumentException Thrown if a related entity is not yet
-	 * 		persisted.
+	 * @throws IllegalArgumentException Thrown if the {@code ParameterSet}
+	 * 		already contains a {@code Parameter} with given name.
 	 * @see Parameter#setObjectValue(Object, Unit)
 	 */
 	public Parameter createParameter(String name, Object value, Unit unit, ParameterSet parameterSet) {
@@ -161,6 +154,14 @@ public abstract class BaseEntityFactory {
 		return parameter;
 	}
 
+	/**
+	 * Creates a new {@link ParameterSet} for given {@link Measurement}.
+	 *
+	 * @param name Name of the created {@code ParameterSet}.
+	 * @param version Version of the created {@code ParameterSet}.
+	 * @param measurement The owning {@code Measurement}.
+	 * @return The created {@code ParameterSet} is returned.
+	 */
 	public ParameterSet createParameterSet(String name, String version, Measurement measurement) {
 		ParameterSet parameterSet = new ParameterSet(createCore(ParameterSet.class));
 
@@ -175,6 +176,14 @@ public abstract class BaseEntityFactory {
 		return parameterSet;
 	}
 
+	/**
+	 * Creates a new {@link ParameterSet} for given {@link Channel}.
+	 *
+	 * @param name Name of the created {@code ParameterSet}.
+	 * @param version Version of the created {@code ParameterSet}.
+	 * @param channel The owning {@code Channel}.
+	 * @return The created {@code ParameterSet} is returned.
+	 */
 	public ParameterSet createParameterSet(String name, String version, Channel channel) {
 		ParameterSet parameterSet = new ParameterSet(createCore(ParameterSet.class));
 
@@ -218,8 +227,6 @@ public abstract class BaseEntityFactory {
 	 * @param name Name of the created {@code Quantity}.
 	 * @param defaultUnit The default {@link Unit}.
 	 * @return The created {@code Quantity} is returned.
-	 * @throws IllegalArgumentException Thrown if a related entity is not yet
-	 * 		persisted.
 	 */
 	public Quantity createQuantity(String name, Unit defaultUnit) {
 		Quantity quantity = new Quantity(createCore(Quantity.class));
@@ -236,7 +243,6 @@ public abstract class BaseEntityFactory {
 		quantity.setDefaultChannelName(name);
 		quantity.setDefaultScalarType(ScalarType.FLOAT);
 
-		// TODO we should check whether this property exists (seems to be a deprecated one..)
 		quantity.getValue("Version").set("1");
 		quantity.getValue("ValidFlag").set(VersionState.VALID);
 
@@ -249,8 +255,6 @@ public abstract class BaseEntityFactory {
 	 *
 	 * @param name Name of the created {@code Test}.
 	 * @return The created {@code Test} is returned.
-	 * @throws IllegalArgumentException Thrown if a related entity is not yet
-	 * 		persisted.
 	 */
 	public Test createTest(String name) {
 		Test test = new Test(createCore(Test.class));
@@ -261,14 +265,6 @@ public abstract class BaseEntityFactory {
 			// may be null if user entities are not available
 			getMutableStore(test).set(responsiblePerson.get());
 		}
-
-		/**
-		 * TODO
-		 * - structure level / pool parent
-		 * - status - part of the default API!
-		 *
-		 * ODS adapter should override and throw an IllStateException as soon as the default API is defined!
-		 */
 
 		// properties
 		test.setName(name);
@@ -283,12 +279,7 @@ public abstract class BaseEntityFactory {
 	 * @param name Name of the created {@code TestStep}.
 	 * @param test The parent {@link Test}.
 	 * @return The created {@code TestStep} is returned.
-	 * @throws IllegalArgumentException Thrown if a related entity is not yet
-	 * 		persisted.
 	 */
-	// TODO if test already exists sortindex is set to -1
-	// as soon as test step is written with a negative sort index
-	// current max index is queried before test step fields are written
 	public TestStep createTestStep(String name, Test test) {
 		TestStep testStep = new TestStep(createCore(TestStep.class));
 
@@ -296,19 +287,13 @@ public abstract class BaseEntityFactory {
 		getPermanentStore(testStep).set(test);
 		getChildrenStore(test).add(testStep);
 
-		/**
-		 * TODO
-		 * - status - part of the default API!
-		 *
-		 * ODS adapter should override and throw an IllStateException as soon as the default API is defined!
-		 */
-
 		// properties
 		testStep.setName(name);
 		testStep.setDateCreated(LocalDateTime.now());
 		testStep.setOptional(Boolean.TRUE);
 
 		if(test.getID() > 0) {
+			// highest sort index in use will be queried before written
 			testStep.setSortIndex(Integer.valueOf(-1));
 		} else {
 			testStep.setSortIndex(nextIndex(getChildrenStore(test).get(TestStep.class)));
@@ -323,8 +308,6 @@ public abstract class BaseEntityFactory {
 	 * @param name Name of the created {@code Unit}.
 	 * @param physicalDimension The {@link PhysicalDimension}.
 	 * @return The created {@code Unit} is returned.
-	 * @throws IllegalArgumentException Thrown if a related entity is not yet
-	 * 		persisted.
 	 */
 	public Unit createUnit(String name, PhysicalDimension physicalDimension) {
 		Unit unit = new Unit(createCore(Unit.class));
@@ -363,35 +346,13 @@ public abstract class BaseEntityFactory {
 	// Protected methods
 	// ======================================================================
 
-	protected final Integer nextIndex(List<? extends Sortable> sortables) {
-		Optional<Integer> maxIndex = sortables.stream().max(Sortable.COMPARATOR).map(Sortable::getSortIndex);
-		return Integer.valueOf(maxIndex.isPresent() ? maxIndex.get().intValue() + 1 : 1);
-	}
-
-	protected final ChildrenStore getChildrenStore(BaseEntity entity) {
-		return getCore(entity).getChildrenStore();
-	}
-
-	protected final EntityStore getMutableStore(BaseEntity entity) {
-		return getCore(entity).getMutableStore();
-	}
-
-	protected final EntityStore getPermanentStore(BaseEntity entity) {
-		return getCore(entity).getPermanentStore();
-	}
-
-	protected abstract Optional<User> getLoggedInUser();
-
-	protected abstract <T extends Entity> Core createCore(Class<T> entityClass);
-
-	protected abstract <T extends Entity> Core createCore(Class<T> entityClass, ContextType contextType);
-
-	protected final Core getCore(BaseEntity entity) {
-		return entity.getCore();
-	}
-
-	// ######################################### CONTEXTS #########################################
-
+	/**
+	 * Creates a new {@link ContextRoot}.
+	 *
+	 * @param name Name of the created {@code ContextRoot}.
+	 * @param contextType {@link ContextType} of the created {@code ContextRoot}.
+	 * @return The created {@code ContextRoot} is returned.
+	 */
 	protected ContextRoot createContextRoot(String name, ContextType contextType) {
 		ContextRoot contextRoot = new ContextRoot(createCore(ContextRoot.class, contextType));
 
@@ -401,6 +362,13 @@ public abstract class BaseEntityFactory {
 		return contextRoot;
 	}
 
+	/**
+	 * Creates a new {@link ContextComponent}.
+	 *
+	 * @param name Name of the created {@code ContextComponent}.
+	 * @param contextRoot The parent {@link ContextRoot}.
+	 * @return The created {@code ContextComponent} is returned.
+	 */
 	protected ContextComponent createContextComponent(String name, ContextRoot contextRoot) {
 		ContextComponent contextComponent = new ContextComponent(createCore(name, ContextComponent.class));
 
@@ -414,6 +382,13 @@ public abstract class BaseEntityFactory {
 		return contextComponent;
 	}
 
+	/**
+	 * Creates a new {@link ContextSensor}.
+	 *
+	 * @param name Name of the created {@code ContextSensor}.
+	 * @param contextRoot The parent {@link ContextComponent}.
+	 * @return The created {@code ContextSensor} is returned.
+	 */
 	protected ContextSensor createContextSensor(String name, ContextComponent contextComponent) {
 		ContextSensor contextSensor = new ContextSensor(createCore(name, ContextSensor.class));
 		// relations
@@ -426,6 +401,94 @@ public abstract class BaseEntityFactory {
 		return contextSensor;
 	}
 
+	/**
+	 * Returns the next usable sort index for given {@code List} of {@link
+	 * Sortable}s.
+	 *
+	 * @param sortables The {@code Sortable} whose max sort index will be
+	 * 		searched.
+	 * @return {@code 1} is returned if given {@code List} is empty, otherwise
+	 * 		the max sort index increased by 1 is returned.
+	 */
+	protected final Integer nextIndex(List<? extends Sortable> sortables) {
+		Optional<Integer> maxIndex = sortables.stream().max(Sortable.COMPARATOR).map(Sortable::getSortIndex);
+		return Integer.valueOf(maxIndex.isPresent() ? maxIndex.get().intValue() + 1 : 1);
+	}
+
+	/**
+	 * Returns the {@link ChildrenStore} for given {@link BaseEntity}.
+	 *
+	 * @param entity The {@code BaseEntity} whose {@code ChildrenStore} will
+	 * 		be returned.
+	 * @return The {@code ChildrenStore} is returned.
+	 */
+	protected final ChildrenStore getChildrenStore(BaseEntity entity) {
+		return getCore(entity).getChildrenStore();
+	}
+
+	/**
+	 * Returns the mutable {@link EntityStore} for given {@link BaseEntity}.
+	 *
+	 * @param entity The {@code BaseEntity} whose {@code ChildrenStore} will
+	 * 		be returned.
+	 * @return The mutable {@code EntityStore} is returned.
+	 */
+	protected final EntityStore getMutableStore(BaseEntity entity) {
+		return getCore(entity).getMutableStore();
+	}
+
+	/**
+	 * Returns the permanent {@link EntityStore} for given {@link BaseEntity}.
+	 *
+	 * @param entity The {@code BaseEntity} whose {@code ChildrenStore} will
+	 * 		be returned.
+	 * @return The permanent {@code EntityStore} is returned.
+	 */
+	protected final EntityStore getPermanentStore(BaseEntity entity) {
+		return getCore(entity).getPermanentStore();
+	}
+
+	/**
+	 * Returns {@link Core} of given {@link Entity}.
+	 *
+	 * @param entity The {@code BaseEntity} whose {@code Core} is required.
+	 * @return The {@code Core} is returned.
+	 */
+	protected final Core getCore(BaseEntity entity) {
+		return entity.getCore();
+	}
+
+	/**
+	 * Returns the {@link User} which is bound to the current session.
+	 *
+	 * @return {@code Optional} is empty if {@code User} entities do not exist.
+	 */
+	protected abstract Optional<User> getLoggedInUser();
+
+	/**
+	 * Returns a new {@link Core} for given entity class.
+	 *
+	 * @param entityClass The entity class.
+	 * @return A new {@code Core} instance is returned.
+	 */
+	protected abstract <T extends Entity> Core createCore(Class<T> entityClass);
+
+	/**
+	 * Returns a new {@link Core} for given entity class and {@link ContextType}.
+	 *
+	 * @param entityClass The entity class.
+	 * @param contextType The {@code ContextType}.
+	 * @return A new {@code Core} instance is returned.
+	 */
+	protected abstract <T extends Entity> Core createCore(Class<T> entityClass, ContextType contextType);
+
+	/**
+	 * Returns a new {@link Core} for given entity class and type name.
+	 *
+	 * @param name Name of the entity type.
+	 * @param entityClass The entity class.
+	 * @return A new {@code Core} instance is returned.
+	 */
 	protected abstract <T extends Entity> Core createCore(String name, Class<T> entityClass);
 
 }

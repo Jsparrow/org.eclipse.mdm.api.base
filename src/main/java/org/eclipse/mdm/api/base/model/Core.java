@@ -20,22 +20,81 @@ import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * Provides access to the internals of any entity:
+ *
+ * <ul>
+ * 	<li>values</li>
+ * 	<li>added/removed file links</li>
+ * 	<li>related entities</li>
+ * 	<li>parent/child entities</li>
+ * </ul>
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ */
 public interface Core {
 
+	// ======================================================================
+	// Public methods
+	// ======================================================================
+
+	/**
+	 * Returns the name of the data source this entity was retrieved from.
+	 *
+	 * @return Name of the data source.
+	 */
 	String getSourceName();
 
+	/**
+	 * Returns the name of the entity type.
+	 *
+	 * @return Name of the entity type is returned.
+	 */
 	String getTypeName();
 
+	/**
+	 * Returns the instance ID or {@code 0} if this instance is not yet
+	 * persisted.
+	 *
+	 * @return The instance ID is returned.
+	 */
 	Long getID();
 
+	/**
+	 * Sets an instance ID.
+	 *
+	 * @param instanceID The new instance ID.
+	 */
 	void setID(Long instanceID);
 
+	/**
+	 * Returns <i>all</i> {@link Value} containers of this entity.
+	 *
+	 * @return Values mapped by their name are returned.
+	 */
 	Map<String, Value> getValues();
 
+	/**
+	 * Hides {@link Value} containers whose name is contained in the given
+	 * names {@code Collection}.
+	 *
+	 * @param names Names of the {@code Value} which shall be hidden.
+	 */
 	void hideValues(Collection<String> names);
 
+	/**
+	 * Returns <i>all</i> {@link Value} containers, including the hidden ones.
+	 *
+	 * @return All {@code Value} containers are returned.
+	 */
 	Map<String, Value> getAllValues();
 
+	/**
+	 * Returns all newly added {@link FileLink}.
+	 *
+	 * @return New {@code FileLink}s are returned.
+	 */
 	default List<FileLink> getAddedFileLinks() {
 		Predicate<FileLink> isRemote = FileLink::isRemote;
 
@@ -55,6 +114,11 @@ public interface Core {
 		return fileLinks;
 	}
 
+	/**
+	 * Returns all removed {@link FileLink}s.
+	 *
+	 * @return Removed {@code FileLink}s are returned.
+	 */
 	default List<FileLink> getRemovedFileLinks() {
 		Predicate<FileLink> isRemote = FileLink::isRemote;
 
@@ -74,6 +138,9 @@ public interface Core {
 		return fileLinks;
 	}
 
+	/**
+	 * Applies modifications made to the entity stores and {@link Value} containers.
+	 */
 	default void apply() {
 		// apply removed mutable entities
 		getMutableStore().apply();
@@ -85,36 +152,84 @@ public interface Core {
 		getValues().values().stream().filter(Value::isModified).forEach(Value::apply);
 	}
 
-	// mutable mostly at any time (templates are critical!)
+	/**
+	 * Returns the mutable {@link EntityStore}. This store holds related
+	 * entities of any kind.
+	 *
+	 * @return The mutable {@code EntityStore} is returned.
+	 */
 	EntityStore getMutableStore();
 
-	// permanent once populated
-	// - relation to parent (insert statement or navigation from child to parent)
-	// - write relations to entities that are not directly available via the entity
-	//   types API
+	/**
+	 * Returns the permanent {@link EntityStore}. This store holds usually only
+	 * the related parent entity.
+	 *
+	 * @return The permanent {@code EntityStore} is returned.
+	 */
 	EntityStore getPermanentStore();
 
-	// mutable().related(Unit.class);
-
+	/**
+	 * Returns the {@link ChildrenStore}. This store holds related child
+	 * entities of any kind.
+	 *
+	 * @return The {@code ChildrenStore} is returned.
+	 */
 	ChildrenStore getChildrenStore();
 
+	// ======================================================================
+	// Inner classes
+	// ======================================================================
+
+	/**
+	 * Holds related entities of any kind and keeps track of modifications.
+	 */
 	public static final class EntityStore {
+
+		// ======================================================================
+		// Instance variables
+		// ======================================================================
 
 		private final Map<String, Entity> current = new HashMap<>(0);
 		private final Map<String, Entity> removed = new HashMap<>(0);
 
+		// ======================================================================
+		// Public methods
+		// ======================================================================
+
+		/**
+		 * Returns current set of related entities.
+		 *
+		 * @return Returned {@code Collection} is unmodifiable.
+		 */
 		public Collection<Entity> getCurrent() {
 			return Collections.unmodifiableCollection(current.values());
 		}
 
+		/**
+		 * Returns current set of removed related entities.
+		 *
+		 * @return Returned {@code Collection} is unmodifiable.
+		 */
 		public Collection<Entity> getRemoved() {
 			return Collections.unmodifiableCollection(removed.values());
 		}
 
+		/**
+		 * Returns related entity identified by given entity class.
+		 *
+		 * @param <T> The desired entity type.
+		 * @param entityClass Used as identifier.
+		 * @return The related entity is returned or null of not defined.
+		 */
 		public <T extends Entity> T get(Class<T> entityClass) {
 			return entityClass.cast(current.get(entityClass.getSimpleName()));
 		}
 
+		/**
+		 * Replaces a related entity with the given one.
+		 *
+		 * @param entity The new related entity.
+		 */
 		public void set(Entity entity) {
 			String key = entity.getClass().getSimpleName();
 			Entity old = current.put(key, entity);
@@ -123,6 +238,11 @@ public interface Core {
 			}
 		}
 
+		/**
+		 * Removes a related entity for given entity class.
+		 *
+		 * @param entityClass Used as identifier.
+		 */
 		public void remove(Class<? extends Entity> entityClass) {
 			String key = entityClass.getSimpleName();
 			Entity old = current.remove(key);
@@ -131,10 +251,24 @@ public interface Core {
 			}
 		}
 
+		/**
+		 * Returns related entity identified by given entity class and {@link ContextType}.
+		 *
+		 * @param <T> The desired entity type.
+		 * @param entityClass Used as identifier.
+		 * @param contextType Used as identifier.
+		 * @return The related entity is returned or null of not defined.
+		 */
 		public <T extends Entity> T get(Class<T> entityClass, ContextType contextType) {
 			return entityClass.cast(current.get(createContextTypeKey(entityClass, contextType)));
 		}
 
+		/**
+		 * Replaces a related entity with the given one.
+		 *
+		 * @param entity The new related entity.
+		 * @param contextType Used as identifier.
+		 */
 		public void set(Entity entity, ContextType contextType) {
 			String key = createContextTypeKey(entity.getClass(), contextType);
 			Entity old = current.put(key, entity);
@@ -143,6 +277,12 @@ public interface Core {
 			}
 		}
 
+		/**
+		 * Removes a related entity for given entity class and {@link ContextType}.
+		 *
+		 * @param entityClass Used as identifier.
+		 * @param contextType Used as identifier.
+		 */
 		public void remove(Class<? extends Entity> entityClass, ContextType contextType) {
 			String key = createContextTypeKey(entityClass, contextType);
 			Entity old = current.remove(key);
@@ -151,34 +291,83 @@ public interface Core {
 			}
 		}
 
+		// ======================================================================
+		// Private methods
+		// ======================================================================
+
+		/**
+		 * Drops removed entities.
+		 */
 		private void apply() {
 			removed.clear();
 		}
 
+		/**
+		 * Generates a key from given entity class and {@link ContextType}.
+		 *
+		 * @param entityClass Identifier part 1.
+		 * @param contextType Identifier part 2.
+		 * @return A context type dependent key is returned.
+		 */
 		private static String createContextTypeKey(Class<? extends Entity> entityClass, ContextType contextType) {
 			return entityClass.getSimpleName() + '_' + contextType;
 		}
 
 	}
 
+	/**
+	 * Holds related entities of any kind and keeps track of modifications.
+	 */
 	public static final class ChildrenStore {
+
+		// ======================================================================
+		// Instance variables
+		// ======================================================================
 
 		private final Map<Class<? extends Deletable>, List<? extends Deletable>> current = new HashMap<>(0);
 		private final Map<Class<? extends Deletable>, List<? extends Deletable>> removed = new HashMap<>(0);
 
+		// ======================================================================
+		// Public methods
+		// ======================================================================
+
+		/**
+		 * Returns current set of related children mapped by their type.
+		 *
+		 * @return Returned {@code Map} is unmodifiable.
+		 */
 		public Map<Class<? extends Deletable>, List<? extends Deletable>> getCurrent() {
 			return Collections.unmodifiableMap(current);
 		}
 
+		/**
+		 * Returns current set of removed related children mapped by their type.
+		 *
+		 * @return Returned {@code Map} is unmodifiable.
+		 */
 		public Map<Class<? extends Deletable>, List<? extends Deletable>> getRemoved() {
 			return Collections.unmodifiableMap(removed);
 		}
 
+		/**
+		 * Returns related child entities of given type.
+		 *
+		 * @param <T> Desired entity type.
+		 * @param entityClass Used as identifier.
+		 * @return Returned {@code List} is unmodifiable.
+		 */
 		@SuppressWarnings("unchecked")
 		public <T extends Deletable> List<T> get(Class<T> entityClass) {
 			return Collections.unmodifiableList((List<T>) current.computeIfAbsent(entityClass, k -> new ArrayList<>()));
 		}
 
+		/**
+		 * Sorts the child entities with given {@code Comparator}.
+		 *
+		 * @param <T> Desired entity type.
+		 * @param entityClass Used as identifier.
+		 * @param comparator Used for sorting.
+		 */
 		@SuppressWarnings("unchecked")
 		public <T extends Deletable> void sort(Class<T> entityClass, Comparator<? super T> comparator) {
 			List<T> children = (List<T>) current.get(entityClass);
@@ -187,12 +376,22 @@ public interface Core {
 			}
 		}
 
+		/**
+		 * Adds given child entity.
+		 *
+		 * @param child The new child.
+		 */
 		@SuppressWarnings("unchecked")
 		public void add(Deletable child) {
 			removed.getOrDefault(child.getClass(), new ArrayList<>()).remove(child);
 			((List<Deletable>) current.computeIfAbsent(child.getClass(), k -> new ArrayList<>())).add(child);
 		}
 
+		/**
+		 * Removes given child entity.
+		 *
+		 * @param child The child which will be removed.
+		 */
 		@SuppressWarnings("unchecked")
 		public void remove(Deletable child) {
 			List<Deletable> children = (List<Deletable>) current.getOrDefault(child.getClass(), new ArrayList<>());
@@ -201,6 +400,13 @@ public interface Core {
 			}
 		}
 
+		// ======================================================================
+		// Private methods
+		// ======================================================================
+
+		/**
+		 * Drops removed children.
+		 */
 		private void apply() {
 			removed.clear();
 		}
