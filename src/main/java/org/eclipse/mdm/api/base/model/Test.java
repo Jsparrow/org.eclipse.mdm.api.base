@@ -75,14 +75,33 @@ FilesAttachable, Tagable, StatusAttachable {
 		getCore().getMutableStore().set(responsiblePerson);
 	}
 
+	/**
+	 * Returns the commissioned {@link TestStep} identified by given name.
+	 *
+	 * @param name The name of the {@code TestStep}.
+	 * @return The {@code Optional} is empty if a {@code TestStep} with given
+	 * 		name does not exist.
+	 */
 	public Optional<TestStep> getCommissionedTestStep(String name) {
 		return getCommissionedTestSteps().stream().filter(ts -> ts.nameMatches(name)).findAny();
 	}
 
+	/**
+	 * Returns all commissioned {@link TestStep}s related to this test.
+	 *
+	 * @return The returned {@code List} is unmodifiable.
+	 */
 	public List<TestStep> getCommissionedTestSteps() {
 		return getCore().getChildrenStore().get(TestStep.class);
 	}
 
+	/**
+	 * Removes the commissioned {@link TestStep} identified by given name.
+	 *
+	 * @param name Name of the {@code TestStep} that has to be removed.
+	 * @return Returns {@code true} if the {@code TestStep} with given
+	 * 		name has been removed.
+	 */
 	public boolean removeCommissionedTestStep(String name) {
 		Optional<TestStep> testStep = getCommissionedTestStep(name);
 		if(testStep.isPresent()) {

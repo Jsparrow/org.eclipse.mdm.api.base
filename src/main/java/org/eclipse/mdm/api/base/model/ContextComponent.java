@@ -66,7 +66,7 @@ public final class ContextComponent extends BaseEntity implements Deletable {
 	/**
 	 * Removes the {@link ContextSensor} identified by given name.
 	 *
-	 * @param name Name of the {@code ContextSensor} that have to be removed.
+	 * @param name Name of the {@code ContextSensor} that has to be removed.
 	 * @return Returns {@code true} if the {@code ContextSensor} with given
 	 * 		name has been removed.
 	 */

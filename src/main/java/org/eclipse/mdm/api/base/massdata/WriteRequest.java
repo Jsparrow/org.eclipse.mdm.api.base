@@ -250,7 +250,7 @@ public final class WriteRequest {
 	 * @see #allValid
 	 */
 	public boolean[] getFlags() {
-		return flags;
+		return flags.clone();
 	}
 
 	// ======================================================================

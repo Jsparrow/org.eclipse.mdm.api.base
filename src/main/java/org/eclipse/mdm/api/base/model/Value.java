@@ -46,17 +46,24 @@ public final class Value {
 	private boolean valid;
 	private Object value;
 
-	private final Class<?> valueClass; // type checking
-	private final Object defaultValue; // null replacement
+	private final Class<?> valueClass;
+	private final Object defaultValue;
 
 	// ======================================================================
 	// Constructors
 	// ======================================================================
 
-	Value(ValueType valueType, String name, String unit, boolean valid, Object value) {
-		this(valueType, name, unit, valid, value, valueType.type, valueType.defaultValue);
-	}
-
+	/**
+	 * Constructor.
+	 *
+	 * @param valueType The associated {@link ValueType}.
+	 * @param name The name of this container.
+	 * @param unit The name of the unit.
+	 * @param valid The initial validity flag.
+	 * @param value The initial value.
+	 * @param valueClass Used for type checking upon assignment.
+	 * @param defaultValue Used as null replacement.
+	 */
 	Value(ValueType valueType, String name, String unit, boolean valid, Object value, Class<?> valueClass, Object defaultValue) {
 		this.valueType = valueType;
 		this.name = name;
@@ -75,6 +82,12 @@ public final class Value {
 		initialValue = copy(extract());
 	}
 
+	/**
+	 * Constructor.
+	 *
+	 * @param origin The origin {@link Value}.
+	 * @param input The new value.
+	 */
 	private Value(Value origin, Object input) {
 		this(origin.valueType, origin.name, origin.unit, origin.valid, input, origin.valueClass, origin.defaultValue);
 	}
@@ -174,12 +187,6 @@ public final class Value {
 		}
 	}
 
-	//	@Deprecated // is this really usefull?!
-	//	public void reset() {
-	//		setValid(wasValid());
-	//		set(copy(extractInitial()));
-	//	}
-
 	/**
 	 * Merges given value container with this instance. To be able to do so,
 	 * the given value container must be compatible with this one. Value
@@ -249,37 +256,70 @@ public final class Value {
 	// Package methods
 	// ======================================================================
 
+	/**
+	 * Checks whether either the validity flag or the value have been modified
+	 * since initialization.
+	 *
+	 * @return Returns {@code true} either if the flag or the value has been
+	 * 		modified.
+	 */
 	boolean isModified() {
 		return wasValid() != isValid() || !Objects.deepEquals(extractInitial(), extract());
 	}
 
+	/**
+	 * Returns the initial validity flag.
+	 *
+	 * @return Returns {@code true} if the value was initially marked as valid.
+	 */
 	boolean wasValid() {
 		return initialValid;
 	}
 
-	@SuppressWarnings("unchecked")
-	<T> T extractInitial() {
-		return (T) initialValue;
+	/**
+	 * Returns the initial value.
+	 *
+	 * @return The initial value is returned.
+	 */
+	Object extractInitial() {
+		return initialValue;
 	}
 
+	/**
+	 * Overwrites the initial validity flag and value with the current ones.
+	 */
 	void apply() {
 		initialValid = isValid();
 		initialValue = copy(extract());
 	}
 
+	/**
+	 * Returns the {@code String} value from given array at given position.
+	 *
+	 * @param array The array {@code Object}.
+	 * @param index The index of the required value.
+	 * @return The {@code String} value of the requested value is returned.
+	 */
 	static String readAt(Object array, int index) {
 		Object value = Array.get(array, index);
 		if(value != null && byte[].class.isInstance(value)) {
-			return Arrays.toString((byte[])value);
+			return Arrays.toString((byte[]) value);
 		}
 
-		return String.valueOf(value);
+		return value == null ? "" : String.valueOf(value);
 	}
 
 	// ======================================================================
 	// Private methods
 	// ======================================================================
 
+	/**
+	 * Returns a copy of given {@code Object}, so modifications in one do not
+	 * affect to other.
+	 *
+	 * @param value The object which will be copied.
+	 * @return The copy is returned.
+	 */
 	private static Object copy(Object value) {
 		if(value == null) {
 			return null;
@@ -294,11 +334,9 @@ public final class Value {
 				return copy;
 			} else {
 				if(value instanceof byte[][]) {
-					byte[][] values = (byte[][]) value;
-					return Arrays.stream(values).map(v -> v.clone()).toArray(s -> values.clone());
+					return Arrays.stream((byte[][]) value).map(v -> v.clone()).toArray(byte[][]::new);
 				} else if(value instanceof FileLink[]) {
-					FileLink[] values = (FileLink[]) value;
-					return Arrays.stream(values).map(FileLink::new).toArray(s -> values.clone());
+					return Arrays.stream((FileLink[]) value).map(FileLink::new).toArray(FileLink[]::new);
 				} else {
 					return Arrays.copyOf((Object[]) value, length);
 				}

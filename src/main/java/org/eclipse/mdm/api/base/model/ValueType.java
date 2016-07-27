@@ -311,7 +311,7 @@ public enum ValueType {
 			throw new IllegalStateException("This value type is an enumeration type.");
 		}
 
-		return new Value(this, name, unit, valid, input);
+		return new Value(this, name, unit, valid, input, type, defaultValue);
 	}
 
 	/**

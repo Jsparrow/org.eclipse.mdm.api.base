@@ -16,12 +16,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Utility class to manage links to externally stored files (local/remote).
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ */
 public final class FileLink {
 
-	private enum State {
-		REMOTE,
-		LOCAL
-	}
+	// ======================================================================
+	// Instance variables
+	// ======================================================================
 
 	private final State state;
 
@@ -33,23 +38,15 @@ public final class FileLink {
 
 	private long size = -1;
 
-	private FileLink(String remotePath, MimeType mimeType) {
-		this.remotePath = remotePath;
-		this.mimeType = mimeType;
+	// ======================================================================
+	// Constructors
+	// ======================================================================
 
-		state = State.REMOTE;
-	}
-
-	private FileLink(Path localPath) throws IOException {
-		this.localPath = localPath;
-		String type = Files.probeContentType(localPath);
-		mimeType =  new MimeType(type == null ? "application/octet-stream" : type);
-		size = Files.size(localPath);
-		description = localPath.getFileName().toString();
-
-		state = State.LOCAL;
-	}
-
+	/**
+	 * Constructor.
+	 *
+	 * @param fileLink Will be copied.
+	 */
 	FileLink(FileLink fileLink) {
 		remotePath = fileLink.remotePath;
 		mimeType = fileLink.mimeType;
@@ -59,12 +56,64 @@ public final class FileLink {
 		state = fileLink.state;
 	}
 
+	/**
+	 * Constructor.
+	 *
+	 * @param remotePath The remote path.
+	 * @param mimeType The MIME type of the linked file.
+	 */
+	private FileLink(String remotePath, MimeType mimeType) {
+		this.remotePath = remotePath;
+		this.mimeType = mimeType;
+
+		state = State.REMOTE;
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 * @param localPath The local {@link Path}.
+	 * @throws IOException Thrown in case of errors.
+	 */
+	private FileLink(Path localPath) throws IOException {
+		this.localPath = localPath;
+		String type = Files.probeContentType(localPath);
+		mimeType =  new MimeType(type == null ? "application/octet-stream" : type);
+		size = Files.size(localPath);
+		Path fileNamePath = localPath.getFileName();
+		if(fileNamePath != null) {
+			description = fileNamePath.toString();
+		}
+
+		state = State.LOCAL;
+	}
+
+	// ======================================================================
+	// Public methods
+	// ======================================================================
+
+	/**
+	 * Creates a new {@link FileLink} instance which remotely available.
+	 *
+	 * @param remotePath The remote path.
+	 * @param mimeType The MIME type.
+	 * @param description Description of the file.
+	 * @return The created {@code FileLink} instance is returned.
+	 */
 	public static FileLink newRemote(String remotePath, MimeType mimeType, String description) {
 		FileLink fileLink = new FileLink(remotePath, mimeType);
 		fileLink.setDescription(description);
 		return fileLink;
 	}
 
+	/**
+	 * Creates a new {@link FileLink} instance which locally available.
+	 *
+	 * @param localPath The local {@link Path} to the file.
+	 * @return The created {@code FileLink} instance is returned.
+	 * @throws IOException Thrown if unable to access file with given {@code
+	 * 		Path}.
+	 */
 	public static FileLink newLocal(Path localPath) throws IOException {
 		if(Files.isDirectory(localPath)) {
 			throw new IllegalArgumentException("Local path is a directory.");
@@ -77,41 +126,109 @@ public final class FileLink {
 		return new FileLink(localPath);
 	}
 
+	/**
+	 * Returns the name of the linked file.
+	 *
+	 * @return Name of the file is returned.
+	 * @throws IllegalStateException Thrown if unable to retrieve the file name.
+	 */
 	public String getFileName() {
+		Path fileNamePath = null;
 		if(isLocal()) {
-			return getLocalPath().getFileName().toString();
+			fileNamePath = getLocalPath().getFileName();
 		} else if(isRemote()) {
-			// quick and dirty (no parsing...)
-			// TODO ...
 			try {
-				return Paths.get(URLDecoder.decode(remotePath, StandardCharsets.UTF_8.name())).getFileName().toString();
+				fileNamePath = Paths.get(URLDecoder.decode(remotePath, StandardCharsets.UTF_8.name())).getFileName();
 			} catch(UnsupportedEncodingException e) {
-				// ignore
+				throw new IllegalStateException("Unable to decode remote path.");
 			}
 		}
 
-		throw new IllegalStateException(); // TODO
+		if(fileNamePath == null) {
+			throw new IllegalStateException("File name is unknown.");
+		}
+
+		return fileNamePath.toString();
 	}
 
+	/**
+	 * Returns the MIME type of the linked file.
+	 *
+	 * @return The MIME type is returned.
+	 */
 	public MimeType getMimeType() {
 		return mimeType;
 	}
 
-	public Path getLocalPath() {
-		return localPath;
+	/**
+	 * Checks whether a local {@link Path} is available for the linked file.
+	 *
+	 * @return Returns {@code true} if a local {@code Path} is available.
+	 */
+	public boolean isLocal() {
+		return localPath != null;
 	}
 
+	/**
+	 * Returns the local {@link Path} to the linked file. Calling this
+	 * method is only allowed if calling {@link #isLocal()} returns {@code
+	 * true}.
+	 *
+	 * @return The local {@code Path} to the linked file is returned.
+	 */
+	public Path getLocalPath() {
+		if(isLocal()) {
+			return localPath;
+		}
+
+		throw new IllegalStateException("Local path is not available.");
+	}
+
+	/**
+	 * This method is called by API providers to set the local {@link Path}
+	 * once the remote file was downloaded.
+	 *
+	 * @param localPath The local {@code Path} of the downloaded file.
+	 * @throws IllegalStateException Thrown if this file link is 'LOCAL'.
+	 */
 	public void setLocalPath(Path localPath) {
 		if(State.LOCAL == state) {
 			throw new IllegalStateException("It is not allowed to replace an existing local path.");
 		}
+
 		this.localPath = localPath;
 	}
 
-	public String getRemotePath() {
-		return remotePath;
+	/**
+	 * Checks whether a remote path is available for for linked file.
+	 *
+	 * @return Returns {@code true} if a remote path is available.
+	 */
+	public boolean isRemote() {
+		return remotePath != null && !remotePath.isEmpty();
 	}
 
+	/**
+	 * Returns the remote path to the linked file. Calling this method is
+	 * only allowed if calling {@link #isRemote()} returns {@code true}.
+	 *
+	 * @return The remote path to the linked file is returned.
+	 */
+	public String getRemotePath() {
+		if(isRemote()) {
+			return remotePath;
+		}
+
+		throw new IllegalStateException("Remote path is not available.");
+	}
+
+	/**
+	 * This method is called by API providers to set the remote path once the
+	 * local file has been uploaded.
+	 *
+	 * @param remotePath The remote path of the uploaded file.
+	 * @throws IllegalStateException Thrown if this file link is 'REMOTE'.
+	 */
 	public void setRemotePath(String remotePath) {
 		if(State.REMOTE == state) {
 			throw new IllegalStateException("It is not allowed to replace an existing remote path.");
@@ -119,34 +236,56 @@ public final class FileLink {
 		this.remotePath = remotePath;
 	}
 
+	/**
+	 * Returns the description of the linked file.
+	 *
+	 * @return The description is returned.
+	 */
 	public String getDescription() {
 		return description == null ? "" : description;
 	}
 
+	/**
+	 * Sets a new description for the linked file.
+	 *
+	 * @param description The new description.
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public boolean isLocal() {
-		return getLocalPath() != null;
-	}
-
-	public boolean isRemote() {
-		return getRemotePath() != null && !getRemotePath().isEmpty();
-	}
-
+	/**
+	 * Returns the size of the linked file or {@code -1} if unknown.
+	 *
+	 * @return The file size in bytes is returned.
+	 */
 	public long getSize() {
 		return size;
 	}
 
+	/**
+	 * Returns the formatted file size of the linked file.
+	 *
+	 * @param format Used to format the size.
+	 * @return The formatted file size is returned.
+	 */
 	public String getSize(Format format) {
 		return format.getSize(size);
 	}
 
+	/**
+	 * This method is called by API providers to set the file size for the
+	 * linked file.
+	 *
+	 * @param size The size of the file in bytes.
+	 */
 	public void setFileSize(long size) {
 		this.size = size;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int hashCode() {
 		if(State.LOCAL == state) {
@@ -156,6 +295,9 @@ public final class FileLink {
 		return getRemotePath().hashCode();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object object) {
 		if(object instanceof FileLink) {
@@ -172,11 +314,14 @@ public final class FileLink {
 		return false;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("FileLink(Description = ");
 
-		if(getDescription() != null) {
+		if(!getDescription().isEmpty()) {
 			sb.append(getDescription());
 		}
 
@@ -190,7 +335,7 @@ public final class FileLink {
 
 		sb.append(", Size = ");
 		if(getSize() > 0) {
-			sb.append(getSize(Format.SI)).append(" / ").append(getSize(Format.BINARY));
+			sb.append(getSize(Format.DECIMAL)).append(" / ").append(getSize(Format.BINARY));
 		} else {
 			sb.append("UNKNOWN");
 		}
@@ -198,31 +343,110 @@ public final class FileLink {
 		return sb.append(')').toString();
 	}
 
+	// ======================================================================
+	// Package methods
+	// ======================================================================
+
+	/**
+	 * Checks whether given {@link FileLink} may be treated as equal. This is
+	 * the case if either their local {@link Path}s or remote paths are equal.
+	 *
+	 * @param o1 The first {@code FileLink}.
+	 * @param o2 The second {@code FileLink}.
+	 * @return Returns {@code true} if either their local {@code Path}s or
+	 * 		remote paths are equal.
+	 */
 	static boolean areEqual(FileLink o1, FileLink o2) {
 		return isLocalPathEqual(o1, o2) || isRemotePathEqual(o1, o2);
 	}
 
+	// ======================================================================
+	// Private methods
+	// ======================================================================
+
+	/**
+	 * Checks whether both {@link FileLink}s return {@code true} when {@link
+	 * #isLocal()} is called and their {@link Path}s are equal.
+	 *
+	 * @param o1 The first {@code FileLink}.
+	 * @param o2 The second {@code FileLink}.
+	 * @return Returns {@code true} if both {@code FileLink}s have a local
+	 * 		{@code Path} which are equal.
+	 */
 	private static boolean isLocalPathEqual(FileLink o1, FileLink o2) {
 		return o1.isLocal() && o2.isLocal() && o1.getLocalPath().equals(o2.getLocalPath());
 	}
 
+	/**
+	 * Checks whether both {@link FileLink}s return {@code true} when {@link
+	 * #isRemote()} is called and their remote paths are equal.
+	 *
+	 * @param o1 The first {@code FileLink}.
+	 * @param o2 The second {@code FileLink}.
+	 * @return Returns {@code true} if both {@code FileLink}s have a remote
+	 * 		path which are equal.
+	 */
 	private static boolean isRemotePathEqual(FileLink o1, FileLink o2) {
 		return o1.isRemote() && o2.isRemote() && o1.getRemotePath().equals(o2.getRemotePath());
 	}
 
+	// ======================================================================
+	// Inner classes
+	// ======================================================================
+
+	/**
+	 * Used to format a number of bytes into a human readable size.
+	 */
 	public enum Format {
-		SI(1000, "kMGTPE"),
-		BINARY(1024, "KMGTPE");
+
+		// ======================================================================
+		// Enum constants
+		// ======================================================================
+
+		/**
+		 * Counts 1000 bits as 1 byte, so formats 110592 to '110.6 kB'.
+		 */
+		DECIMAL(1000, "kMGTPEZY"),
+
+		/**
+		 * Counts 1024 bits as 1 byte, so formats 110592 to '108.0 KiB'.
+		 */
+		BINARY(1024, "KMGTPEZY");
+
+		// ======================================================================
+		// Inner classes
+		// ======================================================================
+
 
 		private final String prefixChars;
 		private final int unit;
 
+		// ======================================================================
+		// Constructors
+		// ======================================================================
+
+		/**
+		 * Constructor.
+		 *
+		 * @param unit The unit.
+		 * @param prefixChars The prefix characters.
+		 */
 		private Format(int unit, String prefixChars) {
 			this.prefixChars = prefixChars;
 			this.unit = unit;
 		}
 
-		public String getSize(long size) {
+		// ======================================================================
+		// Private methods
+		// ======================================================================
+
+		/**
+		 * Formats given file size in bytes into a human readable one.
+		 *
+		 * @param size The number of bytes.
+		 * @return Formatted file size is returned.
+		 */
+		private String getSize(long size) {
 			if(size < 0) {
 				return "UNKNOWN";
 			} else if (size < unit) {
@@ -230,9 +454,26 @@ public final class FileLink {
 			}
 
 			int exponent = (int) (Math.log(size) / Math.log(unit));
-			String prefixChar = prefixChars.charAt(exponent-1) + (SI == this ? "" : "i");
+			String prefixChar = prefixChars.charAt(exponent-1) + (DECIMAL == this ? "" : "i");
 			return String.format("%.1f %sB", size / Math.pow(unit, exponent), prefixChar);
 		}
+	}
+
+	/**
+	 * Used to preserve the initial state of a {@link FileLink}.
+	 */
+	private enum State {
+
+		/**
+		 * {@link FileLink} was initially only remotely available.
+		 */
+		REMOTE,
+
+		/**
+		 * {@link FileLink} was initially only locally available.
+		 */
+		LOCAL
+
 	}
 
 }

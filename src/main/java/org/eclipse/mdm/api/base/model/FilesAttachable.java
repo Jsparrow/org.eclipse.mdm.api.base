@@ -36,32 +36,47 @@ public interface FilesAttachable extends Entity {
 	// Public methods
 	// ======================================================================
 
+	/**
+	 * Returns current set of linked files of this entity.
+	 *
+	 * @return Current set of linked files are returned.
+	 */
 	default FileLink[] getFileLinks() {
 		return ((FileLink[]) getValue(ATTR_FILE_LINKS).extract()).clone();
 	}
 
+	/**
+	 * Replaces current set of linked files with given {@link FileLink}s.
+	 *
+	 * @param fileLinks The new {@code FileLink}s.
+	 */
 	default void setFileLinks(FileLink[] fileLinks) {
 		getValue(ATTR_FILE_LINKS).set(fileLinks);
 	}
 
-	default boolean addFileLink(FileLink fileLink) {
+	/**
+	 * Adds given {@link FileLink} to the current set of linked files.
+	 *
+	 * @param fileLink The new {@code FileLink}.
+	 */
+	default void addFileLink(FileLink fileLink) {
 		FileLink[] fileLinks = getFileLinks();
-		if(Arrays.stream(fileLinks).filter(fl -> FileLink.areEqual(fl, fileLink)).findAny().isPresent()) {
-			return false;
-		}
 
 		FileLink[] newFileLinks = new FileLink[fileLinks.length + 1];
 		System.arraycopy(fileLinks, 0, newFileLinks, 0, fileLinks.length);
 		newFileLinks[fileLinks.length] = fileLink;
 		setFileLinks(newFileLinks);
-		return true;
 	}
 
-	default boolean removeFileLink(FileLink fileLink) {
+	/**
+	 * Removes given {@link FileLink} from current set of linked files.
+	 *
+	 * @param fileLink The {@code FileLink} which shall be removed.
+	 */
+	default void removeFileLink(FileLink fileLink) {
 		List<FileLink> fileLinks = new ArrayList<>(Arrays.asList(getFileLinks()));
-		boolean removed = fileLinks.remove(fileLink);
+		fileLinks.remove(fileLink);
 		setFileLinks(fileLinks.toArray(new FileLink[fileLinks.size()]));
-		return removed;
 	}
 
 }
