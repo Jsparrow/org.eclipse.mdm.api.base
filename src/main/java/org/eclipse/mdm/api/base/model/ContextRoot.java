@@ -38,6 +38,9 @@ public final class ContextRoot extends BaseEntity implements Deletable {
 	// Class variables
 	// ======================================================================
 
+	/**
+	 * The 'Version' attribute name.
+	 */
 	public static final String ATTR_VERSION = "Version";
 
 	// ======================================================================

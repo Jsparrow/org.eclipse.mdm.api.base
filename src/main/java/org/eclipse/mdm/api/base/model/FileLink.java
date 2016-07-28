@@ -406,12 +406,12 @@ public final class FileLink {
 		/**
 		 * Counts 1000 bits as 1 byte, so formats 110592 to '110.6 kB'.
 		 */
-		DECIMAL(1000, "kMGTPEZY"),
+		DECIMAL(1000, "kMGTPE"),
 
 		/**
 		 * Counts 1024 bits as 1 byte, so formats 110592 to '108.0 KiB'.
 		 */
-		BINARY(1024, "KMGTPEZY");
+		BINARY(1024, "KMGTPE");
 
 		// ======================================================================
 		// Inner classes
