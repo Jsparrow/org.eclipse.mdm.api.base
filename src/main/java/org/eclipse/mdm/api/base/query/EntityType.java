@@ -49,7 +49,8 @@ public interface EntityType {
 	/**
 	 * Returns all {@link Attribute}s of this entity type.
 	 *
-	 * TODO: returns only attributes excluding foreign key attributes (relations)
+	 * <p><b>NOTE:</b> Relation attributes are <i>not</i> part of the
+	 * returned {@code List}.
 	 *
 	 * @return The returned {@code List} may be immutable.
 	 */
@@ -86,14 +87,14 @@ public interface EntityType {
 	}
 
 	/**
-	 * Returns the {@link Attribute} associated with given name.
-	 *
-	 * TODO: on miss a lookup for a foreign key (relation) attribute is done
+	 * Returns either the {@link Attribute} identified by the given name or
+	 * the corresponding relation {@code Attribute} (foreign key) as returned
+	 * by {@link Relation#getAttribute()}.
 	 *
 	 * @param name The {@code Attribute} identifier.
 	 * @return The associated {@code Attribute} is returned.
-	 * @throws IllegalArgumentException Thrown if an {@code Attribute} with
-	 * 		given name does not exist.
+	 * @throws IllegalArgumentException Thrown if neither an {@code Attribute}
+	 * 		nor a {@link Relation} with given name exists.
 	 */
 	Attribute getAttribute(String name);
 
@@ -104,6 +105,11 @@ public interface EntityType {
 	 */
 	List<Relation> getRelations();
 
+	/**
+	 * Returns all {@link Relation}s to allowed parent entity types.
+	 *
+	 * @return The returned {@code List} may be immutable.
+	 */
 	List<Relation> getParentRelations();
 
 	/**
@@ -131,15 +137,15 @@ public interface EntityType {
 	List<Relation> getRelations(Relationship relationship);
 
 	/**
-	 * Returns the unambiguous {@link Relation} to given target entity type.
-	 *
-	 * TODO: if an unambiguous relation does not exists it is tried find one within the parent relations
+	 * Returns a {@link Relation} to given target entity type. At first it is
+	 * tried to find a unambiguous {@code Relation} to given {@code EntityType}.
+	 * If this fails it is tried to identify it by the name of the given {@link
+	 * EntityType}.
 	 *
 	 * @param target Used as identifier.
 	 * @return The associated {@code Relation} is returned.
 	 * @throws IllegalArgumentException Thrown if a relation to given target
-	 * 		entity type does not exist or is ambiguous.
-	 * @see #getRelation(EntityType, String)
+	 * 		entity type does not exist.
 	 */
 	Relation getRelation(EntityType target);
 

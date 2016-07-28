@@ -29,7 +29,7 @@ public final class Record {
 	// Instance variables
 	// ======================================================================
 
-	private Map<String, Value> values = new HashMap<>();
+	private final Map<String, Value> values = new HashMap<>();
 	private final EntityType entityType;
 
 	// ======================================================================
@@ -84,6 +84,15 @@ public final class Record {
 		return idValue.extract();
 	}
 
+	/**
+	 * Returns the instance ID of the related entity referenced by the given
+	 * {@link Relation}.
+	 *
+	 * @param relation The foreign key {@code Relation}.
+	 * @return {@code Optional} is empty if there is no related entity.
+	 * @throws IllegalStateException Thrown if the requested foreign key was
+	 * 		not selected prior executing the query.
+	 */
 	public Optional<Long> getID(Relation relation) {
 		Value idValue = getValues().get(relation.getName());
 		if(idValue == null) {

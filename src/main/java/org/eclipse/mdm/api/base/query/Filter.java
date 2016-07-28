@@ -53,22 +53,69 @@ public final class Filter implements Iterable<FilterItem> {
 	// Public methods
 	// ======================================================================
 
+	/**
+	 * Creates a new filter with an instance ID condition for given {@link
+	 * EntityType} and instance ID.
+	 *
+	 * @param entityType The {@code EntityType}.
+	 * @param id The instance ID.
+	 * @return The created filter is returned.
+	 * @see #id(EntityType, Long)
+	 */
 	public static Filter idOnly(EntityType entityType, Long id) {
 		return and().id(entityType, id);
 	}
 
+	/**
+	 * Creates a new filter with an foreign ID condition for given {@link
+	 * Relation} and instance ID.
+	 *
+	 * @param relation The {@code Relation}.
+	 * @param id The instance ID.
+	 * @return The created filter is returned.
+	 * @see #id(Relation, Long)
+	 */
 	public static Filter idOnly(Relation relation, Long id) {
 		return and().id(relation, id);
 	}
 
+	/**
+	 * Creates a new filter with an instance IDs condition for given {@link
+	 * EntityType} and instance IDs.
+	 *
+	 * @param entityType The {@code EntityType}.
+	 * @param ids The instance IDs.
+	 * @return The created filter is returned.
+	 * @see #ids(EntityType, Collection)
+	 */
 	public static Filter idsOnly(EntityType entityType, Collection<Long> ids) {
 		return and().ids(entityType, ids);
 	}
 
+	/**
+	 * Creates a new filter with an foreign IDs condition for given {@link
+	 * Relation} and instance IDs.
+	 *
+	 * @param relation The {@code Relation}.
+	 * @param ids The instance IDs.
+	 * @return The created filter is returned.
+	 * @see #ids(Relation, Collection)
+	 */
 	public static Filter idsOnly(Relation relation, Collection<Long> ids) {
 		return and().ids(relation, ids);
 	}
 
+	/**
+	 * Creates a new filter with an instance name condition for given {@link
+	 * EntityType} and instance name pattern.
+	 *
+	 * @param entityType The {@code EntityType}.
+	 * @param pattern Is always case sensitive and may contain wildcard
+	 * 		characters as follows: "?" for one matching character and "*"
+	 * 		for a sequence of matching characters.
+	 * @return The created filter is returned.
+	 * @see #name(EntityType, String)
+	 */
 	public static Filter nameOnly(EntityType entityType, String pattern) {
 		return and().name(entityType, pattern);
 	}
@@ -133,32 +180,78 @@ public final class Filter implements Iterable<FilterItem> {
 		return this;
 	}
 
-	// TODO docs
+	/**
+	 * Adds a new instance ID condition ({@link Operation#EQUAL}) for given
+	 * {@link EntityType} and instance ID to this filter.
+	 *
+	 * @param entityType The {@code EntityType}.
+	 * @param id The instance ID.
+	 * @return Returns this filter.
+	 * @see #add(Condition)
+	 */
 	public Filter id(EntityType entityType, Long id) {
 		add(Operation.EQUAL.create(entityType.getIDAttribute(), id));
 		return this;
 	}
 
+	/**
+	 * Adds a new foreign ID condition ({@link Operation#EQUAL}) for given
+	 * {@link Relation} and instance ID to this filter.
+	 *
+	 * @param relation The {@code Relation}.
+	 * @param id The instance ID.
+	 * @return Returns this filter.
+	 * @see #add(Condition)
+	 */
 	public Filter id(Relation relation, Long id) {
 		add(Operation.EQUAL.create(relation.getAttribute(), id));
 		return this;
 	}
 
-	// TODO
+	/**
+	 * Adds a new instance IDs condition ({@link Operation#IN_SET}) for given
+	 * {@link EntityType} and instance IDs to this filter.
+	 *
+	 * @param entityType The {@code EntityType}.
+	 * @param ids The instance IDs.
+	 * @return Returns this filter
+	 * @see #add(Condition)
+	 */
 	public Filter ids(EntityType entityType, Collection<Long> ids) {
-		return ids(entityType.getIDAttribute(), ids);
-	}
-
-	public Filter ids(Relation relation, Collection<Long> ids) {
-		return ids(relation.getAttribute(), ids);
-	}
-
-	private Filter ids(Attribute attribute, Collection<Long> ids) {
-		add(Operation.IN_SET.create(attribute, ids.stream().distinct().mapToLong(Long::longValue).toArray()));
+		add(Operation.IN_SET.create(entityType.getIDAttribute(),
+				ids.stream().distinct().mapToLong(Long::longValue).toArray()));
 		return this;
 	}
 
-	// TODO docs: if pattern is "*", then it is safe to skip (it means get all...)
+	/**
+	 * Adds a new foreign IDs condition ({@link Operation#IN_SET}) for given
+	 * {@link Relation} and instance IDs to this filter.
+	 *
+	 * @param relation The {@code Relation}.
+	 * @param ids The instance IDs.
+	 * @return Returns this filter.
+	 * @see #add(Condition)
+	 */
+	public Filter ids(Relation relation, Collection<Long> ids) {
+		add(Operation.IN_SET.create(relation.getAttribute(),
+				ids.stream().distinct().mapToLong(Long::longValue).toArray()));
+		return this;
+	}
+
+	/**
+	 * Adds a instance name condition ({@link Operation#LIKE}) for given {@link
+	 * EntityType} and instance name pattern.
+	 *
+	 * <p><b>NOTE:</b> If the given pattern equals "*", then no {@link
+	 * Condition} will be added since "*" means take all.
+	 *
+	 * @param entityType The {@code EntityType}.
+	 * @param pattern Is always case sensitive and may contain wildcard
+	 * 		characters as follows: "?" for one matching character and "*"
+	 * 		for a sequence of matching characters.
+	 * @return Returns this filter.
+	 * @see #add(Condition)
+	 */
 	public Filter name(EntityType entityType, String pattern) {
 		if(!"*".equals(pattern)) {
 			add(Operation.LIKE.create(entityType.getNameAttribute(), pattern));
@@ -284,7 +377,12 @@ public final class Filter implements Iterable<FilterItem> {
 		return this;
 	}
 
-	// TODO Java Doc
+	/**
+	 * Checks whether this filter has no conditions at all.
+	 *
+	 * @return Returns {@code false} if at least one {@link Condition} is
+	 * 		contained.
+	 */
 	public boolean isEmtpty() {
 		return filterItems.isEmpty();
 	}

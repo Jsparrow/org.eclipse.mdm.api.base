@@ -35,6 +35,11 @@ public interface ModelManager {
 	 */
 	Query createQuery();
 
+	/**
+	 * Returns all available {@link EntityType}s.
+	 *
+	 * @return The returned {@code List} is unmodifiable.
+	 */
 	List<EntityType> listEntityTypes();
 
 	/**
@@ -48,18 +53,26 @@ public interface ModelManager {
 	}
 
 	/**
-	 * Returns the {@link EntityType} associated with given {@link Entity}
-	 * type.
+	 * Returns the {@link EntityType} associated with given entity class type.
 	 *
 	 * @param entityClass Used as identifier.
-	 * @return {@code EntityType} associated with given entity type is
-	 * 		returned.
+	 * @return {@code EntityType} associated with given entity class is returned.
 	 * @throws IllegalArgumentException Thrown if {@code EntityType} for given
 	 * 		type does not exist.
 	 */
 	EntityType getEntityType(Class<? extends Entity> entityClass);
 
-	// TODO: IllegalArgumentException Thrown if {@code EntityType} for given type does not exist.
+	/**
+	 * Returns the {@link EntityType} associated with given entity class and
+	 * {@link ContextType}.
+	 *
+	 * @param entityClass Used as identifier.
+	 * @param contextType Used as identifier.
+	 * @return {@code EntityType} associated with given entity class and {@code
+	 * 		ContextType} is returned.
+	 * @throws IllegalArgumentException Thrown if {@code EntityType} for given
+	 * 		type does not exist.
+	 */
 	EntityType getEntityType(Class<? extends Entity> entityClass, ContextType contextType);
 
 	/**

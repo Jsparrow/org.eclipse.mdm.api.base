@@ -8,10 +8,8 @@
 
 package org.eclipse.mdm.api.base.query;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -36,11 +34,6 @@ public final class Result implements Iterable<Record> {
 	// ======================================================================
 	// Public methods
 	// ======================================================================
-
-	// TODO
-	public List<Record> getRecords() {
-		return new ArrayList<>(records.values());
-	}
 
 	/**
 	 * Adds given {@link Record} to this result.
@@ -121,6 +114,11 @@ public final class Result implements Iterable<Record> {
 		return mergedResult;
 	}
 
+	/**
+	 * Returns a sequential stream with this result as its source.
+	 *
+	 * @return A sequential stream with records of this result.
+	 */
 	public Stream<Record> stream() {
 		return StreamSupport.stream(spliterator(), false);
 	}

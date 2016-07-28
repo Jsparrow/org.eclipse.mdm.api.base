@@ -16,7 +16,27 @@ import org.eclipse.mdm.api.base.model.Core;
 import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.model.Value;
 
+/**
+ * Provides access to the internals of any entity:
+ *
+ * <ul>
+ * 	<li>name of the data source</li>
+ * 	<li>name of the type</li>
+ * 	<li>instance ID</li>
+ * 	<li>values</li>
+ * 	<li>added/removed file links</li>
+ * 	<li>related entities</li>
+ * 	<li>parent/child entities</li>
+ * </ul>
+ *
+ * @since 1.0.0
+ * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
+ */
 public final class DefaultCore implements Core {
+
+	// ======================================================================
+	// Instance variables
+	// ======================================================================
 
 	private final EntityStore permanentEntityStorage = new EntityStore();
 	private final EntityStore mutableEntityStorage = new EntityStore();
@@ -30,6 +50,15 @@ public final class DefaultCore implements Core {
 
 	private Long instanceID;
 
+	// ======================================================================
+	// Constructors
+	// ======================================================================
+
+	/**
+	 * Constructs a new {@link Core} initialized with a queried {@link Record}.
+	 *
+	 * @param record The queried {@code Record}.
+	 */
 	public DefaultCore(Record record) {
 		setID(record.getID());
 		values.putAll(record.getValues());
@@ -43,6 +72,11 @@ public final class DefaultCore implements Core {
 		typeName = entityType.getName();
 	}
 
+	/**
+	 * Constructs a new empty {@link Core}.
+	 *
+	 * @param entityType The associated {@link EntityType}.
+	 */
 	public DefaultCore(EntityType entityType) {
 		setID(Long.valueOf(0L));
 		values.putAll(entityType.createValues());
@@ -52,31 +86,53 @@ public final class DefaultCore implements Core {
 		typeName = entityType.getName();
 	}
 
+	// ======================================================================
+	// Public methods
+	// ======================================================================
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getSourceName() {
 		return sourceName;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getTypeName() {
 		return typeName;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Long getID() {
 		return instanceID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setID(Long instanceID) {
 		this.instanceID = instanceID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Map<String, Value> getValues() {
 		return values;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void hideValues(Collection<String> names) {
 		if(names.isEmpty()) {
@@ -91,6 +147,9 @@ public final class DefaultCore implements Core {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Map<String, Value> getAllValues() {
 		if(hiddenValues.isEmpty()) {
@@ -102,16 +161,25 @@ public final class DefaultCore implements Core {
 		return allValues;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public EntityStore getMutableStore() {
 		return mutableEntityStorage;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public EntityStore getPermanentStore() {
 		return permanentEntityStorage;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public ChildrenStore getChildrenStore() {
 		return childrenStore;

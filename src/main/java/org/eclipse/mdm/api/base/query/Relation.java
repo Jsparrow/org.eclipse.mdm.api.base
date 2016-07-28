@@ -53,6 +53,11 @@ public interface Relation {
 	 */
 	Relationship getRelationship();
 
+	/**
+	 * Returns the foreign key {@link Attribute} for this {@link Relation}.
+	 *
+	 * @return The foreign key {@code Attribute} is returned.
+	 */
 	Attribute getAttribute();
 
 	/**
