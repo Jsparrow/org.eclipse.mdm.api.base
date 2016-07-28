@@ -219,7 +219,7 @@ public enum ValueType {
 	 * The type is used to check assignment compatibility of non {@code null}
 	 * values passed to {@link Value#set(Object)}.
 	 */
-	public final Class<?> type;
+	private final Class<?> type;
 
 	/**
 	 * The default value will be used in {@link Value#set(Object)} to replace
@@ -991,6 +991,20 @@ public enum ValueType {
 		}
 
 		return this;
+	}
+
+	/**
+	 * Returns the value class for this value type.
+	 *
+	 * @return The value class is returned.
+	 * @throws IllegalStateException Thrown if {@link #isEnumerationType()}
+	 * 		returns {@code true}.
+	 */
+	public Class<?> getValueClass() {
+		if(isEnumerationType()) {
+			throw new IllegalStateException("");
+		}
+		return type;
 	}
 
 }

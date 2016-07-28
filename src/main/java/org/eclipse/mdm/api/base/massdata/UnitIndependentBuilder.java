@@ -62,7 +62,7 @@ public final class UnitIndependentBuilder extends IndependentBuilder {
 	 * @return The {@link IndependentBuilder} is returned.
 	 */
 	public IndependentBuilder sourceUnit(Unit sourceUnit) {
-		writeRequest.setSourceUnit(sourceUnit);
+		getWriteRequest().setSourceUnit(sourceUnit);
 		return this;
 	}
 

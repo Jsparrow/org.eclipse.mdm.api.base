@@ -25,7 +25,7 @@ abstract class BaseValuesBuilder {
 	// Instance variables
 	// ======================================================================
 
-	protected final WriteRequest writeRequest;
+	private final WriteRequest writeRequest;
 
 	// ======================================================================
 	// Constructors
@@ -58,8 +58,8 @@ abstract class BaseValuesBuilder {
 			throw new IllegalArgumentException("Values is not allowed to be null.");
 		}
 
-		writeRequest.setRawScalarType(scalarType);
-		writeRequest.setValues(values);
+		getWriteRequest().setRawScalarType(scalarType);
+		getWriteRequest().setValues(values);
 	}
 
 	/**
@@ -78,8 +78,17 @@ abstract class BaseValuesBuilder {
 			throw new IllegalArgumentException("Length of values and flags must be equal.");
 		}
 
-		writeRequest.setRawScalarType(scalarType);
-		writeRequest.setValues(values, flags);
+		getWriteRequest().setRawScalarType(scalarType);
+		getWriteRequest().setValues(values, flags);
+	}
+
+	/**
+	 * Returns the {@link WriteRequest}.
+	 *
+	 * @return The {@code WriteRequest} is returned.
+	 */
+	protected final WriteRequest getWriteRequest() {
+		return writeRequest;
 	}
 
 }

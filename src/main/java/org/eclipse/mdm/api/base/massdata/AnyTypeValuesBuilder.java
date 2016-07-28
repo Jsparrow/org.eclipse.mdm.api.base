@@ -72,7 +72,7 @@ public final class AnyTypeValuesBuilder extends ComplexNumericalValuesBuilder {
 	 */
 	public WriteRequestFinalizer stringValues(String[] values) {
 		createValues(ScalarType.STRING, values);
-		return new WriteRequestFinalizer(writeRequest);
+		return new WriteRequestFinalizer(getWriteRequest());
 	}
 
 	/**
@@ -85,7 +85,7 @@ public final class AnyTypeValuesBuilder extends ComplexNumericalValuesBuilder {
 	 */
 	public WriteRequestFinalizer stringValues(String[] values, boolean[] flags) {
 		createValues(ScalarType.STRING, values, flags);
-		return new WriteRequestFinalizer(writeRequest);
+		return new WriteRequestFinalizer(getWriteRequest());
 	}
 
 	/**
@@ -98,7 +98,7 @@ public final class AnyTypeValuesBuilder extends ComplexNumericalValuesBuilder {
 	 */
 	public IndependentBuilder dateValues(LocalDateTime[] values) {
 		createValues(ScalarType.DATE, values);
-		return new IndependentBuilder(writeRequest);
+		return new IndependentBuilder(getWriteRequest());
 	}
 
 	/**
@@ -111,7 +111,7 @@ public final class AnyTypeValuesBuilder extends ComplexNumericalValuesBuilder {
 	 */
 	public IndependentBuilder dateValues(LocalDateTime[] values, boolean[] flags) {
 		createValues(ScalarType.DATE, values, flags);
-		return new IndependentBuilder(writeRequest);
+		return new IndependentBuilder(getWriteRequest());
 	}
 
 	/**
@@ -123,7 +123,7 @@ public final class AnyTypeValuesBuilder extends ComplexNumericalValuesBuilder {
 	 */
 	public WriteRequestFinalizer booleanValues(boolean[] values) {
 		createValues(ScalarType.BOOLEAN, values);
-		return new WriteRequestFinalizer(writeRequest);
+		return new WriteRequestFinalizer(getWriteRequest());
 	}
 
 	/**
@@ -136,7 +136,7 @@ public final class AnyTypeValuesBuilder extends ComplexNumericalValuesBuilder {
 	 */
 	public WriteRequestFinalizer booleanValues(boolean[] values, boolean[] flags) {
 		createValues(ScalarType.BOOLEAN, values, flags);
-		return new WriteRequestFinalizer(writeRequest);
+		return new WriteRequestFinalizer(getWriteRequest());
 	}
 
 	/**
@@ -149,7 +149,7 @@ public final class AnyTypeValuesBuilder extends ComplexNumericalValuesBuilder {
 	 */
 	public WriteRequestFinalizer byteStreamValues(byte[][] values) {
 		createValues(ScalarType.BYTE_STREAM, values);
-		return new WriteRequestFinalizer(writeRequest);
+		return new WriteRequestFinalizer(getWriteRequest());
 	}
 
 	/**
@@ -162,7 +162,7 @@ public final class AnyTypeValuesBuilder extends ComplexNumericalValuesBuilder {
 	 */
 	public WriteRequestFinalizer byteStreamValues(byte[][] values, boolean[] flags) {
 		createValues(ScalarType.BYTE_STREAM, values, flags);
-		return new WriteRequestFinalizer(writeRequest);
+		return new WriteRequestFinalizer(getWriteRequest());
 	}
 
 	/**
@@ -175,7 +175,7 @@ public final class AnyTypeValuesBuilder extends ComplexNumericalValuesBuilder {
 	 */
 	public WriteRequestFinalizer fileLinkValues(FileLink[] values) {
 		createValues(ScalarType.FILE_LINK, values);
-		return new WriteRequestFinalizer(writeRequest);
+		return new WriteRequestFinalizer(getWriteRequest());
 	}
 
 	/**
@@ -188,7 +188,7 @@ public final class AnyTypeValuesBuilder extends ComplexNumericalValuesBuilder {
 	 */
 	public WriteRequestFinalizer fileLinkValues(FileLink[] values, boolean[] flags) {
 		createValues(ScalarType.FILE_LINK, values, flags);
-		return new WriteRequestFinalizer(writeRequest);
+		return new WriteRequestFinalizer(getWriteRequest());
 	}
 
 	// TODO: is it possible to provide a blob for each row or is the blob for the whole column?!

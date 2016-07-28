@@ -183,7 +183,7 @@ public final class Value {
 		} else {
 			throw new IllegalArgumentException("Incompatible value type '"
 					+ input.getClass().getSimpleName() + "' passed, expected '"
-					+ getValueType().type.getSimpleName() + "'.");
+					+ valueClass.getSimpleName() + "'.");
 		}
 	}
 

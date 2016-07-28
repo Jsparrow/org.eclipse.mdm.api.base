@@ -65,7 +65,7 @@ public class ComplexNumericalValuesBuilder extends NumericalValuesBuilder {
 	 */
 	public final UnitBuilder floatComplexValues(FloatComplex[] values) {
 		createValues(ScalarType.FLOAT_COMPLEX, values);
-		return new UnitBuilder(writeRequest);
+		return new UnitBuilder(getWriteRequest());
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class ComplexNumericalValuesBuilder extends NumericalValuesBuilder {
 	 */
 	public final UnitBuilder floatComplexValues(FloatComplex[] values, boolean[] flags) {
 		createValues(ScalarType.FLOAT_COMPLEX, values, flags);
-		return new UnitBuilder(writeRequest);
+		return new UnitBuilder(getWriteRequest());
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class ComplexNumericalValuesBuilder extends NumericalValuesBuilder {
 	 */
 	public final UnitBuilder doubleComplexValues(DoubleComplex[] values) {
 		createValues(ScalarType.DOUBLE_COMPLEX, values);
-		return new UnitBuilder(writeRequest);
+		return new UnitBuilder(getWriteRequest());
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class ComplexNumericalValuesBuilder extends NumericalValuesBuilder {
 	 */
 	public final UnitBuilder doubleComplexValues(DoubleComplex[] values, boolean[] flags) {
 		createValues(ScalarType.DOUBLE_COMPLEX, values, flags);
-		return new UnitBuilder(writeRequest);
+		return new UnitBuilder(getWriteRequest());
 	}
 
 }

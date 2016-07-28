@@ -22,7 +22,7 @@ public class WriteRequestFinalizer {
 	// Instance variables
 	// ======================================================================
 
-	protected final WriteRequest writeRequest;
+	private final WriteRequest writeRequest;
 
 	// ======================================================================
 	// Constructors
@@ -47,6 +47,19 @@ public class WriteRequestFinalizer {
 	 * @return The configured {@code WriteRequest} is returned.
 	 */
 	public final WriteRequest build() {
+		return getWriteRequest();
+	}
+
+	// ======================================================================
+	// Protected methods
+	// ======================================================================
+
+	/**
+	 * Returns the {@link WriteRequest}.
+	 *
+	 * @return The {@code WriteRequest} is returned.
+	 */
+	protected final WriteRequest getWriteRequest() {
 		return writeRequest;
 	}
 

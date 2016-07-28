@@ -46,7 +46,7 @@ public final class UnitBuilder extends WriteRequestFinalizer {
 	 * @return The {@link WriteRequestFinalizer} is returned.
 	 */
 	public WriteRequestFinalizer sourceUnit(Unit sourceUnit) {
-		writeRequest.setSourceUnit(sourceUnit);
+		getWriteRequest().setSourceUnit(sourceUnit);
 		return this;
 	}
 

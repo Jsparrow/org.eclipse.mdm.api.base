@@ -60,7 +60,7 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 */
 	public final UnitIndependentBuilder byteValues(byte[] values) {
 		createValues(ScalarType.BYTE, values);
-		return new UnitIndependentBuilder(writeRequest);
+		return new UnitIndependentBuilder(getWriteRequest());
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 */
 	public final UnitIndependentBuilder byteValues(byte[] values, boolean[] flags) {
 		createValues(ScalarType.BYTE, values, flags);
-		return new UnitIndependentBuilder(writeRequest);
+		return new UnitIndependentBuilder(getWriteRequest());
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 */
 	public final UnitIndependentBuilder shortValues(short[] values) {
 		createValues(ScalarType.SHORT, values);
-		return new UnitIndependentBuilder(writeRequest);
+		return new UnitIndependentBuilder(getWriteRequest());
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 */
 	public final UnitIndependentBuilder shortValues(short[] values, boolean[] flags) {
 		createValues(ScalarType.SHORT, values, flags);
-		return new UnitIndependentBuilder(writeRequest);
+		return new UnitIndependentBuilder(getWriteRequest());
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 */
 	public final UnitIndependentBuilder integerValues(int[] values) {
 		createValues(ScalarType.INTEGER, values);
-		return new UnitIndependentBuilder(writeRequest);
+		return new UnitIndependentBuilder(getWriteRequest());
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 */
 	public final UnitIndependentBuilder integerValues(int[] values, boolean[] flags) {
 		createValues(ScalarType.INTEGER, values, flags);
-		return new UnitIndependentBuilder(writeRequest);
+		return new UnitIndependentBuilder(getWriteRequest());
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 */
 	public final UnitIndependentBuilder longValues(long[] values) {
 		createValues(ScalarType.LONG, values);
-		return new UnitIndependentBuilder(writeRequest);
+		return new UnitIndependentBuilder(getWriteRequest());
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 */
 	public final UnitIndependentBuilder longValues(long[] values, boolean[] flags) {
 		createValues(ScalarType.LONG, values, flags);
-		return new UnitIndependentBuilder(writeRequest);
+		return new UnitIndependentBuilder(getWriteRequest());
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 */
 	public final UnitIndependentBuilder floatValues(float[] values) {
 		createValues(ScalarType.FLOAT, values);
-		return new UnitIndependentBuilder(writeRequest);
+		return new UnitIndependentBuilder(getWriteRequest());
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 */
 	public final UnitIndependentBuilder floatValues(float[] values, boolean[] flags) {
 		createValues(ScalarType.FLOAT, values, flags);
-		return new UnitIndependentBuilder(writeRequest);
+		return new UnitIndependentBuilder(getWriteRequest());
 	}
 
 	/**
@@ -185,7 +185,7 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 */
 	public final UnitIndependentBuilder doubleValues(double[] values) {
 		createValues(ScalarType.DOUBLE, values);
-		return new UnitIndependentBuilder(writeRequest);
+		return new UnitIndependentBuilder(getWriteRequest());
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 */
 	public final UnitIndependentBuilder doubleValues(double[] values, boolean[] flags) {
 		createValues(ScalarType.DOUBLE, values, flags);
-		return new UnitIndependentBuilder(writeRequest);
+		return new UnitIndependentBuilder(getWriteRequest());
 	}
 
 }

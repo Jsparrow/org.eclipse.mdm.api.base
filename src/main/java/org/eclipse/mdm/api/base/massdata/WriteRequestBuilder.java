@@ -45,8 +45,8 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 	 * @see SequenceRepresentation#EXPLICIT
 	 */
 	public AnyTypeValuesBuilder explicit() {
-		writeRequest.setSequenceRepresentation(SequenceRepresentation.EXPLICIT);
-		return new AnyTypeValuesBuilder(writeRequest);
+		getWriteRequest().setSequenceRepresentation(SequenceRepresentation.EXPLICIT);
+		return new AnyTypeValuesBuilder(getWriteRequest());
 	}
 
 	/**
@@ -75,7 +75,7 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 	 * @see SequenceRepresentation#IMPLICIT_CONSTANT
 	 */
 	public UnitBuilder implicitConstant(ScalarType scalarType, double offset) {
-		writeRequest.setSequenceRepresentation(SequenceRepresentation.IMPLICIT_CONSTANT);
+		getWriteRequest().setSequenceRepresentation(SequenceRepresentation.IMPLICIT_CONSTANT);
 
 		Object values;
 		if(scalarType.isByte()) {
@@ -95,7 +95,7 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 		}
 		createValues(scalarType, values);
 
-		return new UnitBuilder(writeRequest);
+		return new UnitBuilder(getWriteRequest());
 	}
 
 	/**
@@ -125,7 +125,7 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 	 * @see SequenceRepresentation#IMPLICIT_LINEAR
 	 */
 	public UnitIndependentBuilder implicitLinear(ScalarType scalarType, double start, double increment) {
-		writeRequest.setSequenceRepresentation(SequenceRepresentation.IMPLICIT_LINEAR);
+		getWriteRequest().setSequenceRepresentation(SequenceRepresentation.IMPLICIT_LINEAR);
 
 		Object values;
 		if(scalarType.isByte()) {
@@ -145,7 +145,7 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 		}
 		createValues(scalarType, values);
 
-		return new UnitIndependentBuilder(writeRequest);
+		return new UnitIndependentBuilder(getWriteRequest());
 	}
 
 	/**
@@ -176,7 +176,7 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 	 * @see SequenceRepresentation#IMPLICIT_SAW
 	 */
 	public UnitBuilder implicitSaw(ScalarType scalarType, double start, double increment, double valuesPerSaw) {
-		writeRequest.setSequenceRepresentation(SequenceRepresentation.IMPLICIT_SAW);
+		getWriteRequest().setSequenceRepresentation(SequenceRepresentation.IMPLICIT_SAW);
 
 		Object values;
 		if(scalarType.isByte()) {
@@ -198,7 +198,7 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 
 		// NOTE: if it ever should be required to make a channel of this type
 		// an independent one, then return an UnitIndependentBuilder instead!
-		return new UnitBuilder(writeRequest);
+		return new UnitBuilder(getWriteRequest());
 	}
 
 	/**
@@ -211,9 +211,9 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 	 * @see SequenceRepresentation#RAW_LINEAR
 	 */
 	public ComplexNumericalValuesBuilder rawLinear(double offset, double factor) {
-		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_LINEAR);
-		writeRequest.setGenerationParameters(new double[] { offset, factor });
-		return new ComplexNumericalValuesBuilder(writeRequest);
+		getWriteRequest().setSequenceRepresentation(SequenceRepresentation.RAW_LINEAR);
+		getWriteRequest().setGenerationParameters(new double[] { offset, factor });
+		return new ComplexNumericalValuesBuilder(getWriteRequest());
 	}
 
 	/**
@@ -232,16 +232,16 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 					+ "inconsitent with given grade");
 		}
 
-		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_POLYNOMIAL);
+		getWriteRequest().setSequenceRepresentation(SequenceRepresentation.RAW_POLYNOMIAL);
 
 		double[] generationParameters = new double[coefficients.length + 1];
 		generationParameters[0] = coefficients.length - 1;
 		System.arraycopy(coefficients, 0, generationParameters, 1, coefficients.length);
-		writeRequest.setGenerationParameters(generationParameters);
+		getWriteRequest().setGenerationParameters(generationParameters);
 
 		// TODO: currently it is possible to define such a channel as independent
 		// should we prevent this?!
-		return new ComplexNumericalValuesBuilder(writeRequest);
+		return new ComplexNumericalValuesBuilder(getWriteRequest());
 	}
 
 	/**
@@ -255,9 +255,9 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 	 * @see SequenceRepresentation#RAW_LINEAR_CALIBRATED
 	 */
 	public ComplexNumericalValuesBuilder rawLinearCalibrated(double offset, double factor, double calibration) {
-		writeRequest.setSequenceRepresentation(SequenceRepresentation.RAW_LINEAR_CALIBRATED);
-		writeRequest.setGenerationParameters(new double[] { offset, factor, calibration });
-		return new ComplexNumericalValuesBuilder(writeRequest);
+		getWriteRequest().setSequenceRepresentation(SequenceRepresentation.RAW_LINEAR_CALIBRATED);
+		getWriteRequest().setGenerationParameters(new double[] { offset, factor, calibration });
+		return new ComplexNumericalValuesBuilder(getWriteRequest());
 	}
 
 	//	public Object explicitExternal() {
