@@ -182,7 +182,8 @@ public enum Operation {
 	 * @return True if this operation is one of those listed above.
 	 */
 	boolean requiresSequence() {
-		return Arrays.asList(IN_SET, NOT_IN_SET, CASE_INSENSITIVE_IN_SET, CASE_INSENSITIVE_NOT_IN_SET, BETWEEN).contains(this);
+		return Arrays.asList(IN_SET, NOT_IN_SET, CASE_INSENSITIVE_IN_SET,
+				CASE_INSENSITIVE_NOT_IN_SET, BETWEEN).contains(this);
 	}
 
 }

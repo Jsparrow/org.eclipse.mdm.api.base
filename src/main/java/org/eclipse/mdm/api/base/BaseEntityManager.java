@@ -219,7 +219,8 @@ public interface BaseEntityManager<S extends BaseEntityFactory> {
 	 * @throws DataAccessException Thrown if unable to retrieve the children.
 	 * @see #loadChildren(Entity, Class)
 	 */
-	<T extends Entity> List<T> loadChildren(Entity parent, Class<T> entityClass, String pattern) throws DataAccessException;
+	<T extends Entity> List<T> loadChildren(Entity parent, Class<T> entityClass, String pattern)
+			throws DataAccessException;
 
 	/**
 	 * Queries available {@link ContextType} for given {@link

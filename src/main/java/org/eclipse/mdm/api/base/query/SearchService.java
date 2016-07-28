@@ -88,7 +88,8 @@ public interface SearchService {
 	 * @see #listEntityTypes(Class)
 	 * @see #getFilterValues(Class, Attribute, Filter)
 	 */
-	default List<Value> getFilterValues(Class<? extends Entity> entityClass, Attribute attribute) throws DataAccessException {
+	default List<Value> getFilterValues(Class<? extends Entity> entityClass, Attribute attribute)
+			throws DataAccessException {
 		return getFilterValues(entityClass, attribute, Filter.and());
 	}
 
@@ -140,7 +141,8 @@ public interface SearchService {
 	 * @see #fetch(Class, List)
 	 * @see Record#merge(Record)
 	 */
-	default <T extends Entity> Map<T, Result> fetchComplete(Class<T> entityCass, List<EntityType> entityTypes) throws DataAccessException {
+	default <T extends Entity> Map<T, Result> fetchComplete(Class<T> entityCass, List<EntityType> entityTypes)
+			throws DataAccessException {
 		return fetchComplete(entityCass, entityTypes, Filter.and());
 	}
 
@@ -239,7 +241,8 @@ public interface SearchService {
 	 * @see #fetchComplete(Class, List)
 	 * @see Record#merge(Record)
 	 */
-	default <T extends Entity> Map<T, Result> fetch(Class<T> entityClass, List<Attribute> attributes) throws DataAccessException {
+	default <T extends Entity> Map<T, Result> fetch(Class<T> entityClass, List<Attribute> attributes)
+			throws DataAccessException {
 		return fetch(entityClass, attributes, Filter.and());
 	}
 

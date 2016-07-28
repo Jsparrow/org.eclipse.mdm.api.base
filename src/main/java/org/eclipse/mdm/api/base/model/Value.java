@@ -64,7 +64,8 @@ public final class Value {
 	 * @param valueClass Used for type checking upon assignment.
 	 * @param defaultValue Used as null replacement.
 	 */
-	Value(ValueType valueType, String name, String unit, boolean valid, Object value, Class<?> valueClass, Object defaultValue) {
+	Value(ValueType valueType, String name, String unit, boolean valid, Object value,
+			Class<?> valueClass, Object defaultValue) {
 		this.valueType = valueType;
 		this.name = name;
 		this.unit = unit == null ? "" : unit;

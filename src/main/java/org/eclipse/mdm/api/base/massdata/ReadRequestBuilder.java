@@ -114,7 +114,8 @@ public final class ReadRequestBuilder {
 	 */
 	public ReadRequestBuilder requestSize(int requestSize) {
 		if(requestSize < 0) {
-			throw new IllegalArgumentException("The number of values per channel must be greater or at least equal to 0.");
+			throw new IllegalArgumentException("The number of values per channel must be greater or at "
+					+ "least equal to 0.");
 		}
 
 		readRequest.setRequestSize(requestSize);

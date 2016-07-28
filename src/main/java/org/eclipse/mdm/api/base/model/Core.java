@@ -130,12 +130,14 @@ public interface Core {
 				.filter(isRemote).collect(Collectors.toList());
 
 		List<Value> values = getValues().values().stream()
-				.filter(v -> v.getValueType().isFileLinkSequence()).filter(Value::wasValid).filter(Value::isModified)
+				.filter(v -> v.getValueType().isFileLinkSequence())
+				.filter(Value::wasValid).filter(Value::isModified)
 				.collect(Collectors.toList());
 
 		for(Value value : values) {
 			List<FileLink> current = Arrays.asList((FileLink[]) value.extract());
-			Arrays.stream((FileLink[]) value.extractInitial()).filter(fl -> !current.contains(fl)).forEach(fileLinks::add);
+			Arrays.stream((FileLink[]) value.extractInitial())
+			.filter(fl -> !current.contains(fl)).forEach(fileLinks::add);
 		}
 
 		return fileLinks;

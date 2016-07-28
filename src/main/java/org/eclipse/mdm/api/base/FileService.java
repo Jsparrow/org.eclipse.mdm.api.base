@@ -52,7 +52,8 @@ public interface FileService {
 	 * @param progressListener The progress listener.
 	 * @throws IOException Thrown if unable to download file.
 	 */
-	void downloadSequential(Entity entity, Path target, Collection<FileLink> fileLinks, ProgressListener progressListener) throws IOException;
+	void downloadSequential(Entity entity, Path target, Collection<FileLink> fileLinks,
+			ProgressListener progressListener) throws IOException;
 
 	/**
 	 * Parallel download of given {@link FileLink}s into given target {@code
@@ -78,7 +79,8 @@ public interface FileService {
 	 * @param progressListener The progress listener.
 	 * @throws IOException Thrown if unable to download file.
 	 */
-	void downloadParallel(Entity entity, Path target, Collection<FileLink> fileLinks, ProgressListener progressListener ) throws IOException;
+	void downloadParallel(Entity entity, Path target, Collection<FileLink> fileLinks,
+			ProgressListener progressListener ) throws IOException;
 
 	/**
 	 * Downloads given {@link FileLink} into given target {@code Path}.

@@ -23,7 +23,9 @@ public final class ExternalComponent {
 	//	public int flagsStartOffset;
 	//	public short bitCount;
 	//	public short bitOffset;
-	//	public ExternalComponentStruct(vwg.audi.mdm.api.TypeSpec aTypeSpec, int length, int startOffset, int blocksize, int valuesPerBlock, int valueOffset, java.lang.String filenameURL, java.lang.String flagsFileNameURL, int flagsStartOffset, short bitCount, short bitOffset)
+	//	public ExternalComponentStruct(vwg.audi.mdm.api.TypeSpec aTypeSpec, int length, int startOffset, int blocksize,
+	//		int valuesPerBlock, int valueOffset, java.lang.String filenameURL, java.lang.String flagsFileNameURL,
+	//		int flagsStartOffset, short bitCount, short bitOffset)
 	//	{
 	//		this.aTypeSpec = aTypeSpec;
 	//		this.length = length;

@@ -263,7 +263,8 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 	//	public Object explicitExternal() {
 	//		writeRequest.setSequenceRepresentation(SequenceRepresentation.EXPLICIT_EXTERNAL);
 	//		// TODO new builder for external component structure for all types
-	//		// subsequent builder should route to independency builder for sortable types (byte, short, int, long, float, double, date)
+	//		// subsequent builder should route to independency builder for sortable types
+	//		// (byte, short, int, long, float, double, date)
 	//		// see #explicit()
 	//		throw new UnsupportedOperationException("Not implemented.");
 	//	}
