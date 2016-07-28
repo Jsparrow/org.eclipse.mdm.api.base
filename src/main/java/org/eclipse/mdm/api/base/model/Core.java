@@ -24,6 +24,9 @@ import java.util.stream.Collectors;
  * Provides access to the internals of any entity:
  *
  * <ul>
+ * 	<li>name of the data source</li>
+ * 	<li>name of the type</li>
+ * 	<li>instance ID</li>
  * 	<li>values</li>
  * 	<li>added/removed file links</li>
  * 	<li>related entities</li>

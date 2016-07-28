@@ -225,7 +225,7 @@ public enum ValueType {
 	 * The default value will be used in {@link Value#set(Object)} to replace
 	 * a {@code null} input argument.
 	 */
-	final Object defaultValue;
+	private final Object defaultValue;
 
 	// ======================================================================
 	// Constructors

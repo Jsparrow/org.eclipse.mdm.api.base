@@ -140,7 +140,7 @@ public final class FileLink {
 			try {
 				fileNamePath = Paths.get(URLDecoder.decode(remotePath, StandardCharsets.UTF_8.name())).getFileName();
 			} catch(UnsupportedEncodingException e) {
-				throw new IllegalStateException("Unable to decode remote path.");
+				throw new IllegalStateException("Unable to decode remote path due to: " + e.getMessage(), e);
 			}
 		}
 
