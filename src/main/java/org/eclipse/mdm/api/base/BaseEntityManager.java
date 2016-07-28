@@ -126,7 +126,7 @@ public interface BaseEntityManager<S extends BaseEntityFactory> {
 	 * are found:
 	 *
 	 * <pre>{@code
-	 * List<Test> tests = entityManager.get(Test.class);
+	 * List<Test> tests = entityManager.loadAll(Test.class);
 	 * }</pre>
 	 *
 	 * @param <T> The desired type.
@@ -150,7 +150,7 @@ public interface BaseEntityManager<S extends BaseEntityFactory> {
 	 *
 	 * <pre>{@code
 	 * // retrieve all tests whose name starts with 'Example'
-	 * List<Test> tests = entityManager.get(Test.class, "Example*");
+	 * List<Test> tests = entityManager.loadAll(Test.class, "Example*");
 	 * }</pre>
 	 *
 	 * @param <T> The desired type.
@@ -169,7 +169,7 @@ public interface BaseEntityManager<S extends BaseEntityFactory> {
 	 * public fields for available parent entity types e.g.:
 	 *
 	 * <pre>{@code
-	 * Optional<Test> parentTest = entityManager.findParent(testStep, TestStep.PARENT_TYPE_TEST);
+	 * Optional<Test> parentTest = entityManager.loadParent(testStep, TestStep.PARENT_TYPE_TEST);
 	 * }</pre>
 	 *
 	 * @param <T> The desired parent type.
@@ -186,7 +186,7 @@ public interface BaseEntityManager<S extends BaseEntityFactory> {
 	 * e.g.:
 	 *
 	 * <pre>{@code
-	 * List<Channel> channels = entityManager.getChildren(measurement, Measurement.CHILD_TYPE_CHANNEL);
+	 * List<Channel> channels = entityManager.loadChildren(measurement, Measurement.CHILD_TYPE_CHANNEL);
 	 * }</pre>
 	 *
 	 * @param <T> The desired child type.
@@ -206,7 +206,7 @@ public interface BaseEntityManager<S extends BaseEntityFactory> {
 	 * fields for available child entity types e.g.:
 	 *
 	 * <pre>{@code
-	 * List<TestStep> testSteps = entityManager.getChildren(test, Test.CHILD_TYPE_TESTSTEP, "Example*");
+	 * List<TestStep> testSteps = entityManager.loadChildren(test, Test.CHILD_TYPE_TESTSTEP, "Example*");
 	 * }</pre>
 	 *
 	 * @param <T> The desired child type.
