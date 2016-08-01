@@ -24,6 +24,10 @@ public interface Entity {
 	// Class variables
 	// ======================================================================
 
+	/**
+	 * This {@code Comparator} compares entities by their name in
+	 * ascending order.
+	 */
 	static final Comparator<Entity> COMPARATOR = Comparator.comparing(Entity::getName);
 
 	/**

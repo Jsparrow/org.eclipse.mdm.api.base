@@ -26,6 +26,11 @@ public interface Sortable extends Entity {
 	// Class variables
 	// ======================================================================
 
+	/**
+	 * This {@code Comparator} compares entities implementing the {@link
+	 * Sortable} interface by the mandatory {@link #ATTR_SORT_INDEX} property
+	 * in ascending order.
+	 */
 	static final Comparator<Sortable> COMPARATOR = Comparator.comparing(Sortable::getSortIndex);
 
 	/**
