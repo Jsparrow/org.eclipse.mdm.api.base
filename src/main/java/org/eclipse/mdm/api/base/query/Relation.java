@@ -69,4 +69,12 @@ public interface Relation {
 		return ValueType.LONG.create(getName());
 	}
 
+	/**
+	 * Returns the name of this relation.
+	 *
+	 * @return Name of this relation is returned.
+	 */
+	@Override
+	String toString();
+
 }

@@ -135,4 +135,12 @@ public interface Attribute {
 		}
 	}
 
+	/**
+	 * Returns the name of this attribute.
+	 *
+	 * @return The name of this attribute is returned.
+	 */
+	@Override
+	String toString();
+
 }

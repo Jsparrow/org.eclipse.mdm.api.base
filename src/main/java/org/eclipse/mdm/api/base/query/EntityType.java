@@ -173,4 +173,12 @@ public interface EntityType {
 				.collect(Collectors.toMap(Value::getName, Function.identity()));
 	}
 
+	/**
+	 * Returns the name of this entity type.
+	 *
+	 * @return The name of this entity type is returned.
+	 */
+	@Override
+	String toString();
+
 }
