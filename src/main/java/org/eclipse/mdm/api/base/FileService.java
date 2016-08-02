@@ -35,7 +35,7 @@ public interface FileService {
 	 * @param entity Used for security checks.
 	 * @param target Must be a directory.
 	 * @param fileLinks Collection of {@code FileLink}s to download.
-	 * @throws IOException Thrown if unable to download file.
+	 * @throws IOException Thrown if unable to download files.
 	 */
 	default void downloadSequential(Entity entity, Path target, Collection<FileLink> fileLinks) throws IOException {
 		downloadSequential(entity, target, fileLinks, null);
@@ -50,7 +50,7 @@ public interface FileService {
 	 * @param target Must be a directory.
 	 * @param fileLinks Collection of {@code FileLink}s to download.
 	 * @param progressListener The progress listener.
-	 * @throws IOException Thrown if unable to download file.
+	 * @throws IOException Thrown if unable to download files.
 	 */
 	void downloadSequential(Entity entity, Path target, Collection<FileLink> fileLinks,
 			ProgressListener progressListener) throws IOException;
@@ -62,7 +62,7 @@ public interface FileService {
 	 * @param entity Used for security checks.
 	 * @param target Must be a directory.
 	 * @param fileLinks Collection of {@code FileLink}s to download.
-	 * @throws IOException Thrown if unable to download file.
+	 * @throws IOException Thrown if unable to download files.
 	 */
 	default void downloadParallel(Entity entity, Path target, Collection<FileLink> fileLinks) throws IOException {
 		downloadParallel(entity, target, fileLinks, null);
@@ -77,7 +77,7 @@ public interface FileService {
 	 * @param target Must be a directory.
 	 * @param fileLinks Collection of {@code FileLink}s to download.
 	 * @param progressListener The progress listener.
-	 * @throws IOException Thrown if unable to download file.
+	 * @throws IOException Thrown if unable to download files.
 	 */
 	void downloadParallel(Entity entity, Path target, Collection<FileLink> fileLinks,
 			ProgressListener progressListener ) throws IOException;

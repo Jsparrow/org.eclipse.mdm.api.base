@@ -359,6 +359,7 @@ public abstract class BaseEntityFactory {
 		// properties
 		contextRoot.setName(name);
 		contextRoot.setVersion(String.valueOf(0));
+
 		return contextRoot;
 	}
 
