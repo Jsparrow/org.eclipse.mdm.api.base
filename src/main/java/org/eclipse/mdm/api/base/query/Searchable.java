@@ -41,16 +41,6 @@ public interface Searchable {
 	EntityType getEntityType();
 
 	/**
-	 * Checks whether the represented {@link EntityType} is implicitly selected
-	 * for searching and therefore manual selection of its {@link Attribute}s
-	 * is neither required nor recommended.
-	 *
-	 * @return True is returned if the represented {@code EntityType} is implicitly
-	 * 		selected for searching.
-	 */
-	boolean isImplicit();
-
-	/**
 	 * Returns {@code true} if this searchable doesn't have further related
 	 * searchables.
 	 *
