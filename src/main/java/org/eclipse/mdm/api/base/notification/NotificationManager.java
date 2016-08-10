@@ -21,6 +21,14 @@ public interface NotificationManager {
 	/**
 	 * Unregisters a NotificationListener from the underlying notification service.
 	 * @param registrationName The unique name previously used for the registration.
+	 * @throws NotificationException In case the listener cannot be deregistered.
 	 */
-	void deregister(String registrationName);
+	void deregister(String registrationName) throws NotificationException;
+	
+	/**
+	 * Closes the NotificationManager and all registered NotificationListeners
+	 * @param deregisterAll if true, all NotificationListeners are also deregistered before closing.
+	 * @throws NotificationException In case the listeners cannot be deregistered or the manager cannot be closed.
+	 */
+	void close(boolean deregisterAll) throws NotificationException;
 }
