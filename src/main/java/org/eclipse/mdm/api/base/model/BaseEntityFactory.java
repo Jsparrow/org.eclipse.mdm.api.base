@@ -387,7 +387,7 @@ public abstract class BaseEntityFactory {
 	 * Creates a new {@link ContextSensor}.
 	 *
 	 * @param name Name of the created {@code ContextSensor}.
-	 * @param contextRoot The parent {@link ContextComponent}.
+	 * @param contextComponent The parent {@link ContextComponent}.
 	 * @return The created {@code ContextSensor} is returned.
 	 */
 	protected ContextSensor createContextSensor(String name, ContextComponent contextComponent) {
@@ -469,6 +469,7 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Returns a new {@link Core} for given entity class.
 	 *
+	 * @param <T> The entity class type.
 	 * @param entityClass The entity class.
 	 * @return A new {@code Core} instance is returned.
 	 */
@@ -477,6 +478,7 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Returns a new {@link Core} for given entity class and {@link ContextType}.
 	 *
+	 * @param <T> The entity class type.
 	 * @param entityClass The entity class.
 	 * @param contextType The {@code ContextType}.
 	 * @return A new {@code Core} instance is returned.
@@ -486,6 +488,7 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Returns a new {@link Core} for given entity class and type name.
 	 *
+	 * @param <T> The entity class type.
 	 * @param name Name of the entity type.
 	 * @param entityClass The entity class.
 	 * @return A new {@code Core} instance is returned.
