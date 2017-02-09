@@ -275,6 +275,36 @@ public interface SearchService {
 	<T extends Entity> Map<T, Result> fetch(Class<T> entityClass, List<Attribute> attributes, Filter filter)
 			throws DataAccessException;
 
+	/**
+	 * Executes the associated {@link SearchQuery} with given {@link Attribute}s
+	 * and {@link Filter}. Both must be fully supported by the {@code SearchQuery}
+	 * associated with given {@link Entity} type. This method allows fine
+	 * grained {@link Record} configuration. This method allows to specify a 
+	 * fulltext search query.
+	 *
+	 * <p><b>Note:</b> Related {@code Record}s may be merged according to the
+	 * cardinality of the associated {@link Relation}.
+	 *
+	 * @param entityClass Used as the {@code SearchQuery} identifier.
+	 * @param attributes Select statements will be added for each {@code
+	 * 		Attribute}.
+	 * @param filter The criteria sequence.
+	 * @param query The fulltext search query
+	 * @return All {@link Result}s found by the {@link SearchQuery} with given {@link Attribute}s.
+	 * @throws DataAccessException Thrown in case of errors while executing the
+	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
+	 * @throws IllegalArgumentException Thrown if given type is not associated
+	 * 		with a predefined {@code SearchQuery}.
+	 * @see #listSearchableTypes()
+	 * @see #getSearchableRoot(Class)
+	 * @see #listEntityTypes(Class)
+	 * @see Record#merge(Record)
+	 */
+	default List<Result> fetchResults(Class<? extends Entity> entityClass, List<Attribute> attributes, Filter filter, String query)
+			throws DataAccessException {
+		throw new UnsupportedOperationException();
+	}
+	
 	default boolean isTextSearchAvailable() {
 		return false;
 	}
