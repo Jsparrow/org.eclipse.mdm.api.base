@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * A filter is a sequence of {@link FilterItem}s containing {@link Operator}s
- * or {@link Condition}s.
+ * A filter is a sequence of {@link FilterItem}s containing {@link Operator}s or
+ * {@link Condition}s.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -43,7 +43,8 @@ public final class Filter implements Iterable<FilterItem> {
 	/**
 	 * Constructor.
 	 *
-	 * @param operatorItem Will be added between {@link Condition}s or merged filters.
+	 * @param operatorItem
+	 *            Will be added between {@link Condition}s or merged filters.
 	 */
 	private Filter(FilterItem operatorItem) {
 		this.operatorItem = operatorItem;
@@ -54,11 +55,13 @@ public final class Filter implements Iterable<FilterItem> {
 	// ======================================================================
 
 	/**
-	 * Creates a new filter with an instance ID condition for given {@link
-	 * EntityType} and instance ID.
+	 * Creates a new filter with an instance ID condition for given
+	 * {@link EntityType} and instance ID.
 	 *
-	 * @param entityType The {@code EntityType}.
-	 * @param id The instance ID.
+	 * @param entityType
+	 *            The {@code EntityType}.
+	 * @param id
+	 *            The instance ID.
 	 * @return The created filter is returned.
 	 * @see #id(EntityType, Long)
 	 */
@@ -67,11 +70,13 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * Creates a new filter with an foreign ID condition for given {@link
-	 * Relation} and instance ID.
+	 * Creates a new filter with an foreign ID condition for given
+	 * {@link Relation} and instance ID.
 	 *
-	 * @param relation The {@code Relation}.
-	 * @param id The instance ID.
+	 * @param relation
+	 *            The {@code Relation}.
+	 * @param id
+	 *            The instance ID.
 	 * @return The created filter is returned.
 	 * @see #id(Relation, Long)
 	 */
@@ -80,11 +85,13 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * Creates a new filter with an instance IDs condition for given {@link
-	 * EntityType} and instance IDs.
+	 * Creates a new filter with an instance IDs condition for given
+	 * {@link EntityType} and instance IDs.
 	 *
-	 * @param entityType The {@code EntityType}.
-	 * @param ids The instance IDs.
+	 * @param entityType
+	 *            The {@code EntityType}.
+	 * @param ids
+	 *            The instance IDs.
 	 * @return The created filter is returned.
 	 * @see #ids(EntityType, Collection)
 	 */
@@ -93,11 +100,13 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * Creates a new filter with an foreign IDs condition for given {@link
-	 * Relation} and instance IDs.
+	 * Creates a new filter with an foreign IDs condition for given
+	 * {@link Relation} and instance IDs.
 	 *
-	 * @param relation The {@code Relation}.
-	 * @param ids The instance IDs.
+	 * @param relation
+	 *            The {@code Relation}.
+	 * @param ids
+	 *            The instance IDs.
 	 * @return The created filter is returned.
 	 * @see #ids(Relation, Collection)
 	 */
@@ -106,13 +115,15 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * Creates a new filter with an instance name condition for given {@link
-	 * EntityType} and instance name pattern.
+	 * Creates a new filter with an instance name condition for given
+	 * {@link EntityType} and instance name pattern.
 	 *
-	 * @param entityType The {@code EntityType}.
-	 * @param pattern Is always case sensitive and may contain wildcard
-	 * 		characters as follows: "?" for one matching character and "*"
-	 * 		for a sequence of matching characters.
+	 * @param entityType
+	 *            The {@code EntityType}.
+	 * @param pattern
+	 *            Is always case sensitive and may contain wildcard characters
+	 *            as follows: "?" for one matching character and "*" for a
+	 *            sequence of matching characters.
 	 * @return The created filter is returned.
 	 * @see #name(EntityType, String)
 	 */
@@ -121,15 +132,17 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * Creates a new instance of this class that implicitly adds {@link Operator#AND}
-	 * {@code FilterItem}s between {@link Condition}s or merged filters.
+	 * Creates a new instance of this class that implicitly adds
+	 * {@link Operator#AND} {@code FilterItem}s between {@link Condition}s or
+	 * merged filters.
 	 *
 	 * <pre>
 	 * Filter filter = Filter.and();
-	 * filter.add(conditionA);    // conditionA
-	 * filter.add(conditionB);    // conditionA AND conditionB
-	 * filter.invert();           // !(conditionA AND conditionB)
-	 * filter.merge(otherFilter); // !(conditionA AND conditionB) AND (otherFilter)
+	 * filter.add(conditionA); // conditionA
+	 * filter.add(conditionB); // conditionA AND conditionB
+	 * filter.invert(); // !(conditionA AND conditionB)
+	 * filter.merge(otherFilter); // !(conditionA AND conditionB) AND
+	 * 							// (otherFilter)
 	 * </pre>
 	 *
 	 * @return A newly created filter is returned.
@@ -139,14 +152,15 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * Creates a new instance of this class that implicitly adds {@link Operator#OR}
-	 * {@code FilterItem}s between {@link Condition}s or merged filters.
+	 * Creates a new instance of this class that implicitly adds
+	 * {@link Operator#OR} {@code FilterItem}s between {@link Condition}s or
+	 * merged filters.
 	 *
 	 * <pre>
 	 * Filter filter = Filter.or();
-	 * filter.add(conditionA);    // conditionA
-	 * filter.add(conditionB);    // conditionA OR conditionB
-	 * filter.invert();           // !(conditionA OR conditionB)
+	 * filter.add(conditionA); // conditionA
+	 * filter.add(conditionB); // conditionA OR conditionB
+	 * filter.invert(); // !(conditionA OR conditionB)
 	 * filter.merge(otherFilter); // !(conditionA OR conditionB) OR otherFilter
 	 * </pre>
 	 *
@@ -159,7 +173,8 @@ public final class Filter implements Iterable<FilterItem> {
 	/**
 	 * Adds all {@link Condition}s to this filter.
 	 *
-	 * @param conditions The {@link Condition}s that will be added.
+	 * @param conditions
+	 *            The {@link Condition}s that will be added.
 	 * @return Returns this filter.
 	 * @see Filter#add(Condition)
 	 */
@@ -171,7 +186,8 @@ public final class Filter implements Iterable<FilterItem> {
 	/**
 	 * Adds all {@link Condition}s to this filter.
 	 *
-	 * @param conditions The {@link Condition}s that will be added.
+	 * @param conditions
+	 *            The {@link Condition}s that will be added.
 	 * @return Returns this filter.
 	 * @see Filter#add(Condition)
 	 */
@@ -184,8 +200,10 @@ public final class Filter implements Iterable<FilterItem> {
 	 * Adds a new instance ID condition ({@link Operation#EQUAL}) for given
 	 * {@link EntityType} and instance ID to this filter.
 	 *
-	 * @param entityType The {@code EntityType}.
-	 * @param id The instance ID.
+	 * @param entityType
+	 *            The {@code EntityType}.
+	 * @param id
+	 *            The instance ID.
 	 * @return Returns this filter.
 	 * @see #add(Condition)
 	 */
@@ -198,8 +216,10 @@ public final class Filter implements Iterable<FilterItem> {
 	 * Adds a new foreign ID condition ({@link Operation#EQUAL}) for given
 	 * {@link Relation} and instance ID to this filter.
 	 *
-	 * @param relation The {@code Relation}.
-	 * @param id The instance ID.
+	 * @param relation
+	 *            The {@code Relation}.
+	 * @param id
+	 *            The instance ID.
 	 * @return Returns this filter.
 	 * @see #add(Condition)
 	 */
@@ -212,8 +232,10 @@ public final class Filter implements Iterable<FilterItem> {
 	 * Adds a new instance IDs condition ({@link Operation#IN_SET}) for given
 	 * {@link EntityType} and instance IDs to this filter.
 	 *
-	 * @param entityType The {@code EntityType}.
-	 * @param ids The instance IDs.
+	 * @param entityType
+	 *            The {@code EntityType}.
+	 * @param ids
+	 *            The instance IDs.
 	 * @return Returns this filter
 	 * @see #add(Condition)
 	 */
@@ -227,8 +249,10 @@ public final class Filter implements Iterable<FilterItem> {
 	 * Adds a new foreign IDs condition ({@link Operation#IN_SET}) for given
 	 * {@link Relation} and instance IDs to this filter.
 	 *
-	 * @param relation The {@code Relation}.
-	 * @param ids The instance IDs.
+	 * @param relation
+	 *            The {@code Relation}.
+	 * @param ids
+	 *            The instance IDs.
 	 * @return Returns this filter.
 	 * @see #add(Condition)
 	 */
@@ -239,30 +263,35 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * Adds a instance name condition ({@link Operation#LIKE}) for given {@link
-	 * EntityType} and instance name pattern.
+	 * Adds a instance name condition ({@link Operation#LIKE}) for given
+	 * {@link EntityType} and instance name pattern.
 	 *
-	 * <p><b>NOTE:</b> If the given pattern equals "*", then no {@link
-	 * Condition} will be added since "*" means take all.
+	 * <p>
+	 * <b>NOTE:</b> If the given pattern equals "*", then no {@link Condition}
+	 * will be added since "*" means take all.
 	 *
-	 * @param entityType The {@code EntityType}.
-	 * @param pattern Is always case sensitive and may contain wildcard
-	 * 		characters as follows: "?" for one matching character and "*"
-	 * 		for a sequence of matching characters.
+	 * @param entityType
+	 *            The {@code EntityType}.
+	 * @param pattern
+	 *            Is always case sensitive and may contain wildcard characters
+	 *            as follows: "?" for one matching character and "*" for a
+	 *            sequence of matching characters.
 	 * @return Returns this filter.
 	 * @see #add(Condition)
 	 */
 	public Filter name(EntityType entityType, String pattern) {
-		if(!"*".equals(pattern)) {
+		if (!"*".equals(pattern)) {
 			add(Operation.LIKE.create(entityType.getNameAttribute(), pattern));
 		}
 		return this;
 	}
 
 	/**
-	 * Adds given {@link Condition} to this filter's {@link FilterItem} sequence.
+	 * Adds given {@link Condition} to this filter's {@link FilterItem}
+	 * sequence.
 	 *
-	 * @param condition {@code Condition} that will be added.
+	 * @param condition
+	 *            {@code Condition} that will be added.
 	 * @return Returns this filter.
 	 */
 	public Filter add(Condition condition) {
@@ -274,7 +303,8 @@ public final class Filter implements Iterable<FilterItem> {
 	/**
 	 * Merges all given filters with this filter.
 	 *
-	 * @param filters Filters that will be merged.
+	 * @param filters
+	 *            Filters that will be merged.
 	 * @return Returns this filter.
 	 * @see #merge(Filter)
 	 */
@@ -286,7 +316,8 @@ public final class Filter implements Iterable<FilterItem> {
 	/**
 	 * Merges all given filters with this filter.
 	 *
-	 * @param filters Filters that will be merged.
+	 * @param filters
+	 *            Filters that will be merged.
 	 * @return Returns this filter.
 	 * @see #merge(Filter)
 	 */
@@ -296,9 +327,9 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * The {@link FilterItem}s of the given filter are added to this filter.
-	 * If required, then parenthesis are implicitly added as shown in the
-	 * example below:
+	 * The {@link FilterItem}s of the given filter are added to this filter. If
+	 * required, then parenthesis are implicitly added as shown in the example
+	 * below:
 	 *
 	 * <pre>
 	 * Filter filter1 = Filter.and();
@@ -316,20 +347,21 @@ public final class Filter implements Iterable<FilterItem> {
 	 * filter.merge(filter1, filter2); // (filter1) OR filter2
 	 * </pre>
 	 *
-	 * @param filter Filter that will be merged.
+	 * @param filter
+	 *            Filter that will be merged.
 	 * @return Returns this filter.
 	 */
 	public Filter merge(Filter filter) {
 		boolean addBrackets = !filter.isInverted() || filter.hasMultiple() && !(operatorItem == filter.operatorItem);
 		insertOperator();
 
-		if(addBrackets) {
+		if (addBrackets) {
 			filterItems.addLast(FilterItem.OPEN);
 		}
 
 		filter.filterItems.stream().forEach(filterItems::addLast);
 
-		if(addBrackets) {
+		if (addBrackets) {
 			filterItems.addLast(FilterItem.CLOSE);
 		}
 
@@ -358,17 +390,18 @@ public final class Filter implements Iterable<FilterItem> {
 	 * </pre>
 	 *
 	 * @return Returns this filter.
-	 * @throws IllegalStateException Thrown either if the current set of
-	 * 		conditions is empty or this filter is already inverted.
+	 * @throws IllegalStateException
+	 *             Thrown either if the current set of conditions is empty or
+	 *             this filter is already inverted.
 	 */
 	public Filter invert() {
-		if(filterItems.isEmpty()) {
+		if (filterItems.isEmpty()) {
 			throw new IllegalStateException("Current set of conditions is empty.");
 		}
 
-		if(isInverted()) {
+		if (isInverted()) {
 			throw new IllegalStateException("Current set of conditions is already inverted.");
-		} else if(hasMultiple()) {
+		} else if (hasMultiple()) {
 			filterItems.addFirst(FilterItem.OPEN);
 			filterItems.addLast(FilterItem.CLOSE);
 		}
@@ -381,15 +414,15 @@ public final class Filter implements Iterable<FilterItem> {
 	 * Checks whether this filter has no conditions at all.
 	 *
 	 * @return Returns {@code false} if at least one {@link Condition} is
-	 * 		contained.
+	 *         contained.
 	 */
 	public boolean isEmtpty() {
 		return filterItems.isEmpty();
 	}
 
 	/**
-	 * Returns a sequential stream with the internally stored {@link
-	 * FilterItem}s as its source.
+	 * Returns a sequential stream with the internally stored
+	 * {@link FilterItem}s as its source.
 	 *
 	 * @return A stream over the contained {@code FilterItem}s is returned.
 	 */
@@ -398,11 +431,11 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * Returns an iterator over the {@link FilterItem}s contained in this
-	 * filter in proper sequence.
+	 * Returns an iterator over the {@link FilterItem}s contained in this filter
+	 * in proper sequence.
 	 *
-	 * @return The returned iterator does not support the {@link
-	 * 		Iterator#remove()} operation.
+	 * @return The returned iterator does not support the
+	 *         {@link Iterator#remove()} operation.
 	 */
 	@Override
 	public Iterator<FilterItem> iterator() {
@@ -430,7 +463,7 @@ public final class Filter implements Iterable<FilterItem> {
 	 * {@link FilterItem} sequence.
 	 */
 	private void insertOperator() {
-		if(!filterItems.isEmpty()) {
+		if (!filterItems.isEmpty()) {
 			filterItems.addLast(operatorItem);
 		}
 	}

@@ -9,8 +9,8 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * Implementation of the environment entity type. The {@link Environment}
- * is a singleton within a connected data source.
+ * Implementation of the environment entity type. The {@link Environment} is a
+ * singleton within a connected data source.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -59,7 +59,8 @@ public final class Environment extends BaseEntity implements Datable, Describabl
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link Core}.
+	 * @param core
+	 *            The {@link Core}.
 	 */
 	Environment(Core core) {
 		super(core);

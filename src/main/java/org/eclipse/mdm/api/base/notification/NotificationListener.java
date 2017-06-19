@@ -13,46 +13,58 @@ import org.eclipse.mdm.api.base.query.EntityType;
  * @author Matthias Koller, Peak Solution GmbH
  */
 public interface NotificationListener {
-	  /**
-	   * Called when a new instance element was created by the server.
-	   * 
-	   * @param entities A list of newly created entities.
-	   * @param user The user who created the entities.
-	   */
-	  void instanceCreated(List<? extends Entity> entities, User user);
+	/**
+	 * Called when a new instance element was created by the server.
+	 * 
+	 * @param entities
+	 *            A list of newly created entities.
+	 * @param user
+	 *            The user who created the entities.
+	 */
+	void instanceCreated(List<? extends Entity> entities, User user);
 
-	  /**
-	   * Called when a existing instance element was modified by the server.
-	   * 
-	   * @param entities A list of modified entities.
-	   * @param user The user who modified the entities.
-	   */
-	  void instanceModified(List<? extends Entity> entities, User user);
-	  
-	  /**
-	   * Called when a existing instance element was deleted by the server.
-	   * 
-	   * @param entityType EntityType of the deleted entities.
-	   * @param entities A list with the IDs of deleted entities.
-	   * @param user The user who deleted the entities.
-	   */
-	  void instanceDeleted(EntityType entityType, List<Long> ids, User user);
-	  
-	  /**
-	   * Called when the application model is changed by the server
-	   * 
-	   * @param entityType Modified entityType.
-	   * @param user The user who modified the application model.
-	   */
-	  void modelModified(EntityType entityType, User user);
-	  
-	  /**
-	   * Called when security related information is changed by the server
-	   * 
-	   * @param entityType EntityType with changed security
-	   * @param entities A list with the IDs of entities related to the change. 
-	   * Empty if change was only relevant for entityType.
-	   * @param user The user who modified security information.
-	   */
-	  void securityModified(EntityType entityType, List<Long> ids, User user);
+	/**
+	 * Called when a existing instance element was modified by the server.
+	 * 
+	 * @param entities
+	 *            A list of modified entities.
+	 * @param user
+	 *            The user who modified the entities.
+	 */
+	void instanceModified(List<? extends Entity> entities, User user);
+
+	/**
+	 * Called when a existing instance element was deleted by the server.
+	 * 
+	 * @param entityType
+	 *            EntityType of the deleted entities.
+	 * @param entities
+	 *            A list with the IDs of deleted entities.
+	 * @param user
+	 *            The user who deleted the entities.
+	 */
+	void instanceDeleted(EntityType entityType, List<Long> ids, User user);
+
+	/**
+	 * Called when the application model is changed by the server
+	 * 
+	 * @param entityType
+	 *            Modified entityType.
+	 * @param user
+	 *            The user who modified the application model.
+	 */
+	void modelModified(EntityType entityType, User user);
+
+	/**
+	 * Called when security related information is changed by the server
+	 * 
+	 * @param entityType
+	 *            EntityType with changed security
+	 * @param entities
+	 *            A list with the IDs of entities related to the change. Empty
+	 *            if change was only relevant for entityType.
+	 * @param user
+	 *            The user who modified security information.
+	 */
+	void securityModified(EntityType entityType, List<Long> ids, User user);
 }

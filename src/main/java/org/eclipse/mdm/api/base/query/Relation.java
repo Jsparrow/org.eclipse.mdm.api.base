@@ -47,7 +47,8 @@ public interface Relation {
 	 */
 	EntityType getTarget();
 
-	/** Returns the {@link Relationship} type for this relation.
+	/**
+	 * Returns the {@link Relationship} type for this relation.
 	 *
 	 * @return The {@code Relationship} is returned.
 	 */

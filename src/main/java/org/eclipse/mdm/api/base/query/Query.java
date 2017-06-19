@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Provides methods to easily build queries by adding select, join, group by
- * and order by statements. Finally an optional {@link Filter} may be given to
+ * Provides methods to easily build queries by adding select, join, group by and
+ * order by statements. Finally an optional {@link Filter} may be given to
  * select data that match specified criteria.
  *
  * @since 1.0.0
@@ -37,7 +37,8 @@ public interface Query {
 	 * Checks whether given {@link EntityType} will be queried in any way
 	 * (select or join).
 	 *
-	 * @param entityType The checked {@code EntityType}.
+	 * @param entityType
+	 *            The checked {@code EntityType}.
 	 * @return True if given {@code EntityType} will be queried.
 	 */
 	boolean isQueried(EntityType entityType);
@@ -46,8 +47,9 @@ public interface Query {
 	 * Adds select statements for all {@link Attribute}s of each given
 	 * {@link EntityType}.
 	 *
-	 * @param entityTypes The {@code Attribute}s of each {@code EntityType}
-	 * 		will be passed to {@link #select(List)}.
+	 * @param entityTypes
+	 *            The {@code Attribute}s of each {@code EntityType} will be
+	 *            passed to {@link #select(List)}.
 	 * @return This query is returned.
 	 */
 	default Query selectAll(List<EntityType> entityTypes) {
@@ -59,8 +61,9 @@ public interface Query {
 	 * Adds select statements for all {@link Attribute}s of each given
 	 * {@link EntityType}.
 	 *
-	 * @param entityTypes The {@code Attribute}s of each {@code EntityType}
-	 * 		will be passed to {@link #select(List)}.
+	 * @param entityTypes
+	 *            The {@code Attribute}s of each {@code EntityType} will be
+	 *            passed to {@link #select(List)}.
 	 * @return This query is returned.
 	 */
 	default Query selectAll(EntityType... entityTypes) {
@@ -72,9 +75,11 @@ public interface Query {
 	 * Adds select statements for all {@link Attribute}s identified by given
 	 * names at given {@link EntityType}.
 	 *
-	 * @param entityType The {@code EntityType} whose {@code Attribute}s will
-	 * 		be passed to {@link #select(Attribute)}.
-	 * @param names The names of the {@code Attribute}s that have to be added.
+	 * @param entityType
+	 *            The {@code EntityType} whose {@code Attribute}s will be passed
+	 *            to {@link #select(Attribute)}.
+	 * @param names
+	 *            The names of the {@code Attribute}s that have to be added.
 	 * @return This query is returned.
 	 * @see EntityType#getAttribute(String)
 	 */
@@ -87,8 +92,9 @@ public interface Query {
 	 * Adds a select statement for the ID {@link Attribute} of each given
 	 * {@link EntityType}.
 	 *
-	 * @param entityTypes The {@code EntityType}s whose ID {@code Attribute}s
-	 * 		will be passed to {@link #select(Attribute)}.
+	 * @param entityTypes
+	 *            The {@code EntityType}s whose ID {@code Attribute}s will be
+	 *            passed to {@link #select(Attribute)}.
 	 * @return This query is returned.
 	 */
 	default Query selectID(EntityType... entityTypes) {
@@ -99,8 +105,9 @@ public interface Query {
 	/**
 	 * Adds a select statement for each given {@link Attribute}.
 	 *
-	 * @param attributes Each {@code Attribute} will be passed to {@link
-	 * 		#select(Attribute)}.
+	 * @param attributes
+	 *            Each {@code Attribute} will be passed to
+	 *            {@link #select(Attribute)}.
 	 * @return This query is returned.
 	 */
 	default Query select(List<Attribute> attributes) {
@@ -111,8 +118,9 @@ public interface Query {
 	/**
 	 * Adds a select statement for each given {@link Attribute}.
 	 *
-	 * @param attributes Each {@code Attribute} will be passed to {@link
-	 * 		#select(Attribute)}.
+	 * @param attributes
+	 *            Each {@code Attribute} will be passed to
+	 *            {@link #select(Attribute)}.
 	 * @return This query is returned.
 	 */
 	default Query select(Attribute... attributes) {
@@ -123,8 +131,10 @@ public interface Query {
 	/**
 	 * Adds a select statement for given {@link Attribute}.
 	 *
-	 * @param attribute {@code Attribute} will be passed to {@link
-	 * 		#select(Attribute, Aggregation)} with {@link Aggregation#NONE}.
+	 * @param attribute
+	 *            {@code Attribute} will be passed to
+	 *            {@link #select(Attribute, Aggregation)} with
+	 *            {@link Aggregation#NONE}.
 	 * @return This query is returned.
 	 */
 	default Query select(Attribute attribute) {
@@ -132,12 +142,13 @@ public interface Query {
 	}
 
 	/**
-	 * Adds a select statement for given {@link Attribute} with given {@link
-	 * Aggregation} function.
+	 * Adds a select statement for given {@link Attribute} with given
+	 * {@link Aggregation} function.
 	 *
-	 * @param attribute The {@code Attribute} a select statement will be
-	 * 		added for.
-	 * @param aggregation The {@code Aggregation} that will be applied.
+	 * @param attribute
+	 *            The {@code Attribute} a select statement will be added for.
+	 * @param aggregation
+	 *            The {@code Aggregation} that will be applied.
 	 * @return This query is returned.
 	 */
 	Query select(Attribute attribute, Aggregation aggregation);
@@ -146,11 +157,13 @@ public interface Query {
 	 * For all unambiguous {@link Relation}s from the source {@link EntityType}
 	 * to each given target {@code EntityType} a join statement will be added.
 	 *
-	 * @param source The source {@code EntityType}.
-	 * @param targets The unambiguous {@code Relation} for each target {@code
+	 * @param source
+	 *            The source {@code EntityType}.
+	 * @param targets
+	 *            The unambiguous {@code Relation} for each target {@code
 	 * 		EntityType} is retrieved from the source {@code EntityType} using
-	 * 		{@link EntityType#getRelation(EntityType)} and passed to {@link
-	 * 		#join(Relation)}.
+	 *            {@link EntityType#getRelation(EntityType)} and passed to
+	 *            {@link #join(Relation)}.
 	 * @return This query is returned.
 	 */
 	default Query join(EntityType source, EntityType... targets) {
@@ -161,8 +174,9 @@ public interface Query {
 	/**
 	 * Adds a join statement for each given {@link Relation}s.
 	 *
-	 * @param relations Each {@code Relation} will be passed to {@link
-	 * 		#join(Relation)}.
+	 * @param relations
+	 *            Each {@code Relation} will be passed to
+	 *            {@link #join(Relation)}.
 	 * @return This query is returned.
 	 */
 	default Query join(List<Relation> relations) {
@@ -173,8 +187,9 @@ public interface Query {
 	/**
 	 * Adds a join statement for each given {@link Relation}s.
 	 *
-	 * @param relations Each {@code Relation} will be passed to {@link
-	 * 		#join(Relation)}.
+	 * @param relations
+	 *            Each {@code Relation} will be passed to
+	 *            {@link #join(Relation)}.
 	 * @return This query is returned.
 	 */
 	default Query join(Relation... relations) {
@@ -185,8 +200,9 @@ public interface Query {
 	/**
 	 * Adds a join statement for given {@link Relation}.
 	 *
-	 * @param relation {@code Relation} will be passed to {@link
-	 * 		#join(Relation, Join)} with {@link Join#INNER}.
+	 * @param relation
+	 *            {@code Relation} will be passed to
+	 *            {@link #join(Relation, Join)} with {@link Join#INNER}.
 	 * @return This query is returned.
 	 */
 	default Query join(Relation relation) {
@@ -194,11 +210,13 @@ public interface Query {
 	}
 
 	/**
-	 * Adds a join statement for given {@link Relation} with given {@link
-	 * Join} type.
+	 * Adds a join statement for given {@link Relation} with given {@link Join}
+	 * type.
 	 *
-	 * @param relation The {@code Relation} a join statement will be added for.
-	 * @param join The {@code Join} type that will be applied.
+	 * @param relation
+	 *            The {@code Relation} a join statement will be added for.
+	 * @param join
+	 *            The {@code Join} type that will be applied.
 	 * @return This query is returned.
 	 */
 	Query join(Relation relation, Join join);
@@ -206,8 +224,9 @@ public interface Query {
 	/**
 	 * Adds a group by statement for each given {@link Attribute}.
 	 *
-	 * @param attributes Each {@code Attribute} will be passed to {@link
-	 * 		#group(Attribute)}.
+	 * @param attributes
+	 *            Each {@code Attribute} will be passed to
+	 *            {@link #group(Attribute)}.
 	 * @return This query is returned.
 	 */
 	default Query group(List<Attribute> attributes) {
@@ -218,8 +237,9 @@ public interface Query {
 	/**
 	 * Adds a group by statement for each given {@link Attribute}.
 	 *
-	 * @param attributes Each {@code Attribute} will be passed to {@link
-	 * 		#group(Attribute)}.
+	 * @param attributes
+	 *            Each {@code Attribute} will be passed to
+	 *            {@link #group(Attribute)}.
 	 * @return This query is returned.
 	 */
 	default Query group(Attribute... attributes) {
@@ -230,8 +250,8 @@ public interface Query {
 	/**
 	 * Adds a group by statement for given {@link Attribute}.
 	 *
-	 * @param attribute The {@code Attribute} a group by statement will be
-	 * 		added for.
+	 * @param attribute
+	 *            The {@code Attribute} a group by statement will be added for.
 	 * @return This query is returned.
 	 */
 	Query group(Attribute attribute);
@@ -239,8 +259,9 @@ public interface Query {
 	/**
 	 * Adds an order by statement for each given {@link Attribute}.
 	 *
-	 * @param attributes Each {@code Attribute} will be passed to {@link
-	 * 		#order(Attribute)}.
+	 * @param attributes
+	 *            Each {@code Attribute} will be passed to
+	 *            {@link #order(Attribute)}.
 	 * @return This query is returned.
 	 */
 	default Query order(List<Attribute> attributes) {
@@ -251,8 +272,9 @@ public interface Query {
 	/**
 	 * Adds an order by statement for each given {@link Attribute}.
 	 *
-	 * @param attributes Each {@code Attribute} will be passed to {@link
-	 * 		#order(Attribute)}.
+	 * @param attributes
+	 *            Each {@code Attribute} will be passed to
+	 *            {@link #order(Attribute)}.
 	 * @return This query is returned.
 	 */
 	default Query order(Attribute... attributes) {
@@ -263,8 +285,10 @@ public interface Query {
 	/**
 	 * Adds an order by statement for given {@link Attribute}.
 	 *
-	 * @param attribute The {@code Attribute} is passed to {@link
-	 * 		#order(Attribute, boolean)} with {@code ascending = true}.
+	 * @param attribute
+	 *            The {@code Attribute} is passed to
+	 *            {@link #order(Attribute, boolean)} with
+	 *            {@code ascending = true}.
 	 * @return This query is returned.
 	 */
 	default Query order(Attribute attribute) {
@@ -275,9 +299,10 @@ public interface Query {
 	 * Adds an order by statement for given {@link Attribute} with given
 	 * ascending flag.
 	 *
-	 * @param attribute The {@code Attribute} an order by statement will be
-	 * 		added for.
-	 * @param ascending The ascending flag that will be applied.
+	 * @param attribute
+	 *            The {@code Attribute} an order by statement will be added for.
+	 * @param ascending
+	 *            The ascending flag that will be applied.
 	 * @return This query is returned.
 	 */
 	Query order(Attribute attribute, boolean ascending);
@@ -287,46 +312,51 @@ public interface Query {
 	 * {@link Result}.
 	 *
 	 * @return {@code Optional} is empty if {@code Result} could not be found.
-	 * @throws DataAccessException Thrown in case of errors while executing
-	 * 		the query or generating the {@code Result}.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the query or
+	 *             generating the {@code Result}.
 	 */
 	default Optional<Result> fetchSingleton() throws DataAccessException {
 		return fetchSingleton(Filter.and());
 	}
 
 	/**
-	 * Executes this query with given {@link Filter} and returns the {@link
-	 * Result}.
+	 * Executes this query with given {@link Filter} and returns the
+	 * {@link Result}.
 	 *
-	 * @param filter The criteria sequence.
+	 * @param filter
+	 *            The criteria sequence.
 	 * @return {@code Optional} is empty if {@code Result} could not be found.
-	 * @throws DataAccessException Thrown in case of errors while executing
-	 * 		the query or generating the {@code Result}.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the query or
+	 *             generating the {@code Result}.
 	 */
 	Optional<Result> fetchSingleton(Filter filter) throws DataAccessException;
 
 	/**
-	 * Executes this query with an empty {@link Filter} and returns the {@link
-	 * Result}s.
+	 * Executes this query with an empty {@link Filter} and returns the
+	 * {@link Result}s.
 	 *
 	 * @return All {@code Result}s are returned in a {@code List}.
-	 * @throws DataAccessException Thrown in case of errors while executing
-	 * 		the query or generating the {@code Result}s.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the query or
+	 *             generating the {@code Result}s.
 	 */
 	default List<Result> fetch() throws DataAccessException {
 		return fetch(Filter.and());
 	}
 
 	/**
-	 * Executes this query with given {@link Filter} and returns the {@link
-	 * Result}s.
+	 * Executes this query with given {@link Filter} and returns the
+	 * {@link Result}s.
 	 *
-	 * @param filter The criteria sequence.
+	 * @param filter
+	 *            The criteria sequence.
 	 * @return All {@code Result}s are returned in a {@code List}.
-	 * @throws DataAccessException Thrown in case of errors while executing
-	 * 		the query or generating the {@code Result}s.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the query or
+	 *             generating the {@code Result}s.
 	 */
 	List<Result> fetch(Filter filter) throws DataAccessException;
 
 }
-

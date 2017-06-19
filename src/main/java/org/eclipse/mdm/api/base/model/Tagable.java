@@ -9,8 +9,8 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * Each modeled {@link Entity} implements this interface to indicate that
- * tags can be attached to it.
+ * Each modeled {@link Entity} implements this interface to indicate that tags
+ * can be attached to it.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH

@@ -13,18 +13,18 @@ import org.eclipse.mdm.api.base.model.ScalarType;
 /**
  * This builder adds values to the {@link WriteRequest} of types listed below.
  * It is possible to add a sequence where all of its values are valid.
- * Additionally it is possible to provide a validity flag for each single
- * value. In either case neither values nor flags are allowed to be {@code
+ * Additionally it is possible to provide a validity flag for each single value.
+ * In either case neither values nor flags are allowed to be {@code
  * null}. Furthermore if values and flags are given, then their length must be
  * equal.
  *
  * <ul>
- * 	<li>{@link ScalarType#BYTE}</li>
- * 	<li>{@link ScalarType#SHORT}</li>
- * 	<li>{@link ScalarType#INTEGER}</li>
- * 	<li>{@link ScalarType#LONG}</li>
- * 	<li>{@link ScalarType#FLOAT}</li>
- * 	<li>{@link ScalarType#DOUBLE}</li>
+ * <li>{@link ScalarType#BYTE}</li>
+ * <li>{@link ScalarType#SHORT}</li>
+ * <li>{@link ScalarType#INTEGER}</li>
+ * <li>{@link ScalarType#LONG}</li>
+ * <li>{@link ScalarType#FLOAT}</li>
+ * <li>{@link ScalarType#DOUBLE}</li>
  * </ul>
  *
  * @since 1.0.0
@@ -40,8 +40,8 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	/**
 	 * Constructor.
 	 *
-	 * @param writeRequest The {@link WriteRequest} given values will be added
-	 * 		to.
+	 * @param writeRequest
+	 *            The {@link WriteRequest} given values will be added to.
 	 */
 	NumericalValuesBuilder(WriteRequest writeRequest) {
 		super(writeRequest);
@@ -55,7 +55,8 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 * Adds given {@code byte} values to the {@link WriteRequest} with a global
 	 * validity flag.
 	 *
-	 * @param values The {@code byte} array sequence.
+	 * @param values
+	 *            The {@code byte} array sequence.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
 	public final UnitIndependentBuilder byteValues(byte[] values) {
@@ -67,8 +68,10 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 * Adds given {@code byte} values to the {@link WriteRequest} with a
 	 * validity flag for each given value.
 	 *
-	 * @param values The {@code byte} array sequence.
-	 * @param flags The validity flags for each {@code byte} value.
+	 * @param values
+	 *            The {@code byte} array sequence.
+	 * @param flags
+	 *            The validity flags for each {@code byte} value.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
 	public final UnitIndependentBuilder byteValues(byte[] values, boolean[] flags) {
@@ -77,10 +80,11 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	}
 
 	/**
-	 * Adds given {@code short} values to the {@link WriteRequest} with a
-	 * global validity flag.
+	 * Adds given {@code short} values to the {@link WriteRequest} with a global
+	 * validity flag.
 	 *
-	 * @param values The {@code short} array sequence.
+	 * @param values
+	 *            The {@code short} array sequence.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
 	public final UnitIndependentBuilder shortValues(short[] values) {
@@ -92,8 +96,10 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 * Adds given {@code short} values to the {@link WriteRequest} with a
 	 * validity flag for each given value.
 	 *
-	 * @param values The {@code short} array sequence.
-	 * @param flags The validity flags for each {@code short} value.
+	 * @param values
+	 *            The {@code short} array sequence.
+	 * @param flags
+	 *            The validity flags for each {@code short} value.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
 	public final UnitIndependentBuilder shortValues(short[] values, boolean[] flags) {
@@ -105,7 +111,8 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 * Adds given {@code int} values to the {@link WriteRequest} with a global
 	 * validity flag.
 	 *
-	 * @param values The {@code int} array sequence.
+	 * @param values
+	 *            The {@code int} array sequence.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
 	public final UnitIndependentBuilder integerValues(int[] values) {
@@ -114,11 +121,13 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	}
 
 	/**
-	 * Adds given {@code int} values to the {@link WriteRequest} with a
-	 * validity flag for each given value.
+	 * Adds given {@code int} values to the {@link WriteRequest} with a validity
+	 * flag for each given value.
 	 *
-	 * @param values The {@code int} array sequence.
-	 * @param flags The validity flags for each {@code int} value.
+	 * @param values
+	 *            The {@code int} array sequence.
+	 * @param flags
+	 *            The validity flags for each {@code int} value.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
 	public final UnitIndependentBuilder integerValues(int[] values, boolean[] flags) {
@@ -130,7 +139,8 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 * Adds given {@code long} values to the {@link WriteRequest} with a global
 	 * validity flag.
 	 *
-	 * @param values The {@code long} array sequence.
+	 * @param values
+	 *            The {@code long} array sequence.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
 	public final UnitIndependentBuilder longValues(long[] values) {
@@ -142,8 +152,10 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 * Adds given {@code long} values to the {@link WriteRequest} with a
 	 * validity flag for each given value.
 	 *
-	 * @param values The {@code long} array sequence.
-	 * @param flags The validity flags for each {@code long} value.
+	 * @param values
+	 *            The {@code long} array sequence.
+	 * @param flags
+	 *            The validity flags for each {@code long} value.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
 	public final UnitIndependentBuilder longValues(long[] values, boolean[] flags) {
@@ -152,10 +164,11 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	}
 
 	/**
-	 * Adds given {@code float} values to the {@link WriteRequest} with a
-	 * global validity flag.
+	 * Adds given {@code float} values to the {@link WriteRequest} with a global
+	 * validity flag.
 	 *
-	 * @param values The {@code float} array sequence.
+	 * @param values
+	 *            The {@code float} array sequence.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
 	public final UnitIndependentBuilder floatValues(float[] values) {
@@ -167,8 +180,10 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 * Adds given {@code float} values to the {@link WriteRequest} with a
 	 * validity flag for each given value.
 	 *
-	 * @param values The {@code float} array sequence.
-	 * @param flags The validity flags for each {@code float} value.
+	 * @param values
+	 *            The {@code float} array sequence.
+	 * @param flags
+	 *            The validity flags for each {@code float} value.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
 	public final UnitIndependentBuilder floatValues(float[] values, boolean[] flags) {
@@ -180,7 +195,8 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 * Adds given {@code double} values to the {@link WriteRequest} with a
 	 * global validity flag.
 	 *
-	 * @param values The {@code double} array sequence.
+	 * @param values
+	 *            The {@code double} array sequence.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
 	public final UnitIndependentBuilder doubleValues(double[] values) {
@@ -192,8 +208,10 @@ public class NumericalValuesBuilder extends BaseValuesBuilder {
 	 * Adds given {@code double} values to the {@link WriteRequest} with a
 	 * validity flag for each given value.
 	 *
-	 * @param values The {@code double} array sequence.
-	 * @param flags The validity flags for each {@code double} value.
+	 * @param values
+	 *            The {@code double} array sequence.
+	 * @param flags
+	 *            The validity flags for each {@code double} value.
 	 * @return The {@link UnitIndependentBuilder} is returned.
 	 */
 	public final UnitIndependentBuilder doubleValues(double[] values, boolean[] flags) {

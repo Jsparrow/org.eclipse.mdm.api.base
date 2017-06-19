@@ -70,8 +70,7 @@ public enum Operation {
 	NOT_IN_SET,
 
 	/**
-	 * like, use  pattern matching, see Pattern for the
-	 * wildcard definitions.
+	 * like, use pattern matching, see Pattern for the wildcard definitions.
 	 */
 	LIKE,
 
@@ -111,18 +110,20 @@ public enum Operation {
 	CASE_INSENSITIVE_GREATER_THAN_OR_EQUAL,
 
 	/**
-	 * In set, value can be a sequence. case insensitive for {@link ValueType#STRING}
+	 * In set, value can be a sequence. case insensitive for
+	 * {@link ValueType#STRING}
 	 */
 	CASE_INSENSITIVE_IN_SET,
 
 	/**
-	 * Not in set, value can be a sequence. case insensitive for {@link ValueType#STRING}
+	 * Not in set, value can be a sequence. case insensitive for
+	 * {@link ValueType#STRING}
 	 */
 	CASE_INSENSITIVE_NOT_IN_SET,
 
 	/**
-	 * like, use  pattern matching, see Pattern for the wildcard
-	 * definitions. case insensitive for DT_STRING.
+	 * like, use pattern matching, see Pattern for the wildcard definitions.
+	 * case insensitive for DT_STRING.
 	 */
 	CASE_INSENSITIVE_LIKE,
 
@@ -142,9 +143,9 @@ public enum Operation {
 	IS_NOT_NULL,
 
 	/**
-	 * Between; selects all instances where the value of 'attr' lies between
-	 * the first two values given in 'value' (with 'attr', 'value' being
-	 * elements of the SelValue structure; 'value' must be of data type S_*).
+	 * Between; selects all instances where the value of 'attr' lies between the
+	 * first two values given in 'value' (with 'attr', 'value' being elements of
+	 * the SelValue structure; 'value' must be of data type S_*).
 	 */
 	BETWEEN;
 
@@ -155,8 +156,10 @@ public enum Operation {
 	/**
 	 * Creates a new {@link Condition} for given {@link Attribute} and value.
 	 *
-	 * @param attribute The {@code Attribute} the condition will be applied to.
-	 * @param value The value.
+	 * @param attribute
+	 *            The {@code Attribute} the condition will be applied to.
+	 * @param value
+	 *            The value.
 	 * @return The created {@code Condition} is returned.
 	 */
 	public Condition create(Attribute attribute, Object value) {
@@ -168,22 +171,22 @@ public enum Operation {
 	// ======================================================================
 
 	/**
-	 * Checks whether this operation requires a sequence value container. This is
-	 * the case for the following types:
+	 * Checks whether this operation requires a sequence value container. This
+	 * is the case for the following types:
 	 *
 	 * <ul>
-	 * 	<li>{@link Operation#IN_SET}</li>
-	 * 	<li>{@link Operation#NOT_IN_SET}</li>
-	 * 	<li>{@link Operation#CASE_INSENSITIVE_IN_SET}</li>
-	 * 	<li>{@link Operation#CASE_INSENSITIVE_NOT_IN_SET}</li>
-	 * 	<li>{@link Operation#BETWEEN}</li>
+	 * <li>{@link Operation#IN_SET}</li>
+	 * <li>{@link Operation#NOT_IN_SET}</li>
+	 * <li>{@link Operation#CASE_INSENSITIVE_IN_SET}</li>
+	 * <li>{@link Operation#CASE_INSENSITIVE_NOT_IN_SET}</li>
+	 * <li>{@link Operation#BETWEEN}</li>
 	 * </ul>
 	 *
 	 * @return True if this operation is one of those listed above.
 	 */
 	boolean requiresSequence() {
-		return Arrays.asList(IN_SET, NOT_IN_SET, CASE_INSENSITIVE_IN_SET,
-				CASE_INSENSITIVE_NOT_IN_SET, BETWEEN).contains(this);
+		return Arrays.asList(IN_SET, NOT_IN_SET, CASE_INSENSITIVE_IN_SET, CASE_INSENSITIVE_NOT_IN_SET, BETWEEN)
+				.contains(this);
 	}
 
 }

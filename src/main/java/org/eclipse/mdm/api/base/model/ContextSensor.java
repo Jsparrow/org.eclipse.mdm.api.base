@@ -26,7 +26,8 @@ public final class ContextSensor extends BaseEntity implements Deletable {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link Core}.
+	 * @param core
+	 *            The {@link Core}.
 	 */
 	ContextSensor(Core core) {
 		super(core);

@@ -32,8 +32,10 @@ public abstract class BaseEntityFactory {
 	 * Creates a new {@link Channel}. The name of the returned {@code Channel}
 	 * is retrieved from given {@link Quantity}.
 	 *
-	 * @param measurement The parent {@link Measurement}.
-	 * @param quantity The {@code Quantity} is used for default initialization.
+	 * @param measurement
+	 *            The parent {@link Measurement}.
+	 * @param quantity
+	 *            The {@code Quantity} is used for default initialization.
 	 * @return The created {@code Channel} is returned.
 	 */
 	public Channel createChannel(Measurement measurement, Quantity quantity) {
@@ -43,9 +45,12 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Creates a new {@link Channel}.
 	 *
-	 * @param name Name of the created {@code Channel}.
-	 * @param measurement The parent {@link Measurement}.
-	 * @param quantity The {@code Quantity} is used for default initialization.
+	 * @param name
+	 *            Name of the created {@code Channel}.
+	 * @param measurement
+	 *            The parent {@link Measurement}.
+	 * @param quantity
+	 *            The {@code Quantity} is used for default initialization.
 	 * @return The created {@code Channel} is returned.
 	 */
 	public Channel createChannel(String name, Measurement measurement, Quantity quantity) {
@@ -57,9 +62,9 @@ public abstract class BaseEntityFactory {
 		getMutableStore(channel).set(quantity.getDefaultUnit());
 		getMutableStore(channel).set(quantity);
 
-		//		if(contextSensor != null) {
-		//			channel.getCore().setInfoRelation(contextSensor);
-		//		}
+		// if(contextSensor != null) {
+		// channel.getCore().setInfoRelation(contextSensor);
+		// }
 
 		// properties
 		channel.setName(name);
@@ -75,14 +80,18 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Creates a new {@link ChannelGroup}.
 	 *
-	 * @param name Name of the created {@code ChannelGroup}.
-	 * @param numberOfValues The number of values per each related {@link Channel}.
-	 * @param measurement The parent {@link Measurement}.
+	 * @param name
+	 *            Name of the created {@code ChannelGroup}.
+	 * @param numberOfValues
+	 *            The number of values per each related {@link Channel}.
+	 * @param measurement
+	 *            The parent {@link Measurement}.
 	 * @return The created {@code ChannelGroup} is returned.
-	 * @throws IllegalArgumentException Thrown if numberOfValues is negative.
+	 * @throws IllegalArgumentException
+	 *             Thrown if numberOfValues is negative.
 	 */
 	public ChannelGroup createChannelGroup(String name, int numberOfValues, Measurement measurement) {
-		if(numberOfValues < 0) {
+		if (numberOfValues < 0) {
 			throw new IllegalArgumentException("Number of values must be equal or greater than 0.");
 		}
 
@@ -102,9 +111,12 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Creates a new {@link Measurement}.
 	 *
-	 * @param name Name of the created {@code Measurement}.
-	 * @param testStep The parent {@link TestStep}.
-	 * @param contextRoots {@link ContextRoot}s containing the descriptive data.
+	 * @param name
+	 *            Name of the created {@code Measurement}.
+	 * @param testStep
+	 *            The parent {@link TestStep}.
+	 * @param contextRoots
+	 *            {@link ContextRoot}s containing the descriptive data.
 	 * @return The created {@code Measurement} is returned.
 	 */
 	public Measurement createMeasurement(String name, TestStep testStep, ContextRoot... contextRoots) {
@@ -113,7 +125,7 @@ public abstract class BaseEntityFactory {
 		// relations
 		getPermanentStore(measurement).set(testStep);
 		getChildrenStore(testStep).add(measurement);
-		for(ContextRoot contextRoot : contextRoots) {
+		for (ContextRoot contextRoot : contextRoots) {
 			getMutableStore(measurement).set(contextRoot, contextRoot.getContextType());
 		}
 
@@ -127,17 +139,22 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Creates a new {@link Parameter} with initialized with given value.
 	 *
-	 * @param name Name of the created {@code Parameter}.
-	 * @param value The value of the created {@code Parameter}.
-	 * @param unit An optionally related {@link Unit}.
-	 * @param parameterSet The parent {@link ParameterSet}.
+	 * @param name
+	 *            Name of the created {@code Parameter}.
+	 * @param value
+	 *            The value of the created {@code Parameter}.
+	 * @param unit
+	 *            An optionally related {@link Unit}.
+	 * @param parameterSet
+	 *            The parent {@link ParameterSet}.
 	 * @return The created {@code Parameter} is returned.
-	 * @throws IllegalArgumentException Thrown if the {@code ParameterSet}
-	 * 		already contains a {@code Parameter} with given name.
+	 * @throws IllegalArgumentException
+	 *             Thrown if the {@code ParameterSet} already contains a
+	 *             {@code Parameter} with given name.
 	 * @see Parameter#setObjectValue(Object, Unit)
 	 */
 	public Parameter createParameter(String name, Object value, Unit unit, ParameterSet parameterSet) {
-		if(parameterSet.getParameter(name).isPresent()) {
+		if (parameterSet.getParameter(name).isPresent()) {
 			throw new IllegalArgumentException("Parameter with name '" + name + "' already exists.");
 		}
 
@@ -157,9 +174,12 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Creates a new {@link ParameterSet} for given {@link Measurement}.
 	 *
-	 * @param name Name of the created {@code ParameterSet}.
-	 * @param version Version of the created {@code ParameterSet}.
-	 * @param measurement The owning {@code Measurement}.
+	 * @param name
+	 *            Name of the created {@code ParameterSet}.
+	 * @param version
+	 *            Version of the created {@code ParameterSet}.
+	 * @param measurement
+	 *            The owning {@code Measurement}.
 	 * @return The created {@code ParameterSet} is returned.
 	 */
 	public ParameterSet createParameterSet(String name, String version, Measurement measurement) {
@@ -179,9 +199,12 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Creates a new {@link ParameterSet} for given {@link Channel}.
 	 *
-	 * @param name Name of the created {@code ParameterSet}.
-	 * @param version Version of the created {@code ParameterSet}.
-	 * @param channel The owning {@code Channel}.
+	 * @param name
+	 *            Name of the created {@code ParameterSet}.
+	 * @param version
+	 *            Version of the created {@code ParameterSet}.
+	 * @param channel
+	 *            The owning {@code Channel}.
 	 * @return The created {@code ParameterSet} is returned.
 	 */
 	public ParameterSet createParameterSet(String name, String version, Channel channel) {
@@ -201,7 +224,8 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Creates a new {@link PhysicalDimension}.
 	 *
-	 * @param name Name of the created {@code PhysicalDimension}.
+	 * @param name
+	 *            Name of the created {@code PhysicalDimension}.
 	 * @return The created {@code PhysicalDimension} is returned.
 	 */
 	public PhysicalDimension createPhysicalDimension(String name) {
@@ -224,8 +248,10 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Creates a new {@link Quantity}.
 	 *
-	 * @param name Name of the created {@code Quantity}.
-	 * @param defaultUnit The default {@link Unit}.
+	 * @param name
+	 *            Name of the created {@code Quantity}.
+	 * @param defaultUnit
+	 *            The default {@link Unit}.
 	 * @return The created {@code Quantity} is returned.
 	 */
 	public Quantity createQuantity(String name, Unit defaultUnit) {
@@ -250,10 +276,11 @@ public abstract class BaseEntityFactory {
 	}
 
 	/**
-	 * Creates a new {@link Test} with a reference to the logged in {@link
-	 * User}, if there is one.
+	 * Creates a new {@link Test} with a reference to the logged in
+	 * {@link User}, if there is one.
 	 *
-	 * @param name Name of the created {@code Test}.
+	 * @param name
+	 *            Name of the created {@code Test}.
 	 * @return The created {@code Test} is returned.
 	 */
 	public Test createTest(String name) {
@@ -261,7 +288,7 @@ public abstract class BaseEntityFactory {
 
 		// relations
 		Optional<User> responsiblePerson = getLoggedInUser();
-		if(responsiblePerson.isPresent()) {
+		if (responsiblePerson.isPresent()) {
 			// may be null if user entities are not available
 			getMutableStore(test).set(responsiblePerson.get());
 		}
@@ -276,8 +303,10 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Creates a new {@link TestStep}.
 	 *
-	 * @param name Name of the created {@code TestStep}.
-	 * @param test The parent {@link Test}.
+	 * @param name
+	 *            Name of the created {@code TestStep}.
+	 * @param test
+	 *            The parent {@link Test}.
 	 * @return The created {@code TestStep} is returned.
 	 */
 	public TestStep createTestStep(String name, Test test) {
@@ -292,7 +321,7 @@ public abstract class BaseEntityFactory {
 		testStep.setDateCreated(LocalDateTime.now());
 		testStep.setOptional(Boolean.TRUE);
 
-		if(test.getID() > 0) {
+		if (test.getID() > 0) {
 			// highest sort index in use will be queried before written
 			testStep.setSortIndex(Integer.valueOf(-1));
 		} else {
@@ -305,8 +334,10 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Creates a new {@link Unit}.
 	 *
-	 * @param name Name of the created {@code Unit}.
-	 * @param physicalDimension The {@link PhysicalDimension}.
+	 * @param name
+	 *            Name of the created {@code Unit}.
+	 * @param physicalDimension
+	 *            The {@link PhysicalDimension}.
 	 * @return The created {@code Unit} is returned.
 	 */
 	public Unit createUnit(String name, PhysicalDimension physicalDimension) {
@@ -326,9 +357,12 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Creates a new {@link User}.
 	 *
-	 * @param name Name of the created {@code User}.
-	 * @param givenName Given name of the created {@code User}.
-	 * @param surname Surname of the created {@code User}.
+	 * @param name
+	 *            Name of the created {@code User}.
+	 * @param givenName
+	 *            Given name of the created {@code User}.
+	 * @param surname
+	 *            Surname of the created {@code User}.
 	 * @return The created {@code User} is returned.
 	 */
 	public User createUser(String name, String givenName, String surname) {
@@ -349,8 +383,10 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Creates a new {@link ContextRoot}.
 	 *
-	 * @param name Name of the created {@code ContextRoot}.
-	 * @param contextType {@link ContextType} of the created {@code ContextRoot}.
+	 * @param name
+	 *            Name of the created {@code ContextRoot}.
+	 * @param contextType
+	 *            {@link ContextType} of the created {@code ContextRoot}.
 	 * @return The created {@code ContextRoot} is returned.
 	 */
 	protected ContextRoot createContextRoot(String name, ContextType contextType) {
@@ -366,8 +402,10 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Creates a new {@link ContextComponent}.
 	 *
-	 * @param name Name of the created {@code ContextComponent}.
-	 * @param contextRoot The parent {@link ContextRoot}.
+	 * @param name
+	 *            Name of the created {@code ContextComponent}.
+	 * @param contextRoot
+	 *            The parent {@link ContextRoot}.
 	 * @return The created {@code ContextComponent} is returned.
 	 */
 	protected ContextComponent createContextComponent(String name, ContextRoot contextRoot) {
@@ -386,8 +424,10 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Creates a new {@link ContextSensor}.
 	 *
-	 * @param name Name of the created {@code ContextSensor}.
-	 * @param contextComponent The parent {@link ContextComponent}.
+	 * @param name
+	 *            Name of the created {@code ContextSensor}.
+	 * @param contextComponent
+	 *            The parent {@link ContextComponent}.
 	 * @return The created {@code ContextSensor} is returned.
 	 */
 	protected ContextSensor createContextSensor(String name, ContextComponent contextComponent) {
@@ -403,13 +443,13 @@ public abstract class BaseEntityFactory {
 	}
 
 	/**
-	 * Returns the next usable sort index for given {@code List} of {@link
-	 * Sortable}s.
+	 * Returns the next usable sort index for given {@code List} of
+	 * {@link Sortable}s.
 	 *
-	 * @param sortables The {@code Sortable} whose max sort index will be
-	 * 		searched.
+	 * @param sortables
+	 *            The {@code Sortable} whose max sort index will be searched.
 	 * @return {@code 1} is returned if given {@code List} is empty, otherwise
-	 * 		the max sort index increased by 1 is returned.
+	 *         the max sort index increased by 1 is returned.
 	 */
 	protected final Integer nextIndex(List<? extends Sortable> sortables) {
 		Optional<Integer> maxIndex = sortables.stream().max(Sortable.COMPARATOR).map(Sortable::getSortIndex);
@@ -419,8 +459,9 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Returns the {@link ChildrenStore} for given {@link BaseEntity}.
 	 *
-	 * @param entity The {@code BaseEntity} whose {@code ChildrenStore} will
-	 * 		be returned.
+	 * @param entity
+	 *            The {@code BaseEntity} whose {@code ChildrenStore} will be
+	 *            returned.
 	 * @return The {@code ChildrenStore} is returned.
 	 */
 	protected final ChildrenStore getChildrenStore(BaseEntity entity) {
@@ -430,8 +471,9 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Returns the mutable {@link EntityStore} for given {@link BaseEntity}.
 	 *
-	 * @param entity The {@code BaseEntity} whose {@code ChildrenStore} will
-	 * 		be returned.
+	 * @param entity
+	 *            The {@code BaseEntity} whose {@code ChildrenStore} will be
+	 *            returned.
 	 * @return The mutable {@code EntityStore} is returned.
 	 */
 	protected final EntityStore getMutableStore(BaseEntity entity) {
@@ -441,8 +483,9 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Returns the permanent {@link EntityStore} for given {@link BaseEntity}.
 	 *
-	 * @param entity The {@code BaseEntity} whose {@code ChildrenStore} will
-	 * 		be returned.
+	 * @param entity
+	 *            The {@code BaseEntity} whose {@code ChildrenStore} will be
+	 *            returned.
 	 * @return The permanent {@code EntityStore} is returned.
 	 */
 	protected final EntityStore getPermanentStore(BaseEntity entity) {
@@ -452,7 +495,8 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Returns {@link Core} of given {@link Entity}.
 	 *
-	 * @param entity The {@code BaseEntity} whose {@code Core} is required.
+	 * @param entity
+	 *            The {@code BaseEntity} whose {@code Core} is required.
 	 * @return The {@code Core} is returned.
 	 */
 	protected final Core getCore(BaseEntity entity) {
@@ -469,18 +513,24 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Returns a new {@link Core} for given entity class.
 	 *
-	 * @param <T> The entity class type.
-	 * @param entityClass The entity class.
+	 * @param <T>
+	 *            The entity class type.
+	 * @param entityClass
+	 *            The entity class.
 	 * @return A new {@code Core} instance is returned.
 	 */
 	protected abstract <T extends Entity> Core createCore(Class<T> entityClass);
 
 	/**
-	 * Returns a new {@link Core} for given entity class and {@link ContextType}.
+	 * Returns a new {@link Core} for given entity class and
+	 * {@link ContextType}.
 	 *
-	 * @param <T> The entity class type.
-	 * @param entityClass The entity class.
-	 * @param contextType The {@code ContextType}.
+	 * @param <T>
+	 *            The entity class type.
+	 * @param entityClass
+	 *            The entity class.
+	 * @param contextType
+	 *            The {@code ContextType}.
 	 * @return A new {@code Core} instance is returned.
 	 */
 	protected abstract <T extends Entity> Core createCore(Class<T> entityClass, ContextType contextType);
@@ -488,9 +538,12 @@ public abstract class BaseEntityFactory {
 	/**
 	 * Returns a new {@link Core} for given entity class and type name.
 	 *
-	 * @param <T> The entity class type.
-	 * @param name Name of the entity type.
-	 * @param entityClass The entity class.
+	 * @param <T>
+	 *            The entity class type.
+	 * @param name
+	 *            Name of the entity type.
+	 * @param entityClass
+	 *            The entity class.
 	 * @return A new {@code Core} instance is returned.
 	 */
 	protected abstract <T extends Entity> Core createCore(String name, Class<T> entityClass);

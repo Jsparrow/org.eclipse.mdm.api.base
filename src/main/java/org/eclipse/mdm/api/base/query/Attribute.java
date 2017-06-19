@@ -56,13 +56,15 @@ public interface Attribute {
 	ValueType getValueType();
 
 	/**
-	 * Returns the enumeration {@code Class} associated with this {@code Attribute}.
+	 * Returns the enumeration {@code Class} associated with this
+	 * {@code Attribute}.
 	 *
-	 * @return The enumeration {@code Class} associated with this {@code Attribute}
-	 * 		is returned.
-	 * @throws IllegalStateException Thrown if the {@link ValueType} of this
-	 * 		{@code Attribute} is neither {@link ValueType#ENUMERATION} nor
-	 * 		{@link ValueType#ENUMERATION_SEQUENCE}.
+	 * @return The enumeration {@code Class} associated with this
+	 *         {@code Attribute} is returned.
+	 * @throws IllegalStateException
+	 *             Thrown if the {@link ValueType} of this {@code Attribute} is
+	 *             neither {@link ValueType#ENUMERATION} nor
+	 *             {@link ValueType#ENUMERATION_SEQUENCE}.
 	 */
 	Class<? extends Enum<?>> getEnumClass();
 
@@ -73,7 +75,7 @@ public interface Attribute {
 	 */
 	default Value createValue() {
 		ValueType valueType = getValueType();
-		if(valueType.isEnumerationType()) {
+		if (valueType.isEnumerationType()) {
 			return valueType.create(getEnumClass(), getName());
 		} else {
 			return valueType.create(getName());
@@ -83,7 +85,8 @@ public interface Attribute {
 	/**
 	 * Creates a new {@link Value} with given initial value.
 	 *
-	 * @param input The initial value.
+	 * @param input
+	 *            The initial value.
 	 * @return Created {@code Value} is returned.
 	 */
 	default Value createValue(Object input) {
@@ -93,8 +96,10 @@ public interface Attribute {
 	/**
 	 * Creates a new {@link Value} with given unit name and initial value.
 	 *
-	 * @param unit The name of unit.
-	 * @param input The initial value.
+	 * @param unit
+	 *            The name of unit.
+	 * @param input
+	 *            The initial value.
 	 * @return Created {@code Value} is returned.
 	 */
 	default Value createValue(String unit, Object input) {
@@ -105,13 +110,15 @@ public interface Attribute {
 	 * Creates a new sequence {@link Value} with given unit name and initial
 	 * value.
 	 *
-	 * @param unit The name of unit.
-	 * @param input The initial value.
+	 * @param unit
+	 *            The name of unit.
+	 * @param input
+	 *            The initial value.
 	 * @return Created {@code Value} is returned.
 	 */
 	default Value createValueSeq(String unit, Object input) {
 		ValueType valueType = getValueType().toSequenceType();
-		if(valueType.isEnumerationType()) {
+		if (valueType.isEnumerationType()) {
 			return valueType.create(getEnumClass(), getName(), unit, true, input);
 		} else {
 			return valueType.create(getName(), unit, true, input);
@@ -119,16 +126,20 @@ public interface Attribute {
 	}
 
 	/**
-	 * Creates a new {@link Value} with given unit name, initial valid flag and value.
+	 * Creates a new {@link Value} with given unit name, initial valid flag and
+	 * value.
 	 *
-	 * @param unit The name of unit.
-	 * @param valid The initial valid flag.
-	 * @param input The initial value.
+	 * @param unit
+	 *            The name of unit.
+	 * @param valid
+	 *            The initial valid flag.
+	 * @param input
+	 *            The initial value.
 	 * @return Created {@code Value} is returned.
 	 */
 	default Value createValue(String unit, boolean valid, Object input) {
 		ValueType valueType = getValueType();
-		if(valueType.isEnumerationType()) {
+		if (valueType.isEnumerationType()) {
 			return valueType.create(getEnumClass(), getName(), unit, valid, input);
 		} else {
 			return valueType.create(getName(), unit, valid, input);

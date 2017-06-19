@@ -43,8 +43,8 @@ public enum Interpolation {
 	/**
 	 * Returns true if this interpolation is {@link #NONE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isNone() {
 		return NONE == this;
@@ -53,8 +53,8 @@ public enum Interpolation {
 	/**
 	 * Returns true if this interpolation is {@link #LINEAR}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isLinear() {
 		return LINEAR == this;
@@ -63,8 +63,8 @@ public enum Interpolation {
 	/**
 	 * Returns true if this interpolation is {@link #SPECIFIC}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isSpecific() {
 		return SPECIFIC == this;

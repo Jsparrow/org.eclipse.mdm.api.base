@@ -38,28 +38,31 @@ public final class Result implements Iterable<Record> {
 	/**
 	 * Adds given {@link Record} to this result.
 	 *
-	 * @param record {@code Record} that will be added.
-	 * @throws IllegalArgumentException Thrown if given {@code Record}
-	 * 		overwrites an existing one.
+	 * @param record
+	 *            {@code Record} that will be added.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given {@code Record} overwrites an existing one.
 	 */
 	public void addRecord(Record record) {
-		if(records.put(record.getEntityType(), record) != null) {
-			throw new IllegalArgumentException("Record for entity type '"
-					+ record.getEntityType() + "' is already defined.");
+		if (records.put(record.getEntityType(), record) != null) {
+			throw new IllegalArgumentException(
+					"Record for entity type '" + record.getEntityType() + "' is already defined.");
 		}
 	}
 
 	/**
 	 * Returns the {@link Record} associated with given {@link EntityType}.
 	 *
-	 * @param entityType Used as identifier.
-	 * @return The {@code Record} associated with given {@code EntityType} is returned.
-	 * @throws IllegalArgumentException Thrown if associated {@code Record}
-	 * 		does not exist.
+	 * @param entityType
+	 *            Used as identifier.
+	 * @return The {@code Record} associated with given {@code EntityType} is
+	 *         returned.
+	 * @throws IllegalArgumentException
+	 *             Thrown if associated {@code Record} does not exist.
 	 */
 	public Record getRecord(EntityType entityType) {
 		Record record = records.get(entityType);
-		if(record == null) {
+		if (record == null) {
 			throw new IllegalArgumentException("Record for entity type '" + entityType + "' is not available.");
 		}
 
@@ -70,15 +73,16 @@ public final class Result implements Iterable<Record> {
 	 * Removes the {@link Record} associated with given {@link EntityType} from
 	 * this result and returns it.
 	 *
-	 * @param entityType Used as identifier.
-	 * @return The removed {@code Record} associated with given {@code EntityType}
-	 * 		is returned.
-	 * @throws IllegalArgumentException Thrown if associated {@code Record}
-	 * 		does not exists.
+	 * @param entityType
+	 *            Used as identifier.
+	 * @return The removed {@code Record} associated with given
+	 *         {@code EntityType} is returned.
+	 * @throws IllegalArgumentException
+	 *             Thrown if associated {@code Record} does not exists.
 	 */
 	public Record removeRecord(EntityType entityType) {
 		Record record = records.remove(entityType);
-		if(record == null) {
+		if (record == null) {
 			throw new IllegalArgumentException("Record for entity type '" + entityType + "' is not available.");
 		}
 
@@ -86,9 +90,11 @@ public final class Result implements Iterable<Record> {
 	}
 
 	/**
-	 * Returns the {@link Value} container associated with given {@link Attribute}.
+	 * Returns the {@link Value} container associated with given
+	 * {@link Attribute}.
 	 *
-	 * @param attribute Used as identifier to find the associated {@code Value}.
+	 * @param attribute
+	 *            Used as identifier to find the associated {@code Value}.
 	 * @return Associated {@code Value} is returned.
 	 */
 	public Value getValue(Attribute attribute) {
@@ -97,15 +103,17 @@ public final class Result implements Iterable<Record> {
 
 	/**
 	 * Merges given result with this instance. To be able to do so, the given
-	 * result must be compatible with this result. Results are compatible if
-	 * the subset of {@link Record}s is the same.
+	 * result must be compatible with this result. Results are compatible if the
+	 * subset of {@link Record}s is the same.
 	 *
-	 * @param result The result that will be merged with this instance.
+	 * @param result
+	 *            The result that will be merged with this instance.
 	 * @return A new result with merged {@code Record}s is returned.
-	 * @throws IllegalArgumentException Thrown if given result is not compatible.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given result is not compatible.
 	 */
 	public Result merge(Result result) {
-		if(records.size() != result.records.size()) {
+		if (records.size() != result.records.size()) {
 			throw new IllegalArgumentException("Unable to merge, incompatible result passed.");
 		}
 

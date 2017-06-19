@@ -60,7 +60,8 @@ public final class FilterItem {
 	/**
 	 * Constructor.
 	 *
-	 * @param condition The {@link Condition}.
+	 * @param condition
+	 *            The {@link Condition}.
 	 */
 	FilterItem(Condition condition) {
 		this.condition = condition;
@@ -70,7 +71,8 @@ public final class FilterItem {
 	/**
 	 * Constructor.
 	 *
-	 * @param operator The {@link Operator}.
+	 * @param operator
+	 *            The {@link Operator}.
 	 */
 	private FilterItem(Operator operator) {
 		condition = null;
@@ -94,11 +96,11 @@ public final class FilterItem {
 	 * Returns the contained {@link Operator}.
 	 *
 	 * @return The {@code Operator} is returned.
-	 * @throws IllegalStateException Thrown if {@code Operator} is not
-	 * 		contained.
+	 * @throws IllegalStateException
+	 *             Thrown if {@code Operator} is not contained.
 	 */
 	public Operator getOperator() {
-		if(isOperator()) {
+		if (isOperator()) {
 			return operator;
 		}
 
@@ -118,11 +120,11 @@ public final class FilterItem {
 	 * Returns the contained {@link Condition}.
 	 *
 	 * @return The {@code Condition} is returned.
-	 * @throws IllegalStateException Thrown if {@code Condition} is not
-	 * 		contained.
+	 * @throws IllegalStateException
+	 *             Thrown if {@code Condition} is not contained.
 	 */
 	public Condition getCondition() {
-		if(isCondition()) {
+		if (isCondition()) {
 			return condition;
 		}
 

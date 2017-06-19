@@ -56,16 +56,23 @@ public final class Value {
 	/**
 	 * Constructor.
 	 *
-	 * @param valueType The associated {@link ValueType}.
-	 * @param name The name of this container.
-	 * @param unit The name of the unit.
-	 * @param valid The initial validity flag.
-	 * @param value The initial value.
-	 * @param valueClass Used for type checking upon assignment.
-	 * @param defaultValue Used as null replacement.
+	 * @param valueType
+	 *            The associated {@link ValueType}.
+	 * @param name
+	 *            The name of this container.
+	 * @param unit
+	 *            The name of the unit.
+	 * @param valid
+	 *            The initial validity flag.
+	 * @param value
+	 *            The initial value.
+	 * @param valueClass
+	 *            Used for type checking upon assignment.
+	 * @param defaultValue
+	 *            Used as null replacement.
 	 */
-	Value(ValueType valueType, String name, String unit, boolean valid, Object value,
-			Class<?> valueClass, Object defaultValue) {
+	Value(ValueType valueType, String name, String unit, boolean valid, Object value, Class<?> valueClass,
+			Object defaultValue) {
 		this.valueType = valueType;
 		this.name = name;
 		this.unit = unit == null ? "" : unit;
@@ -86,8 +93,10 @@ public final class Value {
 	/**
 	 * Constructor.
 	 *
-	 * @param origin The origin {@link Value}.
-	 * @param input The new value.
+	 * @param origin
+	 *            The origin {@link Value}.
+	 * @param input
+	 *            The new value.
 	 */
 	private Value(Value origin, Object input) {
 		this(origin.valueType, origin.name, origin.unit, origin.valid, input, origin.valueClass, origin.defaultValue);
@@ -132,11 +141,11 @@ public final class Value {
 	public boolean isValid() {
 		Object v = extract();
 
-		if(v != null) {
-			if(v.getClass().isArray()) {
+		if (v != null) {
+			if (v.getClass().isArray()) {
 				return valid && Array.getLength(v) > 0;
-			} else if(v instanceof String) {
-				return valid && !((String)v).isEmpty();
+			} else if (v instanceof String) {
+				return valid && !((String) v).isEmpty();
 			}
 		}
 
@@ -146,7 +155,8 @@ public final class Value {
 	/**
 	 * Overwrites validity flag with given flag.
 	 *
-	 * @param valid The new validity flag.
+	 * @param valid
+	 *            The new validity flag.
 	 */
 	public void setValid(boolean valid) {
 		this.valid = valid;
@@ -155,7 +165,8 @@ public final class Value {
 	/**
 	 * Returns currently stored value of this value container.
 	 *
-	 * @param <T> The expected value type.
+	 * @param <T>
+	 *            The expected value type.
 	 * @return Currently stored value is returned.
 	 */
 	@SuppressWarnings("unchecked")
@@ -165,47 +176,47 @@ public final class Value {
 
 	/**
 	 * Replaces currently stored value with the given one. If {@code null} is
-	 * given, then a well defined default value is used instead and the
-	 * validity flag is automatically set to {@code false}.
+	 * given, then a well defined default value is used instead and the validity
+	 * flag is automatically set to {@code false}.
 	 *
-	 * @param input The new value must be an instance of the type defined in
-	 * 		{@link ValueType#type} or in case of an enumeration type an
-	 * 		appropriate enumeration constant or array thereof.
-	 * @throws IllegalArgumentException Thrown if an incompatible value is
-	 * 		given.
+	 * @param input
+	 *            The new value must be an instance of the type defined in
+	 *            {@link ValueType#type} or in case of an enumeration type an
+	 *            appropriate enumeration constant or array thereof.
+	 * @throws IllegalArgumentException
+	 *             Thrown if an incompatible value is given.
 	 */
 	public void set(Object input) {
-		if(input == null) {
+		if (input == null) {
 			value = defaultValue;
 			setValid(false);
-		} else if(valueClass.isInstance(input)) {
+		} else if (valueClass.isInstance(input)) {
 			value = input;
 			setValid(true);
 		} else {
-			throw new IllegalArgumentException("Incompatible value type '"
-					+ input.getClass().getSimpleName() + "' passed, expected '"
-					+ valueClass.getSimpleName() + "'.");
+			throw new IllegalArgumentException("Incompatible value type '" + input.getClass().getSimpleName()
+					+ "' passed, expected '" + valueClass.getSimpleName() + "'.");
 		}
 	}
 
 	/**
-	 * Merges given value container with this instance. To be able to do so,
-	 * the given value container must be compatible with this one. Value
-	 * containers are compatible if the their name, unit and {@link ValueType}
-	 * is equal. If the stored values or the validity flags do not match, then
-	 * both values are discarded and {@code null} is taken as the initial
-	 * value.
+	 * Merges given value container with this instance. To be able to do so, the
+	 * given value container must be compatible with this one. Value containers
+	 * are compatible if the their name, unit and {@link ValueType} is equal. If
+	 * the stored values or the validity flags do not match, then both values
+	 * are discarded and {@code null} is taken as the initial value.
 	 *
-	 * @param value The value container that will be merged with this instance.
+	 * @param value
+	 *            The value container that will be merged with this instance.
 	 * @return A new value container with merged value is returned.
-	 * @throws IllegalArgumentException Thrown if given value container is not
-	 * 		compatible.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given value container is not compatible.
 	 */
 	public Value merge(Value value) {
 		boolean nameMissmatch = !getName().equals(value.getName());
 		boolean unitMissmatch = !getUnit().equals(value.getUnit());
 		boolean typeMissmatch = !getValueType().equals(value.getValueType());
-		if(nameMissmatch || unitMissmatch || typeMissmatch) {
+		if (nameMissmatch || unitMissmatch || typeMissmatch) {
 			throw new IllegalArgumentException("Unable to merge, incompatible value passed.");
 		}
 
@@ -217,8 +228,8 @@ public final class Value {
 	/**
 	 * Returns a human readable {@code String} representation of this value. In
 	 * case of a sequence value container with up to 10 values the complete
-	 * sequence will be printed. Otherwise only the 5 first and last values
-	 * will be printed. If the contained value is marked as not valid, then the
+	 * sequence will be printed. Otherwise only the 5 first and last values will
+	 * be printed. If the contained value is marked as not valid, then the
 	 * contained value is omitted in the representation.
 	 *
 	 * @return The {@code String} representation of this value.
@@ -227,16 +238,16 @@ public final class Value {
 	public String toString() {
 		StringBuilder sb = new StringBuilder(name).append(" = ");
 
-		if(isValid()) {
+		if (isValid()) {
 			Object v = extract();
-			if(v != null && v.getClass().isArray()) {
+			if (v != null && v.getClass().isArray()) {
 				int length = Array.getLength(v);
 				sb.append('[');
 
-				if(length > 10) {
+				if (length > 10) {
 					sb.append(range(0, 5).mapToObj(i -> readAt(v, i)).collect(Collectors.joining(", ")));
 					sb.append(", ..., ");
-					sb.append(range(length-5, length).mapToObj(i -> readAt(v, i)).collect(Collectors.joining(", ")));
+					sb.append(range(length - 5, length).mapToObj(i -> readAt(v, i)).collect(Collectors.joining(", ")));
 				} else {
 					sb.append(range(0, length).mapToObj(i -> readAt(v, i)).collect(Collectors.joining(", ")));
 				}
@@ -246,7 +257,7 @@ public final class Value {
 			}
 		}
 
-		if(!getUnit().isEmpty()) {
+		if (!getUnit().isEmpty()) {
 			sb.append(" [").append(getUnit()).append(']');
 		}
 
@@ -262,7 +273,7 @@ public final class Value {
 	 * since initialization.
 	 *
 	 * @return Returns {@code true} either if the flag or the value has been
-	 * 		modified.
+	 *         modified.
 	 */
 	boolean isModified() {
 		return wasValid() != isValid() || !Objects.deepEquals(extractInitial(), extract());
@@ -297,13 +308,15 @@ public final class Value {
 	/**
 	 * Returns the {@code String} value from given array at given position.
 	 *
-	 * @param array The array {@code Object}.
-	 * @param index The index of the required value.
+	 * @param array
+	 *            The array {@code Object}.
+	 * @param index
+	 *            The index of the required value.
 	 * @return The {@code String} value of the requested value is returned.
 	 */
 	static String readAt(Object array, int index) {
 		Object value = Array.get(array, index);
-		if(value != null && byte[].class.isInstance(value)) {
+		if (value != null && byte[].class.isInstance(value)) {
 			return Arrays.toString((byte[]) value);
 		}
 
@@ -318,31 +331,32 @@ public final class Value {
 	 * Returns a copy of given {@code Object}, so modifications in one do not
 	 * affect to other.
 	 *
-	 * @param value The object which will be copied.
+	 * @param value
+	 *            The object which will be copied.
 	 * @return The copy is returned.
 	 */
 	private static Object copy(Object value) {
-		if(value == null) {
+		if (value == null) {
 			return null;
 		}
 
 		Class<?> valueClass = value.getClass();
-		if(valueClass.isArray() && Array.getLength(value) > 0) {
+		if (valueClass.isArray() && Array.getLength(value) > 0) {
 			int length = Array.getLength(value);
-			if(valueClass.getComponentType().isPrimitive()) {
+			if (valueClass.getComponentType().isPrimitive()) {
 				Object copy = Array.newInstance(valueClass.getComponentType(), length);
 				System.arraycopy(value, 0, copy, 0, length);
 				return copy;
 			} else {
-				if(value instanceof byte[][]) {
+				if (value instanceof byte[][]) {
 					return Arrays.stream((byte[][]) value).map(v -> v.clone()).toArray(byte[][]::new);
-				} else if(value instanceof FileLink[]) {
+				} else if (value instanceof FileLink[]) {
 					return Arrays.stream((FileLink[]) value).map(FileLink::new).toArray(FileLink[]::new);
 				} else {
 					return Arrays.copyOf((Object[]) value, length);
 				}
 			}
-		} else if(value instanceof FileLink) {
+		} else if (value instanceof FileLink) {
 			return new FileLink((FileLink) value);
 		}
 

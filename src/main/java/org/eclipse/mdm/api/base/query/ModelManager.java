@@ -14,9 +14,9 @@ import org.eclipse.mdm.api.base.model.ContextType;
 import org.eclipse.mdm.api.base.model.Entity;
 
 /**
- * Provides access to any modeled {@link EntityType} within an underlying application
- * model. A {@link Query}, created by this service, uses these {@code EntityType}s
- * to access corresponding records.
+ * Provides access to any modeled {@link EntityType} within an underlying
+ * application model. A {@link Query}, created by this service, uses these
+ * {@code EntityType}s to access corresponding records.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -45,7 +45,8 @@ public interface ModelManager {
 	/**
 	 * Returns the {@link EntityType} associated with given {@link Entity}.
 	 *
-	 * @param entity Its type name is used as identifier.
+	 * @param entity
+	 *            Its type name is used as identifier.
 	 * @return {@code EntityType} associated with given entity is returned.
 	 */
 	default EntityType getEntityType(Entity entity) {
@@ -55,10 +56,12 @@ public interface ModelManager {
 	/**
 	 * Returns the {@link EntityType} associated with given entity class type.
 	 *
-	 * @param entityClass Used as identifier.
-	 * @return {@code EntityType} associated with given entity class is returned.
-	 * @throws IllegalArgumentException Thrown if {@code EntityType} for given
-	 * 		type does not exist.
+	 * @param entityClass
+	 *            Used as identifier.
+	 * @return {@code EntityType} associated with given entity class is
+	 *         returned.
+	 * @throws IllegalArgumentException
+	 *             Thrown if {@code EntityType} for given type does not exist.
 	 */
 	EntityType getEntityType(Class<? extends Entity> entityClass);
 
@@ -66,32 +69,36 @@ public interface ModelManager {
 	 * Returns the {@link EntityType} associated with given entity class and
 	 * {@link ContextType}.
 	 *
-	 * @param entityClass Used as identifier.
-	 * @param contextType Used as identifier.
+	 * @param entityClass
+	 *            Used as identifier.
+	 * @param contextType
+	 *            Used as identifier.
 	 * @return {@code EntityType} associated with given entity class and {@code
 	 * 		ContextType} is returned.
-	 * @throws IllegalArgumentException Thrown if {@code EntityType} for given
-	 * 		type does not exist.
+	 * @throws IllegalArgumentException
+	 *             Thrown if {@code EntityType} for given type does not exist.
 	 */
 	EntityType getEntityType(Class<? extends Entity> entityClass, ContextType contextType);
 
 	/**
 	 * Returns the {@link EntityType} identified by given name.
 	 *
-	 * @param name Used as identifier.
+	 * @param name
+	 *            Used as identifier.
 	 * @return {@code EntityType} with given name is returned.
-	 * @throws IllegalArgumentException Thrown if {@code EntityType} with given
-	 * 		name does not exist.
+	 * @throws IllegalArgumentException
+	 *             Thrown if {@code EntityType} with given name does not exist.
 	 */
 	EntityType getEntityType(String name);
 
 	/**
 	 * Returns the {@link EntityType} identified by given ID.
 	 *
-	 * @param id Used as ID.
+	 * @param id
+	 *            Used as ID.
 	 * @return {@code EntityType} with given ID is returned.
-	 * @throws IllegalArgumentException Thrown if {@code EntityType} with given
-	 * 		ID does not exist.
+	 * @throws IllegalArgumentException
+	 *             Thrown if {@code EntityType} with given ID does not exist.
 	 */
 	EntityType getEntityType(long id);
 }

@@ -36,16 +36,20 @@ public final class Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @param attribute The {@link Attribute} this condition will be applied to.
-	 * @param operation The condition {@link Operation}.
-	 * @param unit The unit of the created value.
-	 * @param input The condition value.
+	 * @param attribute
+	 *            The {@link Attribute} this condition will be applied to.
+	 * @param operation
+	 *            The condition {@link Operation}.
+	 * @param unit
+	 *            The unit of the created value.
+	 * @param input
+	 *            The condition value.
 	 */
 	Condition(Attribute attribute, Operation operation, String unit, Object input) {
 		this.attribute = attribute;
 		this.operation = operation;
-		value = operation.requiresSequence() ?
-				attribute.createValueSeq(unit, input) : attribute.createValue(unit, input);
+		value = operation.requiresSequence() ? attribute.createValueSeq(unit, input)
+				: attribute.createValue(unit, input);
 	}
 
 	// ======================================================================

@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 /**
  * Implementation of the context component entity types. Instances of this class
  * are only provided / managed via the owning descriptive {@link ContextRoot}.
- * Additionally if the owning {@code ContextRoot} is of type {@link
- * ContextType#TESTEQUIPMENT} this context component may have relations to
- * {@link ContextSensor}s whose names have to be unique.
+ * Additionally if the owning {@code ContextRoot} is of type
+ * {@link ContextType#TESTEQUIPMENT} this context component may have relations
+ * to {@link ContextSensor}s whose names have to be unique.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -32,7 +32,8 @@ public final class ContextComponent extends BaseEntity implements Deletable {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link Core}.
+	 * @param core
+	 *            The {@link Core}.
 	 */
 	ContextComponent(Core core) {
 		super(core);
@@ -45,9 +46,10 @@ public final class ContextComponent extends BaseEntity implements Deletable {
 	/**
 	 * Returns the {@link ContextSensor} identified by given name.
 	 *
-	 * @param name The name of the {@code ContextSensor}.
+	 * @param name
+	 *            The name of the {@code ContextSensor}.
 	 * @return The {@code Optional} is empty if a {@code ContextSensor} with
-	 * 		given name does not exist.
+	 *         given name does not exist.
 	 */
 	public Optional<ContextSensor> getContextSensor(String name) {
 		return getContextSensors().stream().filter(cs -> cs.nameMatches(name)).findAny();
@@ -66,13 +68,14 @@ public final class ContextComponent extends BaseEntity implements Deletable {
 	/**
 	 * Removes the {@link ContextSensor} identified by given name.
 	 *
-	 * @param name Name of the {@code ContextSensor} that has to be removed.
-	 * @return Returns {@code true} if the {@code ContextSensor} with given
-	 * 		name has been removed.
+	 * @param name
+	 *            Name of the {@code ContextSensor} that has to be removed.
+	 * @return Returns {@code true} if the {@code ContextSensor} with given name
+	 *         has been removed.
 	 */
 	public boolean removeContextSensor(String name) {
 		Optional<ContextSensor> catalogSensor = getContextSensor(name);
-		if(catalogSensor.isPresent()) {
+		if (catalogSensor.isPresent()) {
 			getCore().getChildrenStore().remove(catalogSensor.get());
 			return true;
 		}
@@ -89,7 +92,7 @@ public final class ContextComponent extends BaseEntity implements Deletable {
 		sb.append(getValues().values().stream().map(Value::toString).collect(Collectors.joining(", ")));
 
 		List<ContextSensor> contextSensors = getContextSensors();
-		if(!contextSensors.isEmpty()) {
+		if (!contextSensors.isEmpty()) {
 			sb.append(", ContextSensors = ").append(contextSensors);
 		}
 

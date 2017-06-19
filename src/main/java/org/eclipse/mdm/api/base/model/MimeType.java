@@ -33,7 +33,8 @@ public final class MimeType {
 	/**
 	 * Constructor.
 	 *
-	 * @param mimeType The MIME type will be changed to lower case.
+	 * @param mimeType
+	 *            The MIME type will be changed to lower case.
 	 */
 	public MimeType(String mimeType) {
 		internal = mimeType.toLowerCase(Locale.ROOT);
@@ -48,21 +49,22 @@ public final class MimeType {
 	}
 
 	/**
-	 * Checks whether given {@code MimeType} is either the same as or a sub
-	 * type of this MIME type. See the following examples:
+	 * Checks whether given {@code MimeType} is either the same as or a sub type
+	 * of this MIME type. See the following examples:
 	 *
 	 * <pre>
 	 * MimeType type = new MimeType("application/x-asam.aomeasurement");
 	 * MimeType subType = new MimeType("application/x-asam.aomeasurement.subtype");
 	 *
-	 * type.isParentOf(subType);  // true
-	 * subType.isParentOf(type);  // false
-	 * type.isParentOf(type);     // true
+	 * type.isParentOf(subType); // true
+	 * subType.isParentOf(type); // false
+	 * type.isParentOf(type); // true
 	 * </pre>
 	 *
-	 * @param mimeType The checked type.
-	 * @return Returns true if either this MIME type and given one are the
-	 * 		same or the given one is a sub type of this MIME type.
+	 * @param mimeType
+	 *            The checked type.
+	 * @return Returns true if either this MIME type and given one are the same
+	 *         or the given one is a sub type of this MIME type.
 	 */
 	public boolean isParentOf(MimeType mimeType) {
 		return mimeType != null && mimeType.compareString().startsWith(compareString());
@@ -77,8 +79,8 @@ public final class MimeType {
 	}
 
 	/**
-	 * Checks whether given {@code Object} represents the same type as this
-	 * MIME type.
+	 * Checks whether given {@code Object} represents the same type as this MIME
+	 * type.
 	 *
 	 * <pre>
 	 * MimeType type = new MimeType("application/x-asam.aomeasurement");
@@ -86,18 +88,19 @@ public final class MimeType {
 	 * MimeType subType = new MimeType("application/x-asam.aomeasurement.subtype");
 	 * MimeType anotherType = new MimeType("application/x-asam.aounit");
 	 *
-	 * type.equals(equalType);   // true
-	 * subType.equals(type);     // false
+	 * type.equals(equalType); // true
+	 * subType.equals(type); // false
 	 * type.equals(anotherType); // false
 	 * </pre>
 	 *
-	 * @param object The checked object.
-	 * @return True if given object is of type {@code MimeType} and
-	 * 		represents exactly the same type as this  MIME type.
+	 * @param object
+	 *            The checked object.
+	 * @return True if given object is of type {@code MimeType} and represents
+	 *         exactly the same type as this MIME type.
 	 */
 	@Override
 	public boolean equals(Object object) {
-		if(object instanceof MimeType) {
+		if (object instanceof MimeType) {
 			return internal.equals(((MimeType) object).internal);
 		}
 
@@ -119,7 +122,8 @@ public final class MimeType {
 	// ======================================================================
 
 	/**
-	 * Adds a termination character to the internally stored string representation.
+	 * Adds a termination character to the internally stored string
+	 * representation.
 	 *
 	 * @return A closed comparison string is returned.
 	 */

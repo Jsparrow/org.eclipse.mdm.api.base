@@ -53,9 +53,12 @@ public final class WriteRequest {
 	/**
 	 * Constructor.
 	 *
-	 * @param channelGroup The {@link ChannelGroup} for this request.
-	 * @param channel The {@link Channel} specified mass data will be dedicated to.
-	 * @param axisType The {@link AxisType} of the written mass data.
+	 * @param channelGroup
+	 *            The {@link ChannelGroup} for this request.
+	 * @param channel
+	 *            The {@link Channel} specified mass data will be dedicated to.
+	 * @param axisType
+	 *            The {@link AxisType} of the written mass data.
 	 */
 	private WriteRequest(ChannelGroup channelGroup, Channel channel, AxisType axisType) {
 		this.channelGroup = channelGroup;
@@ -68,11 +71,15 @@ public final class WriteRequest {
 	// ======================================================================
 
 	/**
-	 * Starts a new {@link WriteRequest} by returning a {@link WriteRequestBuilder}.
+	 * Starts a new {@link WriteRequest} by returning a
+	 * {@link WriteRequestBuilder}.
 	 *
-	 * @param channelGroup The {@link ChannelGroup} for this request.
-	 * @param channel The {@link Channel} specified mass data will be dedicated to.
-	 * @param axisType The {@link AxisType} of the written mass data.
+	 * @param channelGroup
+	 *            The {@link ChannelGroup} for this request.
+	 * @param channel
+	 *            The {@link Channel} specified mass data will be dedicated to.
+	 * @param axisType
+	 *            The {@link AxisType} of the written mass data.
 	 * @return A {@code WriteRequestBuilder} is returned.
 	 */
 	public static WriteRequestBuilder create(ChannelGroup channelGroup, Channel channel, AxisType axisType) {
@@ -120,9 +127,10 @@ public final class WriteRequest {
 	 * returned array depends on the {@link SequenceRepresentation} of this
 	 * request.
 	 *
-	 * <p><b>NOTE:</b> In case of an implicit sequence representation this
-	 * method will always return an empty array since these generation
-	 * parameters are correctly typed and stored as measured values.
+	 * <p>
+	 * <b>NOTE:</b> In case of an implicit sequence representation this method
+	 * will always return an empty array since these generation parameters are
+	 * correctly typed and stored as measured values.
 	 *
 	 * @return If none available, then an empty array is returned.
 	 */
@@ -134,8 +142,8 @@ public final class WriteRequest {
 	 * Returns the independent flag of this request.
 	 *
 	 * @return Returns {@code true} if the measured values do not depend on
-	 * 		those of other {@link Channel}s within their common {@link
-	 * 		ChannelGroup}.
+	 *         those of other {@link Channel}s within their common
+	 *         {@link ChannelGroup}.
 	 */
 	public boolean isIndependent() {
 		return independent;
@@ -144,8 +152,9 @@ public final class WriteRequest {
 	/**
 	 * Checks whether this request has measured values.
 	 *
-	 * @return Returns {@code true} if {@link
-	 * 		SequenceRepresentation#isExternal()} returns {@code false}.
+	 * @return Returns {@code true} if
+	 *         {@link SequenceRepresentation#isExternal()} returns
+	 *         {@code false}.
 	 * @see #hasExternalComponents()
 	 */
 	public boolean hasValues() {
@@ -156,10 +165,11 @@ public final class WriteRequest {
 	 * Returns the stored measured values.
 	 *
 	 * @return The measured values are returned.
-	 * @throws IllegalStateException Thrown if values are not available.
+	 * @throws IllegalStateException
+	 *             Thrown if values are not available.
 	 */
 	public Object getValues() {
-		if(hasValues()) {
+		if (hasValues()) {
 			return values;
 		}
 
@@ -170,8 +180,8 @@ public final class WriteRequest {
 	 * Checks whether this request has measured values, stored in externally
 	 * linked files.
 	 *
-	 * @return Returns {@code true} if {@link
-	 * 		SequenceRepresentation#isExternal()} returns {@code true}.
+	 * @return Returns {@code true} if
+	 *         {@link SequenceRepresentation#isExternal()} returns {@code true}.
 	 * @see #hasValues()
 	 */
 	public boolean hasExternalComponents() {
@@ -181,12 +191,13 @@ public final class WriteRequest {
 	/**
 	 * Returns the configurations for measured values stored in externally
 	 * referenced files.
-
+	 * 
 	 * @return Returned {@code List} is unmodifiable.
-	 * @throws IllegalStateException Thrown if configurations are not available.
+	 * @throws IllegalStateException
+	 *             Thrown if configurations are not available.
 	 */
 	public List<ExternalComponent> getExternalComponents() {
-		if(!hasExternalComponents()) {
+		if (!hasExternalComponents()) {
 			throw new IllegalStateException("External components are not available.");
 		}
 
@@ -204,23 +215,23 @@ public final class WriteRequest {
 
 	/**
 	 * Returns the calculated {@link ScalarType} which reflects the final
-	 * {@code ScalarType} of the generated measured value sequence. If {@link
-	 * #getGenerationParameters()} returns a not empty array and {@link
-	 * #getRawScalarType()} is an integer type (byte, short, int, long), then
-	 * the returned {@code ScalarType} is bumped to the next suitable floating
-	 * point type as listed below:
+	 * {@code ScalarType} of the generated measured value sequence. If
+	 * {@link #getGenerationParameters()} returns a not empty array and
+	 * {@link #getRawScalarType()} is an integer type (byte, short, int, long),
+	 * then the returned {@code ScalarType} is bumped to the next suitable
+	 * floating point type as listed below:
 	 *
 	 * <ul>
-	 * 	<li>{@link ScalarType#BYTE} -&gt; {@link ScalarType#FLOAT}</li>
-	 * 	<li>{@link ScalarType#SHORT} -&gt; {@link ScalarType#FLOAT}</li>
-	 * 	<li>{@link ScalarType#INTEGER} -&gt; {@link ScalarType#FLOAT}</li>
-	 * 	<li>{@link ScalarType#LONG} -&gt; {@link ScalarType#DOUBLE}</li>
+	 * <li>{@link ScalarType#BYTE} -&gt; {@link ScalarType#FLOAT}</li>
+	 * <li>{@link ScalarType#SHORT} -&gt; {@link ScalarType#FLOAT}</li>
+	 * <li>{@link ScalarType#INTEGER} -&gt; {@link ScalarType#FLOAT}</li>
+	 * <li>{@link ScalarType#LONG} -&gt; {@link ScalarType#DOUBLE}</li>
 	 * </ul>
 	 *
 	 * @return The calculated {@code ScalarType} is returned.
 	 */
 	public ScalarType getCalculatedScalarType() {
-		if(getGenerationParameters().length > 0 && getRawScalarType().isIntegerType()) {
+		if (getGenerationParameters().length > 0 && getRawScalarType().isIntegerType()) {
 			return getRawScalarType().isLong() ? ScalarType.DOUBLE : ScalarType.FLOAT;
 		}
 
@@ -229,8 +240,8 @@ public final class WriteRequest {
 
 	/**
 	 * Checks whether all measured values within the whole sequence are valid.
-	 * If this method returns {@code true}, then {@link #getFlags()} will
-	 * return an empty array.
+	 * If this method returns {@code true}, then {@link #getFlags()} will return
+	 * an empty array.
 	 *
 	 * @return Returns {@code true} if all measured values are valid.
 	 * @see #getFlags()
@@ -240,11 +251,10 @@ public final class WriteRequest {
 	}
 
 	/**
-	 * Returns the validity flags sequence for the stored measured values.
-	 * If {@link #areAllValid()} returns {@code false} this method will
-	 * return an array with the same length as the measured values sequence,
-	 * where each flag indicates whether the corresponding measured value is
-	 * valid or not.
+	 * Returns the validity flags sequence for the stored measured values. If
+	 * {@link #areAllValid()} returns {@code false} this method will return an
+	 * array with the same length as the measured values sequence, where each
+	 * flag indicates whether the corresponding measured value is valid or not.
 	 *
 	 * @return The validity flags sequence is returned.
 	 * @see #allValid
@@ -260,7 +270,8 @@ public final class WriteRequest {
 	/**
 	 * Sets the {@link SequenceRepresentation} for this request.
 	 *
-	 * @param sequenceRepresentation The {@link SequenceRepresentation}.
+	 * @param sequenceRepresentation
+	 *            The {@link SequenceRepresentation}.
 	 */
 	void setSequenceRepresentation(SequenceRepresentation sequenceRepresentation) {
 		this.sequenceRepresentation = sequenceRepresentation;
@@ -269,7 +280,8 @@ public final class WriteRequest {
 	/**
 	 * Sets generation parameters for this request.
 	 *
-	 * @param generationParameters The generation parameters.
+	 * @param generationParameters
+	 *            The generation parameters.
 	 */
 	void setGenerationParameters(double[] generationParameters) {
 		this.generationParameters = generationParameters.clone();
@@ -283,54 +295,62 @@ public final class WriteRequest {
 	}
 
 	/**
-	 * Triggers an adjustment of the generation parameters and modification
-	 * of the {@link SequenceRepresentation} of this request to match the
+	 * Triggers an adjustment of the generation parameters and modification of
+	 * the {@link SequenceRepresentation} of this request to match the
 	 * {@link Channel}s default {@link Unit}.
 	 *
-	 * @param sourceUnit The {@link Unit} of the measured values.
+	 * @param sourceUnit
+	 *            The {@link Unit} of the measured values.
 	 */
 	void setSourceUnit(Unit sourceUnit) {
-		//		Unit targetUnit = getChannel().getUnit();
+		// Unit targetUnit = getChannel().getUnit();
 		//
-		//		if(!targetUnit.nameMatches(sourceUnit.getName())) {
-		//			if(!targetUnit.getPhysicalDimension().nameMatches(sourceUnit.getPhysicalDimension().getName())) {
-		//				// conversion is not possible!
-		//				//
-		//				// different physical dimensions -> replace Unit of channel with given sourceUnit!
-		//				// MeaQuantityImpl.addDataValues()
-		//				//
-		//				//  or simply throw an exception?!
-		//				// MeaQuantityImpl.addDataFromExternalComponentInUnit
-		//				//
-		//				// what to do?!
-		//			}
+		// if(!targetUnit.nameMatches(sourceUnit.getName())) {
+		// if(!targetUnit.getPhysicalDimension().nameMatches(sourceUnit.getPhysicalDimension().getName()))
+		// {
+		// // conversion is not possible!
+		// //
+		// // different physical dimensions -> replace Unit of channel with
+		// given sourceUnit!
+		// // MeaQuantityImpl.addDataValues()
+		// //
+		// // or simply throw an exception?!
+		// // MeaQuantityImpl.addDataFromExternalComponentInUnit
+		// //
+		// // what to do?!
+		// }
 		//
-		//			// convert from source to target unit!
-		//			SequenceRepresentation sequenceRepresentation = getSequenceRepresentation();
-		//			if(sequenceRepresentation.isExplicit()) {
-		//				if(sequenceRepresentation.isExternal()) {
-		//					// values stored in file so what to do?!
-		//					// switch sequenceRepresentation to SequenceRepresentation.RAW_LINEAR?
-		//				} else {
-		//					// convert this.values
-		//				}
-		//			} else if(sequenceRepresentation.isImplicit()) {
-		//				// adjust generation parameters
-		//				// ATTENTION -> generation parameters are stored in this.values! (new ODS standard!)
-		//			} else {
-		//				// adjust generation parameters for all other SeqReps....
-		//			}
+		// // convert from source to target unit!
+		// SequenceRepresentation sequenceRepresentation =
+		// getSequenceRepresentation();
+		// if(sequenceRepresentation.isExplicit()) {
+		// if(sequenceRepresentation.isExternal()) {
+		// // values stored in file so what to do?!
+		// // switch sequenceRepresentation to
+		// SequenceRepresentation.RAW_LINEAR?
+		// } else {
+		// // convert this.values
+		// }
+		// } else if(sequenceRepresentation.isImplicit()) {
+		// // adjust generation parameters
+		// // ATTENTION -> generation parameters are stored in this.values! (new
+		// ODS standard!)
+		// } else {
+		// // adjust generation parameters for all other SeqReps....
+		// }
 		//
 		//
 		//
-		//			// Problematik bei Umrechnung impliziter INTEGER Kanäle -> Anpassen des RAW Datentyps?!
+		// // Problematik bei Umrechnung impliziter INTEGER Kanäle -> Anpassen
+		// des RAW Datentyps?!
 		//
-		//			// Problematik bei Umrechung Einheit in dB zu Einheit in nicht dB
-		//			// Problematik bei Umrechung Einheit in nicht dB zu Einheit in dB
+		// // Problematik bei Umrechung Einheit in dB zu Einheit in nicht dB
+		// // Problematik bei Umrechung Einheit in nicht dB zu Einheit in dB
 		//
-		//			//  should we do this implicitly within the WritRequest?!
-		//			// ==> implementation is central and adapter implementation independent!
-		//		}
+		// // should we do this implicitly within the WritRequest?!
+		// // ==> implementation is central and adapter implementation
+		// independent!
+		// }
 
 		throw new UnsupportedOperationException("Conversion between units is not implemented yet.");
 	}
@@ -338,7 +358,8 @@ public final class WriteRequest {
 	/**
 	 * Sets the raw {@link ScalarType} for this request.
 	 *
-	 * @param rawScalarType The {@link ScalarType}.
+	 * @param rawScalarType
+	 *            The {@link ScalarType}.
 	 */
 	void setRawScalarType(ScalarType rawScalarType) {
 		this.rawScalarType = rawScalarType;
@@ -348,12 +369,13 @@ public final class WriteRequest {
 	 * Sets the measured values sequence where each value in the sequence is
 	 * expected to be valid.
 	 *
-	 * @param values The measured value sequence.
-	 * @throws IllegalStateException Thrown if {@link #hasValues()} returns
-	 * 		{@code false}.
+	 * @param values
+	 *            The measured value sequence.
+	 * @throws IllegalStateException
+	 *             Thrown if {@link #hasValues()} returns {@code false}.
 	 */
 	void setValues(Object values) {
-		if(hasValues()) {
+		if (hasValues()) {
 			this.values = values;
 			allValid = true;
 		} else {
@@ -365,13 +387,15 @@ public final class WriteRequest {
 	 * Sets the measured values sequence where each value's validity is
 	 * specified in the given flags array.
 	 *
-	 * @param values The measured value sequence.
-	 * @param flags The validity flag sequence.
-	 * @throws IllegalStateException Thrown if {@link #hasValues()} returns
-	 * 		{@code false}.
+	 * @param values
+	 *            The measured value sequence.
+	 * @param flags
+	 *            The validity flag sequence.
+	 * @throws IllegalStateException
+	 *             Thrown if {@link #hasValues()} returns {@code false}.
 	 */
 	void setValues(Object values, boolean[] flags) {
-		if(hasValues()) {
+		if (hasValues()) {
 			this.values = values;
 			this.flags = flags.clone();
 		} else {
@@ -380,14 +404,17 @@ public final class WriteRequest {
 	}
 
 	/**
-	 * Adds a configuration for measured values stored in externally linked files.
+	 * Adds a configuration for measured values stored in externally linked
+	 * files.
 	 *
-	 * @param externalComponent The new configuration.
-	 * @throws IllegalStateException Thrown if {@link #hasExternalComponents()}
-	 * 		returns {@code false}.
+	 * @param externalComponent
+	 *            The new configuration.
+	 * @throws IllegalStateException
+	 *             Thrown if {@link #hasExternalComponents()} returns
+	 *             {@code false}.
 	 */
 	void addExternalComponent(ExternalComponent externalComponent) {
-		if(hasExternalComponents()) {
+		if (hasExternalComponents()) {
 			externalComponents.add(externalComponent);
 		} else {
 			throw new IllegalStateException("Measured values expected");

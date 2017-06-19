@@ -6,7 +6,8 @@ import org.eclipse.mdm.api.base.model.BaseEntityFactory;
 import org.eclipse.mdm.api.base.notification.NotificationManager;
 
 /**
- * Takes a base entity manager and connection parameters and produces a corresponding notification manager.
+ * Takes a base entity manager and connection parameters and produces a
+ * corresponding notification manager.
  *
  * @since 1.0.0
  * @author Matthias Koller, Peak Solution GmbH
@@ -14,12 +15,17 @@ import org.eclipse.mdm.api.base.notification.NotificationManager;
 public interface NotificationManagerFactory {
 
 	/**
-	 * Creates a notification manager based on the given entity manager and parameters
+	 * Creates a notification manager based on the given entity manager and
+	 * parameters
 	 *
-	 * @param entityManager The entityManager.
-	 * @param connectionParameters The connection parameters.
+	 * @param entityManager
+	 *            The entityManager.
+	 * @param connectionParameters
+	 *            The connection parameters.
 	 * @return The configured NotificationManager is returned.
-	 * @throws ConnectionException Thrown if unable to connect to a data source.
+	 * @throws ConnectionException
+	 *             Thrown if unable to connect to a data source.
 	 */
-	NotificationManager create(BaseEntityManager<? extends BaseEntityFactory> baseEntityManager, Map<String, String> parameters) throws ConnectionException;
+	NotificationManager create(BaseEntityManager<? extends BaseEntityFactory> baseEntityManager,
+			Map<String, String> parameters) throws ConnectionException;
 }

@@ -48,10 +48,12 @@ public interface SearchService {
 	 * Returns all {@link EntityType}s supported by the {@link SearchQuery}
 	 * associated with given {@link Entity} type.
 	 *
-	 * @param entityClass Used as the {@code SearchQuery} identifier.
+	 * @param entityClass
+	 *            Used as the {@code SearchQuery} identifier.
 	 * @return The returned {@code List} may be immutable.
-	 * @throws IllegalArgumentException Thrown if given type is not associated
-	 * 		with a predefined {@code SearchQuery}.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given type is not associated with a predefined
+	 *             {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 */
 	List<EntityType> listEntityTypes(Class<? extends Entity> entityClass);
@@ -61,10 +63,12 @@ public interface SearchService {
 	 * the {@link EntityType}s supported by the {@link SearchQuery} associated
 	 * with given {@link Entity} type.
 	 *
-	 * @param entityClass Used as the {@code SearchQuery} identifier.
+	 * @param entityClass
+	 *            Used as the {@code SearchQuery} identifier.
 	 * @return The {@code Searchable} root is returned.
-	 * @throws IllegalArgumentException Thrown if given type is not associated
-	 * 		with a predefined {@code SearchQuery}.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given type is not associated with a predefined
+	 *             {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 */
 	Searchable getSearchableRoot(Class<? extends Entity> entityClass);
@@ -75,14 +79,18 @@ public interface SearchService {
 	 * associated with given {@link Entity} type. The returned {@code Value}
 	 * sequence is intended to be used for building filter criteria.
 	 *
-	 * @param entityClass Used as the {@code SearchQuery} identifier.
-	 * @param attribute The {@code Attribute} whose distinct values will be
-	 * 		queried.
-	 * @return A distinct {@code List} of all available {@code Value}s is returned.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		query or generating the distinct {@code Value} sequence.
-	 * @throws IllegalArgumentException Thrown if given type is not associated
-	 * 		with a predefined {@code SearchQuery}.
+	 * @param entityClass
+	 *            Used as the {@code SearchQuery} identifier.
+	 * @param attribute
+	 *            The {@code Attribute} whose distinct values will be queried.
+	 * @return A distinct {@code List} of all available {@code Value}s is
+	 *         returned.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the query or
+	 *             generating the distinct {@code Value} sequence.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given type is not associated with a predefined
+	 *             {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
 	 * @see #listEntityTypes(Class)
@@ -95,19 +103,24 @@ public interface SearchService {
 
 	/**
 	 * Returns the distinct {@link Value} sequence for given {@link Attribute}
-	 * and {@link Filter}. Both must be fully supported by the {@link SearchQuery}
-	 * associated with given {@link Entity} type. The returned {@code Value}
-	 * sequence is intended to be used for building filter criteria.
+	 * and {@link Filter}. Both must be fully supported by the
+	 * {@link SearchQuery} associated with given {@link Entity} type. The
+	 * returned {@code Value} sequence is intended to be used for building
+	 * filter criteria.
 	 *
-	 * @param entityClass Used as the {@code SearchQuery} identifier.
-	 * @param attribute The {@code Attribute} whose distinct values will be
-	 * 		queried.
-	 * @param filter The criteria sequence.
+	 * @param entityClass
+	 *            Used as the {@code SearchQuery} identifier.
+	 * @param attribute
+	 *            The {@code Attribute} whose distinct values will be queried.
+	 * @param filter
+	 *            The criteria sequence.
 	 * @return A distinct {@code List} of {@code Value}s is returned.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		query or generating the distinct {@code Value} sequence.
-	 * @throws IllegalArgumentException Thrown if given type is not associated
-	 * 		with a predefined {@code SearchQuery}.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the query or
+	 *             generating the distinct {@code Value} sequence.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given type is not associated with a predefined
+	 *             {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
 	 * @see #listEntityTypes(Class)
@@ -117,24 +130,30 @@ public interface SearchService {
 			throws DataAccessException;
 
 	/**
-	 * Executes the associated {@link SearchQuery} with given {@link EntityType}s.
-	 * The {@code EntityType}s must be fully supported by the {@code SearchQuery}
-	 * associated with given {@link Entity} type. This method selects all {@link
-	 * Attribute}s of each given {@code EntityType}.
+	 * Executes the associated {@link SearchQuery} with given
+	 * {@link EntityType}s. The {@code EntityType}s must be fully supported by
+	 * the {@code SearchQuery} associated with given {@link Entity} type. This
+	 * method selects all {@link Attribute}s of each given {@code EntityType}.
 	 *
-	 * <p><b>Note:</b> Related {@code Record}s may be merged according to the
+	 * <p>
+	 * <b>Note:</b> Related {@code Record}s may be merged according to the
 	 * cardinality of the associated {@link Relation}.
 	 *
-	 * @param <T> Type of the entities that will be generated for each result.
-	 * @param entityCass Used as the {@code SearchQuery} identifier.
-	 * @param entityTypes Select statements will be added for all {@code Attribute}s
-	 * 		of each given {@code EntityType}.
+	 * @param <T>
+	 *            Type of the entities that will be generated for each result.
+	 * @param entityCass
+	 *            Used as the {@code SearchQuery} identifier.
+	 * @param entityTypes
+	 *            Select statements will be added for all {@code Attribute}s of
+	 *            each given {@code EntityType}.
 	 * @return All {@link Result}s are returned in a {@code Map}, which maps
-	 * 		entities to related {@link Record}s.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
-	 * @throws IllegalArgumentException Thrown if given type is not associated
-	 * 		with a predefined {@code SearchQuery}.
+	 *         entities to related {@link Record}s.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the
+	 *             {@code SearchQuery} or analyzing its {@code Result}s.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given type is not associated with a predefined
+	 *             {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
 	 * @see #listEntityTypes(Class)
@@ -147,26 +166,32 @@ public interface SearchService {
 	}
 
 	/**
-	 * Executes the associated {@link SearchQuery} with given {@link EntityType}s
-	 * and {@link Filter}. Both must be fully supported by the {@code SearchQuery}
-	 * associated with given {@link Entity} type. This method selects all {@link
-	 * Attribute}s of each given {@code EntityType}.
+	 * Executes the associated {@link SearchQuery} with given
+	 * {@link EntityType}s and {@link Filter}. Both must be fully supported by
+	 * the {@code SearchQuery} associated with given {@link Entity} type. This
+	 * method selects all {@link Attribute}s of each given {@code EntityType}.
 	 *
-	 * <p><b>Note:</b> Related {@code Record}s may be merged according to the
+	 * <p>
+	 * <b>Note:</b> Related {@code Record}s may be merged according to the
 	 * cardinality of the associated {@link Relation}.
 	 *
-	 * @param <T> Type of the entities that will be generated for each.
-	 * 		result.
-	 * @param entityClass Used as the {@code SearchQuery} identifier.
-	 * @param entityTypes Select statements will be added for all {@code Attribute}s
-	 * 		of each given {@code EntityType}.
-	 * @param filter The criteria sequence.
+	 * @param <T>
+	 *            Type of the entities that will be generated for each. result.
+	 * @param entityClass
+	 *            Used as the {@code SearchQuery} identifier.
+	 * @param entityTypes
+	 *            Select statements will be added for all {@code Attribute}s of
+	 *            each given {@code EntityType}.
+	 * @param filter
+	 *            The criteria sequence.
 	 * @return All {@link Result}s are returned in a {@code Map}, which maps
-	 * 		entities to related {@link Record}s.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
-	 * @throws IllegalArgumentException Thrown if given type is not associated
-	 * 		with a predefined {@code SearchQuery}.
+	 *         entities to related {@link Record}s.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the
+	 *             {@code SearchQuery} or analyzing its {@code Result}s.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given type is not associated with a predefined
+	 *             {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
 	 * @see #listEntityTypes(Class)
@@ -180,13 +205,17 @@ public interface SearchService {
 	 * Executes the associated {@link SearchQuery} and returns all available
 	 * instances of the specified {@link Entity} type.
 	 *
-	 * @param <T> Type of the entities that will be generated for each result.
-	 * @param entityClass Used as the {@code SearchQuery} identifier.
+	 * @param <T>
+	 *            Type of the entities that will be generated for each result.
+	 * @param entityClass
+	 *            Used as the {@code SearchQuery} identifier.
 	 * @return All available entities are returned in a {@code List}.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
-	 * @throws IllegalArgumentException Thrown if given type is not associated
-	 * 		with a predefined {@code SearchQuery}.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the
+	 *             {@code SearchQuery} or analyzing its {@code Result}s.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given type is not associated with a predefined
+	 *             {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #fetch(Class, Filter)
 	 */
@@ -199,14 +228,19 @@ public interface SearchService {
 	 * The {@code Filter} must be fully supported by the {@code SearchQuery}
 	 * associated with given {@link Entity} type.
 	 *
-	 * @param <T> Type of the entities that will be generated for each result.
-	 * @param entityClass Used as the {@code SearchQuery} identifier.
-	 * @param filter The criteria sequence.
+	 * @param <T>
+	 *            Type of the entities that will be generated for each result.
+	 * @param entityClass
+	 *            Used as the {@code SearchQuery} identifier.
+	 * @param filter
+	 *            The criteria sequence.
 	 * @return All matched entities are returned in a {@code List}.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
-	 * @throws IllegalArgumentException Thrown if given type is not associated
-	 * 		with a predefined {@code SearchQuery}.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the
+	 *             {@code SearchQuery} or analyzing its {@code Result}s.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given type is not associated with a predefined
+	 *             {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
 	 * @see #listEntityTypes(Class)
@@ -217,24 +251,30 @@ public interface SearchService {
 	}
 
 	/**
-	 * Executes the associated {@link SearchQuery} with given {@link Attribute}s.
-	 * The {@code Attribute}s must be fully supported by the {@code SearchQuery}
-	 * associated with given {@link Entity} type. This method allows fine
-	 * grained {@link Record} configuration.
+	 * Executes the associated {@link SearchQuery} with given
+	 * {@link Attribute}s. The {@code Attribute}s must be fully supported by the
+	 * {@code SearchQuery} associated with given {@link Entity} type. This
+	 * method allows fine grained {@link Record} configuration.
 	 *
-	 * <p><b>Note:</b> Related {@code Record}s may be merged according to the
+	 * <p>
+	 * <b>Note:</b> Related {@code Record}s may be merged according to the
 	 * cardinality of the associated {@link Relation}.
 	 *
-	 * @param <T> Type of the entities that will be generated for each result.
-	 * @param entityClass Used as the {@code SearchQuery} identifier.
-	 * @param attributes Select statements will be added for each {@code
+	 * @param <T>
+	 *            Type of the entities that will be generated for each result.
+	 * @param entityClass
+	 *            Used as the {@code SearchQuery} identifier.
+	 * @param attributes
+	 *            Select statements will be added for each {@code
 	 * 		Attribute}.
 	 * @return All {@link Result}s are returned in a {@code Map}, which maps
-	 * 		entities to related {@code Record}s.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
-	 * @throws IllegalArgumentException Thrown if given type is not associated
-	 * 		with a predefined {@code SearchQuery}.
+	 *         entities to related {@code Record}s.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the
+	 *             {@code SearchQuery} or analyzing its {@code Result}s.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given type is not associated with a predefined
+	 *             {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
 	 * @see #listEntityTypes(Class)
@@ -248,24 +288,31 @@ public interface SearchService {
 
 	/**
 	 * Executes the associated {@link SearchQuery} with given {@link Attribute}s
-	 * and {@link Filter}. Both must be fully supported by the {@code SearchQuery}
-	 * associated with given {@link Entity} type. This method allows fine
-	 * grained {@link Record} configuration.
+	 * and {@link Filter}. Both must be fully supported by the
+	 * {@code SearchQuery} associated with given {@link Entity} type. This
+	 * method allows fine grained {@link Record} configuration.
 	 *
-	 * <p><b>Note:</b> Related {@code Record}s may be merged according to the
+	 * <p>
+	 * <b>Note:</b> Related {@code Record}s may be merged according to the
 	 * cardinality of the associated {@link Relation}.
 	 *
-	 * @param <T> Type of the entities that will be generated for each result.
-	 * @param entityClass Used as the {@code SearchQuery} identifier.
-	 * @param attributes Select statements will be added for each {@code
+	 * @param <T>
+	 *            Type of the entities that will be generated for each result.
+	 * @param entityClass
+	 *            Used as the {@code SearchQuery} identifier.
+	 * @param attributes
+	 *            Select statements will be added for each {@code
 	 * 		Attribute}.
-	 * @param filter The criteria sequence.
+	 * @param filter
+	 *            The criteria sequence.
 	 * @return All {@link Result}s are returned in a {@code Map}, which maps
-	 * 		entities to related {@code Record}s.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
-	 * @throws IllegalArgumentException Thrown if given type is not associated
-	 * 		with a predefined {@code SearchQuery}.
+	 *         entities to related {@code Record}s.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the
+	 *             {@code SearchQuery} or analyzing its {@code Result}s.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given type is not associated with a predefined
+	 *             {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
 	 * @see #listEntityTypes(Class)
@@ -277,34 +324,42 @@ public interface SearchService {
 
 	/**
 	 * Executes the associated {@link SearchQuery} with given {@link Attribute}s
-	 * and {@link Filter}. Both must be fully supported by the {@code SearchQuery}
-	 * associated with given {@link Entity} type. This method allows fine
-	 * grained {@link Record} configuration. This method allows to specify a 
-	 * fulltext search query.
+	 * and {@link Filter}. Both must be fully supported by the
+	 * {@code SearchQuery} associated with given {@link Entity} type. This
+	 * method allows fine grained {@link Record} configuration. This method
+	 * allows to specify a fulltext search query.
 	 *
-	 * <p><b>Note:</b> Related {@code Record}s may be merged according to the
+	 * <p>
+	 * <b>Note:</b> Related {@code Record}s may be merged according to the
 	 * cardinality of the associated {@link Relation}.
 	 *
-	 * @param entityClass Used as the {@code SearchQuery} identifier.
-	 * @param attributes Select statements will be added for each {@code
+	 * @param entityClass
+	 *            Used as the {@code SearchQuery} identifier.
+	 * @param attributes
+	 *            Select statements will be added for each {@code
 	 * 		Attribute}.
-	 * @param filter The criteria sequence.
-	 * @param query The fulltext search query
-	 * @return All {@link Result}s found by the {@link SearchQuery} with given {@link Attribute}s.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		{@code SearchQuery} or analyzing its {@code Result}s.
-	 * @throws IllegalArgumentException Thrown if given type is not associated
-	 * 		with a predefined {@code SearchQuery}.
+	 * @param filter
+	 *            The criteria sequence.
+	 * @param query
+	 *            The fulltext search query
+	 * @return All {@link Result}s found by the {@link SearchQuery} with given
+	 *         {@link Attribute}s.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the
+	 *             {@code SearchQuery} or analyzing its {@code Result}s.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given type is not associated with a predefined
+	 *             {@code SearchQuery}.
 	 * @see #listSearchableTypes()
 	 * @see #getSearchableRoot(Class)
 	 * @see #listEntityTypes(Class)
 	 * @see Record#merge(Record)
 	 */
-	default List<Result> fetchResults(Class<? extends Entity> entityClass, List<Attribute> attributes, Filter filter, String query)
-			throws DataAccessException {
+	default List<Result> fetchResults(Class<? extends Entity> entityClass, List<Attribute> attributes, Filter filter,
+			String query) throws DataAccessException {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	default boolean isTextSearchAvailable() {
 		return false;
 	}

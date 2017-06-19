@@ -53,7 +53,8 @@ public final class User extends BaseEntity implements Deletable, Describable {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link Core}.
+	 * @param core
+	 *            The {@link Core}.
 	 */
 	User(Core core) {
 		super(core);
@@ -75,7 +76,8 @@ public final class User extends BaseEntity implements Deletable, Describable {
 	/**
 	 * Sets new given name for this user.
 	 *
-	 * @param givenName The new given name.
+	 * @param givenName
+	 *            The new given name.
 	 */
 	public void setGivenName(String givenName) {
 		getValue(ATTR_GIVEN_NAME).set(givenName);
@@ -93,7 +95,8 @@ public final class User extends BaseEntity implements Deletable, Describable {
 	/**
 	 * Sets new surname for this user.
 	 *
-	 * @param surname The new surname.
+	 * @param surname
+	 *            The new surname.
 	 */
 	public void setSurname(String surname) {
 		getValue(ATTR_SURNAME).set(surname);
@@ -111,7 +114,8 @@ public final class User extends BaseEntity implements Deletable, Describable {
 	/**
 	 * Sets new department for this user.
 	 *
-	 * @param department The new department.
+	 * @param department
+	 *            The new department.
 	 */
 	public void setDepartment(String department) {
 		getValue(ATTR_DEPARTMENT).set(department);
@@ -129,7 +133,8 @@ public final class User extends BaseEntity implements Deletable, Describable {
 	/**
 	 * Sets new phone number for this user.
 	 *
-	 * @param phone The new phone number.
+	 * @param phone
+	 *            The new phone number.
 	 */
 	public void setPhone(String phone) {
 		getValue(ATTR_PHONE).set(phone);
@@ -147,7 +152,8 @@ public final class User extends BaseEntity implements Deletable, Describable {
 	/**
 	 * Sets new e-mail address for this user.
 	 *
-	 * @param eMail The new e-mail address.
+	 * @param eMail
+	 *            The new e-mail address.
 	 */
 	public void setMail(String eMail) {
 		getValue(ATTR_EMAIL).set(eMail);

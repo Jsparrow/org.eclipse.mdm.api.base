@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 /**
  * This is a base implementation for modeled entities. API consumers should
- * never use this class in any way, instead the most common interface should
- * be used (e.g.: {@link Entity}, {@link ContextDescribable}, etc.). API
- * producers must let their {@code Entity} implementations extend this class.
+ * never use this class in any way, instead the most common interface should be
+ * used (e.g.: {@link Entity}, {@link ContextDescribable}, etc.). API producers
+ * must let their {@code Entity} implementations extend this class.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -37,7 +37,8 @@ public abstract class BaseEntity implements Entity {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link Core}.
+	 * @param core
+	 *            The {@link Core}.
 	 */
 	protected BaseEntity(Core core) {
 		this.core = core;
@@ -77,7 +78,7 @@ public abstract class BaseEntity implements Entity {
 	@Override
 	public final Value getValue(String name) {
 		Value value = getCore().getValues().get(name);
-		if(value == null) {
+		if (value == null) {
 			throw new IllegalStateException("Value with name '" + name + "' does not exist");
 		}
 		return value;
@@ -116,7 +117,8 @@ public abstract class BaseEntity implements Entity {
 	/**
 	 * Convenience method to extract {@link Core} of given {@link Entity}.
 	 *
-	 * @param entity The {@code Entity} whose {@code Core} is required.
+	 * @param entity
+	 *            The {@code Entity} whose {@code Core} is required.
 	 * @return The {@code Core} is returned.
 	 */
 	protected static Core getCore(Entity entity) {

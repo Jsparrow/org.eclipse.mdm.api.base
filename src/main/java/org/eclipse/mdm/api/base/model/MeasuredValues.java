@@ -34,10 +34,9 @@ public final class MeasuredValues {
 	private final boolean[] flags;
 
 	/*
-	 *  TODO:
-	 *  - replace name and unit with the corresponding Channel & Unit entities
-	 *  - provide AxisType, Independent flag and further informations if required
-	 *  - provide an overall offset for this value sequence
+	 * TODO: - replace name and unit with the corresponding Channel & Unit
+	 * entities - provide AxisType, Independent flag and further informations if
+	 * required - provide an overall offset for this value sequence
 	 */
 
 	private final String name;
@@ -52,23 +51,29 @@ public final class MeasuredValues {
 	/**
 	 * Constructor.
 	 *
-	 * @param scalarType The {@link ScalarType} of this measured values.
-	 * @param name This is the name of the corresponding {@link Channel}.
-	 * @param unit Name of the unit the contained values are of.
-	 * @param values The measured values.
-	 * @param flags The validity flags of the measured values.
-	 * @throws IllegalArgumentException Thrown if values or flags is null or
-	 * 		length of values and flags is not equal.
+	 * @param scalarType
+	 *            The {@link ScalarType} of this measured values.
+	 * @param name
+	 *            This is the name of the corresponding {@link Channel}.
+	 * @param unit
+	 *            Name of the unit the contained values are of.
+	 * @param values
+	 *            The measured values.
+	 * @param flags
+	 *            The validity flags of the measured values.
+	 * @throws IllegalArgumentException
+	 *             Thrown if values or flags is null or length of values and
+	 *             flags is not equal.
 	 */
 	MeasuredValues(ScalarType scalarType, String name, String unit, Object values, boolean[] flags) {
 		this.name = name;
-		this.unit = unit == null  ? "" : unit;
+		this.unit = unit == null ? "" : unit;
 		this.scalarType = scalarType;
 		this.values = values;
 
-		if(values == null || flags == null) {
+		if (values == null || flags == null) {
 			throw new IllegalArgumentException("Neither values nor flags is allowed to be null.");
-		} else if(Array.getLength(values) != flags.length) {
+		} else if (Array.getLength(values) != flags.length) {
 			throw new IllegalArgumentException("Length of values and flags is not equal.");
 		}
 
@@ -122,19 +127,22 @@ public final class MeasuredValues {
 	 * <pre>
 	 * // assume the measuredValues().getScalarType() == ScalarType.BYTE
 	 * ValueIterator&lt;Byte&gt; valueIterator = measuredValues().iterator();
-	 * while(valueIterator.hasNext()) {
+	 * while (valueIterator.hasNext()) {
 	 * 	boolean isCurrentValid = valueIterator.isValid();
 	 * 	Byte currentValue = valueIterator.next();
 	 * }
 	 * </pre>
 	 *
-	 * @param <E> This type has to be derived from the {@link ScalarType} of
-	 * 		this measured values.
+	 * @param <E>
+	 *            This type has to be derived from the {@link ScalarType} of
+	 *            this measured values.
 	 * @return A typed {@code ValueIterator} is returned.
 	 */
 	public <E> ValueIterator<E> iterator() {
-		// TODO provide custom implementations for each type and typed nextType() methods
-		// idea: getScalarType().createIterator(values, flags); // <- package private
+		// TODO provide custom implementations for each type and typed
+		// nextType() methods
+		// idea: getScalarType().createIterator(values, flags); // <- package
+		// private
 		return new ValueIterator<E>() {
 
 			private int index = 0;
@@ -152,7 +160,7 @@ public final class MeasuredValues {
 			@Override
 			@SuppressWarnings("unchecked")
 			public E next() {
-				if(hasNext()) {
+				if (hasNext()) {
 					return (E) Array.get(values, index++);
 				}
 
@@ -163,9 +171,9 @@ public final class MeasuredValues {
 
 	/**
 	 * Returns a human readable {@code String} representation of this measured
-	 * values. If this sequence contains more than 10 values, only the first
-	 * and last 5 values are written. If a value is marked as not valid, then
-	 * 'XX' is written instead of its value.
+	 * values. If this sequence contains more than 10 values, only the first and
+	 * last 5 values are written. If a value is marked as not valid, then 'XX'
+	 * is written instead of its value.
 	 *
 	 * @return The {@code String} representation of this entity.
 	 */
@@ -174,19 +182,19 @@ public final class MeasuredValues {
 		StringBuilder sb = new StringBuilder("MeasuredValues(ChannelName = ").append(getName());
 		sb.append(", ScalarType = ").append(getScalarType());
 
-		if(!getUnit().isEmpty()) {
+		if (!getUnit().isEmpty()) {
 			sb.append(", Unit = ").append(getUnit());
 		}
 
 		sb.append(", Values = [");
 		String notValidMarker = "XX";
-		if(getLength() > 10) {
+		if (getLength() > 10) {
 			sb.append(range(0, 5).mapToObj(i -> flags[i] ? readAt(values, i) : notValidMarker)
 					.collect(Collectors.joining(", ")));
 			sb.append(", ..., ");
-			sb.append(range(length-5, length).mapToObj(i -> flags[i] ? readAt(values, i) : notValidMarker)
+			sb.append(range(length - 5, length).mapToObj(i -> flags[i] ? readAt(values, i) : notValidMarker)
 					.collect(Collectors.joining(", ")));
-		} else if(getLength() > 0) {
+		} else if (getLength() > 0) {
 			sb.append(range(0, length).mapToObj(i -> flags[i] ? readAt(values, i) : notValidMarker)
 					.collect(Collectors.joining(", ")));
 		}
@@ -201,7 +209,8 @@ public final class MeasuredValues {
 	/**
 	 * The measured values iterator.
 	 *
-	 * @param <E> Type of the returned values.
+	 * @param <E>
+	 *            Type of the returned values.
 	 * @since 1.0.0
 	 * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
 	 */

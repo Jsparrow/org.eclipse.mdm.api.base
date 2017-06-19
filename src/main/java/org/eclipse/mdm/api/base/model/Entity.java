@@ -25,8 +25,8 @@ public interface Entity {
 	// ======================================================================
 
 	/**
-	 * This {@code Comparator} compares entities by their name in
-	 * ascending order.
+	 * This {@code Comparator} compares entities by their name in ascending
+	 * order.
 	 */
 	static final Comparator<Entity> COMPARATOR = Comparator.comparing(Entity::getName);
 
@@ -83,7 +83,8 @@ public interface Entity {
 	/**
 	 * Sets new name for this entity.
 	 *
-	 * @param name The new name.
+	 * @param name
+	 *            The new name.
 	 */
 	default void setName(String name) {
 		getValue(ATTR_NAME).set(name);
@@ -101,7 +102,8 @@ public interface Entity {
 	/**
 	 * Sets new {@link MimeType} for this entity.
 	 *
-	 * @param mimeType The new {@code MimeType}.
+	 * @param mimeType
+	 *            The new {@code MimeType}.
 	 */
 	default void setMimeType(MimeType mimeType) {
 		getValue(ATTR_MIMETYPE).set(mimeType.toString());
@@ -110,7 +112,8 @@ public interface Entity {
 	/**
 	 * Returns the {@link Value} container associated with given name.
 	 *
-	 * @param name Name of the attribute.
+	 * @param name
+	 *            Name of the attribute.
 	 * @return The {@code Value} container is returned.
 	 */
 	Value getValue(String name);
@@ -134,9 +137,10 @@ public interface Entity {
 	/**
 	 * Checks whether given name equals the name of this entity.
 	 *
-	 * @param name The checked name.
+	 * @param name
+	 *            The checked name.
 	 * @return Returns {@code true} if given name equals the name of this
-	 * 		entity.
+	 *         entity.
 	 */
 	default boolean nameMatches(String name) {
 		return getName().equals(name);

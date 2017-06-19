@@ -49,14 +49,16 @@ public interface SearchQuery {
 	/**
 	 * Returns the distinct {@link Value} sequence for given {@link Attribute}.
 	 * The {@code Attribute} must be supported by this search query. The
-	 * returned {@code Value} sequence is intended to be used for building filter
-	 * criteria for this search query.
+	 * returned {@code Value} sequence is intended to be used for building
+	 * filter criteria for this search query.
 	 *
-	 * @param attribute The {@code Attribute} whose distinct values will be
-	 * 		queried.
-	 * @return A distinct {@code List} of all available {@code Value}s is returned.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		query or generating the distinct {@code Value} sequence.
+	 * @param attribute
+	 *            The {@code Attribute} whose distinct values will be queried.
+	 * @return A distinct {@code List} of all available {@code Value}s is
+	 *         returned.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the query or
+	 *             generating the distinct {@code Value} sequence.
 	 * @see #getSearchableRoot()
 	 * @see #listEntityTypes()
 	 * @see #getFilterValues(Attribute, Filter)
@@ -71,12 +73,14 @@ public interface SearchQuery {
 	 * The returned {@code Value} sequence is intended to be used for building
 	 * filter criteria for this search query.
 	 *
-	 * @param attribute The {@code Attribute} whose distinct values will be
-	 * 		queried.
-	 * @param filter The criteria sequence.
+	 * @param attribute
+	 *            The {@code Attribute} whose distinct values will be queried.
+	 * @param filter
+	 *            The criteria sequence.
 	 * @return A distinct {@code List} of {@code Value}s is returned.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		query or generating the distinct {@code Value} sequence.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the query or
+	 *             generating the distinct {@code Value} sequence.
 	 * @see #getSearchableRoot()
 	 * @see #listEntityTypes()
 	 * @see #getFilterValues(Attribute)
@@ -88,11 +92,13 @@ public interface SearchQuery {
 	 * EntityType}s must be fully supported by this search query. This method
 	 * selects all {@link Attribute}s of each given {@code EntityType}.
 	 *
-	 * @param entityTypes Select statements will be added for all {@code Attribute}s
-	 * 		of each given {@code EntityType}.
+	 * @param entityTypes
+	 *            Select statements will be added for all {@code Attribute}s of
+	 *            each given {@code EntityType}.
 	 * @return All {@code Result}s are returned in a {@code List}.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		query or generating the {@code Result}s.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the query or
+	 *             generating the {@code Result}s.
 	 * @see #getSearchableRoot()
 	 * @see #listEntityTypes()
 	 * @see #fetchComplete(List, Filter)
@@ -103,16 +109,19 @@ public interface SearchQuery {
 	}
 
 	/**
-	 * Executes this search query with given {@link EntityType}s and {@link
-	 * Filter}. Both must be fully supported by this search query. This method
-	 * selects all {@link Attribute}s of each given {@code EntityType}.
+	 * Executes this search query with given {@link EntityType}s and
+	 * {@link Filter}. Both must be fully supported by this search query. This
+	 * method selects all {@link Attribute}s of each given {@code EntityType}.
 	 *
-	 * @param entityTypes Select statements will be added for all {@code Attribute}s
-	 * 		of each given {@code EntityType}.
-	 * @param filter The criteria sequence.
+	 * @param entityTypes
+	 *            Select statements will be added for all {@code Attribute}s of
+	 *            each given {@code EntityType}.
+	 * @param filter
+	 *            The criteria sequence.
 	 * @return All {@code Result}s are returned in a {@code List}.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		query or generating the {@code Result}s.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the query or
+	 *             generating the {@code Result}s.
 	 * @see #getSearchableRoot()
 	 * @see #listEntityTypes()
 	 * @see #fetchComplete(List)
@@ -125,11 +134,13 @@ public interface SearchQuery {
 	 * Attribute}s must be fully supported by this search query. This method
 	 * allows fine grained {@link Result} configuration.
 	 *
-	 * @param attributes Select statements will be added for each {@code
+	 * @param attributes
+	 *            Select statements will be added for each {@code
 	 * 		Attribute}.
 	 * @return All {@code Result}s are returned in a {@code List}.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		query or generating the {@code Result}s.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the query or
+	 *             generating the {@code Result}s.
 	 * @see #getSearchableRoot()
 	 * @see #listEntityTypes()
 	 * @see #fetch(List, Filter)
@@ -140,16 +151,19 @@ public interface SearchQuery {
 	}
 
 	/**
-	 * Executes this search query with given {@link Attribute}s and {@link Filter}.
-	 * Both must be fully supported by this search query. This method allows fine
-	 * grained {@link Result} configuration.
+	 * Executes this search query with given {@link Attribute}s and
+	 * {@link Filter}. Both must be fully supported by this search query. This
+	 * method allows fine grained {@link Result} configuration.
 	 *
-	 * @param attributes Select statements will be added for each {@code
+	 * @param attributes
+	 *            Select statements will be added for each {@code
 	 * 		Attribute}.
-	 * @param filter The criteria sequence.
+	 * @param filter
+	 *            The criteria sequence.
 	 * @return All {@code Result}s are returned in a {@code List}.
-	 * @throws DataAccessException Thrown in case of errors while executing the
-	 * 		query or generating the {@code Result}s.
+	 * @throws DataAccessException
+	 *             Thrown in case of errors while executing the query or
+	 *             generating the {@code Result}s.
 	 * @see #getSearchableRoot()
 	 * @see #listEntityTypes()
 	 * @see #fetch(List)

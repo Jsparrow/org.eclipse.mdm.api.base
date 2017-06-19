@@ -44,7 +44,8 @@ public final class ChannelGroup extends BaseEntity implements Deletable {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link Core}.
+	 * @param core
+	 *            The {@link Core}.
 	 */
 	ChannelGroup(Core core) {
 		super(core);
@@ -66,7 +67,8 @@ public final class ChannelGroup extends BaseEntity implements Deletable {
 	/**
 	 * Sets new number of values for this channel group.
 	 *
-	 * @param numberOfValues The new number of values.
+	 * @param numberOfValues
+	 *            The new number of values.
 	 */
 	public void setNumberOfValues(Integer numberOfValues) {
 		getValue(ATTR_NUMBER_OF_VALUES).set(numberOfValues);

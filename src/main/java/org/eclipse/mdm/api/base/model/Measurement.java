@@ -16,25 +16,26 @@ import java.time.LocalDateTime;
  * following related data:
  *
  * <ul>
- * 	<li>To ensure any persisted measurement can always be reinterpreted it,
- * 		always should have relations to {@link ContextRoot}s that contain
- * 		the description of the test run. All measurement entities under the
- * 		same parent {@link TestStep} must reference the same {@code
+ * <li>To ensure any persisted measurement can always be reinterpreted it,
+ * always should have relations to {@link ContextRoot}s that contain the
+ * description of the test run. All measurement entities under the same parent
+ * {@link TestStep} must reference the same {@code
  * 		ContextRoot}.</li>
- * 	<li>The results of a test run are accessible via the children of type
- * 		{@link ChannelGroup} and {@link Channel}.</li>
+ * <li>The results of a test run are accessible via the children of type
+ * {@link ChannelGroup} and {@link Channel}.</li>
  * </ul>
  *
  * The name of a measurement should be chosen in a speaking way. It has to be
- * unique under the parent {@code TestStep}.<p>
+ * unique under the parent {@code TestStep}.
+ * <p>
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see ParameterSet
  */
-public final class Measurement extends BaseEntity implements ContextDescribable, Datable, Deletable, Describable,
-FilesAttachable, Tagable {
+public final class Measurement extends BaseEntity
+		implements ContextDescribable, Datable, Deletable, Describable, FilesAttachable, Tagable {
 
 	// ======================================================================
 	// Class variables
@@ -77,7 +78,8 @@ FilesAttachable, Tagable {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link Core}.
+	 * @param core
+	 *            The {@link Core}.
 	 */
 	Measurement(Core core) {
 		super(core);
@@ -99,7 +101,8 @@ FilesAttachable, Tagable {
 	/**
 	 * Sets new time stamp for the date when this measurement was started.
 	 *
-	 * @param measurementBegin The new measurement start time stamp.
+	 * @param measurementBegin
+	 *            The new measurement start time stamp.
 	 */
 	public void setMeasurementBegin(LocalDateTime measurementBegin) {
 		getValue(ATTR_MEASUREMENT_BEGIN).set(measurementBegin);
@@ -117,7 +120,8 @@ FilesAttachable, Tagable {
 	/**
 	 * Sets new time stamp for the date when this measurement was finished.
 	 *
-	 * @param measurementEnd The new measurement execution end time stamp.
+	 * @param measurementEnd
+	 *            The new measurement execution end time stamp.
 	 */
 	public void setMeasurementEnd(LocalDateTime measurementEnd) {
 		getValue(ATTR_MEASUREMENT_END).set(measurementEnd);

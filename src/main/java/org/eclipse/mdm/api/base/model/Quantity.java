@@ -10,8 +10,8 @@ package org.eclipse.mdm.api.base.model;
 
 /**
  * Implementation of the quantity entity type. {@link Channel}s are based on
- * entities of this type. Each quantity has a relation to a default {@link
- * Unit}.
+ * entities of this type. Each quantity has a relation to a default
+ * {@link Unit}.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -55,7 +55,8 @@ public final class Quantity extends BaseEntity implements Datable, Deletable, De
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link Core}.
+	 * @param core
+	 *            The {@link Core}.
 	 */
 	Quantity(Core core) {
 		super(core);
@@ -77,7 +78,8 @@ public final class Quantity extends BaseEntity implements Datable, Deletable, De
 	/**
 	 * Sets new default rank for this quantity.
 	 *
-	 * @param defaultRank The new default rank.
+	 * @param defaultRank
+	 *            The new default rank.
 	 */
 	public void setDefaultRank(Integer defaultRank) {
 		getValue(ATTR_DEFAULT_RANK).set(defaultRank);
@@ -95,7 +97,8 @@ public final class Quantity extends BaseEntity implements Datable, Deletable, De
 	/**
 	 * Sets new default dimension for this quantity.
 	 *
-	 * @param defaultDimension The new default dimension.
+	 * @param defaultDimension
+	 *            The new default dimension.
 	 */
 	public void setDefaultDimension(int[] defaultDimension) {
 		getValue(ATTR_DEFAULT_DIMENSION).set(defaultDimension);
@@ -113,7 +116,8 @@ public final class Quantity extends BaseEntity implements Datable, Deletable, De
 	/**
 	 * Sets new default type size for this quantity.
 	 *
-	 * @param defaultTypeSize The new default type size.
+	 * @param defaultTypeSize
+	 *            The new default type size.
 	 */
 	public void setDefaultTypeSize(Integer defaultTypeSize) {
 		getValue(ATTR_DEFAULT_TYPE_SIZE).set(defaultTypeSize);
@@ -131,7 +135,8 @@ public final class Quantity extends BaseEntity implements Datable, Deletable, De
 	/**
 	 * Sets new default {@link Channel} name for this quantity.
 	 *
-	 * @param defaultChannelName The new default {@code Channel} name.
+	 * @param defaultChannelName
+	 *            The new default {@code Channel} name.
 	 */
 	public void setDefaultChannelName(String defaultChannelName) {
 		getValue(ATTR_DEFAULT_CHANNEL_NAME).set(defaultChannelName);
@@ -149,14 +154,16 @@ public final class Quantity extends BaseEntity implements Datable, Deletable, De
 	/**
 	 * Sets new default {@link ScalarType} for this quantity.
 	 *
-	 * @param defaultScalarType The new default {@code ScalarType}.
-	 * @throws IllegalArgumentException Thrown if given {@code ScalarType} is
-	 * 		{@link ScalarType#UNKNOWN}.
+	 * @param defaultScalarType
+	 *            The new default {@code ScalarType}.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given {@code ScalarType} is
+	 *             {@link ScalarType#UNKNOWN}.
 	 */
 	public void setDefaultScalarType(ScalarType defaultScalarType) {
-		if(defaultScalarType.isUnknown()) {
-			throw new IllegalArgumentException("Default scalar type constant is not allowed to be '"
-					+ defaultScalarType + "'.");
+		if (defaultScalarType.isUnknown()) {
+			throw new IllegalArgumentException(
+					"Default scalar type constant is not allowed to be '" + defaultScalarType + "'.");
 		}
 
 		getValue(ATTR_DEFAULT_SCALAR_TYPE).set(defaultScalarType);
@@ -174,7 +181,8 @@ public final class Quantity extends BaseEntity implements Datable, Deletable, De
 	/**
 	 * Sets new default {@link Unit} for this quantity.
 	 *
-	 * @param defaultUnit The new default {@code Unit}.
+	 * @param defaultUnit
+	 *            The new default {@code Unit}.
 	 */
 	public void setDefaultUnit(Unit defaultUnit) {
 		getCore().getMutableStore().set(defaultUnit);

@@ -36,7 +36,8 @@ public final class ReadRequestBuilder {
 	/**
 	 * Constructor.
 	 *
-	 * @param readRequest The {@link ReadRequest} that will be configured.
+	 * @param readRequest
+	 *            The {@link ReadRequest} that will be configured.
 	 */
 	ReadRequestBuilder(ReadRequest readRequest) {
 		this.readRequest = readRequest;
@@ -60,11 +61,12 @@ public final class ReadRequestBuilder {
 	/**
 	 * Adds given {@link Channel}s to the underlying {@link ReadRequest}.
 	 *
-	 * <p><b>Note:</b> {@code Channel}s added with this method will be ignored,
+	 * <p>
+	 * <b>Note:</b> {@code Channel}s added with this method will be ignored,
 	 * once {@link #allChannels()} was called.
 	 *
-	 * @param channels The {@code Channel}s whose measured values will be
-	 * 		loaded.
+	 * @param channels
+	 *            The {@code Channel}s whose measured values will be loaded.
 	 * @return This builder is returned.
 	 */
 	public ReadRequestBuilder channels(List<Channel> channels) {
@@ -75,11 +77,12 @@ public final class ReadRequestBuilder {
 	/**
 	 * Adds given {@link Channel}s to the underlying {@link ReadRequest}.
 	 *
-	 * <p><b>Note:</b> {@code Channel}s added with this method will be ignored,
+	 * <p>
+	 * <b>Note:</b> {@code Channel}s added with this method will be ignored,
 	 * once {@link #allChannels()} was called.
 	 *
-	 * @param channels The {@code Channel}s whose measured values will be
-	 * 		loaded.
+	 * @param channels
+	 *            The {@code Channel}s whose measured values will be loaded.
 	 * @return This builder is returned.
 	 */
 	public ReadRequestBuilder channels(Channel... channels) {
@@ -90,11 +93,14 @@ public final class ReadRequestBuilder {
 	/**
 	 * Adds given {@link Channel} to the underlying {@link ReadRequest}.
 	 *
-	 * <p><b>Note:</b> {@code Channel} added with this method will be ignored,
-	 * once {@link #allChannels()} was called.
+	 * <p>
+	 * <b>Note:</b> {@code Channel} added with this method will be ignored, once
+	 * {@link #allChannels()} was called.
 	 *
-	 * @param channel The {@code Channel} whose measured values will be loaded.
-	 * @param unit The unit of the loaded measured values.
+	 * @param channel
+	 *            The {@code Channel} whose measured values will be loaded.
+	 * @param unit
+	 *            The unit of the loaded measured values.
 	 * @return This builder is returned.
 	 */
 	public ReadRequestBuilder channel(Channel channel, Unit unit) {
@@ -105,17 +111,20 @@ public final class ReadRequestBuilder {
 	/**
 	 * Configures the number of values that will be loaded per {@link Channel}.
 	 *
-	 * <p><b>Note:</b> If the request size is zero, then all available measured
+	 * <p>
+	 * <b>Note:</b> If the request size is zero, then all available measured
 	 * values will be loaded for each configured {@link Channel}.
 	 *
-	 * @param requestSize The request size.
+	 * @param requestSize
+	 *            The request size.
 	 * @return This builder is returned.
-	 * @throws IllegalArgumentException Thrown if the request size is smaller than 0.
+	 * @throws IllegalArgumentException
+	 *             Thrown if the request size is smaller than 0.
 	 */
 	public ReadRequestBuilder requestSize(int requestSize) {
-		if(requestSize < 0) {
-			throw new IllegalArgumentException("The number of values per channel must be greater or at "
-					+ "least equal to 0.");
+		if (requestSize < 0) {
+			throw new IllegalArgumentException(
+					"The number of values per channel must be greater or at " + "least equal to 0.");
 		}
 
 		readRequest.setRequestSize(requestSize);
@@ -125,12 +134,14 @@ public final class ReadRequestBuilder {
 	/**
 	 * Configures the number of values that will be skipped.
 	 *
-	 * @param startIndex The start index.
+	 * @param startIndex
+	 *            The start index.
 	 * @return This builder is returned.
-	 * @throws IllegalArgumentException Thrown if the start index is smaller than 0.
+	 * @throws IllegalArgumentException
+	 *             Thrown if the start index is smaller than 0.
 	 */
 	public ReadRequestBuilder startIndex(int startIndex) {
-		if(startIndex < 0) {
+		if (startIndex < 0) {
 			throw new IllegalArgumentException("The start index must be greater or at least equal to 0.");
 		}
 
@@ -143,7 +154,8 @@ public final class ReadRequestBuilder {
 	 * configured {@link Channel} and returns the configured {@code
 	 * ReadRequest}.
 	 *
-	 * <p><b>Note:</b> Before calling this the {@code Channel}s whose measured
+	 * <p>
+	 * <b>Note:</b> Before calling this the {@code Channel}s whose measured
 	 * values have to be loaded must be configured.
 	 *
 	 * @return This builder is returned.

@@ -20,13 +20,13 @@ import org.eclipse.mdm.api.base.model.Value;
  * Provides access to the internals of any entity:
  *
  * <ul>
- * 	<li>name of the data source</li>
- * 	<li>name of the type</li>
- * 	<li>instance ID</li>
- * 	<li>values</li>
- * 	<li>added/removed file links</li>
- * 	<li>related entities</li>
- * 	<li>parent/child entities</li>
+ * <li>name of the data source</li>
+ * <li>name of the type</li>
+ * <li>instance ID</li>
+ * <li>values</li>
+ * <li>added/removed file links</li>
+ * <li>related entities</li>
+ * <li>parent/child entities</li>
  * </ul>
  *
  * @since 1.0.0
@@ -57,7 +57,8 @@ public final class DefaultCore implements Core {
 	/**
 	 * Constructs a new {@link Core} initialized with a queried {@link Record}.
 	 *
-	 * @param record The queried {@code Record}.
+	 * @param record
+	 *            The queried {@code Record}.
 	 */
 	public DefaultCore(Record record) {
 		setID(record.getID());
@@ -75,7 +76,8 @@ public final class DefaultCore implements Core {
 	/**
 	 * Constructs a new empty {@link Core}.
 	 *
-	 * @param entityType The associated {@link EntityType}.
+	 * @param entityType
+	 *            The associated {@link EntityType}.
 	 */
 	public DefaultCore(EntityType entityType) {
 		setID(Long.valueOf(0L));
@@ -135,13 +137,13 @@ public final class DefaultCore implements Core {
 	 */
 	@Override
 	public void hideValues(Collection<String> names) {
-		if(names.isEmpty()) {
+		if (names.isEmpty()) {
 			return;
 		}
 
-		for(String name : names) {
+		for (String name : names) {
 			Value value = values.remove(name);
-			if(name != null) {
+			if (name != null) {
 				hiddenValues.put(name, value);
 			}
 		}
@@ -152,7 +154,7 @@ public final class DefaultCore implements Core {
 	 */
 	@Override
 	public Map<String, Value> getAllValues() {
-		if(hiddenValues.isEmpty()) {
+		if (hiddenValues.isEmpty()) {
 			return values;
 		}
 

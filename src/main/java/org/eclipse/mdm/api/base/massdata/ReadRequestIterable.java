@@ -35,7 +35,8 @@ public final class ReadRequestIterable implements Iterable<ReadRequest>, Iterato
 	/**
 	 * Constructor.
 	 *
-	 * @param readRequest The {@link ReadRequest}.
+	 * @param readRequest
+	 *            The {@link ReadRequest}.
 	 */
 	ReadRequestIterable(ReadRequest readRequest) {
 		this.readRequest = readRequest;
@@ -58,7 +59,7 @@ public final class ReadRequestIterable implements Iterable<ReadRequest>, Iterato
 	 */
 	@Override
 	public ReadRequest next() {
-		if(hasNext()) {
+		if (hasNext()) {
 			readRequest = count == 0 ? readRequest : new ReadRequest(readRequest);
 			count++;
 			return readRequest;

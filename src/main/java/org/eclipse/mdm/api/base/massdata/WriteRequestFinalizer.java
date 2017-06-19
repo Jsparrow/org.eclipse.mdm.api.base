@@ -31,7 +31,8 @@ public class WriteRequestFinalizer {
 	/**
 	 * Constructor.
 	 *
-	 * @param writeRequest The configured {@link WriteRequest}.
+	 * @param writeRequest
+	 *            The configured {@link WriteRequest}.
 	 */
 	WriteRequestFinalizer(WriteRequest writeRequest) {
 		this.writeRequest = writeRequest;
