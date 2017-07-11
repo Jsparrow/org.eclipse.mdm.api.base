@@ -18,3 +18,8 @@ repositories {
     mavenLocal()
     mavenCentral()
 }
+
+dependencies {
+    // testing
+    testCompile 'junit:junit:4.12'
+}
