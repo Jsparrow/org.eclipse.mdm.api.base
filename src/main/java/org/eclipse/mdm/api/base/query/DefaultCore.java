@@ -32,7 +32,7 @@ import org.eclipse.mdm.api.base.model.Value;
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  */
-public final class DefaultCore implements Core {
+public class DefaultCore implements Core {
 
 	// ======================================================================
 	// Instance variables
