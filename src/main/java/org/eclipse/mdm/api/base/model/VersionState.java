@@ -16,7 +16,7 @@ package org.eclipse.mdm.api.base.model;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see FileLink
  */
-public enum VersionState {
+public class VersionState extends EnumerationValue {
 
 	// ======================================================================
 	// Enumerations
@@ -26,7 +26,7 @@ public enum VersionState {
 	 * An entity with this version state is still editable and hence not allowed
 	 * be used when creating new entities.
 	 */
-	EDITABLE,
+	public static final VersionState EDITABLE = new VersionState(); 
 
 	/**
 	 * An entity with this version state is no longer editable and is allowed to
@@ -36,7 +36,7 @@ public enum VersionState {
 	 * <b>Note:</b> If an entity's version state is this state, then its version
 	 * state is only allowed to be changed to {@link #ARCHIVED}.
 	 */
-	VALID,
+	public static final VersionState VALID = new VersionState(); 
 
 	/**
 	 * An entity with this version state is neither editable nor is it allowed
@@ -46,7 +46,7 @@ public enum VersionState {
 	 * <b>Note:</b> If an entity's version state is this state, then its version
 	 * state is no longer allowed to be changed.
 	 */
-	ARCHIVED;
+	public static final VersionState ARCHIVED = new VersionState(); 
 
 	// ======================================================================
 	// Public methods

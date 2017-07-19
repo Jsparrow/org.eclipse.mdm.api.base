@@ -8,6 +8,7 @@
 
 package org.eclipse.mdm.api.base;
 
+import org.eclipse.mdm.api.base.model.Enumeration;
 import org.eclipse.mdm.api.base.model.ValueType;
 import org.eclipse.mdm.api.base.query.Attribute;
 import org.eclipse.mdm.api.base.query.EntityType;
@@ -50,7 +51,7 @@ public class AttributeImpl implements Attribute {
 	}
 
 	@Override
-	public Class<? extends Enum<?>> getEnumClass() {
+	public Enumeration<?> getEnumObj() {
 		throw new UnsupportedOperationException();
 	}
 }

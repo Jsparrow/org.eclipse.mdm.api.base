@@ -21,7 +21,10 @@ import java.time.LocalDateTime;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public enum ScalarType {
+
+
+
+public class ScalarType extends EnumerationValue {
 
 	// ======================================================================
 	// Enumerations
@@ -31,96 +34,96 @@ public enum ScalarType {
 	 * A {@link MeasuredValues} with this type contains an array sequence of
 	 * {@code String} values.
 	 */
-	STRING(ValueType.STRING_SEQUENCE, String.class),
+	public static final ScalarType STRING = new ScalarType(ValueType.STRING_SEQUENCE, String.class);
 
 	/**
 	 * A {@link MeasuredValues} with this type contains an array sequence of
 	 * {@code LocalDateTime} values.
 	 */
-	DATE(ValueType.DATE_SEQUENCE, LocalDateTime.class),
+	public static final ScalarType DATE = new ScalarType(ValueType.DATE_SEQUENCE, LocalDateTime.class);
 
 	/**
 	 * A {@link MeasuredValues} with this type contains an array sequence of
 	 * {@code boolean} values.
 	 */
-	BOOLEAN(ValueType.BOOLEAN_SEQUENCE, boolean.class),
+	public static final ScalarType BOOLEAN = new ScalarType(ValueType.BOOLEAN_SEQUENCE, boolean.class);
 
 	/**
 	 * A {@link MeasuredValues} with this type contains an array sequence of
 	 * {@code byte} values.
 	 */
-	BYTE(ValueType.BYTE_SEQUENCE, byte.class),
+	public static final ScalarType BYTE = new ScalarType(ValueType.BYTE_SEQUENCE, byte.class);
 
 	/**
 	 * A {@link MeasuredValues} with this type contains an array sequence of
 	 * {@code short} values.
 	 */
-	SHORT(ValueType.SHORT_SEQUENCE, short.class),
+	public static final ScalarType SHORT = new ScalarType(ValueType.SHORT_SEQUENCE, short.class);
 
 	/**
 	 * A {@link MeasuredValues} with this type contains an array sequence of
 	 * {@code int} values.
 	 */
-	INTEGER(ValueType.INTEGER_SEQUENCE, int.class),
+	public static final ScalarType INTEGER = new ScalarType(ValueType.INTEGER_SEQUENCE, int.class);
 
 	/**
 	 * A {@link MeasuredValues} with this type contains an array sequence of
 	 * {@code long} values.
 	 */
-	LONG(ValueType.LONG_SEQUENCE, long.class),
+	public static final ScalarType LONG = new ScalarType(ValueType.LONG_SEQUENCE, long.class);
 
 	/**
 	 * A {@link MeasuredValues} with this type contains an array sequence of
 	 * {@code float} values.
 	 */
-	FLOAT(ValueType.FLOAT_SEQUENCE, float.class),
+	public static final ScalarType FLOAT = new ScalarType(ValueType.FLOAT_SEQUENCE, float.class);
 
 	/**
 	 * A {@link MeasuredValues} with this type contains an array sequence of
 	 * {@code double} values.
 	 */
-	DOUBLE(ValueType.DOUBLE_SEQUENCE, double.class),
+	public static final ScalarType DOUBLE = new ScalarType(ValueType.DOUBLE_SEQUENCE, double.class);
 
 	/**
 	 * A {@link MeasuredValues} with this type contains an array sequence of
 	 * {@code byte[]} values.
 	 */
-	BYTE_STREAM(ValueType.BYTE_STREAM_SEQUENCE, byte[].class),
+	public static final ScalarType BYTE_STREAM = new ScalarType(ValueType.BYTE_STREAM_SEQUENCE, byte[].class);
 
 	/**
 	 * A {@link MeasuredValues} with this type contains an array sequence of
 	 * {@code FloatComplex} values.
 	 */
-	FLOAT_COMPLEX(ValueType.FLOAT_COMPLEX_SEQUENCE, FloatComplex.class),
+	public static final ScalarType FLOAT_COMPLEX = new ScalarType(ValueType.FLOAT_COMPLEX_SEQUENCE, FloatComplex.class);
 
 	/**
 	 * A {@link MeasuredValues} with this type contains an array sequence of
 	 * {@code DoubleComplex} values.
 	 */
-	DOUBLE_COMPLEX(ValueType.DOUBLE_COMPLEX_SEQUENCE, DoubleComplex.class),
+	public static final ScalarType DOUBLE_COMPLEX = new ScalarType(ValueType.DOUBLE_COMPLEX_SEQUENCE, DoubleComplex.class);
 
 	/**
 	 * {@link MeasuredValues} are not allowed to be of this type. This constant
 	 * may be used in other contexts.
 	 */
-	ENUMERATION(ValueType.ENUMERATION_SEQUENCE),
+	public static final ScalarType ENUMERATION = new ScalarType(ValueType.ENUMERATION_SEQUENCE);
 
 	/**
 	 * A {@link MeasuredValues} with this type contains an array sequence of
 	 * {@code FileLink} values.
 	 */
-	FILE_LINK(ValueType.FILE_LINK_SEQUENCE, FileLink.class),
+	public static final ScalarType FILE_LINK = new ScalarType(ValueType.FILE_LINK_SEQUENCE, FileLink.class);
 
 	/**
 	 * TODO ...
 	 */
-	BLOB(ValueType.BLOB, Object.class),
+	public static final ScalarType BLOB = new ScalarType(ValueType.BLOB, Object.class);
 
 	/**
 	 * {@link MeasuredValues} are not allowed to be of this type. This constant
 	 * may be used in other contexts.
 	 */
-	UNKNOWN(ValueType.UNKNOWN);
+	public static final ScalarType UNKNOWN = new ScalarType(ValueType.UNKNOWN);
 
 	// ======================================================================
 	// Instance variables

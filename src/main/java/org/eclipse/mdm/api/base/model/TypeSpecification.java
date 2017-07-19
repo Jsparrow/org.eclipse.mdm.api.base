@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Gigatronik Ingolstadt GmbH
+ * Copyright (c) 2016 Gigatronik Ingolstadt GmbH and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -16,86 +16,86 @@ package org.eclipse.mdm.api.base.model;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see Channel
  */
-public enum TypeSpecification {
+public class TypeSpecification extends EnumerationValue {
 
 	// ======================================================================
 	// Enumerations
 	// ======================================================================
 
-	BOOLEAN,
+	final static TypeSpecification BOOLEAN = new TypeSpecification();
 
-	BYTE,
+	final static TypeSpecification BYTE = new TypeSpecification();
 
-	SHORT,
+	final static TypeSpecification SHORT = new TypeSpecification();
 
-	INTEGER,
+	final static TypeSpecification INTEGER = new TypeSpecification();
 
-	LONG,
+	final static TypeSpecification LONG = new TypeSpecification();
 
-	FLOAT,
+	final static TypeSpecification FLOAT = new TypeSpecification();
 
-	DOUBLE,
+	final static TypeSpecification DOUBLE = new TypeSpecification();
 
-	SHORT_BEO,
+	final static TypeSpecification SHORT_BEO = new TypeSpecification();
 
-	INTEGER_BEO,
+	final static TypeSpecification INTEGER_BEO = new TypeSpecification();
 
-	LONG_BEO,
+	final static TypeSpecification LONG_BEO = new TypeSpecification();
 
-	FLOAT_BEO,
+	final static TypeSpecification FLOAT_BEO = new TypeSpecification();
 
-	DOUBLE_BEO,
+	final static TypeSpecification DOUBLE_BEO = new TypeSpecification();
 
-	STRING,
+	final static TypeSpecification STRING = new TypeSpecification();
 
-	BYTE_STREAM,
+	final static TypeSpecification BYTE_STREAM = new TypeSpecification();
 
-	BLOB,
+	final static TypeSpecification BLOB = new TypeSpecification();
 
-	BOOLEAN_FLAGS_BEO,
+	final static TypeSpecification BOOLEAN_FLAGS_BEO = new TypeSpecification();
 
-	BYTE_FLAGS_BEO,
+	final static TypeSpecification BYTE_FLAGS_BEO = new TypeSpecification();
 
-	STRING_FLAGS_BEO,
+	final static TypeSpecification STRING_FLAGS_BEO = new TypeSpecification();
 
-	BYTE_STREAM_BEO,
+	final static TypeSpecification BYTE_STREAM_BEO = new TypeSpecification();
 
 	// SBYTE,
-	SIGNED_BYTE,
+	final static TypeSpecification SIGNED_BYTE = new TypeSpecification();
 
 	// SBYTE_FLAGS_BEO,
-	SIGNED_BYTE_FLAGS_BEO,
+	final static TypeSpecification SIGNED_BYTE_FLAGS_BEO = new TypeSpecification();
 
 	// USHORT,
-	UNSIGNED_SHORT,
+	final static TypeSpecification UNSIGNED_SHORT = new TypeSpecification();
 
 	// USHORT_BEO,
-	UNSIGNED_SHORT_BEO,
+	final static TypeSpecification UNSIGNED_SHORT_BEO = new TypeSpecification();
 
 	// UINTEGER,
-	UNSIGNED_INTEGER,
+	final static TypeSpecification UNSIGNED_INTEGER = new TypeSpecification();
 
 	// UINTEGER_BEO,
-	UNSIGNED_INTEGER_BEO,
+	final static TypeSpecification UNSIGNED_INTEGER_BEO = new TypeSpecification();
 
-	STRING_UTF8,
+	final static TypeSpecification STRING_UTF8 = new TypeSpecification();
 
-	STRING_UTF8_FLAGS_BEO,
+	final static TypeSpecification STRING_UTF8_FLAGS_BEO = new TypeSpecification();
 
 	// BIT_INT,
-	BIT_INTEGER,
+	final static TypeSpecification BIT_INTEGER = new TypeSpecification();
 
 	// BIT_INT_BEO,
-	BIT_INTEGER_BEO,
+	final static TypeSpecification BIT_INTEGER_BEO = new TypeSpecification();
 
 	// BIT_UINT,
-	BIT_UNSIGNED_INTEGER,
+	final static TypeSpecification BIT_UNSIGNED_INTEGER = new TypeSpecification();
 
 	// BIT_UINT_BEO,
-	BIT_UNSIGNED_INTEGER_BEO,
+	final static TypeSpecification BIT_UNSIGNED_INTEGER_BEO = new TypeSpecification();
 
-	BIT_FLOAT,
+	final static TypeSpecification BIT_FLOAT = new TypeSpecification();
 
-	BIT_FLOAT_BEO
+	final static TypeSpecification BIT_FLOAT_BEO = new TypeSpecification();
 
 }

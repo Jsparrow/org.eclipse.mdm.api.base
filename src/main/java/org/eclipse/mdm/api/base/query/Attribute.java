@@ -8,6 +8,7 @@
 
 package org.eclipse.mdm.api.base.query;
 
+import org.eclipse.mdm.api.base.model.Enumeration;
 import org.eclipse.mdm.api.base.model.Value;
 import org.eclipse.mdm.api.base.model.ValueType;
 
@@ -66,7 +67,7 @@ public interface Attribute {
 	 *             neither {@link ValueType#ENUMERATION} nor
 	 *             {@link ValueType#ENUMERATION_SEQUENCE}.
 	 */
-	Class<? extends Enum<?>> getEnumClass();
+	Enumeration<?> getEnumObj();
 
 	/**
 	 * Creates a new and empty {@link Value}.
@@ -76,7 +77,7 @@ public interface Attribute {
 	default Value createValue() {
 		ValueType valueType = getValueType();
 		if (valueType.isEnumerationType()) {
-			return valueType.create(getEnumClass(), getName());
+			return valueType.create(getEnumObj(), getName());
 		} else {
 			return valueType.create(getName());
 		}
@@ -119,7 +120,7 @@ public interface Attribute {
 	default Value createValueSeq(String unit, Object input) {
 		ValueType valueType = getValueType().toSequenceType();
 		if (valueType.isEnumerationType()) {
-			return valueType.create(getEnumClass(), getName(), unit, true, input);
+			return valueType.create(getEnumObj(), getName(), unit, true, input, getEnumObj().getName());
 		} else {
 			return valueType.create(getName(), unit, true, input);
 		}
@@ -140,7 +141,7 @@ public interface Attribute {
 	default Value createValue(String unit, boolean valid, Object input) {
 		ValueType valueType = getValueType();
 		if (valueType.isEnumerationType()) {
-			return valueType.create(getEnumClass(), getName(), unit, valid, input);
+			return valueType.create(getEnumObj(), getName(), unit, valid, input, getEnumObj().getName());
 		} else {
 			return valueType.create(getName(), unit, valid, input);
 		}

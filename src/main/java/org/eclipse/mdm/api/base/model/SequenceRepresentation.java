@@ -16,7 +16,7 @@ package org.eclipse.mdm.api.base.model;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see Channel
  */
-public enum SequenceRepresentation {
+public class SequenceRepresentation extends EnumerationValue {
 
 	// ======================================================================
 	// Enumerations
@@ -26,14 +26,14 @@ public enum SequenceRepresentation {
 	 * Measured values are stored as is and values are therefore immediately
 	 * available.
 	 */
-	EXPLICIT,
+	public static final SequenceRepresentation EXPLICIT = new SequenceRepresentation();
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> = p for i
 	 * &isin; [1, n], n is the total number of values and generation parameter p
 	 * (offset).
 	 */
-	IMPLICIT_CONSTANT,
+	public static final SequenceRepresentation IMPLICIT_CONSTANT = new SequenceRepresentation();
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> =
@@ -41,7 +41,7 @@ public enum SequenceRepresentation {
 	 * number of values and generation parameters p<sub>1</sub> (start value)
 	 * and p<sub>2</sub> (increment).
 	 */
-	IMPLICIT_LINEAR,
+	public static final SequenceRepresentation IMPLICIT_LINEAR = new SequenceRepresentation();
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> =
@@ -52,7 +52,7 @@ public enum SequenceRepresentation {
 	 * (p<sub>3</sub>-p<sub>1</sub>)/p<sub>2</sub> must be truncated to integer
 	 * to start each saw curve cycle at p<sub>1</sub>.
 	 */
-	IMPLICIT_SAW,
+	public static final SequenceRepresentation IMPLICIT_SAW = new SequenceRepresentation();
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> =
@@ -60,7 +60,7 @@ public enum SequenceRepresentation {
 	 * total number of values and generation parameters p<sub>1</sub> (offset),
 	 * p<sub>2</sub> (factor) and the raw value r at position i.
 	 */
-	RAW_LINEAR,
+	public static final SequenceRepresentation RAW_LINEAR = new SequenceRepresentation();
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> = &sum;
@@ -70,13 +70,18 @@ public enum SequenceRepresentation {
 	 * p<sub>j</sub> for j &isin; [1, p<sub>1</sub>] and the raw value r at
 	 * position i.
 	 */
-	RAW_POLYNOMIAL,
+	public static final SequenceRepresentation RAW_POLYNOMIAL = new SequenceRepresentation();
 
+	/*
+	 * Not used. Do not remove, because this changes the ordinal numbers of the enumeration.
+	 */
+	public static final SequenceRepresentation FORMULA = new SequenceRepresentation();
+	
 	/**
 	 * Measured values are stored as is in an external file and values are
 	 * therefore immediately available.
 	 */
-	EXPLICIT_EXTERNAL,
+	public static final SequenceRepresentation EXPLICIT_EXTERNAL = new SequenceRepresentation();
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> =
@@ -85,7 +90,7 @@ public enum SequenceRepresentation {
 	 * p<sub>2</sub> (factor) and the raw value r at position i read from an
 	 * external file.
 	 */
-	RAW_LINEAR_EXTERNAL,
+	public static final SequenceRepresentation RAW_LINEAR_EXTERNAL = new SequenceRepresentation();
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> = &sum;
@@ -95,7 +100,7 @@ public enum SequenceRepresentation {
 	 * p<sub>j</sub> for j &isin; [1, p<sub>1</sub>] and the raw value r at
 	 * position i read from an external file.
 	 */
-	RAW_POLYNOMIAL_EXTERNAL,
+	public static final SequenceRepresentation RAW_POLYNOMIAL_EXTERNAL = new SequenceRepresentation();
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> =
@@ -104,7 +109,7 @@ public enum SequenceRepresentation {
 	 * p<sub>1</sub> (offset), p<sub>2</sub> (factor), p<sub>2</sub>
 	 * (calibration) and the raw value r at position i.
 	 */
-	RAW_LINEAR_CALIBRATED,
+	public static final SequenceRepresentation RAW_LINEAR_CALIBRATED = new SequenceRepresentation();
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> =
@@ -114,7 +119,7 @@ public enum SequenceRepresentation {
 	 * (calibration) and the raw value r at position i read from an external
 	 * file.
 	 */
-	RAW_LINEAR_CALIBRATED_EXTERNAL;
+	public static final SequenceRepresentation RAW_LINEAR_CALIBRATED_EXTERNAL = new SequenceRepresentation();
 
 	// ======================================================================
 	// Public methods
