@@ -321,7 +321,7 @@ public abstract class BaseEntityFactory {
 		testStep.setDateCreated(LocalDateTime.now());
 		testStep.setOptional(Boolean.TRUE);
 
-		if (test.getID() != null && test.getID().length() > 0 && Long.valueOf(test.getID()) > 0) {
+		if (test.getID() != null && test.getID().length() > 0) {
 			// highest sort index in use will be queried before written
 			testStep.setSortIndex(Integer.valueOf(-1));
 		} else {
