@@ -43,7 +43,7 @@ public interface NotificationListener {
 	 * @param user
 	 *            The user who deleted the entities.
 	 */
-	void instanceDeleted(EntityType entityType, List<Long> ids, User user);
+	void instanceDeleted(EntityType entityType, List<String> ids, User user);
 
 	/**
 	 * Called when the application model is changed by the server
@@ -66,5 +66,5 @@ public interface NotificationListener {
 	 * @param user
 	 *            The user who modified security information.
 	 */
-	void securityModified(EntityType entityType, List<Long> ids, User user);
+	void securityModified(EntityType entityType, List<String> ids, User user);
 }

@@ -68,7 +68,7 @@ public abstract class BaseEntity implements Entity {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Long getID() {
+	public String getID() {
 		return getCore().getID();
 	}
 

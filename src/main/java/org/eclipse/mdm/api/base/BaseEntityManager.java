@@ -121,7 +121,7 @@ public interface BaseEntityManager<S extends BaseEntityFactory> {
 	 * @throws DataAccessException
 	 *             Thrown if unable to retrieve the entity.
 	 */
-	<T extends Entity> T load(Class<T> entityClass, Long instanceID) throws DataAccessException;
+	<T extends Entity> T load(Class<T> entityClass, String instanceID) throws DataAccessException;
 
 	/**
 	 * Loads all available entities of given type. This method is useful while

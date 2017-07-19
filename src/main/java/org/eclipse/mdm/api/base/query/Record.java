@@ -76,7 +76,7 @@ public final class Record {
 	 * @throws IllegalStateException
 	 *             Thrown if the ID {@code Value} container is not available.
 	 */
-	public Long getID() {
+	public String getID() {
 		Value idValue = getValues().get(getEntityType().getIDAttribute().getName());
 		if (idValue == null) {
 			throw new IllegalStateException("ID attribute was not selected.");
@@ -96,7 +96,7 @@ public final class Record {
 	 *             Thrown if the requested foreign key was not selected prior
 	 *             executing the query.
 	 */
-	public Optional<Long> getID(Relation relation) {
+	public Optional<String> getID(Relation relation) {
 		Value idValue = getValues().get(relation.getName());
 		if (idValue == null) {
 			throw new IllegalStateException("Relation attribute '" + relation + "' was not selected.");

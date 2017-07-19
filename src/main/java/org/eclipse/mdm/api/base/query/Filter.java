@@ -63,9 +63,9 @@ public final class Filter implements Iterable<FilterItem> {
 	 * @param id
 	 *            The instance ID.
 	 * @return The created filter is returned.
-	 * @see #id(EntityType, Long)
+	 * @see #id(EntityType, String)
 	 */
-	public static Filter idOnly(EntityType entityType, Long id) {
+	public static Filter idOnly(EntityType entityType, String id) {
 		return and().id(entityType, id);
 	}
 
@@ -78,9 +78,9 @@ public final class Filter implements Iterable<FilterItem> {
 	 * @param id
 	 *            The instance ID.
 	 * @return The created filter is returned.
-	 * @see #id(Relation, Long)
+	 * @see #id(Relation, String)
 	 */
-	public static Filter idOnly(Relation relation, Long id) {
+	public static Filter idOnly(Relation relation, String id) {
 		return and().id(relation, id);
 	}
 
@@ -95,7 +95,7 @@ public final class Filter implements Iterable<FilterItem> {
 	 * @return The created filter is returned.
 	 * @see #ids(EntityType, Collection)
 	 */
-	public static Filter idsOnly(EntityType entityType, Collection<Long> ids) {
+	public static Filter idsOnly(EntityType entityType, Collection<String> ids) {
 		return and().ids(entityType, ids);
 	}
 
@@ -110,7 +110,7 @@ public final class Filter implements Iterable<FilterItem> {
 	 * @return The created filter is returned.
 	 * @see #ids(Relation, Collection)
 	 */
-	public static Filter idsOnly(Relation relation, Collection<Long> ids) {
+	public static Filter idsOnly(Relation relation, Collection<String> ids) {
 		return and().ids(relation, ids);
 	}
 
@@ -207,7 +207,7 @@ public final class Filter implements Iterable<FilterItem> {
 	 * @return Returns this filter.
 	 * @see #add(Condition)
 	 */
-	public Filter id(EntityType entityType, Long id) {
+	public Filter id(EntityType entityType, String id) {
 		add(Operation.EQUAL.create(entityType.getIDAttribute(), id));
 		return this;
 	}
@@ -223,7 +223,7 @@ public final class Filter implements Iterable<FilterItem> {
 	 * @return Returns this filter.
 	 * @see #add(Condition)
 	 */
-	public Filter id(Relation relation, Long id) {
+	public Filter id(Relation relation, String id) {
 		add(Operation.EQUAL.create(relation.getAttribute(), id));
 		return this;
 	}
@@ -239,9 +239,9 @@ public final class Filter implements Iterable<FilterItem> {
 	 * @return Returns this filter
 	 * @see #add(Condition)
 	 */
-	public Filter ids(EntityType entityType, Collection<Long> ids) {
+	public Filter ids(EntityType entityType, Collection<String> ids) {
 		add(Operation.IN_SET.create(entityType.getIDAttribute(),
-				ids.stream().distinct().mapToLong(Long::longValue).toArray()));
+				ids.stream().distinct().toArray(String[]::new)));
 		return this;
 	}
 
@@ -256,9 +256,9 @@ public final class Filter implements Iterable<FilterItem> {
 	 * @return Returns this filter.
 	 * @see #add(Condition)
 	 */
-	public Filter ids(Relation relation, Collection<Long> ids) {
+	public Filter ids(Relation relation, Collection<String> ids) {
 		add(Operation.IN_SET.create(relation.getAttribute(),
-				ids.stream().distinct().mapToLong(Long::longValue).toArray()));
+				ids.stream().distinct().toArray(String[]::new)));
 		return this;
 	}
 

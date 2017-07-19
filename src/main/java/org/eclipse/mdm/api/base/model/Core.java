@@ -62,7 +62,7 @@ public interface Core {
 	 *
 	 * @return The instance ID is returned.
 	 */
-	Long getID();
+	String getID();
 
 	/**
 	 * Sets an instance ID.
@@ -70,7 +70,7 @@ public interface Core {
 	 * @param instanceID
 	 *            The new instance ID.
 	 */
-	void setID(Long instanceID);
+	void setID(String instanceID);
 
 	/**
 	 * Returns <i>all</i> {@link Value} containers of this entity.
@@ -421,7 +421,8 @@ public interface Core {
 		@SuppressWarnings("unchecked")
 		public void remove(Deletable child) {
 			List<Deletable> children = (List<Deletable>) current.getOrDefault(child.getClass(), new ArrayList<>());
-			if (children.remove(child) && child.getID() > 0) {
+			if (children.remove(child) && child.getID() != null && child.getID().length() > 0
+					&& Long.valueOf(child.getID()) > 0) {
 				((List<Deletable>) removed.computeIfAbsent(child.getClass(), k -> new ArrayList<>())).add(child);
 			}
 		}

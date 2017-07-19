@@ -51,7 +51,7 @@ public interface EntityType {
 	 *
 	 * @return The ID is returned.
 	 */
-	long getId();
+	String getId();
 
 	/**
 	 * Returns all {@link Attribute}s of this entity type.

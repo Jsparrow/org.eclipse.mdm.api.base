@@ -69,7 +69,7 @@ public interface Entity {
 	 *
 	 * @return The instance ID is returned.
 	 */
-	Long getID();
+	String getID();
 
 	/**
 	 * Returns the name of this entity.
