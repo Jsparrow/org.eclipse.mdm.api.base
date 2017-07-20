@@ -100,5 +100,5 @@ public interface ModelManager {
 	 * @throws IllegalArgumentException
 	 *             Thrown if {@code EntityType} with given ID does not exist.
 	 */
-	EntityType getEntityType(long id);
+	EntityType getEntityTypeById(String id);
 }

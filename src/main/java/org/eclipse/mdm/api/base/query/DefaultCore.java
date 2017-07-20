@@ -48,7 +48,7 @@ public class DefaultCore implements Core {
 	private final String sourceName;
 	private final String typeName;
 
-	private Long instanceID;
+	private String instanceID;
 
 	// ======================================================================
 	// Constructors
@@ -74,13 +74,13 @@ public class DefaultCore implements Core {
 	}
 
 	/**
-	 * Constructs a new empty {@link Core}.
+	 * Constructs a new empty {@link Core}. The ID is set to an empty String.
 	 *
 	 * @param entityType
 	 *            The associated {@link EntityType}.
 	 */
 	public DefaultCore(EntityType entityType) {
-		setID(Long.valueOf(0L));
+		setID("");
 		values.putAll(entityType.createValues());
 		values.remove(Entity.ATTR_ID);
 
@@ -112,7 +112,7 @@ public class DefaultCore implements Core {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Long getID() {
+	public String getID() {
 		return instanceID;
 	}
 
@@ -120,7 +120,7 @@ public class DefaultCore implements Core {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setID(Long instanceID) {
+	public void setID(String instanceID) {
 		this.instanceID = instanceID;
 	}
 

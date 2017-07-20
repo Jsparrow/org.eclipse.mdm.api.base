@@ -8,13 +8,16 @@
 
 package org.eclipse.mdm.api.base.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
+import org.eclipse.mdm.api.base.CoreImpl;
+import org.eclipse.mdm.api.base.EntityFactoryImpl;
 import org.eclipse.mdm.api.base.massdata.UnitBuilder;
 import org.eclipse.mdm.api.base.massdata.WriteRequest;
 import org.eclipse.mdm.api.base.massdata.WriteRequestBuilder;
@@ -29,114 +32,6 @@ import org.eclipse.mdm.api.base.model.MeasuredValues.ValueIterator;
  *
  */
 public class ModelTest {
-	/**
-	 * 
-	 * Very basic implementation of BaseEntityFactory for testing purposes. We
-	 * deliver a core containing data on initialization to simulate other data
-	 * sources.
-	 * 
-	 * @author Florian Schmitt
-	 *
-	 */
-	private class EntityFactoryImpl extends BaseEntityFactory {
-
-		private Core core;
-
-		EntityFactoryImpl(Core core) {
-			this.core = core;
-		}
-
-		@Override
-		protected Optional<User> getLoggedInUser() {
-			return Optional.ofNullable(null);
-		}
-
-		@Override
-		protected <T extends Entity> Core createCore(Class<T> entityClass) {
-			return core;
-		}
-
-		@Override
-		protected <T extends Entity> Core createCore(Class<T> entityClass, ContextType contextType) {
-			return core;
-		}
-
-		@Override
-		protected <T extends Entity> Core createCore(String name, Class<T> entityClass) {
-			return core;
-		}
-
-	}
-
-	/**
-	 * 
-	 * Very basic implementation of the Core class. The contents is initialized
-	 * via a given map (instead of using a database or some other method)
-	 * 
-	 * @author Florian Schmitt
-	 */
-	private class CoreImpl implements Core {
-
-		private Map<String, Value> values;
-		private EntityStore mutableStore;
-
-		public CoreImpl(Map<String, Value> values) {
-			super();
-			this.values = values;
-			this.mutableStore = new EntityStore();
-		}
-
-		@Override
-		public String getSourceName() {
-			return "UnitTestSource";
-		}
-
-		@Override
-		public String getTypeName() {
-			return "UnitTestType";
-		}
-
-		@Override
-		public Long getID() {
-			return 4711l;
-		}
-
-		@Override
-		public void setID(Long instanceID) {
-
-		}
-
-		@Override
-		public Map<String, Value> getValues() {
-			return values;
-		}
-
-		@Override
-		public void hideValues(Collection<String> names) {
-
-		}
-
-		@Override
-		public Map<String, Value> getAllValues() {
-			return values;
-		}
-
-		@Override
-		public EntityStore getMutableStore() {
-			return mutableStore;
-		}
-
-		@Override
-		public EntityStore getPermanentStore() {
-			return new EntityStore();
-		}
-
-		@Override
-		public ChildrenStore getChildrenStore() {
-			return new ChildrenStore();
-		}
-
-	}
 
 	/**
 	 * Quick and dirty comparison of two numbers for approximate equality

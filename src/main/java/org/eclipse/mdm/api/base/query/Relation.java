@@ -67,7 +67,7 @@ public interface Relation {
 	 * @return Created {@code Value} is returned.
 	 */
 	default Value createValue() {
-		return ValueType.LONG.create(getName());
+		return ValueType.STRING.create(getName());
 	}
 
 	/**
