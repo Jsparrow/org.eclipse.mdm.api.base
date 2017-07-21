@@ -31,14 +31,14 @@ public enum ValueType {
 	STRING(String.class, ""),
 
 	/**
-	 * A {@link Value} with this type contains a {@code String[]} value
-	 * replaces {@code null} with an empty {@code String} array.
+	 * A {@link Value} with this type contains a {@code String[]} value replaces
+	 * {@code null} with an empty {@code String} array.
 	 */
 	STRING_SEQUENCE(String[].class, new String[0]),
 
 	/**
-	 * A {@link Value} with this type contains a {@link LocalDateTime} value
-	 * and does not replace {@code null}.
+	 * A {@link Value} with this type contains a {@link LocalDateTime} value and
+	 * does not replace {@code null}.
 	 */
 	DATE(LocalDateTime.class, null),
 
@@ -49,7 +49,7 @@ public enum ValueType {
 	DATE_SEQUENCE(LocalDateTime[].class, new LocalDateTime[0]),
 
 	/**
-	 * A {@link Value} with this type contains a {@link Boolean} value  and
+	 * A {@link Value} with this type contains a {@link Boolean} value and
 	 * replaces {@code null} with {@link Boolean#FALSE}.
 	 */
 	BOOLEAN(Boolean.class, Boolean.FALSE),
@@ -61,8 +61,8 @@ public enum ValueType {
 	BOOLEAN_SEQUENCE(boolean[].class, new boolean[0]),
 
 	/**
-	 * A {@link Value} with this type contains a {@link Byte} value and
-	 * replaces {@code null} with a {@code Byte} containing zero.
+	 * A {@link Value} with this type contains a {@link Byte} value and replaces
+	 * {@code null} with a {@code Byte} containing zero.
 	 */
 	BYTE(Byte.class, Byte.valueOf((byte) 0)),
 
@@ -97,8 +97,8 @@ public enum ValueType {
 	INTEGER_SEQUENCE(int[].class, new int[0]),
 
 	/**
-	 * A {@link Value} with this type contains a {@link Long} value and
-	 * replaces {@code null} with a {@code Long} containing zero.
+	 * A {@link Value} with this type contains a {@link Long} value and replaces
+	 * {@code null} with a {@code Long} containing zero.
 	 */
 	LONG(Long.class, Long.valueOf(0)),
 
@@ -145,8 +145,8 @@ public enum ValueType {
 	BYTE_STREAM_SEQUENCE(byte[][].class, new byte[0][]),
 
 	/**
-	 * A {@link Value} with this type contains a {@link FloatComplex} value
-	 * and does not replaces {@code null}.
+	 * A {@link Value} with this type contains a {@link FloatComplex} value and
+	 * does not replaces {@code null}.
 	 */
 	FLOAT_COMPLEX(FloatComplex.class, null),
 
@@ -157,8 +157,8 @@ public enum ValueType {
 	FLOAT_COMPLEX_SEQUENCE(FloatComplex[].class, new FloatComplex[0]),
 
 	/**
-	 * A {@link Value} with this type contains a {@link DoubleComplex} value
-	 * and does not replaces {@code null}.
+	 * A {@link Value} with this type contains a {@link DoubleComplex} value and
+	 * does not replaces {@code null}.
 	 */
 	DOUBLE_COMPLEX(DoubleComplex.class, null),
 
@@ -169,8 +169,8 @@ public enum ValueType {
 	DOUBLE_COMPLEX_SEQUENCE(DoubleComplex[].class, new DoubleComplex[0]),
 
 	/**
-	 * A {@link Value} with this type contains a modeled enumeration
-	 * constant value and does not replace {@code null}.
+	 * A {@link Value} with this type contains a modeled enumeration constant
+	 * value and does not replace {@code null}.
 	 *
 	 * @see #create(Class, String)
 	 * @see #create(Class, String, String, boolean, Object)
@@ -178,9 +178,9 @@ public enum ValueType {
 	ENUMERATION,
 
 	/**
-	 * A {@link Value} with this type contains a modeled enumeration
-	 * constant array value and replaces {@code null} with an empty
-	 * array with defined component type.
+	 * A {@link Value} with this type contains a modeled enumeration constant
+	 * array value and replaces {@code null} with an empty array with defined
+	 * component type.
 	 *
 	 * @see #create(Class, String)
 	 * @see #create(Class, String, String, boolean, Object)
@@ -188,8 +188,8 @@ public enum ValueType {
 	ENUMERATION_SEQUENCE,
 
 	/**
-	 * A {@link Value} with this type contains a {@link FileLink} value and
-	 * does not replace {@code null}.
+	 * A {@link Value} with this type contains a {@link FileLink} value and does
+	 * not replace {@code null}.
 	 */
 	FILE_LINK(FileLink.class, null),
 
@@ -205,9 +205,9 @@ public enum ValueType {
 	BLOB(Object.class, null),
 
 	/**
-	 * A {@link Value} with this type contains a {@link Object} value and
-	 * does not replace {@code null}. This value type does not have a
-	 * corresponding sequence type.
+	 * A {@link Value} with this type contains a {@link Object} value and does
+	 * not replace {@code null}. This value type does not have a corresponding
+	 * sequence type.
 	 */
 	UNKNOWN;
 
@@ -222,8 +222,8 @@ public enum ValueType {
 	private final Class<?> type;
 
 	/**
-	 * The default value will be used in {@link Value#set(Object)} to replace
-	 * a {@code null} input argument.
+	 * The default value will be used in {@link Value#set(Object)} to replace a
+	 * {@code null} input argument.
 	 */
 	private final Object defaultValue;
 
@@ -232,8 +232,8 @@ public enum ValueType {
 	// ======================================================================
 
 	/**
-	 * Constructor - May only be used to create {@link #ENUMERATION}, {@link
-	 * #ENUMERATION_SEQUENCE} or {@link #UNKNOWN} types.
+	 * Constructor - May only be used to create {@link #ENUMERATION},
+	 * {@link #ENUMERATION_SEQUENCE} or {@link #UNKNOWN} types.
 	 */
 	private ValueType() {
 		this(null, null);
@@ -242,10 +242,12 @@ public enum ValueType {
 	/**
 	 * Constructor.
 	 *
-	 * @param type The type of value a {@link Value} with this value type will
-	 * 		accept.
-	 * @param defaultValue Will be used as {@code null} replacement in {@link
-	 * 		Value#set(Object)}.
+	 * @param type
+	 *            The type of value a {@link Value} with this value type will
+	 *            accept.
+	 * @param defaultValue
+	 *            Will be used as {@code null} replacement in
+	 *            {@link Value#set(Object)}.
 	 */
 	private ValueType(Class<?> type, Object defaultValue) {
 		this.type = type;
@@ -258,17 +260,20 @@ public enum ValueType {
 
 	/**
 	 * Creates a new {@link Value} initialized with given name. The {@code
-	 * Value}'s initial validity flag will be set to {@code true}, the unit
-	 * name will be omitted.
+	 * Value}'s initial validity flag will be set to {@code true}, the unit name
+	 * will be omitted.
 	 *
-	 * <p><b>Note:</b> This method is only allowed to be called where {@link
-	 * #isEnumerationType()} returns {@code false}.
+	 * <p>
+	 * <b>Note:</b> This method is only allowed to be called where
+	 * {@link #isEnumerationType()} returns {@code false}.
 	 *
-	 * @param name The name of the attribute.
-	 * @param input The initial value.
+	 * @param name
+	 *            The name of the attribute.
+	 * @param input
+	 *            The initial value.
 	 * @return The created {@code Value} is returned.
-	 * @throws IllegalStateException Thrown if {@link #isEnumerationType()} returns
-	 * 		{@code true}.
+	 * @throws IllegalStateException
+	 *             Thrown if {@link #isEnumerationType()} returns {@code true}.
 	 */
 	public Value create(String name, Object input) {
 		return create(name, "", true, input);
@@ -277,16 +282,18 @@ public enum ValueType {
 	/**
 	 * Creates a new {@link Value} initialized with given name. The {@code
 	 * Value}'s initial validity flag will be set to {@code false}, the unit
-	 * name will be omitted. The initial value will be the one defined in {@link
-	 * #defaultValue}.
+	 * name will be omitted. The initial value will be the one defined in
+	 * {@link #defaultValue}.
 	 *
-	 * <p><b>Note:</b> This method is only allowed to be called where {@link
-	 * #isEnumerationType()} returns {@code false}.
+	 * <p>
+	 * <b>Note:</b> This method is only allowed to be called where
+	 * {@link #isEnumerationType()} returns {@code false}.
 	 *
-	 * @param name The name of the attribute.
+	 * @param name
+	 *            The name of the attribute.
 	 * @return The created {@code Value} is returned.
-	 * @throws IllegalStateException Thrown if {@link #isEnumerationType()} returns
-	 * 		{@code true}.
+	 * @throws IllegalStateException
+	 *             Thrown if {@link #isEnumerationType()} returns {@code true}.
 	 */
 	public Value create(String name) {
 		return create(name, "", false, defaultValue);
@@ -295,19 +302,24 @@ public enum ValueType {
 	/**
 	 * Creates a new {@link Value} initialized with given arguments.
 	 *
-	 * <p><b>Note:</b> This method is only allowed to be called where {@link
-	 * #isEnumerationType()} returns {@code false}.
+	 * <p>
+	 * <b>Note:</b> This method is only allowed to be called where
+	 * {@link #isEnumerationType()} returns {@code false}.
 	 *
-	 * @param name The name of the attribute.
-	 * @param unit The unit name of the attribute.
-	 * @param valid The initial validity flag.
-	 * @param input The initial value.
+	 * @param name
+	 *            The name of the attribute.
+	 * @param unit
+	 *            The unit name of the attribute.
+	 * @param valid
+	 *            The initial validity flag.
+	 * @param input
+	 *            The initial value.
 	 * @return The created {@code Value} is returned.
-	 * @throws IllegalStateException Thrown if {@link #isEnumerationType()} returns
-	 * 		{@code true}.
+	 * @throws IllegalStateException
+	 *             Thrown if {@link #isEnumerationType()} returns {@code true}.
 	 */
 	public Value create(String name, String unit, boolean valid, Object input) {
-		if(isEnumerationType()) {
+		if (isEnumerationType()) {
 			throw new IllegalStateException("This value type is an enumeration type.");
 		}
 
@@ -318,18 +330,22 @@ public enum ValueType {
 	 * Creates a new {@link Value} initialized with given name. The {@code
 	 * Value}'s initial validity flag will be set to {@code false}, the unit
 	 * name will be omitted. The initial value will be {@code null} if
-	 * {@link #isSequence()} returns {@code false} otherwise an empty
-	 * array with given component type in enumClass is used.
+	 * {@link #isSequence()} returns {@code false} otherwise an empty array with
+	 * given component type in enumClass is used.
 	 *
-	 * <p><b>Note:</b> This method is only allowed to be called where {@link
-	 * #isEnumerationType()} returns {@code true}.
+	 * <p>
+	 * <b>Note:</b> This method is only allowed to be called where
+	 * {@link #isEnumerationType()} returns {@code true}.
 	 *
-	 * @param <E> Modeled enumeration type.
-	 * @param enumClass The enumeration class type will be used for validity checking.
-	 * @param name The name of the attribute.
+	 * @param <E>
+	 *            Modeled enumeration type.
+	 * @param enumClass
+	 *            The enumeration class type will be used for validity checking.
+	 * @param name
+	 *            The name of the attribute.
 	 * @return The created {@code Value} is returned.
-	 * @throws IllegalStateException Thrown if {@link #isEnumerationType()} returns
-	 * 		{@code false}.
+	 * @throws IllegalStateException
+	 *             Thrown if {@link #isEnumerationType()} returns {@code false}.
 	 */
 	public <E extends Enum<?>> Value create(Class<E> enumClass, String name) {
 		return create(enumClass, name, "", false, null);
@@ -338,25 +354,31 @@ public enum ValueType {
 	/**
 	 * Creates a new {@link Value} initialized with given arguments.
 	 *
-	 * <p><b>Note:</b> This method is only allowed to be called where {@link
-	 * #isEnumerationType()} returns {@code true}.
+	 * <p>
+	 * <b>Note:</b> This method is only allowed to be called where
+	 * {@link #isEnumerationType()} returns {@code true}.
 	 *
-	 * @param <E> Modeled enumeration type.
-	 * @param enumClass The enumeration class type will be used for validity checking.
-	 * @param name The name of the attribute.
-	 * @param unit The unit name of the attribute.
-	 * @param valid The initial validity flag.
-	 * @param input The initial value.
+	 * @param <E>
+	 *            Modeled enumeration type.
+	 * @param enumClass
+	 *            The enumeration class type will be used for validity checking.
+	 * @param name
+	 *            The name of the attribute.
+	 * @param unit
+	 *            The unit name of the attribute.
+	 * @param valid
+	 *            The initial validity flag.
+	 * @param input
+	 *            The initial value.
 	 * @return The created {@code Value} is returned.
-	 * @throws IllegalStateException Thrown if {@link #isEnumerationType()} returns
-	 * 		{@code false}.
+	 * @throws IllegalStateException
+	 *             Thrown if {@link #isEnumerationType()} returns {@code false}.
 	 */
-	public <E extends Enum<?>> Value create(Class<E> enumClass, String name, String unit,
-			boolean valid, Object input) {
-		if(isEnumerationType()) {
+	public <E extends Enum<?>> Value create(Class<E> enumClass, String name, String unit, boolean valid, Object input) {
+		if (isEnumerationType()) {
 			Object nullReplacement = null;
 			Class<?> valueClass = enumClass;
-			if(isSequence()) {
+			if (isSequence()) {
 				nullReplacement = Array.newInstance(enumClass, 0);
 				valueClass = nullReplacement.getClass();
 			}
@@ -371,8 +393,8 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #STRING}</li>
-	 * 	<li>{@link #STRING_SEQUENCE}</li>
+	 * <li>{@link #STRING}</li>
+	 * <li>{@link #STRING_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -384,8 +406,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #STRING}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isString() {
 		return STRING == this;
@@ -394,8 +416,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #STRING_SEQUENCE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isStringSequence() {
 		return STRING_SEQUENCE == this;
@@ -405,8 +427,8 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #DATE}</li>
-	 * 	<li>{@link #DATE_SEQUENCE}</li>
+	 * <li>{@link #DATE}</li>
+	 * <li>{@link #DATE_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -418,8 +440,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #DATE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isDate() {
 		return DATE == this;
@@ -428,8 +450,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #DATE_SEQUENCE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isDateSequence() {
 		return DATE_SEQUENCE == this;
@@ -439,8 +461,8 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #BOOLEAN}</li>
-	 * 	<li>{@link #BOOLEAN_SEQUENCE}</li>
+	 * <li>{@link #BOOLEAN}</li>
+	 * <li>{@link #BOOLEAN_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -452,8 +474,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #BOOLEAN}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isBoolean() {
 		return BOOLEAN == this;
@@ -462,8 +484,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #BOOLEAN_SEQUENCE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isBooleanSequence() {
 		return BOOLEAN_SEQUENCE == this;
@@ -473,18 +495,18 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #BYTE}</li>
-	 * 	<li>{@link #BYTE_SEQUENCE}</li>
-	 * 	<li>{@link #SHORT}</li>
-	 * 	<li>{@link #SHORT_SEQUENCE}</li>
-	 * 	<li>{@link #INTEGER}</li>
-	 * 	<li>{@link #INTEGER_SEQUENCE}</li>
-	 * 	<li>{@link #LONG}</li>
-	 * 	<li>{@link #LONG_SEQUENCE}</li>
-	 * 	<li>{@link #FLOAT}</li>
-	 * 	<li>{@link #FLOAT_SEQUENCE}</li>
-	 * 	<li>{@link #DOUBLE}</li>
-	 * 	<li>{@link #DOUBLE_SEQUENCE}</li>
+	 * <li>{@link #BYTE}</li>
+	 * <li>{@link #BYTE_SEQUENCE}</li>
+	 * <li>{@link #SHORT}</li>
+	 * <li>{@link #SHORT_SEQUENCE}</li>
+	 * <li>{@link #INTEGER}</li>
+	 * <li>{@link #INTEGER_SEQUENCE}</li>
+	 * <li>{@link #LONG}</li>
+	 * <li>{@link #LONG_SEQUENCE}</li>
+	 * <li>{@link #FLOAT}</li>
+	 * <li>{@link #FLOAT_SEQUENCE}</li>
+	 * <li>{@link #DOUBLE}</li>
+	 * <li>{@link #DOUBLE_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -497,14 +519,14 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #BYTE}</li>
-	 * 	<li>{@link #BYTE_SEQUENCE}</li>
-	 * 	<li>{@link #SHORT}</li>
-	 * 	<li>{@link #SHORT_SEQUENCE}</li>
-	 * 	<li>{@link #INTEGER}</li>
-	 * 	<li>{@link #INTEGER_SEQUENCE}</li>
-	 * 	<li>{@link #LONG}</li>
-	 * 	<li>{@link #LONG_SEQUENCE}</li>
+	 * <li>{@link #BYTE}</li>
+	 * <li>{@link #BYTE_SEQUENCE}</li>
+	 * <li>{@link #SHORT}</li>
+	 * <li>{@link #SHORT_SEQUENCE}</li>
+	 * <li>{@link #INTEGER}</li>
+	 * <li>{@link #INTEGER_SEQUENCE}</li>
+	 * <li>{@link #LONG}</li>
+	 * <li>{@link #LONG_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -517,8 +539,8 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #BYTE}</li>
-	 * 	<li>{@link #BYTE_SEQUENCE}</li>
+	 * <li>{@link #BYTE}</li>
+	 * <li>{@link #BYTE_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -530,8 +552,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #BYTE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isByte() {
 		return BYTE == this;
@@ -540,8 +562,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #BYTE_SEQUENCE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isByteSequence() {
 		return BYTE_SEQUENCE == this;
@@ -551,8 +573,8 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #SHORT}</li>
-	 * 	<li>{@link #SHORT_SEQUENCE}</li>
+	 * <li>{@link #SHORT}</li>
+	 * <li>{@link #SHORT_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -564,8 +586,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #SHORT}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isShort() {
 		return SHORT == this;
@@ -574,8 +596,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #SHORT_SEQUENCE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isShortSequence() {
 		return SHORT_SEQUENCE == this;
@@ -585,8 +607,8 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #INTEGER}</li>
-	 * 	<li>{@link #INTEGER_SEQUENCE}</li>
+	 * <li>{@link #INTEGER}</li>
+	 * <li>{@link #INTEGER_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -598,8 +620,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #INTEGER}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isInteger() {
 		return INTEGER == this;
@@ -608,8 +630,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #INTEGER_SEQUENCE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isIntegerSequence() {
 		return INTEGER_SEQUENCE == this;
@@ -619,8 +641,8 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #LONG}</li>
-	 * 	<li>{@link #LONG_SEQUENCE}</li>
+	 * <li>{@link #LONG}</li>
+	 * <li>{@link #LONG_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -632,8 +654,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #LONG}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isLong() {
 		return LONG == this;
@@ -642,8 +664,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #LONG_SEQUENCE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isLongSequence() {
 		return LONG_SEQUENCE == this;
@@ -653,10 +675,10 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #FLOAT}</li>
-	 * 	<li>{@link #FLOAT_SEQUENCE}</li>
-	 * 	<li>{@link #DOUBLE}</li>
-	 * 	<li>{@link #DOUBLE_SEQUENCE}</li>
+	 * <li>{@link #FLOAT}</li>
+	 * <li>{@link #FLOAT_SEQUENCE}</li>
+	 * <li>{@link #DOUBLE}</li>
+	 * <li>{@link #DOUBLE_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -669,8 +691,8 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #FLOAT}</li>
-	 * 	<li>{@link #FLOAT_SEQUENCE}</li>
+	 * <li>{@link #FLOAT}</li>
+	 * <li>{@link #FLOAT_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -682,8 +704,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #FLOAT}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isFloat() {
 		return FLOAT == this;
@@ -692,8 +714,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #FLOAT_SEQUENCE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isFloatSequence() {
 		return FLOAT_SEQUENCE == this;
@@ -703,8 +725,8 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #DOUBLE}</li>
-	 * 	<li>{@link #DOUBLE_SEQUENCE}</li>
+	 * <li>{@link #DOUBLE}</li>
+	 * <li>{@link #DOUBLE_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -716,8 +738,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #DOUBLE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isDouble() {
 		return DOUBLE == this;
@@ -726,8 +748,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #DOUBLE_SEQUENCE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isDoubleSequence() {
 		return DOUBLE_SEQUENCE == this;
@@ -737,8 +759,8 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #BYTE_STREAM}</li>
-	 * 	<li>{@link #BYTE_STREAM_SEQUENCE}</li>
+	 * <li>{@link #BYTE_STREAM}</li>
+	 * <li>{@link #BYTE_STREAM_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -750,8 +772,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #BYTE_STREAM}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isByteStream() {
 		return BYTE_STREAM == this;
@@ -760,8 +782,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #BYTE_STREAM_SEQUENCE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isByteStreamSequence() {
 		return BYTE_STREAM_SEQUENCE == this;
@@ -771,10 +793,10 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #FLOAT_COMPLEX}</li>
-	 * 	<li>{@link #FLOAT_COMPLEX_SEQUENCE}</li>
-	 * 	<li>{@link #DOUBLE_COMPLEX}</li>
-	 * 	<li>{@link #DOUBLE_COMPLEX_SEQUENCE}</li>
+	 * <li>{@link #FLOAT_COMPLEX}</li>
+	 * <li>{@link #FLOAT_COMPLEX_SEQUENCE}</li>
+	 * <li>{@link #DOUBLE_COMPLEX}</li>
+	 * <li>{@link #DOUBLE_COMPLEX_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -787,8 +809,8 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #FLOAT_COMPLEX}</li>
-	 * 	<li>{@link #FLOAT_COMPLEX_SEQUENCE}</li>
+	 * <li>{@link #FLOAT_COMPLEX}</li>
+	 * <li>{@link #FLOAT_COMPLEX_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -800,8 +822,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #FLOAT_COMPLEX}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isFloatComplex() {
 		return FLOAT_COMPLEX == this;
@@ -810,8 +832,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #FLOAT_COMPLEX_SEQUENCE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isFloatComplexSequence() {
 		return FLOAT_COMPLEX_SEQUENCE == this;
@@ -821,8 +843,8 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #DOUBLE_COMPLEX}</li>
-	 * 	<li>{@link #DOUBLE_COMPLEX_SEQUENCE}</li>
+	 * <li>{@link #DOUBLE_COMPLEX}</li>
+	 * <li>{@link #DOUBLE_COMPLEX_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -834,8 +856,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #DOUBLE_COMPLEX}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isDoubleComplex() {
 		return DOUBLE_COMPLEX == this;
@@ -844,8 +866,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #DOUBLE_COMPLEX_SEQUENCE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isDoubleComplexSequence() {
 		return DOUBLE_COMPLEX_SEQUENCE == this;
@@ -855,8 +877,8 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #ENUMERATION}</li>
-	 * 	<li>{@link #ENUMERATION_SEQUENCE}</li>
+	 * <li>{@link #ENUMERATION}</li>
+	 * <li>{@link #ENUMERATION_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -868,8 +890,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #ENUMERATION}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isEnumeration() {
 		return ENUMERATION == this;
@@ -878,8 +900,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #ENUMERATION_SEQUENCE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isEnumerationSequence() {
 		return ENUMERATION_SEQUENCE == this;
@@ -889,8 +911,8 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #FILE_LINK}</li>
-	 * 	<li>{@link #FILE_LINK_SEQUENCE}</li>
+	 * <li>{@link #FILE_LINK}</li>
+	 * <li>{@link #FILE_LINK_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -902,8 +924,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #FILE_LINK}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isFileLink() {
 		return FILE_LINK == this;
@@ -912,8 +934,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #FILE_LINK_SEQUENCE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isFileLinkSequence() {
 		return FILE_LINK_SEQUENCE == this;
@@ -922,8 +944,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #BLOB}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isBlob() {
 		return BLOB == this;
@@ -932,8 +954,8 @@ public enum ValueType {
 	/**
 	 * Returns true if this value type is {@link #UNKNOWN}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isUnknown() {
 		return UNKNOWN == this;
@@ -943,20 +965,20 @@ public enum ValueType {
 	 * Returns true if this value type is one of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #STRING_SEQUENCE}</li>
-	 * 	<li>{@link #DATE_SEQUENCE}</li>
-	 * 	<li>{@link #BOOLEAN_SEQUENCE}</li>
-	 * 	<li>{@link #BYTE_SEQUENCE}</li>
-	 * 	<li>{@link #SHORT_SEQUENCE}</li>
-	 * 	<li>{@link #INTEGER_SEQUENCE}</li>
-	 * 	<li>{@link #LONG_SEQUENCE}</li>
-	 * 	<li>{@link #FLOAT_SEQUENCE}</li>
-	 * 	<li>{@link #DOUBLE_SEQUENCE}</li>
-	 * 	<li>{@link #BYTE_STREAM_SEQUENCE}</li>
-	 * 	<li>{@link #FLOAT_COMPLEX_SEQUENCE}</li>
-	 * 	<li>{@link #DOUBLE_COMPLEX_SEQUENCE}</li>
-	 * 	<li>{@link #ENUMERATION_SEQUENCE}</li>
-	 * 	<li>{@link #FILE_LINK_SEQUENCE}</li>
+	 * <li>{@link #STRING_SEQUENCE}</li>
+	 * <li>{@link #DATE_SEQUENCE}</li>
+	 * <li>{@link #BOOLEAN_SEQUENCE}</li>
+	 * <li>{@link #BYTE_SEQUENCE}</li>
+	 * <li>{@link #SHORT_SEQUENCE}</li>
+	 * <li>{@link #INTEGER_SEQUENCE}</li>
+	 * <li>{@link #LONG_SEQUENCE}</li>
+	 * <li>{@link #FLOAT_SEQUENCE}</li>
+	 * <li>{@link #DOUBLE_SEQUENCE}</li>
+	 * <li>{@link #BYTE_STREAM_SEQUENCE}</li>
+	 * <li>{@link #FLOAT_COMPLEX_SEQUENCE}</li>
+	 * <li>{@link #DOUBLE_COMPLEX_SEQUENCE}</li>
+	 * <li>{@link #ENUMERATION_SEQUENCE}</li>
+	 * <li>{@link #FILE_LINK_SEQUENCE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -972,7 +994,7 @@ public enum ValueType {
 	 * @return The sequence version of this value type is returned.
 	 */
 	public ValueType toSequenceType() {
-		if(isSequence()) {
+		if (isSequence()) {
 			return this;
 		}
 
@@ -986,7 +1008,7 @@ public enum ValueType {
 	 * @return The sequence version of this value type is returned.
 	 */
 	public ValueType toSingleType() {
-		if(isSequence()) {
+		if (isSequence()) {
 			return ValueType.valueOf(name().replace("_SEQUENCE", ""));
 		}
 
@@ -997,11 +1019,11 @@ public enum ValueType {
 	 * Returns the value class for this value type.
 	 *
 	 * @return The value class is returned.
-	 * @throws IllegalStateException Thrown if {@link #isEnumerationType()}
-	 * 		returns {@code true}.
+	 * @throws IllegalStateException
+	 *             Thrown if {@link #isEnumerationType()} returns {@code true}.
 	 */
 	public Class<?> getValueClass() {
-		if(isEnumerationType()) {
+		if (isEnumerationType()) {
 			throw new IllegalStateException("");
 		}
 		return type;

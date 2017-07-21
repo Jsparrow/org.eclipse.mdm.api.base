@@ -13,8 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * This interface extends the {@link Entity} interface and provides getter
- * and setter methods for the 'FileLinks' sequence field of an entity.
+ * This interface extends the {@link Entity} interface and provides getter and
+ * setter methods for the 'FileLinks' sequence field of an entity.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -48,7 +48,8 @@ public interface FilesAttachable extends Entity {
 	/**
 	 * Replaces current set of linked files with given {@link FileLink}s.
 	 *
-	 * @param fileLinks The new {@code FileLink}s.
+	 * @param fileLinks
+	 *            The new {@code FileLink}s.
 	 */
 	default void setFileLinks(FileLink[] fileLinks) {
 		getValue(ATTR_FILE_LINKS).set(fileLinks);
@@ -57,7 +58,8 @@ public interface FilesAttachable extends Entity {
 	/**
 	 * Adds given {@link FileLink} to the current set of linked files.
 	 *
-	 * @param fileLink The new {@code FileLink}.
+	 * @param fileLink
+	 *            The new {@code FileLink}.
 	 */
 	default void addFileLink(FileLink fileLink) {
 		FileLink[] fileLinks = getFileLinks();
@@ -71,7 +73,8 @@ public interface FilesAttachable extends Entity {
 	/**
 	 * Removes given {@link FileLink} from current set of linked files.
 	 *
-	 * @param fileLink The {@code FileLink} which shall be removed.
+	 * @param fileLink
+	 *            The {@code FileLink} which shall be removed.
 	 */
 	default void removeFileLink(FileLink fileLink) {
 		List<FileLink> fileLinks = new ArrayList<>(Arrays.asList(getFileLinks()));

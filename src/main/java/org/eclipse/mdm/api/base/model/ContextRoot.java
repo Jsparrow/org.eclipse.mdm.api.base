@@ -16,15 +16,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of the context root entity types. This is the root node of
- * the descriptive component structure for a {@link ContextType}. This element
- * is used for both, order and measured result description data. If it belongs
- * to an order description, then a relation to a {@link TestStep} exists.
- * Otherwise it represents the description of a measurement and therefore has
- * one ore more relations to {@link Measurement}s. In the base application
- * model the component structure is provided as is. An extension of the base
- * application model may define a template, the structure of contained {@link
- * ContextComponent}s and {@link ContextSensor}s will be restricted to.
+ * Implementation of the context root entity types. This is the root node of the
+ * descriptive component structure for a {@link ContextType}. This element is
+ * used for both, order and measured result description data. If it belongs to
+ * an order description, then a relation to a {@link TestStep} exists. Otherwise
+ * it represents the description of a measurement and therefore has one ore more
+ * relations to {@link Measurement}s. In the base application model the
+ * component structure is provided as is. An extension of the base application
+ * model may define a template, the structure of contained
+ * {@link ContextComponent}s and {@link ContextSensor}s will be restricted to.
  * Additionally the <b>names</b> of all related {@code ContextComponent}s have
  * to be unique.
  *
@@ -56,7 +56,8 @@ public final class ContextRoot extends BaseEntity implements Deletable {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link Core}.
+	 * @param core
+	 *            The {@link Core}.
 	 */
 	ContextRoot(Core core) {
 		super(core);
@@ -79,9 +80,10 @@ public final class ContextRoot extends BaseEntity implements Deletable {
 	/**
 	 * Returns the {@link ContextComponent} identified by given name.
 	 *
-	 * @param name The name of the {@code ContextComponent}.
-	 * @return The {@code Optional} is empty if a {@code ContextComponent}
-	 * 		with given name does not exist.
+	 * @param name
+	 *            The name of the {@code ContextComponent}.
+	 * @return The {@code Optional} is empty if a {@code ContextComponent} with
+	 *         given name does not exist.
 	 */
 	public Optional<ContextComponent> getContextComponent(String name) {
 		return getContextComponents().stream().filter(cc -> cc.nameMatches(name)).findAny();
@@ -100,13 +102,14 @@ public final class ContextRoot extends BaseEntity implements Deletable {
 	/**
 	 * Removes the {@link ContextComponent} identified by given name.
 	 *
-	 * @param name Name of the {@code ContextComponent} that have to be removed.
+	 * @param name
+	 *            Name of the {@code ContextComponent} that have to be removed.
 	 * @return Returns {@code true} if the {@code ContextComponent} with given
-	 * 		name has been removed.
+	 *         name has been removed.
 	 */
 	public boolean removeContextComponent(String name) {
 		Optional<ContextComponent> contextComponent = getContextComponent(name);
-		if(contextComponent.isPresent()) {
+		if (contextComponent.isPresent()) {
 			getCore().getChildrenStore().remove(contextComponent.get());
 			return true;
 		}
@@ -115,20 +118,20 @@ public final class ContextRoot extends BaseEntity implements Deletable {
 	}
 
 	/**
-	 * Returns all available {@link ContextSensor}s related to the {@link
-	 * ContextComponent}s, which are held by this context root.
+	 * Returns all available {@link ContextSensor}s related to the
+	 * {@link ContextComponent}s, which are held by this context root.
 	 *
 	 * @return The returned {@code List} will always be empty if this context
-	 * 		root is of type {@link ContextType#UNITUNDERTEST} or {@link
-	 * 		ContextType#TESTSEQUENCE}.
+	 *         root is of type {@link ContextType#UNITUNDERTEST} or
+	 *         {@link ContextType#TESTSEQUENCE}.
 	 */
 	public List<ContextSensor> getContextSensors() {
-		if(!getContextType().isTestEquipment()) {
+		if (!getContextType().isTestEquipment()) {
 			return Collections.emptyList();
 		}
 
-		return getContextComponents().stream().map(ContextComponent::getContextSensors)
-				.collect(ArrayList::new, List::addAll, List::addAll);
+		return getContextComponents().stream().map(ContextComponent::getContextSensors).collect(ArrayList::new,
+				List::addAll, List::addAll);
 	}
 
 	/**
@@ -143,7 +146,8 @@ public final class ContextRoot extends BaseEntity implements Deletable {
 	/**
 	 * Sets new version for this context root.
 	 *
-	 * @param version The new version.
+	 * @param version
+	 *            The new version.
 	 */
 	public void setVersion(String version) {
 		getValue(ATTR_VERSION).set(version);
@@ -159,7 +163,7 @@ public final class ContextRoot extends BaseEntity implements Deletable {
 		sb.append(getValues().values().stream().map(Value::toString).collect(Collectors.joining(", ")));
 
 		List<ContextComponent> contextComponents = getContextComponents();
-		if(!contextComponents.isEmpty()) {
+		if (!contextComponents.isEmpty()) {
 			sb.append(", ContextComponents = ").append(contextComponents);
 		}
 
@@ -170,7 +174,8 @@ public final class ContextRoot extends BaseEntity implements Deletable {
 	 * Convenience method to access the {@link ContextRoot}s of newly created
 	 * {@link ContextDescribable}.
 	 *
-	 * @param contextDescribable Either a {@link TestStep} or a {@link Measurement}.
+	 * @param contextDescribable
+	 *            Either a {@link TestStep} or a {@link Measurement}.
 	 * @return The {@code ContextRoot}s are returned.
 	 */
 	public static List<ContextRoot> of(ContextDescribable contextDescribable) {
@@ -186,14 +191,15 @@ public final class ContextRoot extends BaseEntity implements Deletable {
 	// ======================================================================
 
 	/**
-	 * Returns the {@link ContextRoot} with given {@link ContextType} from
-	 * given {@link ContextDescribable}.
+	 * Returns the {@link ContextRoot} with given {@link ContextType} from given
+	 * {@link ContextDescribable}.
 	 *
-	 * @param contextDescribable Either a {@link TestStep} or a {@link
-	 * 		Measurement}.
-	 * @param contextType The requested {@code ContextType}.
+	 * @param contextDescribable
+	 *            Either a {@link TestStep} or a {@link Measurement}.
+	 * @param contextType
+	 *            The requested {@code ContextType}.
 	 * @return {@code Optional} is empty if a {@code ContextRoot} with given
-	 * 		{@code ContextType} does not exist.
+	 *         {@code ContextType} does not exist.
 	 */
 	private static Optional<ContextRoot> of(ContextDescribable contextDescribable, ContextType contextType) {
 		return Optional.ofNullable(getCore(contextDescribable).getMutableStore().get(ContextRoot.class, contextType));

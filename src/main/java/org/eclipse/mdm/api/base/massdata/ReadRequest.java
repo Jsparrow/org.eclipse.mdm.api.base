@@ -44,7 +44,8 @@ public final class ReadRequest {
 	/**
 	 * Constructor.
 	 *
-	 * @param readRequest The previous {@link ReadRequest}.
+	 * @param readRequest
+	 *            The previous {@link ReadRequest}.
 	 */
 	ReadRequest(ReadRequest readRequest) {
 		this(readRequest.getChannelGroup());
@@ -57,8 +58,9 @@ public final class ReadRequest {
 	/**
 	 * Constructor.
 	 *
-	 * @param channelGroup The {@link ChannelGroup} is the source entity to
-	 * 		access measured values.
+	 * @param channelGroup
+	 *            The {@link ChannelGroup} is the source entity to access
+	 *            measured values.
 	 */
 	private ReadRequest(ChannelGroup channelGroup) {
 		this.channelGroup = channelGroup;
@@ -69,22 +71,33 @@ public final class ReadRequest {
 	// ======================================================================
 
 	/**
-	 * Creates a new {@link ReadRequestBuilder} with the given {@link
-	 * ChannelGroup} as the source entity for the requested measured values.
+	 * Creates a new {@link ReadRequestBuilder} with the given
+	 * {@link ChannelGroup} as the source entity for the requested measured
+	 * values.
 	 *
 	 * <pre>
-	 * ReadRequest readRequest1 = ReadRequest.create(ChannelGroup)
-	 * 	.allChannels() // load values of all related channels
-	 * 	.allValues()   // load all values of each channel
-	 * 	.get();
+	 * ReadRequest readRequest1 = ReadRequest.create(ChannelGroup).allChannels() // load
+	 * 																			// values
+	 * 																			// of
+	 * 																			// all
+	 * 																			// related
+	 * 																			// channels
+	 * 		.allValues() // load all values of each channel
+	 * 		.get();
 	 *
-	 * ReadRequest readRequest2 = ReadRequest.create(ChannelGroup)
-	 * 	.channels(channel1, channel2) // load measured values of these channels
-	 * 	.requestSize(1_000)           // load 1000 values of each channel (default is 100_000)
-	 * 	.get();
+	 * ReadRequest readRequest2 = ReadRequest.create(ChannelGroup).channels(channel1, channel2) // load
+	 * 																							// measured
+	 * 																							// values
+	 * 																							// of
+	 * 																							// these
+	 * 																							// channels
+	 * 		.requestSize(1_000) // load 1000 values of each channel (default
+	 * 							// is 100_000)
+	 * 		.get();
 	 * </pre>
 	 *
-	 * @param channelGroup Used to access measured values.
+	 * @param channelGroup
+	 *            Used to access measured values.
 	 * @return Returns the {@link ReadRequestBuilder}.
 	 */
 	public static ReadRequestBuilder create(ChannelGroup channelGroup) {
@@ -92,11 +105,11 @@ public final class ReadRequest {
 	}
 
 	/**
-	 * Returns the selected {@link Channel}s whose values will be loaded and
-	 * the corresponding {@link Unit} configuration.
+	 * Returns the selected {@link Channel}s whose values will be loaded and the
+	 * corresponding {@link Unit} configuration.
 	 *
 	 * @return The returned {@code Map} is empty, if this request is configured
-	 * 		to load values of all related {@code Channel}s.
+	 *         to load values of all related {@code Channel}s.
 	 */
 	public Map<Channel, Unit> getChannels() {
 		return Collections.unmodifiableMap(channels);
@@ -150,8 +163,9 @@ public final class ReadRequest {
 	 * Adds a new {@link Channel} whose measured values have to be loaded. The
 	 * measured values will be retrieved in the unit they were stored.
 	 *
-	 * @param channel This {@code Channel} has to related to the underlying
-	 * 		{@link ChannelGroup}.
+	 * @param channel
+	 *            This {@code Channel} has to related to the underlying
+	 *            {@link ChannelGroup}.
 	 */
 	void addChannel(Channel channel) {
 		addChannel(channel, channel.getUnit());
@@ -161,12 +175,15 @@ public final class ReadRequest {
 	 * Adds a new {@link Channel} whose measured values have to be loaded. The
 	 * measured values will be retrieved in the given unit.
 	 *
-	 * <p><b>Note:</b> The processing of this request may fail if it is not
+	 * <p>
+	 * <b>Note:</b> The processing of this request may fail if it is not
 	 * possible to convert the values.
 	 *
-	 * @param channel This {@code Channel} has to related to the underlying
-	 * 		{@link ChannelGroup}.
-	 * @param unit {@code Unit} the measured values have to be loaded in.
+	 * @param channel
+	 *            This {@code Channel} has to related to the underlying
+	 *            {@link ChannelGroup}.
+	 * @param unit
+	 *            {@code Unit} the measured values have to be loaded in.
 	 */
 	void addChannel(Channel channel, Unit unit) {
 		channels.put(channel, unit);
@@ -185,10 +202,12 @@ public final class ReadRequest {
 	 * Sets the number of values that will be loaded per {@link Channel} while
 	 * processing this request.
 	 *
-	 * <p><b>Note:</b> If the request size is zero, then all available measured
+	 * <p>
+	 * <b>Note:</b> If the request size is zero, then all available measured
 	 * values will be loaded for each configured {@link Channel}.
 	 *
-	 * @param requestSize The number of values loaded per {@code Channel}.
+	 * @param requestSize
+	 *            The number of values loaded per {@code Channel}.
 	 */
 	void setRequestSize(int requestSize) {
 		this.requestSize = requestSize;
@@ -197,7 +216,8 @@ public final class ReadRequest {
 	/**
 	 * Sets the number of values that will be skipped.
 	 *
-	 * @param startIndex The number of values that will be skipped.
+	 * @param startIndex
+	 *            The number of values that will be skipped.
 	 */
 	void setStartIndex(int startIndex) {
 		this.startIndex = startIndex;

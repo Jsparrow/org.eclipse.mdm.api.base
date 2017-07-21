@@ -29,7 +29,8 @@ public final class DataAccessException extends Exception {
 	/**
 	 * Constructor.
 	 *
-	 * @param message The error message.
+	 * @param message
+	 *            The error message.
 	 */
 	public DataAccessException(String message) {
 		super(message);
@@ -38,8 +39,10 @@ public final class DataAccessException extends Exception {
 	/**
 	 * Constructor.
 	 *
-	 * @param message The error message.
-	 * @param throwable The origin cause.
+	 * @param message
+	 *            The error message.
+	 * @param throwable
+	 *            The origin cause.
 	 */
 	public DataAccessException(String message, Throwable throwable) {
 		super(message, throwable);

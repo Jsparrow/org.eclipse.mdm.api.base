@@ -9,10 +9,11 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * Each modeled {@link Entity} implements this interface to indicate that it
- * has a status.
+ * Each modeled {@link Entity} implements this interface to indicate that it has
+ * a status.
  *
- * <p><b>Note:</b> State management is not part of the base application model.
+ * <p>
+ * <b>Note:</b> State management is not part of the base application model.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH

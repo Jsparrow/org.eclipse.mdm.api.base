@@ -15,8 +15,8 @@ import java.util.Optional;
 import org.eclipse.mdm.api.base.model.Value;
 
 /**
- * A record corresponds to an instance of the underlying {@link EntityType}.
- * It contains a subset of its {@link Value}s.
+ * A record corresponds to an instance of the underlying {@link EntityType}. It
+ * contains a subset of its {@link Value}s.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -39,7 +39,8 @@ public final class Record {
 	/**
 	 * Constructor.
 	 *
-	 * @param entityType The {@link EntityType} this record is associated with.
+	 * @param entityType
+	 *            The {@link EntityType} this record is associated with.
 	 */
 	public Record(EntityType entityType) {
 		this.entityType = entityType;
@@ -72,12 +73,12 @@ public final class Record {
 	 * this record.
 	 *
 	 * @return Returns the ID of this record.
-	 * @throws IllegalStateException Thrown if the ID {@code Value} container
-	 * 		is not available.
+	 * @throws IllegalStateException
+	 *             Thrown if the ID {@code Value} container is not available.
 	 */
-	public Long getID() {
+	public String getID() {
 		Value idValue = getValues().get(getEntityType().getIDAttribute().getName());
-		if(idValue == null) {
+		if (idValue == null) {
 			throw new IllegalStateException("ID attribute was not selected.");
 		}
 
@@ -88,14 +89,16 @@ public final class Record {
 	 * Returns the instance ID of the related entity referenced by the given
 	 * {@link Relation}.
 	 *
-	 * @param relation The foreign key {@code Relation}.
+	 * @param relation
+	 *            The foreign key {@code Relation}.
 	 * @return {@code Optional} is empty if there is no related entity.
-	 * @throws IllegalStateException Thrown if the requested foreign key was
-	 * 		not selected prior executing the query.
+	 * @throws IllegalStateException
+	 *             Thrown if the requested foreign key was not selected prior
+	 *             executing the query.
 	 */
-	public Optional<Long> getID(Relation relation) {
+	public Optional<String> getID(Relation relation) {
 		Value idValue = getValues().get(relation.getName());
-		if(idValue == null) {
+		if (idValue == null) {
 			throw new IllegalStateException("Relation attribute '" + relation + "' was not selected.");
 		}
 
@@ -105,12 +108,13 @@ public final class Record {
 	/**
 	 * Adds given {@link Value} to this record.
 	 *
-	 * @param value {@link Value} that will be added.
-	 * @throws IllegalArgumentException Thrown if given {@code Value}
-	 * 		overwrites an existing one.
+	 * @param value
+	 *            {@link Value} that will be added.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given {@code Value} overwrites an existing one.
 	 */
 	public void addValue(Value value) {
-		if(values.put(value.getName(), value) != null) {
+		if (values.put(value.getName(), value) != null) {
 			throw new IllegalArgumentException("Value with name '" + value.getName() + "' for entity type '"
 					+ entityType + "' record is already defined.");
 		}
@@ -133,18 +137,20 @@ public final class Record {
 
 	/**
 	 * Merges given record with this instance. To be able to do so, the given
-	 * record must be compatible with this record. Records are compatible if
-	 * the underlying {@link EntityType} and the subset of {@link Value}s is the
+	 * record must be compatible with this record. Records are compatible if the
+	 * underlying {@link EntityType} and the subset of {@link Value}s is the
 	 * same.
 	 *
-	 * @param record The record that will be merged with this instance.
+	 * @param record
+	 *            The record that will be merged with this instance.
 	 * @return A new record with merged {@code Value}s is returned.
-	 * @throws IllegalArgumentException Thrown if given record is not compatible.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given record is not compatible.
 	 */
 	Record merge(Record record) {
 		boolean entityTypeMissmatch = !getEntityType().equals(record.getEntityType());
 		boolean valuesMissmatch = getValues().size() != record.getValues().size();
-		if(entityTypeMissmatch || valuesMissmatch) {
+		if (entityTypeMissmatch || valuesMissmatch) {
 			throw new IllegalArgumentException("Unable to merge, incompatible record passed.");
 		}
 
@@ -156,14 +162,15 @@ public final class Record {
 	/**
 	 * Returns {@link Value} with given name.
 	 *
-	 * @param name Used as identifier.
+	 * @param name
+	 *            Used as identifier.
 	 * @return {@code Value} with given name is returned.
-	 * @throws IllegalArgumentException Thrown if attribute with given name is
-	 * 		not contained.
+	 * @throws IllegalArgumentException
+	 *             Thrown if attribute with given name is not contained.
 	 */
 	Value getValue(String name) {
 		Value value = getValues().get(name);
-		if(value == null) {
+		if (value == null) {
 			throw new IllegalArgumentException("Value with name '" + name + "' not found.");
 		}
 

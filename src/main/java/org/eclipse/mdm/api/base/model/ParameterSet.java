@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 /**
  * Implementation of the parameter set entity type. Instances of this class
  * group a set of further describing data stored in {@link Parameter}s.
- * Parameter sets are attached either to a {@link Measurement} or {@link
- * Channel}.
+ * Parameter sets are attached either to a {@link Measurement} or
+ * {@link Channel}.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -50,7 +50,8 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link Core}.
+	 * @param core
+	 *            The {@link Core}.
 	 */
 	ParameterSet(Core core) {
 		super(core);
@@ -63,9 +64,10 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	/**
 	 * Returns the {@link Parameter} identified by given name.
 	 *
-	 * @param name The name of the {@code Parameter}.
-	 * @return The {@code Optional} is empty if a {@code Parameter} with
-	 * 		given name does not exist.
+	 * @param name
+	 *            The name of the {@code Parameter}.
+	 * @return The {@code Optional} is empty if a {@code Parameter} with given
+	 *         name does not exist.
 	 */
 	public Optional<Parameter> getParameter(String name) {
 		return getParameters().stream().filter(p -> p.nameMatches(name)).findAny();
@@ -83,13 +85,14 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	/**
 	 * Removes the {@link Parameter} identified by given name.
 	 *
-	 * @param name Name of the {@code Parameter} that have to be removed.
-	 * @return Returns {@code true} if the {@code Parameter} with given name
-	 * 		has been removed.
+	 * @param name
+	 *            Name of the {@code Parameter} that have to be removed.
+	 * @return Returns {@code true} if the {@code Parameter} with given name has
+	 *         been removed.
 	 */
 	public boolean removeParameter(String name) {
 		Optional<Parameter> parameter = getParameter(name);
-		if(parameter.isPresent()) {
+		if (parameter.isPresent()) {
 			getCore().getChildrenStore().remove(parameter.get());
 			return true;
 		}
@@ -109,7 +112,8 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	/**
 	 * Sets new version for this parameter set.
 	 *
-	 * @param version The new version.
+	 * @param version
+	 *            The new version.
 	 */
 	public void setVersion(String version) {
 		getValue(ATTR_VERSION).set(version);

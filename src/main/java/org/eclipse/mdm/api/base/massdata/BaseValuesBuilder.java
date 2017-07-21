@@ -34,8 +34,9 @@ abstract class BaseValuesBuilder {
 	/**
 	 * Constructor.
 	 *
-	 * @param writeRequest The {@link WriteRequest} given values and
-	 * 		corresponding {@link ScalarType} will be applied to.
+	 * @param writeRequest
+	 *            The {@link WriteRequest} given values and corresponding
+	 *            {@link ScalarType} will be applied to.
 	 */
 	BaseValuesBuilder(WriteRequest writeRequest) {
 		this.writeRequest = writeRequest;
@@ -49,12 +50,14 @@ abstract class BaseValuesBuilder {
 	 * Adds given value sequence and sets the corresponding {@link ScalarType}
 	 * as the raw {@code ScalarType}.
 	 *
-	 * @param scalarType The {@code ScalarType}.
-	 * @param values The array value sequence must be assignment compatible
-	 * 		with the type represented by the given {@code ScalarType}.
+	 * @param scalarType
+	 *            The {@code ScalarType}.
+	 * @param values
+	 *            The array value sequence must be assignment compatible with
+	 *            the type represented by the given {@code ScalarType}.
 	 */
 	protected final void createValues(ScalarType scalarType, Object values) {
-		if(values == null) {
+		if (values == null) {
 			throw new IllegalArgumentException("Values is not allowed to be null.");
 		}
 
@@ -66,15 +69,18 @@ abstract class BaseValuesBuilder {
 	 * Adds given value sequence, associated validity flags and sets the
 	 * corresponding {@link ScalarType} as the raw {@code ScalarType}.
 	 *
-	 * @param scalarType The {@code ScalarType}.
-	 * @param values The array value sequence must be assignment compatible
-	 * 		with the type represented by the given {@code ScalarType}.
-	 * @param flags The validity flags for each value in the values sequence.
+	 * @param scalarType
+	 *            The {@code ScalarType}.
+	 * @param values
+	 *            The array value sequence must be assignment compatible with
+	 *            the type represented by the given {@code ScalarType}.
+	 * @param flags
+	 *            The validity flags for each value in the values sequence.
 	 */
 	protected final void createValues(ScalarType scalarType, Object values, boolean[] flags) {
-		if(values == null || flags == null) {
+		if (values == null || flags == null) {
 			throw new IllegalArgumentException("Neither values nor flags are allowed to be null.");
-		} else if(Array.getLength(values) != flags.length) {
+		} else if (Array.getLength(values) != flags.length) {
 			throw new IllegalArgumentException("Length of values and flags must be equal.");
 		}
 

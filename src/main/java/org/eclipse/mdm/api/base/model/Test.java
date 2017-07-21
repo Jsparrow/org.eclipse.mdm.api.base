@@ -26,8 +26,8 @@ import java.util.Optional;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class Test extends BaseEntity implements Datable, Deletable, Describable,
-FilesAttachable, Tagable, StatusAttachable {
+public final class Test extends BaseEntity
+		implements Datable, Deletable, Describable, FilesAttachable, Tagable, StatusAttachable {
 
 	// ======================================================================
 	// Class variables
@@ -45,7 +45,8 @@ FilesAttachable, Tagable, StatusAttachable {
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link Core}.
+	 * @param core
+	 *            The {@link Core}.
 	 */
 	Test(Core core) {
 		super(core);
@@ -58,9 +59,8 @@ FilesAttachable, Tagable, StatusAttachable {
 	/**
 	 * Returns the {@link User} who is responsible for this test.
 	 *
-	 * @return {@code Optional} is empty if the data source does not provide
-	 * 		any {@code User} entities at all, which is implementation
-	 * 		specific!
+	 * @return {@code Optional} is empty if the data source does not provide any
+	 *         {@code User} entities at all, which is implementation specific!
 	 */
 	public Optional<User> getResponsiblePerson() {
 		return Optional.ofNullable(getCore().getMutableStore().get(User.class));
@@ -69,7 +69,8 @@ FilesAttachable, Tagable, StatusAttachable {
 	/**
 	 * Sets new {@link User} as the responsible person for this test.
 	 *
-	 * @param responsiblePerson The new responsible person.
+	 * @param responsiblePerson
+	 *            The new responsible person.
 	 */
 	public void setResponsiblePerson(User responsiblePerson) {
 		getCore().getMutableStore().set(responsiblePerson);
@@ -78,9 +79,10 @@ FilesAttachable, Tagable, StatusAttachable {
 	/**
 	 * Returns the commissioned {@link TestStep} identified by given name.
 	 *
-	 * @param name The name of the {@code TestStep}.
+	 * @param name
+	 *            The name of the {@code TestStep}.
 	 * @return The {@code Optional} is empty if a {@code TestStep} with given
-	 * 		name does not exist.
+	 *         name does not exist.
 	 */
 	public Optional<TestStep> getCommissionedTestStep(String name) {
 		return getCommissionedTestSteps().stream().filter(ts -> ts.nameMatches(name)).findAny();
@@ -98,13 +100,14 @@ FilesAttachable, Tagable, StatusAttachable {
 	/**
 	 * Removes the commissioned {@link TestStep} identified by given name.
 	 *
-	 * @param name Name of the {@code TestStep} that has to be removed.
-	 * @return Returns {@code true} if the {@code TestStep} with given
-	 * 		name has been removed.
+	 * @param name
+	 *            Name of the {@code TestStep} that has to be removed.
+	 * @return Returns {@code true} if the {@code TestStep} with given name has
+	 *         been removed.
 	 */
 	public boolean removeCommissionedTestStep(String name) {
 		Optional<TestStep> testStep = getCommissionedTestStep(name);
-		if(testStep.isPresent()) {
+		if (testStep.isPresent()) {
 			getCore().getChildrenStore().remove(testStep.get());
 			return true;
 		}

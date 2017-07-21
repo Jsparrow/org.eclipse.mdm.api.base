@@ -32,8 +32,10 @@ public final class DoubleComplex {
 	/**
 	 * Constructor.
 	 *
-	 * @param real The real part.
-	 * @param imaginary The imaginary part.
+	 * @param real
+	 *            The real part.
+	 * @param imaginary
+	 *            The imaginary part.
 	 */
 	public DoubleComplex(double real, double imaginary) {
 		re = real;
@@ -49,13 +51,15 @@ public final class DoubleComplex {
 	 * by one or more blanks. Furthermore both must be floating point numbers
 	 * that can be parsed by calling {@link Double#valueOf(String)}.
 	 *
-	 * @param s The {@code String} to be parsed.
+	 * @param s
+	 *            The {@code String} to be parsed.
 	 * @return The parsed {@link DoubleComplex} value is returned.
-	 * @throws NumberFormatException Thrown if unable to parse the complex value.
+	 * @throws NumberFormatException
+	 *             Thrown if unable to parse the complex value.
 	 */
 	public static DoubleComplex valueOf(String s) {
 		String[] values = s.split(" +");
-		if(values.length != 2) {
+		if (values.length != 2) {
 			throw new NumberFormatException("Unable to parse complex value.");
 		}
 

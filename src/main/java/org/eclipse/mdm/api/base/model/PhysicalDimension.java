@@ -73,7 +73,8 @@ public final class PhysicalDimension extends BaseEntity implements Describable, 
 	/**
 	 * Constructor.
 	 *
-	 * @param core The {@link Core}.
+	 * @param core
+	 *            The {@link Core}.
 	 */
 	PhysicalDimension(Core core) {
 		super(core);
@@ -95,7 +96,8 @@ public final class PhysicalDimension extends BaseEntity implements Describable, 
 	/**
 	 * Sets new length exponent for this physical dimension.
 	 *
-	 * @param exponent The new length exponent.
+	 * @param exponent
+	 *            The new length exponent.
 	 */
 	public void setLength(Integer exponent) {
 		getValue(ATTR_LENGTH).set(exponent);
@@ -113,7 +115,8 @@ public final class PhysicalDimension extends BaseEntity implements Describable, 
 	/**
 	 * Sets new mass exponent for this physical dimension.
 	 *
-	 * @param exponent The new mass exponent.
+	 * @param exponent
+	 *            The new mass exponent.
 	 */
 	public void setMass(Integer exponent) {
 		getValue(ATTR_MASS).set(exponent);
@@ -131,7 +134,8 @@ public final class PhysicalDimension extends BaseEntity implements Describable, 
 	/**
 	 * Sets new time exponent for this physical dimension.
 	 *
-	 * @param exponent The new time exponent.
+	 * @param exponent
+	 *            The new time exponent.
 	 */
 	public void setTime(Integer exponent) {
 		getValue(ATTR_TIME).set(exponent);
@@ -149,7 +153,8 @@ public final class PhysicalDimension extends BaseEntity implements Describable, 
 	/**
 	 * Sets new current exponent for this physical dimension.
 	 *
-	 * @param exponent The new current exponent.
+	 * @param exponent
+	 *            The new current exponent.
 	 */
 	public void setCurrent(Integer exponent) {
 		getValue(ATTR_CURRENT).set(exponent);
@@ -167,7 +172,8 @@ public final class PhysicalDimension extends BaseEntity implements Describable, 
 	/**
 	 * Sets new temperature exponent for this physical dimension.
 	 *
-	 * @param exponent The new temperature exponent.
+	 * @param exponent
+	 *            The new temperature exponent.
 	 */
 	public void setTemperature(Integer exponent) {
 		getValue(ATTR_TEMPERATURE).set(exponent);
@@ -185,7 +191,8 @@ public final class PhysicalDimension extends BaseEntity implements Describable, 
 	/**
 	 * Sets new molar amount exponent for this physical dimension.
 	 *
-	 * @param exponent The new molar amount exponent.
+	 * @param exponent
+	 *            The new molar amount exponent.
 	 */
 	public void setMolarAmount(Integer exponent) {
 		getValue(ATTR_MOLAR_AMOUNT).set(exponent);
@@ -203,7 +210,8 @@ public final class PhysicalDimension extends BaseEntity implements Describable, 
 	/**
 	 * Sets new luminous intensity exponent for this physical dimension.
 	 *
-	 * @param exponent The new luminous intensity exponent.
+	 * @param exponent
+	 *            The new luminous intensity exponent.
 	 */
 	public void setLuminousIntensity(Integer exponent) {
 		getValue(ATTR_LUMINOUS_INTENSITY).set(exponent);
@@ -221,7 +229,8 @@ public final class PhysicalDimension extends BaseEntity implements Describable, 
 	/**
 	 * Sets new angle exponent for this physical dimension.
 	 *
-	 * @param exponent The new angle exponent.
+	 * @param exponent
+	 *            The new angle exponent.
 	 */
 	public void setAngle(Integer exponent) {
 		getValue(ATTR_ANGLE).set(exponent);

@@ -136,7 +136,8 @@ public enum ScalarType {
 	/**
 	 * Constructor.
 	 *
-	 * @param valueType The associated {@link ValueType}.
+	 * @param valueType
+	 *            The associated {@link ValueType}.
 	 */
 	private ScalarType(ValueType valueType) {
 		this.valueType = valueType;
@@ -146,9 +147,11 @@ public enum ScalarType {
 	/**
 	 * Constructor.
 	 *
-	 * @param valueType The associated {@link ValueType}.
-	 * @param componentType The component type of the array held by instances
-	 * 		of {@link MeasuredValues}.
+	 * @param valueType
+	 *            The associated {@link ValueType}.
+	 * @param componentType
+	 *            The component type of the array held by instances of
+	 *            {@link MeasuredValues}.
 	 */
 	private ScalarType(ValueType valueType, Class<?> componentType) {
 		this.valueType = valueType;
@@ -163,20 +166,25 @@ public enum ScalarType {
 	 * Creates a new {@link MeasuredValues} initialized with given name, unit
 	 * and values including the related validity flags.
 	 *
-	 * @param name This is the name of the corresponding {@link Channel}.
-	 * @param unit Name of the unit the contained values are of.
-	 * @param input The measured values.
-	 * @param flags The validity flags of the measured values.
+	 * @param name
+	 *            This is the name of the corresponding {@link Channel}.
+	 * @param unit
+	 *            Name of the unit the contained values are of.
+	 * @param input
+	 *            The measured values.
+	 * @param flags
+	 *            The validity flags of the measured values.
 	 * @return The created {@code MeasuredValues} is returned.
-	 * @throws IllegalStateException Thrown if {@link #isEnumeration()} or
-	 * 		{@link #isUnknown()} returns {@code true}.
-	 * @throws IllegalArgumentException Thrown if given values are not assignment
-	 * 		compatible.
+	 * @throws IllegalStateException
+	 *             Thrown if {@link #isEnumeration()} or {@link #isUnknown()}
+	 *             returns {@code true}.
+	 * @throws IllegalArgumentException
+	 *             Thrown if given values are not assignment compatible.
 	 */
 	public MeasuredValues createMeasuredValues(String name, String unit, Object input, boolean[] flags) {
-		if(isEnumeration() || isUnknown()) {
+		if (isEnumeration() || isUnknown()) {
 			throw new IllegalStateException("It is not allowed to create measured values of type '" + this + "'.");
-		} else if(!arrayType.isInstance(input)) {
+		} else if (!arrayType.isInstance(input)) {
 			throw new IllegalArgumentException("Given values of type '" + input.getClass() + "'.");
 		}
 
@@ -186,8 +194,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #STRING}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isString() {
 		return STRING == this;
@@ -196,8 +204,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #DATE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isDate() {
 		return DATE == this;
@@ -206,8 +214,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #BOOLEAN}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isBoolean() {
 		return BOOLEAN == this;
@@ -217,12 +225,12 @@ public enum ScalarType {
 	 * Returns true if this scalar type on of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #BYTE}</li>
-	 * 	<li>{@link #SHORT}</li>
-	 * 	<li>{@link #INTEGER}</li>
-	 * 	<li>{@link #LONG}</li>
-	 * 	<li>{@link #FLOAT}</li>
-	 * 	<li>{@link #DOUBLE}</li>
+	 * <li>{@link #BYTE}</li>
+	 * <li>{@link #SHORT}</li>
+	 * <li>{@link #INTEGER}</li>
+	 * <li>{@link #LONG}</li>
+	 * <li>{@link #FLOAT}</li>
+	 * <li>{@link #DOUBLE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -235,10 +243,10 @@ public enum ScalarType {
 	 * Returns true if this scalar type on of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #BYTE}</li>
-	 * 	<li>{@link #SHORT}</li>
-	 * 	<li>{@link #INTEGER}</li>
-	 * 	<li>{@link #LONG}</li>
+	 * <li>{@link #BYTE}</li>
+	 * <li>{@link #SHORT}</li>
+	 * <li>{@link #INTEGER}</li>
+	 * <li>{@link #LONG}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -250,8 +258,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #BYTE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isByte() {
 		return BYTE == this;
@@ -260,8 +268,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #SHORT}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isShort() {
 		return SHORT == this;
@@ -270,8 +278,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #INTEGER}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isInteger() {
 		return INTEGER == this;
@@ -280,8 +288,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #LONG}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isLong() {
 		return LONG == this;
@@ -291,8 +299,8 @@ public enum ScalarType {
 	 * Returns true if this scalar type on of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #FLOAT}</li>
-	 * 	<li>{@link #DOUBLE}</li>
+	 * <li>{@link #FLOAT}</li>
+	 * <li>{@link #DOUBLE}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -304,8 +312,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #FLOAT}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isFloat() {
 		return FLOAT == this;
@@ -314,8 +322,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #DOUBLE}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isDouble() {
 		return DOUBLE == this;
@@ -324,8 +332,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #BYTE_STREAM}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isByteStream() {
 		return BYTE_STREAM == this;
@@ -335,8 +343,8 @@ public enum ScalarType {
 	 * Returns true if this scalar type on of the following:
 	 *
 	 * <ul>
-	 * 	<li>{@link #FLOAT_COMPLEX}</li>
-	 * 	<li>{@link #DOUBLE_COMPLEX}</li>
+	 * <li>{@link #FLOAT_COMPLEX}</li>
+	 * <li>{@link #DOUBLE_COMPLEX}</li>
 	 * </ul>
 	 *
 	 * @return Returns {@code true} in the cases listed above.
@@ -348,8 +356,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #FLOAT_COMPLEX}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isFloatComplex() {
 		return FLOAT_COMPLEX == this;
@@ -358,8 +366,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #DOUBLE_COMPLEX}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isDoubleComplex() {
 		return DOUBLE_COMPLEX == this;
@@ -368,8 +376,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #ENUMERATION}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isEnumeration() {
 		return ENUMERATION == this;
@@ -378,8 +386,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #FILE_LINK}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isFileLink() {
 		return FILE_LINK == this;
@@ -388,8 +396,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #BLOB}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isBlob() {
 		return BLOB == this;
@@ -398,8 +406,8 @@ public enum ScalarType {
 	/**
 	 * Returns true if this scalar type is {@link #UNKNOWN}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isUnknown() {
 		return UNKNOWN == this;

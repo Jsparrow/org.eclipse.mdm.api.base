@@ -24,8 +24,8 @@ public enum Relationship {
 	// ======================================================================
 
 	/**
-	 * Represents a hierarchical relation between two {@link EntityType}s
-	 * e.g.: {@code Test} and {@code TestStep}.
+	 * Represents a hierarchical relation between two {@link EntityType}s e.g.:
+	 * {@code Test} and {@code TestStep}.
 	 */
 	FATHER_CHILD,
 

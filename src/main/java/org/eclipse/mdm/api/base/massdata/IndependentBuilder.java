@@ -19,13 +19,13 @@ import org.eclipse.mdm.api.base.model.ScalarType;
  * sortable types are listed below:
  *
  * <ul>
- * 	<li>{@link ScalarType#DATE}</li>
- * 	<li>{@link ScalarType#BYTE}</li>
- * 	<li>{@link ScalarType#SHORT}</li>
- * 	<li>{@link ScalarType#INTEGER}</li>
- * 	<li>{@link ScalarType#LONG}</li>
- *  <li>{@link ScalarType#FLOAT}</li>
- * 	<li>{@link ScalarType#DOUBLE}</li>
+ * <li>{@link ScalarType#DATE}</li>
+ * <li>{@link ScalarType#BYTE}</li>
+ * <li>{@link ScalarType#SHORT}</li>
+ * <li>{@link ScalarType#INTEGER}</li>
+ * <li>{@link ScalarType#LONG}</li>
+ * <li>{@link ScalarType#FLOAT}</li>
+ * <li>{@link ScalarType#DOUBLE}</li>
  * </ul>
  *
  * @since 1.0.0
@@ -41,8 +41,9 @@ public class IndependentBuilder extends WriteRequestFinalizer {
 	/**
 	 * Constructor.
 	 *
-	 * @param writeRequest The {@link WriteRequest}, whose measured values of
-	 * 		the underlying {@link Channel} may be marked as independent.
+	 * @param writeRequest
+	 *            The {@link WriteRequest}, whose measured values of the
+	 *            underlying {@link Channel} may be marked as independent.
 	 */
 	IndependentBuilder(WriteRequest writeRequest) {
 		super(writeRequest);

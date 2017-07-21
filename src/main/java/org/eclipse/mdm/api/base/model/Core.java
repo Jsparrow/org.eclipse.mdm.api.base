@@ -24,13 +24,13 @@ import java.util.stream.Collectors;
  * Provides access to the internals of any entity:
  *
  * <ul>
- * 	<li>name of the data source</li>
- * 	<li>name of the type</li>
- * 	<li>instance ID</li>
- * 	<li>values</li>
- * 	<li>added/removed file links</li>
- * 	<li>related entities</li>
- * 	<li>parent/child entities</li>
+ * <li>name of the data source</li>
+ * <li>name of the type</li>
+ * <li>instance ID</li>
+ * <li>values</li>
+ * <li>added/removed file links</li>
+ * <li>related entities</li>
+ * <li>parent/child entities</li>
  * </ul>
  *
  * @since 1.0.0
@@ -62,14 +62,15 @@ public interface Core {
 	 *
 	 * @return The instance ID is returned.
 	 */
-	Long getID();
+	String getID();
 
 	/**
 	 * Sets an instance ID.
 	 *
-	 * @param instanceID The new instance ID.
+	 * @param instanceID
+	 *            The new instance ID.
 	 */
-	void setID(Long instanceID);
+	void setID(String instanceID);
 
 	/**
 	 * Returns <i>all</i> {@link Value} containers of this entity.
@@ -79,10 +80,11 @@ public interface Core {
 	Map<String, Value> getValues();
 
 	/**
-	 * Hides {@link Value} containers whose name is contained in the given
-	 * names {@code Collection}.
+	 * Hides {@link Value} containers whose name is contained in the given names
+	 * {@code Collection}.
 	 *
-	 * @param names Names of the {@code Value} which shall be hidden.
+	 * @param names
+	 *            Names of the {@code Value} which shall be hidden.
 	 */
 	void hideValues(Collection<String> names);
 
@@ -101,16 +103,14 @@ public interface Core {
 	default List<FileLink> getAddedFileLinks() {
 		Predicate<FileLink> isRemote = FileLink::isRemote;
 
-		List<FileLink> fileLinks = getValues().values().stream()
-				.filter(v -> v.getValueType().isFileLink()).filter(Value::isValid)
-				.map(v -> (FileLink) v.extract()).filter(isRemote.negate())
+		List<FileLink> fileLinks = getValues().values().stream().filter(v -> v.getValueType().isFileLink())
+				.filter(Value::isValid).map(v -> (FileLink) v.extract()).filter(isRemote.negate())
 				.collect(Collectors.toList());
 
-		List<Value> values = getValues().values().stream()
-				.filter(v -> v.getValueType().isFileLinkSequence()).filter(Value::isValid)
-				.collect(Collectors.toList());
+		List<Value> values = getValues().values().stream().filter(v -> v.getValueType().isFileLinkSequence())
+				.filter(Value::isValid).collect(Collectors.toList());
 
-		for(Value value : values) {
+		for (Value value : values) {
 			Arrays.stream((FileLink[]) value.extract()).filter(isRemote.negate()).forEach(fileLinks::add);
 		}
 
@@ -129,22 +129,21 @@ public interface Core {
 				.filter(Value::isModified).map(v -> (FileLink) v.extractInitial()).filter(Objects::nonNull)
 				.filter(isRemote).collect(Collectors.toList());
 
-		List<Value> values = getValues().values().stream()
-				.filter(v -> v.getValueType().isFileLinkSequence())
-				.filter(Value::wasValid).filter(Value::isModified)
-				.collect(Collectors.toList());
+		List<Value> values = getValues().values().stream().filter(v -> v.getValueType().isFileLinkSequence())
+				.filter(Value::wasValid).filter(Value::isModified).collect(Collectors.toList());
 
-		for(Value value : values) {
+		for (Value value : values) {
 			List<FileLink> current = Arrays.asList((FileLink[]) value.extract());
-			Arrays.stream((FileLink[]) value.extractInitial())
-			.filter(fl -> !current.contains(fl)).forEach(fileLinks::add);
+			Arrays.stream((FileLink[]) value.extractInitial()).filter(fl -> !current.contains(fl))
+					.forEach(fileLinks::add);
 		}
 
 		return fileLinks;
 	}
 
 	/**
-	 * Applies modifications made to the entity stores and {@link Value} containers.
+	 * Applies modifications made to the entity stores and {@link Value}
+	 * containers.
 	 */
 	default void apply() {
 		// apply removed mutable entities
@@ -222,8 +221,10 @@ public interface Core {
 		/**
 		 * Returns related entity identified by given entity class.
 		 *
-		 * @param <T> The desired entity type.
-		 * @param entityClass Used as identifier.
+		 * @param <T>
+		 *            The desired entity type.
+		 * @param entityClass
+		 *            Used as identifier.
 		 * @return The related entity is returned or null of not defined.
 		 */
 		public <T extends Entity> T get(Class<T> entityClass) {
@@ -233,12 +234,13 @@ public interface Core {
 		/**
 		 * Replaces a related entity with the given one.
 		 *
-		 * @param entity The new related entity.
+		 * @param entity
+		 *            The new related entity.
 		 */
 		public void set(Entity entity) {
 			String key = entity.getClass().getSimpleName();
 			Entity old = current.put(key, entity);
-			if(old != null) {
+			if (old != null) {
 				removed.put(key, old);
 			}
 		}
@@ -246,22 +248,27 @@ public interface Core {
 		/**
 		 * Removes a related entity for given entity class.
 		 *
-		 * @param entityClass Used as identifier.
+		 * @param entityClass
+		 *            Used as identifier.
 		 */
 		public void remove(Class<? extends Entity> entityClass) {
 			String key = entityClass.getSimpleName();
 			Entity old = current.remove(key);
-			if(old != null) {
+			if (old != null) {
 				removed.put(key, old);
 			}
 		}
 
 		/**
-		 * Returns related entity identified by given entity class and {@link ContextType}.
+		 * Returns related entity identified by given entity class and
+		 * {@link ContextType}.
 		 *
-		 * @param <T> The desired entity type.
-		 * @param entityClass Used as identifier.
-		 * @param contextType Used as identifier.
+		 * @param <T>
+		 *            The desired entity type.
+		 * @param entityClass
+		 *            Used as identifier.
+		 * @param contextType
+		 *            Used as identifier.
 		 * @return The related entity is returned or null of not defined.
 		 */
 		public <T extends Entity> T get(Class<T> entityClass, ContextType contextType) {
@@ -271,27 +278,32 @@ public interface Core {
 		/**
 		 * Replaces a related entity with the given one.
 		 *
-		 * @param entity The new related entity.
-		 * @param contextType Used as identifier.
+		 * @param entity
+		 *            The new related entity.
+		 * @param contextType
+		 *            Used as identifier.
 		 */
 		public void set(Entity entity, ContextType contextType) {
 			String key = createContextTypeKey(entity.getClass(), contextType);
 			Entity old = current.put(key, entity);
-			if(old != null) {
+			if (old != null) {
 				removed.put(key, old);
 			}
 		}
 
 		/**
-		 * Removes a related entity for given entity class and {@link ContextType}.
+		 * Removes a related entity for given entity class and
+		 * {@link ContextType}.
 		 *
-		 * @param entityClass Used as identifier.
-		 * @param contextType Used as identifier.
+		 * @param entityClass
+		 *            Used as identifier.
+		 * @param contextType
+		 *            Used as identifier.
 		 */
 		public void remove(Class<? extends Entity> entityClass, ContextType contextType) {
 			String key = createContextTypeKey(entityClass, contextType);
 			Entity old = current.remove(key);
-			if(old != null) {
+			if (old != null) {
 				removed.put(key, old);
 			}
 		}
@@ -310,8 +322,10 @@ public interface Core {
 		/**
 		 * Generates a key from given entity class and {@link ContextType}.
 		 *
-		 * @param entityClass Identifier part 1.
-		 * @param contextType Identifier part 2.
+		 * @param entityClass
+		 *            Identifier part 1.
+		 * @param contextType
+		 *            Identifier part 2.
 		 * @return A context type dependent key is returned.
 		 */
 		private static String createContextTypeKey(Class<? extends Entity> entityClass, ContextType contextType) {
@@ -357,8 +371,10 @@ public interface Core {
 		/**
 		 * Returns related child entities of given type.
 		 *
-		 * @param <T> Desired entity type.
-		 * @param entityClass Used as identifier.
+		 * @param <T>
+		 *            Desired entity type.
+		 * @param entityClass
+		 *            Used as identifier.
 		 * @return Returned {@code List} is unmodifiable.
 		 */
 		@SuppressWarnings("unchecked")
@@ -369,14 +385,17 @@ public interface Core {
 		/**
 		 * Sorts the child entities with given {@code Comparator}.
 		 *
-		 * @param <T> Desired entity type.
-		 * @param entityClass Used as identifier.
-		 * @param comparator Used for sorting.
+		 * @param <T>
+		 *            Desired entity type.
+		 * @param entityClass
+		 *            Used as identifier.
+		 * @param comparator
+		 *            Used for sorting.
 		 */
 		@SuppressWarnings("unchecked")
 		public <T extends Deletable> void sort(Class<T> entityClass, Comparator<? super T> comparator) {
 			List<T> children = (List<T>) current.get(entityClass);
-			if(children != null) {
+			if (children != null) {
 				children.sort(comparator);
 			}
 		}
@@ -384,7 +403,8 @@ public interface Core {
 		/**
 		 * Adds given child entity.
 		 *
-		 * @param child The new child.
+		 * @param child
+		 *            The new child.
 		 */
 		@SuppressWarnings("unchecked")
 		public void add(Deletable child) {
@@ -395,12 +415,13 @@ public interface Core {
 		/**
 		 * Removes given child entity.
 		 *
-		 * @param child The child which will be removed.
+		 * @param child
+		 *            The child which will be removed.
 		 */
 		@SuppressWarnings("unchecked")
 		public void remove(Deletable child) {
 			List<Deletable> children = (List<Deletable>) current.getOrDefault(child.getClass(), new ArrayList<>());
-			if(children.remove(child) && child.getID() > 0) {
+			if (children.remove(child) && child.getID() != null && child.getID().length() > 0) {
 				((List<Deletable>) removed.computeIfAbsent(child.getClass(), k -> new ArrayList<>())).add(child);
 			}
 		}

@@ -11,8 +11,8 @@ package org.eclipse.mdm.api.base.model;
 import java.time.LocalDateTime;
 
 /**
- * This interface extends the {@link Entity} interface and provides getter
- * and setter methods for the 'DateCreated' field of an entity.
+ * This interface extends the {@link Entity} interface and provides getter and
+ * setter methods for the 'DateCreated' field of an entity.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -45,7 +45,8 @@ public interface Datable extends Entity {
 	/**
 	 * Set new creation time stamp for this entity.
 	 *
-	 * @param dateCreated The new creation time stamp.
+	 * @param dateCreated
+	 *            The new creation time stamp.
 	 */
 	default void setDateCreated(LocalDateTime dateCreated) {
 		getValue(ATTR_DATE_CREATED).set(dateCreated);

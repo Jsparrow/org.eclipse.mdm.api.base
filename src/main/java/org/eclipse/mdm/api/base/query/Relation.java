@@ -47,7 +47,8 @@ public interface Relation {
 	 */
 	EntityType getTarget();
 
-	/** Returns the {@link Relationship} type for this relation.
+	/**
+	 * Returns the {@link Relationship} type for this relation.
 	 *
 	 * @return The {@code Relationship} is returned.
 	 */
@@ -66,7 +67,7 @@ public interface Relation {
 	 * @return Created {@code Value} is returned.
 	 */
 	default Value createValue() {
-		return ValueType.LONG.create(getName());
+		return ValueType.STRING.create(getName());
 	}
 
 	/**

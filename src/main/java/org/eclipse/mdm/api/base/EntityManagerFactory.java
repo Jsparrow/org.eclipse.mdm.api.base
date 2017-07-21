@@ -15,7 +15,8 @@ import org.eclipse.mdm.api.base.model.BaseEntityFactory;
 /**
  * Takes connection parameters and produces a corresponding entity manager.
  *
- * @param <T> Type of the connected entity manager.
+ * @param <T>
+ *            Type of the connected entity manager.
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  */
@@ -29,9 +30,11 @@ public interface EntityManagerFactory<T extends BaseEntityManager<? extends Base
 	 * Takes given connection parameters and creates a new entity manager, which
 	 * is permanently connected with configured data source.
 	 *
-	 * @param connectionParameters The connection parameters.
+	 * @param connectionParameters
+	 *            The connection parameters.
 	 * @return The connected entity manager is returned.
-	 * @throws ConnectionException Thrown if unable to connect to a data source.
+	 * @throws ConnectionException
+	 *             Thrown if unable to connect to a data source.
 	 */
 	T connect(Map<String, String> connectionParameters) throws ConnectionException;
 

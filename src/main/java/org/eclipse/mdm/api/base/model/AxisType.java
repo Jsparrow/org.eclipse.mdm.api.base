@@ -37,7 +37,6 @@ public enum AxisType {
 	 */
 	XY_AXIS;
 
-
 	// ======================================================================
 	// Public methods
 	// ======================================================================
@@ -45,8 +44,8 @@ public enum AxisType {
 	/**
 	 * Returns true if this axis type is {@link #X_AXIS}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isXAxis() {
 		return X_AXIS == this;
@@ -55,8 +54,8 @@ public enum AxisType {
 	/**
 	 * Returns true if this axis type is {@link #Y_AXIS}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isYAxis() {
 		return Y_AXIS == this;
@@ -65,8 +64,8 @@ public enum AxisType {
 	/**
 	 * Returns true if this axis type is {@link #XY_AXIS}.
 	 *
-	 * @return Returns {@code true} if this constant is the constant
-	 * 		described above.
+	 * @return Returns {@code true} if this constant is the constant described
+	 *         above.
 	 */
 	public boolean isXYAxis() {
 		return XY_AXIS == this;

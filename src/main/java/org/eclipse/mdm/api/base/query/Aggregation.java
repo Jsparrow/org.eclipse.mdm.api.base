@@ -33,8 +33,8 @@ public enum Aggregation {
 	COUNT,
 
 	/**
-	 * Within the result rows for the selected attribute all distinct values
-	 * are counted.
+	 * Within the result rows for the selected attribute all distinct values are
+	 * counted.
 	 */
 	DISTINCT_COUNT,
 
@@ -63,14 +63,14 @@ public enum Aggregation {
 	DEVIATION,
 
 	/**
-	 * All result rows for the selected attribute are summed. Only for
-	 * numerical values.
+	 * All result rows for the selected attribute are summed. Only for numerical
+	 * values.
 	 */
 	SUM,
 
 	/**
-	 * Within the result rows for the selected attribute all distinct values
-	 * are collected.
+	 * Within the result rows for the selected attribute all distinct values are
+	 * collected.
 	 */
 	DISTINCT
 

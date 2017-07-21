@@ -28,8 +28,9 @@ public final class UnitBuilder extends WriteRequestFinalizer {
 	/**
 	 * Constructor.
 	 *
-	 *  @param writeRequest The {@link WriteRequest}, whose measured value's
-	 *  	source {@link Unit} may be defined.
+	 * @param writeRequest
+	 *            The {@link WriteRequest}, whose measured value's source
+	 *            {@link Unit} may be defined.
 	 */
 	UnitBuilder(WriteRequest writeRequest) {
 		super(writeRequest);
@@ -42,7 +43,8 @@ public final class UnitBuilder extends WriteRequestFinalizer {
 	/**
 	 * Sets a source {@link Unit} for the previously defined measured values.
 	 *
-	 * @param sourceUnit The source {@code Unit}.
+	 * @param sourceUnit
+	 *            The source {@code Unit}.
 	 * @return The {@link WriteRequestFinalizer} is returned.
 	 */
 	public WriteRequestFinalizer sourceUnit(Unit sourceUnit) {

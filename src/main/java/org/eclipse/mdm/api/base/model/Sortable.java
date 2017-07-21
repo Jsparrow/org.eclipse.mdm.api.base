@@ -11,10 +11,10 @@ package org.eclipse.mdm.api.base.model;
 import java.util.Comparator;
 
 /**
- * This interface extends the {@link Entity} interface and provides getter
- * and setter methods for the 'SortIndex' field of an entity. The value in
- * this field is the index of an entity relative to all other entities of
- * the same type beneath their shared parent.
+ * This interface extends the {@link Entity} interface and provides getter and
+ * setter methods for the 'SortIndex' field of an entity. The value in this
+ * field is the index of an entity relative to all other entities of the same
+ * type beneath their shared parent.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -27,9 +27,9 @@ public interface Sortable extends Entity {
 	// ======================================================================
 
 	/**
-	 * This {@code Comparator} compares entities implementing the {@link
-	 * Sortable} interface by the mandatory {@link #ATTR_SORT_INDEX} property
-	 * in ascending order.
+	 * This {@code Comparator} compares entities implementing the
+	 * {@link Sortable} interface by the mandatory {@link #ATTR_SORT_INDEX}
+	 * property in ascending order.
 	 */
 	static final Comparator<Sortable> COMPARATOR = Comparator.comparing(Sortable::getSortIndex);
 
@@ -54,7 +54,8 @@ public interface Sortable extends Entity {
 	/**
 	 * Sets new sort index for this entity.
 	 *
-	 * @param sortIndex The new sort index.
+	 * @param sortIndex
+	 *            The new sort index.
 	 */
 	default void setSortIndex(Integer sortIndex) {
 		getValue(ATTR_SORT_INDEX).set(sortIndex);

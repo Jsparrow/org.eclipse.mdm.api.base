@@ -29,7 +29,8 @@ public class ConnectionException extends Exception {
 	/**
 	 * Constructor.
 	 *
-	 * @param message The error message.
+	 * @param message
+	 *            The error message.
 	 */
 	public ConnectionException(String message) {
 		super(message);
@@ -38,8 +39,10 @@ public class ConnectionException extends Exception {
 	/**
 	 * Constructor.
 	 *
-	 * @param message The error message.
-	 * @param throwable The origin cause.
+	 * @param message
+	 *            The error message.
+	 * @param throwable
+	 *            The origin cause.
 	 */
 	public ConnectionException(String message, Throwable throwable) {
 		super(message, throwable);

@@ -9,8 +9,8 @@
 package org.eclipse.mdm.api.base.model;
 
 /**
- * This interface extends the {@link Entity} interface and provides getter
- * and setter methods for the 'Description' field of an entity.
+ * This interface extends the {@link Entity} interface and provides getter and
+ * setter methods for the 'Description' field of an entity.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -43,7 +43,8 @@ public interface Describable extends Entity {
 	/**
 	 * Sets new description for this entity.
 	 *
-	 * @param description The new description.
+	 * @param description
+	 *            The new description.
 	 */
 	default void setDescription(String description) {
 		getValue(ATTR_DESCRIPTION).set(description);

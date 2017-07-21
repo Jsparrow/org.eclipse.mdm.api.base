@@ -11,8 +11,8 @@ package org.eclipse.mdm.api.base.query;
 import java.util.List;
 
 /**
- * A searchable is used to describe the hierarchical order of {@link
- * EntityType}s being used for searching.
+ * A searchable is used to describe the hierarchical order of
+ * {@link EntityType}s being used for searching.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -36,7 +36,8 @@ public interface Searchable {
 	/**
 	 * Returns the {@link EntityType} represented by this searchable.
 	 *
-	 * @return The {@code EntityType} represented by this searchable is returned.
+	 * @return The {@code EntityType} represented by this searchable is
+	 *         returned.
 	 */
 	EntityType getEntityType();
 
