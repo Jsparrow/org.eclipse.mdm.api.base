@@ -228,7 +228,22 @@ public interface Core {
 		 * @return The related entity is returned or null of not defined.
 		 */
 		public <T extends Entity> T get(Class<T> entityClass) {
-			return entityClass.cast(current.get(entityClass.getSimpleName()));
+			return get(entityClass.getSimpleName(), entityClass);
+		}
+
+		/**
+		 * Returns related entity identified by given entity class.
+		 *
+		 * @param <T>
+		 *            The desired entity type.
+		 * @param relationName
+		 *            The relation name the entity is referenced by.
+		 * @param entityClass
+		 *            Used as identifier.
+		 * @return The related entity is returned or null of not defined.
+		 */
+		public <T extends Entity> T get(String relationName, Class<T> entityClass) {
+			return entityClass.cast(current.get(relationName));
 		}
 
 		/**
@@ -238,10 +253,21 @@ public interface Core {
 		 *            The new related entity.
 		 */
 		public void set(Entity entity) {
-			String key = entity.getClass().getSimpleName();
-			Entity old = current.put(key, entity);
+			set(entity.getClass().getSimpleName(), entity);
+		}
+
+		/**
+		 * Replaces a related entity with the given one.
+		 *
+		 * @param name
+		 *            The name of the relation the entity is referenced by.
+		 * @param entity
+		 *            The new related entity.
+		 */
+		public void set(String name, Entity entity) {
+			Entity old = current.put(name, entity);
 			if (old != null) {
-				removed.put(key, old);
+				removed.put(name, old);
 			}
 		}
 
@@ -253,9 +279,21 @@ public interface Core {
 		 */
 		public void remove(Class<? extends Entity> entityClass) {
 			String key = entityClass.getSimpleName();
-			Entity old = current.remove(key);
+			remove(key, entityClass);
+		}
+
+		/**
+		 * Removes a related entity for given relation name and entity class.
+		 *
+		 * @param name
+		 *            The name of the relation the entity is referenced by.
+		 * @param entityClass
+		 *            Used as identifier.
+		 */
+		public void remove(String name, Class<? extends Entity> entityClass) {
+			Entity old = current.remove(name);
 			if (old != null) {
-				removed.put(key, old);
+				removed.put(name, old);
 			}
 		}
 
