@@ -16,7 +16,7 @@ package org.eclipse.mdm.api.base.model;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class ChannelGroup extends BaseEntity implements Deletable {
+public class ChannelGroup extends BaseEntity implements Deletable {
 
 	// ======================================================================
 	// Class variables
