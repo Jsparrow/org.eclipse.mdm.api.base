@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class ContextRoot extends BaseEntity implements Deletable {
+public class ContextRoot extends BaseEntity implements Deletable {
 
 	// ======================================================================
 	// Class variables

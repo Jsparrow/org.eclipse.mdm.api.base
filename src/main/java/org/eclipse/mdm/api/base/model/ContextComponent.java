@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class ContextComponent extends BaseEntity implements Deletable {
+public class ContextComponent extends BaseEntity implements Deletable {
 
 	// ======================================================================
 	// Constructors

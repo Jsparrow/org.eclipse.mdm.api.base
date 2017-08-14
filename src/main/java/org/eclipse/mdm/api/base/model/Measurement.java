@@ -34,7 +34,7 @@ import java.time.LocalDateTime;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see ParameterSet
  */
-public final class Measurement extends BaseEntity
+public class Measurement extends BaseEntity
 		implements ContextDescribable, Datable, Deletable, Describable, FilesAttachable, Tagable {
 
 	// ======================================================================

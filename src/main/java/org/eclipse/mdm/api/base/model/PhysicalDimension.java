@@ -20,7 +20,7 @@ package org.eclipse.mdm.api.base.model;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class PhysicalDimension extends BaseEntity implements Describable, Deletable {
+public class PhysicalDimension extends BaseEntity implements Describable, Deletable {
 
 	// ======================================================================
 	// Class variables

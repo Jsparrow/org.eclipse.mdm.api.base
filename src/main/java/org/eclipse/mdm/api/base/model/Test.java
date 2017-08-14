@@ -26,7 +26,7 @@ import java.util.Optional;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class Test extends BaseEntity
+public class Test extends BaseEntity
 		implements Datable, Deletable, Describable, FilesAttachable, Tagable, StatusAttachable {
 
 	// ======================================================================
