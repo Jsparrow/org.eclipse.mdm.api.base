@@ -9,6 +9,11 @@
 package org.eclipse.mdm.api.base.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.mdm.api.base.BaseEntityManager;
+import org.eclipse.mdm.api.base.query.DataAccessException;
 
 /**
  * Implementation of the measurement entity type. The measurement entity holds
@@ -125,6 +130,24 @@ public class Measurement extends BaseEntity
 	 */
 	public void setMeasurementEnd(LocalDateTime measurementEnd) {
 		getValue(ATTR_MEASUREMENT_END).set(measurementEnd);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ContextType> loadContextTypes(BaseEntityManager<? extends BaseEntityFactory> manager) 
+			throws DataAccessException {
+		return manager.loadContextTypes(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<ContextType, ContextRoot> loadContexts(BaseEntityManager<? extends BaseEntityFactory> manager,
+			ContextType... contextTypes) throws DataAccessException {
+		return manager.loadContexts(this, contextTypes);
 	}
 
 }
