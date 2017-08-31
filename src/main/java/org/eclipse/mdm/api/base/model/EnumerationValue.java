@@ -55,7 +55,7 @@ public class EnumerationValue {
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	public Enumeration getOwner() {
+	public Enumeration<? extends EnumerationValue> getOwner() {
 		return owner;
 	}
 

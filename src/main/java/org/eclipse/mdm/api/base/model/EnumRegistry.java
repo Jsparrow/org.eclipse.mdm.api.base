@@ -27,7 +27,7 @@ public class EnumRegistry {
 	public static final String VERSION_STATE = "VersionState";
 	public static final String AXIS_TYPE = "AxisType";
 
-	private HashMap<String, Enumeration<?>> enumerations;
+	private HashMap<String, Enumeration<? extends EnumerationValue>> enumerations;
 
 	/**
 	 * Constructor. Not called directly. Use getInstance() instead.
@@ -52,7 +52,7 @@ public class EnumRegistry {
 	 * @param enumeration
 	 *            the dynamic enumeration object
 	 */
-	public void add(String name, Enumeration<?> enumeration) {
+	public void add(String name, Enumeration<? extends EnumerationValue> enumeration) {
 		enumerations.put(name, enumeration);
 	}
 
@@ -61,8 +61,7 @@ public class EnumRegistry {
 	 *            the name of the registered enumeration
 	 * @return the dynamic enumeration object
 	 */
-	@SuppressWarnings("rawtypes")
-	public Enumeration get(String name) {
+	public Enumeration<?> get(String name) {
 		return enumerations.get(name);
 	}
 

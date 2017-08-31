@@ -118,9 +118,9 @@ public interface Attribute {
 	 * @return Created {@code Value} is returned.
 	 */
 	default Value createValueSeq(String unit, Object input) {
-		ValueType valueType = getValueType().toSequenceType();
+		ValueType<?> valueType = getValueType().toSequenceType();
 		if (valueType.isEnumerationType()) {
-			return valueType.create(getEnumObj(), getName(), unit, true, input, getEnumObj().getName());
+			return valueType.create(getName(), unit, true, input, getEnumObj().getName());
 		} else {
 			return valueType.create(getName(), unit, true, input);
 		}
@@ -139,9 +139,9 @@ public interface Attribute {
 	 * @return Created {@code Value} is returned.
 	 */
 	default Value createValue(String unit, boolean valid, Object input) {
-		ValueType valueType = getValueType();
+		ValueType<?> valueType = getValueType();
 		if (valueType.isEnumerationType()) {
-			return valueType.create(getEnumObj(), getName(), unit, valid, input, getEnumObj().getName());
+			return valueType.create(getName(), unit, valid, input, getEnumObj().getName());
 		} else {
 			return valueType.create(getName(), unit, valid, input);
 		}
