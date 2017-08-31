@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Gigatronik Ingolstadt GmbH
+ * Copyright (c) 2016 Gigatronik Ingolstadt GmbH and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,27 +9,35 @@
 package org.eclipse.mdm.api.base.query;
 
 /**
- * Join enumeration.
+ * RelationType enumeration.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Query
+ * @see EntityType
+ * @see Relation
  */
-public enum Join {
+public enum RelationType {
 
 	// ======================================================================
 	// Enumerations
 	// ======================================================================
 
 	/**
-	 * Enforces an inner join.
+	 * Represents a hierarchical relation between two {@link EntityType}s e.g.:
+	 * {@code Test} and {@code TestStep}.
 	 */
-	INNER,
+	FATHER_CHILD,
 
 	/**
-	 * Enforces an outer join.
+	 * Represents an informational relation between two {@link EntityType}s
+	 * e.g.: {@code Measurement} and {@code ParameterSet}.
 	 */
-	OUTER
+	INFO,
+
+	/**
+	 * Represents an inheritance relation between two {@link EntityType}s.
+	 */
+	INHERITANCE
 
 }

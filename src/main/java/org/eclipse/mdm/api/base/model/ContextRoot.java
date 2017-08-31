@@ -86,7 +86,7 @@ public class ContextRoot extends BaseEntity implements Deletable {
 	 *         given name does not exist.
 	 */
 	public Optional<ContextComponent> getContextComponent(String name) {
-		return getContextComponents().stream().filter(cc -> cc.nameMatches(name)).findAny();
+		return getContextComponents().stream().filter(cc -> cc.nameEquals(name)).findAny();
 	}
 
 	/**

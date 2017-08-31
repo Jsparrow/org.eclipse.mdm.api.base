@@ -17,7 +17,7 @@ import org.eclipse.mdm.api.base.model.Value;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see Attribute
- * @see Operation
+ * @see ComparisonOperator
  */
 public final class Condition {
 
@@ -27,7 +27,7 @@ public final class Condition {
 
 	private final Attribute attribute;
 	private final Value value;
-	private final Operation operation;
+	private final ComparisonOperator comparisonOperator;
 
 	// ======================================================================
 	// Constructors
@@ -38,17 +38,17 @@ public final class Condition {
 	 *
 	 * @param attribute
 	 *            The {@link Attribute} this condition will be applied to.
-	 * @param operation
-	 *            The condition {@link Operation}.
+	 * @param comparisonOperator
+	 *            The condition {@link ComparisonOperator}.
 	 * @param unit
 	 *            The unit of the created value.
 	 * @param input
 	 *            The condition value.
 	 */
-	Condition(Attribute attribute, Operation operation, String unit, Object input) {
+	Condition(Attribute attribute, ComparisonOperator comparisonOperator, String unit, Object input) {
 		this.attribute = attribute;
-		this.operation = operation;
-		value = operation.requiresSequence() ? attribute.createValueSeq(unit, input)
+		this.comparisonOperator = comparisonOperator;
+		value = comparisonOperator.requiresSequence() ? attribute.createValueSeq(unit, input)
 				: attribute.createValue(unit, input);
 	}
 
@@ -75,12 +75,12 @@ public final class Condition {
 	}
 
 	/**
-	 * Returns the condition {@link Operation}.
+	 * Returns the condition {@link ComparisonOperator}.
 	 *
-	 * @return The condition {@code Operation} is returned.
+	 * @return The condition {@code ComparisonOperator} is returned.
 	 */
-	public Operation getOperation() {
-		return operation;
+	public ComparisonOperator getComparisonOperator() {
+		return comparisonOperator;
 	}
 
 }

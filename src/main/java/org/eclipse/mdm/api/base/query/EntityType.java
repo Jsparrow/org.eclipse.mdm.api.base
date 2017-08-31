@@ -24,7 +24,7 @@ import org.eclipse.mdm.api.base.model.Value;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see Attribute
  * @see Relation
- * @see Relationship
+ * @see RelationType
  */
 public interface EntityType {
 
@@ -124,7 +124,7 @@ public interface EntityType {
 
 	/**
 	 * Returns all available child {@link Relation}s whose relationship is
-	 * {@link Relationship#FATHER_CHILD}.
+	 * {@link RelationType#FATHER_CHILD}.
 	 *
 	 * @return The returned {@code List} may be immutable.
 	 */
@@ -132,7 +132,7 @@ public interface EntityType {
 
 	/**
 	 * Returns all child {@link Relation}s whose relationship is
-	 * {@link Relationship#INFO}.
+	 * {@link RelationType#INFO}.
 	 *
 	 * @return The returned {@code List} may be immutable.
 	 */
@@ -141,11 +141,11 @@ public interface EntityType {
 	/**
 	 * Returns all {@link Relation}s whose relationship is of the given type.
 	 *
-	 * @param relationship
+	 * @param relationType
 	 *            The relationship type.
 	 * @return The returned {@code List} may be immutable.
 	 */
-	List<Relation> getRelations(Relationship relationship);
+	List<Relation> getRelations(RelationType relationType);
 
 	/**
 	 * Returns a {@link Relation} to given target entity type. At first it is

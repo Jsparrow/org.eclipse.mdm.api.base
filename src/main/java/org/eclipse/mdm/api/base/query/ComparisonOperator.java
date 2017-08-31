@@ -23,7 +23,7 @@ import org.eclipse.mdm.api.base.model.ValueType;
  * @see Condition
  * @see Filter
  */
-public enum Operation {
+public enum ComparisonOperator {
 
 	// ======================================================================
 	// Enumerations
@@ -175,11 +175,11 @@ public enum Operation {
 	 * is the case for the following types:
 	 *
 	 * <ul>
-	 * <li>{@link Operation#IN_SET}</li>
-	 * <li>{@link Operation#NOT_IN_SET}</li>
-	 * <li>{@link Operation#CASE_INSENSITIVE_IN_SET}</li>
-	 * <li>{@link Operation#CASE_INSENSITIVE_NOT_IN_SET}</li>
-	 * <li>{@link Operation#BETWEEN}</li>
+	 * <li>{@link ComparisonOperator#IN_SET}</li>
+	 * <li>{@link ComparisonOperator#NOT_IN_SET}</li>
+	 * <li>{@link ComparisonOperator#CASE_INSENSITIVE_IN_SET}</li>
+	 * <li>{@link ComparisonOperator#CASE_INSENSITIVE_NOT_IN_SET}</li>
+	 * <li>{@link ComparisonOperator#BETWEEN}</li>
 	 * </ul>
 	 *
 	 * @return True if this operation is one of those listed above.

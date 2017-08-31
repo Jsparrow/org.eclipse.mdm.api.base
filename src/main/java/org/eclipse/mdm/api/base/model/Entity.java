@@ -142,7 +142,7 @@ public interface Entity {
 	 * @return Returns {@code true} if given name equals the name of this
 	 *         entity.
 	 */
-	default boolean nameMatches(String name) {
+	default boolean nameEquals(String name) {
 		return getName().equals(name);
 	}
 

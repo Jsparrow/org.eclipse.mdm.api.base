@@ -11,7 +11,7 @@ package org.eclipse.mdm.api.base;
 import org.eclipse.mdm.api.base.query.Attribute;
 import org.eclipse.mdm.api.base.query.EntityType;
 import org.eclipse.mdm.api.base.query.Relation;
-import org.eclipse.mdm.api.base.query.Relationship;
+import org.eclipse.mdm.api.base.query.RelationType;
 
 public class RelationImpl implements Relation {
 
@@ -41,7 +41,7 @@ public class RelationImpl implements Relation {
 	}
 
 	@Override
-	public Relationship getRelationship() {
+	public RelationType getRelationType() {
 		throw new UnsupportedOperationException();
 	}
 

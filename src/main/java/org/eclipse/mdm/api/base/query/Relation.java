@@ -18,7 +18,7 @@ import org.eclipse.mdm.api.base.model.ValueType;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see EntityType
- * @see Relationship
+ * @see RelationType
  */
 public interface Relation {
 
@@ -48,11 +48,11 @@ public interface Relation {
 	EntityType getTarget();
 
 	/**
-	 * Returns the {@link Relationship} type for this relation.
+	 * Returns the {@link RelationType} type for this relation.
 	 *
-	 * @return The {@code Relationship} is returned.
+	 * @return The {@code RelationType} is returned.
 	 */
-	Relationship getRelationship();
+	RelationType getRelationType();
 
 	/**
 	 * Returns the foreign key {@link Attribute} for this {@link Relation}.

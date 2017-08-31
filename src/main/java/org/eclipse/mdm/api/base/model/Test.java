@@ -85,7 +85,7 @@ public class Test extends BaseEntity
 	 *         name does not exist.
 	 */
 	public Optional<TestStep> getCommissionedTestStep(String name) {
-		return getCommissionedTestSteps().stream().filter(ts -> ts.nameMatches(name)).findAny();
+		return getCommissionedTestSteps().stream().filter(ts -> ts.nameEquals(name)).findAny();
 	}
 
 	/**

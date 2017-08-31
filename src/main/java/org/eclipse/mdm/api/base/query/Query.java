@@ -24,7 +24,7 @@ import java.util.Optional;
  * @see Attribute
  * @see Aggregation
  * @see Relation
- * @see Join
+ * @see JoinType
  * @see Result
  */
 public interface Query {
@@ -202,24 +202,24 @@ public interface Query {
 	 *
 	 * @param relation
 	 *            {@code Relation} will be passed to
-	 *            {@link #join(Relation, Join)} with {@link Join#INNER}.
+	 *            {@link #join(Relation, JoinType)} with {@link JoinType#INNER}.
 	 * @return This query is returned.
 	 */
 	default Query join(Relation relation) {
-		return join(relation, Join.INNER);
+		return join(relation, JoinType.INNER);
 	}
 
 	/**
-	 * Adds a join statement for given {@link Relation} with given {@link Join}
+	 * Adds a join statement for given {@link Relation} with given {@link JoinType}
 	 * type.
 	 *
 	 * @param relation
 	 *            The {@code Relation} a join statement will be added for.
 	 * @param join
-	 *            The {@code Join} type that will be applied.
+	 *            The {@code JoinType} type that will be applied.
 	 * @return This query is returned.
 	 */
-	Query join(Relation relation, Join join);
+	Query join(Relation relation, JoinType join);
 
 	/**
 	 * Adds a group by statement for each given {@link Attribute}.

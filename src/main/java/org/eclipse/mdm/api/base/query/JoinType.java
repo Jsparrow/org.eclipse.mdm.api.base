@@ -9,35 +9,27 @@
 package org.eclipse.mdm.api.base.query;
 
 /**
- * Relationship enumeration.
+ * JoinType enumeration.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see EntityType
- * @see Relation
+ * @see Query
  */
-public enum Relationship {
+public enum JoinType {
 
 	// ======================================================================
 	// Enumerations
 	// ======================================================================
 
 	/**
-	 * Represents a hierarchical relation between two {@link EntityType}s e.g.:
-	 * {@code Test} and {@code TestStep}.
+	 * Enforces an inner join.
 	 */
-	FATHER_CHILD,
+	INNER,
 
 	/**
-	 * Represents an informational relation between two {@link EntityType}s
-	 * e.g.: {@code Measurement} and {@code ParameterSet}.
+	 * Enforces an outer join.
 	 */
-	INFO,
-
-	/**
-	 * Represents an inheritance relation between two {@link EntityType}s.
-	 */
-	INHERITANCE
+	OUTER
 
 }
