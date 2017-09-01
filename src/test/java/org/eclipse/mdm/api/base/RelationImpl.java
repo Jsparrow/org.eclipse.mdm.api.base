@@ -54,4 +54,14 @@ public class RelationImpl implements Relation {
 			throw new UnsupportedOperationException();
 		}
 	}
+
+	@Override
+	public boolean isOutgoing(RelationType relationType) {
+		return true;
+	}
+
+	@Override
+	public boolean isIncoming(RelationType relationType) {
+		return false;
+	}
 }

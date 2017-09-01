@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Gigatronik Ingolstadt GmbH
+ * Copyright (c) 2016 Gigatronik Ingolstadt GmbH and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -77,5 +77,31 @@ public interface Relation {
 	 */
 	@Override
 	String toString();
+	
+	/**
+	 * Checks whether this relation is of the same {@link RelationType} as the
+	 * given one and whether the foreign key is in the table of the source
+	 * entity type (or, in other words, if there may be at most 1 related
+	 * destination object). 
+	 *
+	 * @param relationType
+	 *            The {@code RelationType}.
+	 * @return Returns {@code true} this relation's {@code RelationType} is
+	 *         equal with the given one and it is is an outgoing relation.
+	 */
+	boolean isOutgoing(RelationType relationType);
+	
+	/**
+	 * Checks whether this relation is of the same {@link RelationType} as the
+	 * given one and whether the foreign key is in the table of the target
+	 * entity type (or, in other words, if there may be more than one related
+	 * destination objects).
+	 *
+	 * @param relationType
+	 *            The {@code RelationType}.
+	 * @return Returns {@code true} this relation's {@code RelationType} is
+	 *         equal with the given one and it is is an incoming relation.
+	 */
+	boolean isIncoming(RelationType relationType);
 
 }
