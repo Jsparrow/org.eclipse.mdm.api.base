@@ -17,21 +17,12 @@ package org.eclipse.mdm.api.base.query;
  * @see Condition
  * @see Filter
  */
-public enum Operator {
+public enum BooleanOperator {
 
 	// ======================================================================
 	// Enumerations
 	// ======================================================================
 
-	/**
-	 * Left parenthesis.
-	 */
-	OPEN,
-
-	/**
-	 * Right parenthesis.
-	 */
-	CLOSE,
 
 	/**
 	 * Logical conjunction.

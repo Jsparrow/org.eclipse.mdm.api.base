@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * A filter is a sequence of {@link FilterItem}s containing {@link Operator}s or
+ * A filter is a sequence of {@link FilterItem}s containing {@link BooleanOperator}s or
  * {@link Condition}s.
  *
  * @since 1.0.0
@@ -133,7 +133,7 @@ public final class Filter implements Iterable<FilterItem> {
 
 	/**
 	 * Creates a new instance of this class that implicitly adds
-	 * {@link Operator#AND} {@code FilterItem}s between {@link Condition}s or
+	 * {@link BooleanOperator#AND} {@code FilterItem}s between {@link Condition}s or
 	 * merged filters.
 	 *
 	 * <pre>
@@ -153,7 +153,7 @@ public final class Filter implements Iterable<FilterItem> {
 
 	/**
 	 * Creates a new instance of this class that implicitly adds
-	 * {@link Operator#OR} {@code FilterItem}s between {@link Condition}s or
+	 * {@link BooleanOperator#OR} {@code FilterItem}s between {@link Condition}s or
 	 * merged filters.
 	 *
 	 * <pre>
@@ -369,7 +369,7 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * Inverts this filter by prepending the {@link Operator#NOT} to the
+	 * Inverts this filter by prepending the {@link BooleanOperator#NOT} to the
 	 * {@link FilterItem} sequence as shown in the following examples:
 	 *
 	 * <pre>
@@ -470,7 +470,7 @@ public final class Filter implements Iterable<FilterItem> {
 
 	/**
 	 * Determines whether the {@link FilterItem} sequence starts with the
-	 * {@link Operator#NOT}.
+	 * {@link BooleanOperator#NOT}.
 	 *
 	 * @return True if this filter is inverted.
 	 */
