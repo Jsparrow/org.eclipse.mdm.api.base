@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * A filter is a sequence of {@link FilterItem}s containing {@link Operator}s or
+ * A filter is a sequence of {@link FilterItem}s containing {@link BooleanOperator}s or
  * {@link Condition}s.
  *
  * @since 1.0.0
@@ -133,7 +133,7 @@ public final class Filter implements Iterable<FilterItem> {
 
 	/**
 	 * Creates a new instance of this class that implicitly adds
-	 * {@link Operator#AND} {@code FilterItem}s between {@link Condition}s or
+	 * {@link BooleanOperator#AND} {@code FilterItem}s between {@link Condition}s or
 	 * merged filters.
 	 *
 	 * <pre>
@@ -153,7 +153,7 @@ public final class Filter implements Iterable<FilterItem> {
 
 	/**
 	 * Creates a new instance of this class that implicitly adds
-	 * {@link Operator#OR} {@code FilterItem}s between {@link Condition}s or
+	 * {@link BooleanOperator#OR} {@code FilterItem}s between {@link Condition}s or
 	 * merged filters.
 	 *
 	 * <pre>
@@ -197,7 +197,7 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * Adds a new instance ID condition ({@link Operation#EQUAL}) for given
+	 * Adds a new instance ID condition ({@link ComparisonOperator#EQUAL}) for given
 	 * {@link EntityType} and instance ID to this filter.
 	 *
 	 * @param entityType
@@ -208,12 +208,12 @@ public final class Filter implements Iterable<FilterItem> {
 	 * @see #add(Condition)
 	 */
 	public Filter id(EntityType entityType, String id) {
-		add(Operation.EQUAL.create(entityType.getIDAttribute(), id));
+		add(ComparisonOperator.EQUAL.create(entityType.getIDAttribute(), id));
 		return this;
 	}
 
 	/**
-	 * Adds a new foreign ID condition ({@link Operation#EQUAL}) for given
+	 * Adds a new foreign ID condition ({@link ComparisonOperator#EQUAL}) for given
 	 * {@link Relation} and instance ID to this filter.
 	 *
 	 * @param relation
@@ -224,12 +224,12 @@ public final class Filter implements Iterable<FilterItem> {
 	 * @see #add(Condition)
 	 */
 	public Filter id(Relation relation, String id) {
-		add(Operation.EQUAL.create(relation.getAttribute(), id));
+		add(ComparisonOperator.EQUAL.create(relation.getAttribute(), id));
 		return this;
 	}
 
 	/**
-	 * Adds a new instance IDs condition ({@link Operation#IN_SET}) for given
+	 * Adds a new instance IDs condition ({@link ComparisonOperator#IN_SET}) for given
 	 * {@link EntityType} and instance IDs to this filter.
 	 *
 	 * @param entityType
@@ -240,13 +240,13 @@ public final class Filter implements Iterable<FilterItem> {
 	 * @see #add(Condition)
 	 */
 	public Filter ids(EntityType entityType, Collection<String> ids) {
-		add(Operation.IN_SET.create(entityType.getIDAttribute(),
+		add(ComparisonOperator.IN_SET.create(entityType.getIDAttribute(),
 				ids.stream().distinct().toArray(String[]::new)));
 		return this;
 	}
 
 	/**
-	 * Adds a new foreign IDs condition ({@link Operation#IN_SET}) for given
+	 * Adds a new foreign IDs condition ({@link ComparisonOperator#IN_SET}) for given
 	 * {@link Relation} and instance IDs to this filter.
 	 *
 	 * @param relation
@@ -257,13 +257,13 @@ public final class Filter implements Iterable<FilterItem> {
 	 * @see #add(Condition)
 	 */
 	public Filter ids(Relation relation, Collection<String> ids) {
-		add(Operation.IN_SET.create(relation.getAttribute(),
+		add(ComparisonOperator.IN_SET.create(relation.getAttribute(),
 				ids.stream().distinct().toArray(String[]::new)));
 		return this;
 	}
 
 	/**
-	 * Adds a instance name condition ({@link Operation#LIKE}) for given
+	 * Adds a instance name condition ({@link ComparisonOperator#LIKE}) for given
 	 * {@link EntityType} and instance name pattern.
 	 *
 	 * <p>
@@ -281,7 +281,7 @@ public final class Filter implements Iterable<FilterItem> {
 	 */
 	public Filter name(EntityType entityType, String pattern) {
 		if (!"*".equals(pattern)) {
-			add(Operation.LIKE.create(entityType.getNameAttribute(), pattern));
+			add(ComparisonOperator.LIKE.create(entityType.getNameAttribute(), pattern));
 		}
 		return this;
 	}
@@ -369,7 +369,7 @@ public final class Filter implements Iterable<FilterItem> {
 	}
 
 	/**
-	 * Inverts this filter by prepending the {@link Operator#NOT} to the
+	 * Inverts this filter by prepending the {@link BooleanOperator#NOT} to the
 	 * {@link FilterItem} sequence as shown in the following examples:
 	 *
 	 * <pre>
@@ -470,7 +470,7 @@ public final class Filter implements Iterable<FilterItem> {
 
 	/**
 	 * Determines whether the {@link FilterItem} sequence starts with the
-	 * {@link Operator#NOT}.
+	 * {@link BooleanOperator#NOT}.
 	 *
 	 * @return True if this filter is inverted.
 	 */

@@ -55,7 +55,7 @@ public class ModelTest {
 	public void parameterValue() {
 		Map<String, Value> map = new HashMap<String, Value>();
 		map.put("DataType", new Value(ValueType.STRING, "DataType", null, true, ScalarType.FLOAT, ScalarType.class,
-				ScalarType.FLOAT));
+				ScalarType.FLOAT, EnumRegistry.SCALAR_TYPE));
 		map.put("Value", ValueType.STRING.create("Value", null, true, "5.7"));
 		map.put("Name", ValueType.STRING.create("Name", null, true, "paramname"));
 		Core core = new CoreImpl(map);
@@ -152,7 +152,7 @@ public class ModelTest {
 	public void getQuantity() {
 		Map<String, Value> map = new HashMap<String, Value>();
 		map.put("DefDataType", new Value(ValueType.ENUMERATION, "name", "unit", true, ScalarType.FLOAT,
-				ScalarType.class, ScalarType.FLOAT));
+				ScalarType.class, ScalarType.FLOAT, EnumRegistry.SCALAR_TYPE));
 		Core core = new CoreImpl(map);
 		Quantity quantity = new Quantity(core);
 		ScalarType defaultScalarType = quantity.getDefaultScalarType();
@@ -193,7 +193,7 @@ public class ModelTest {
 		map.put("Current", ValueType.INTEGER.create("Length", null, true, 0));
 		map.put("MolarAmount", ValueType.INTEGER.create("Length", null, true, 0));
 		map.put("LuminousIntensity", ValueType.INTEGER.create("Length", null, true, 0));
-		// TODO: check if angle in lower case is correct
+		// TODO (Florian Schmitt): check if angle in lower case is correct
 		map.put("angle", ValueType.INTEGER.create("Length", null, true, 0));
 		Core core = new CoreImpl(map);
 		EntityFactoryImpl ef = new EntityFactoryImpl(core);
@@ -216,9 +216,9 @@ public class ModelTest {
 		map.put("DefTypeSize", ValueType.INTEGER.create("DefTypeSize", null, true, 8));
 		map.put("DefMQName", ValueType.STRING.create("DefMQName", null, true, "mqname"));
 		map.put("DefDataType", new Value(ValueType.ENUMERATION, "DefDataType", "", true, ScalarType.DOUBLE,
-				ScalarType.class, ScalarType.DOUBLE));
+				ScalarType.class, ScalarType.DOUBLE, EnumRegistry.SCALAR_TYPE));
 		map.put("ValidFlag", new Value(ValueType.ENUMERATION, "ValidFlag", "", false, VersionState.ARCHIVED,
-				VersionState.class, null));
+				VersionState.class, null, EnumRegistry.VERSION_STATE));
 		map.put("Description", ValueType.STRING.create("Description", null, true, null));
 		core = new CoreImpl(map);
 		ef = new EntityFactoryImpl(core);
@@ -256,9 +256,11 @@ public class ModelTest {
 		map = new HashMap<String, Value>();
 		map.put("Name", ValueType.STRING.create("Name", null, true, null));
 		map.put("Description", ValueType.STRING.create("Description", null, true, null));
-		map.put("Interpolation",
-				new Value(ValueType.ENUMERATION, "Interpolation", "", true, null, Interpolation.class, null));
-		map.put("DataType", new Value(ValueType.ENUMERATION, "DataType", "", true, null, ScalarType.class, null));
+		map.put("Interpolation", new Value(ValueType.ENUMERATION, "Interpolation", "", true, null, Interpolation.class,
+				null, EnumRegistry.SCALAR_TYPE));
+		map.put("DataType", new Value(ValueType.ENUMERATION, "DataType", "", true, null, ScalarType.class, null,
+				EnumRegistry.SCALAR_TYPE));
+
 		map.put("TypeSize", ValueType.INTEGER.create("TypeSize", null, true, null));
 		map.put("Rank", ValueType.INTEGER.create("Rank", null, true, null));
 		core = new CoreImpl(map);
@@ -272,8 +274,12 @@ public class ModelTest {
 	 */
 	@org.junit.Test
 	public void valueType() {
+		EnumRegistry.getInstance();
 		assertEquals(ValueType.SHORT_SEQUENCE.toSingleType(), ValueType.SHORT);
 		assertEquals(ValueType.DATE.toSequenceType(), ValueType.DATE_SEQUENCE);
+		assertEquals(ValueType.ENUMERATION_SEQUENCE.toSingleType(), ValueType.ENUMERATION);
+		assertEquals(ValueType.ENUMERATION.toSingleType(), ValueType.ENUMERATION);
+		assertEquals(ValueType.ENUMERATION, ValueType.ENUMERATION.valueOf(ValueType.ENUMERATION.toSingleType().name()));
 		assertEquals(Float.class, ValueType.FLOAT.getValueClass());
 		assertEquals(true, ValueType.DOUBLE.isAnyFloatType());
 		assertEquals(true, ValueType.DOUBLE.isDouble());
@@ -305,6 +311,12 @@ public class ModelTest {
 		assertTrue(SequenceRepresentation.EXPLICIT_EXTERNAL.isExplicit());
 		assertTrue(SequenceRepresentation.EXPLICIT_EXTERNAL.isExternal());
 		assertFalse(SequenceRepresentation.EXPLICIT_EXTERNAL.isImplicit());
+		assertEquals(SequenceRepresentation.EXPLICIT.ordinal(), (Integer) 0);
+		assertEquals((Integer) 5, SequenceRepresentation.RAW_POLYNOMIAL.ordinal());
+		assertEquals((Integer) 7, SequenceRepresentation.EXPLICIT_EXTERNAL.ordinal());
+		assertEquals((Integer) 9, SequenceRepresentation.RAW_POLYNOMIAL_EXTERNAL.ordinal());
+		assertEquals((Integer) 10, SequenceRepresentation.RAW_LINEAR_CALIBRATED.ordinal());
+		assertEquals((Integer) 11, SequenceRepresentation.RAW_LINEAR_CALIBRATED_EXTERNAL.ordinal());
 	}
 
 	/**
@@ -352,5 +364,15 @@ public class ModelTest {
 	public void interpolation() {
 		assertTrue(Interpolation.LINEAR.isLinear());
 		assertFalse(Interpolation.NONE.isSpecific());
+		assertEquals(Interpolation.NONE.ordinal(), (Integer) 0);
+		assertEquals(Interpolation.LINEAR.ordinal(), (Integer) 1);
+		assertEquals(Interpolation.SPECIFIC.ordinal(), (Integer) 2);
 	}
+
+	@org.junit.Test
+	public void enumRegistry() {
+		EnumRegistry er = EnumRegistry.getInstance();
+		assertTrue(er.get("Interpolation") instanceof Enumeration<?>);
+	}
+
 }

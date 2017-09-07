@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class ParameterSet extends BaseEntity implements Deletable {
+public class ParameterSet extends BaseEntity implements Deletable {
 
 	// ======================================================================
 	// Class variables
@@ -70,7 +70,7 @@ public final class ParameterSet extends BaseEntity implements Deletable {
 	 *         name does not exist.
 	 */
 	public Optional<Parameter> getParameter(String name) {
-		return getParameters().stream().filter(p -> p.nameMatches(name)).findAny();
+		return getParameters().stream().filter(p -> p.nameEquals(name)).findAny();
 	}
 
 	/**

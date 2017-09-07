@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Gigatronik Ingolstadt GmbH
+ * Copyright (c) 2016 Gigatronik Ingolstadt GmbH and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -16,7 +16,7 @@ package org.eclipse.mdm.api.base.model;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see Channel
  */
-public enum AxisType {
+public class AxisType extends EnumerationValue{
 
 	// ======================================================================
 	// Enumerations
@@ -25,17 +25,17 @@ public enum AxisType {
 	/**
 	 * A {@link Channel} of this type may be displayed as the x-axis.
 	 */
-	X_AXIS,
+	public static final AxisType X_AXIS = new AxisType(); 
 
 	/**
 	 * A {@link Channel} of this type may be displayed as the y-axis.
 	 */
-	Y_AXIS,
+	public static final AxisType Y_AXIS = new AxisType();
 
 	/**
 	 * A {@link Channel} of this type may be displayed as the x- or y-axis.
 	 */
-	XY_AXIS;
+	public static final AxisType XY_AXIS = new AxisType();
 
 	// ======================================================================
 	// Public methods

@@ -9,7 +9,7 @@
 package org.eclipse.mdm.api.base.query;
 
 /**
- * Filter item contains either a {@link Condition} or an {@link Operator}.
+ * Filter item contains either a {@link Condition} or an {@link BooleanOperator}.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -22,36 +22,37 @@ public final class FilterItem {
 	// ======================================================================
 
 	/**
-	 * Contains the {@link Operator#AND}.
+	 * Contains the {@link BooleanOperator#AND}.
 	 */
-	static final FilterItem AND = new FilterItem(Operator.AND);
+	static final FilterItem AND = new FilterItem(BooleanOperator.AND);
 
 	/**
-	 * Contains the {@link Operator#OR}.
+	 * Contains the {@link BooleanOperator#OR}.
 	 */
-	static final FilterItem OR = new FilterItem(Operator.OR);
+	static final FilterItem OR = new FilterItem(BooleanOperator.OR);
 
 	/**
-	 * Contains the {@link Operator#NOT}.
+	 * Contains the {@link BooleanOperator#NOT}.
 	 */
-	static final FilterItem NOT = new FilterItem(Operator.NOT);
+	static final FilterItem NOT = new FilterItem(BooleanOperator.NOT);
 
 	/**
-	 * Contains the {@link Operator#OPEN}.
+	 * Contains the {@link BooleanOperator#OPEN}.
 	 */
-	static final FilterItem OPEN = new FilterItem(Operator.OPEN);
+	static final FilterItem OPEN = new FilterItem(BracketOperator.OPEN);
 
 	/**
-	 * Contains the {@link Operator#CLOSE}.
+	 * Contains the {@link BooleanOperator#CLOSE}.
 	 */
-	static final FilterItem CLOSE = new FilterItem(Operator.CLOSE);
+	static final FilterItem CLOSE = new FilterItem(BracketOperator.CLOSE);
 
 	// ======================================================================
 	// Instance variables
 	// ======================================================================
 
 	private final Condition condition;
-	private final Operator operator;
+	private final BooleanOperator booleanOperator;
+	private final BracketOperator bracketOperator;
 
 	// ======================================================================
 	// Constructors
@@ -65,18 +66,32 @@ public final class FilterItem {
 	 */
 	FilterItem(Condition condition) {
 		this.condition = condition;
-		operator = null;
+		this.bracketOperator = null;
+		this.booleanOperator = null;
 	}
 
 	/**
 	 * Constructor.
 	 *
-	 * @param operator
-	 *            The {@link Operator}.
+	 * @param booleanOperator
+	 *            The {@link BooleanOperator}.
 	 */
-	private FilterItem(Operator operator) {
-		condition = null;
-		this.operator = operator;
+	private FilterItem(BooleanOperator booleanOperator) {
+		this.condition = null;
+		this.bracketOperator = null;
+		this.booleanOperator = booleanOperator;
+	}
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param bracketoperator
+	 *            The {@link BracketOperator}.
+	 */
+	private FilterItem(BracketOperator bracketoperator) {
+		this.condition = null;
+		this.booleanOperator = null;
+		this.bracketOperator = bracketoperator;
 	}
 
 	// ======================================================================
@@ -84,27 +99,28 @@ public final class FilterItem {
 	// ======================================================================
 
 	/**
-	 * Checks whether an {@link Operator} is contained.
+	 * Checks whether an {@link BooleanOperator} is contained.
 	 *
-	 * @return True if an {@code Operator} is contained.
+	 * @return True if an {@code BooleanOperator} is contained.
 	 */
-	public boolean isOperator() {
-		return operator != null;
+	public boolean isBooleanOperator() {
+		return booleanOperator != null;
 	}
+	
 
 	/**
-	 * Returns the contained {@link Operator}.
+	 * Returns the contained {@link BooleanOperator}.
 	 *
-	 * @return The {@code Operator} is returned.
+	 * @return The {@code BooleanOperator} is returned.
 	 * @throws IllegalStateException
-	 *             Thrown if {@code Operator} is not contained.
+	 *             Thrown if {@code BooleanOperator} is not contained.
 	 */
-	public Operator getOperator() {
-		if (isOperator()) {
-			return operator;
+	public BooleanOperator getBooleanOperator() {
+		if (isBooleanOperator()) {
+			return booleanOperator;
 		}
 
-		throw new IllegalStateException("Item does not contain an operator.");
+		throw new IllegalStateException("Item does not contain an booleanOperator.");
 	}
 
 	/**
@@ -126,6 +142,30 @@ public final class FilterItem {
 	public Condition getCondition() {
 		if (isCondition()) {
 			return condition;
+		}
+
+		throw new IllegalStateException("Item does not contain a condition.");
+	}
+	
+	/**
+	 * Checks whether an {@link BrackerOperator} is contained.
+	 *
+	 * @return True if an {@code BracketOperator} is contained.
+	 */
+	public boolean isBracketOperator() {
+		return bracketOperator != null;
+	}
+	
+	/**
+	 * Returns the contained {@link Condition}.
+	 *
+	 * @return The {@code Condition} is returned.
+	 * @throws IllegalStateException
+	 *             Thrown if {@code Condition} is not contained.
+	 */
+	public BracketOperator getBracketOperator() {
+		if (isBracketOperator()) {
+			return bracketOperator;
 		}
 
 		throw new IllegalStateException("Item does not contain a condition.");

@@ -15,7 +15,7 @@ package org.eclipse.mdm.api.base.model;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public enum Interpolation {
+public class Interpolation extends EnumerationValue {
 
 	// ======================================================================
 	// Enumerations
@@ -24,17 +24,17 @@ public enum Interpolation {
 	/**
 	 * No interpolation is used.
 	 */
-	NONE,
+	public static final Interpolation NONE = new Interpolation();
 
 	/**
 	 * Interpolation is linear.
 	 */
-	LINEAR,
+	public static final Interpolation LINEAR = new Interpolation();
 
 	/**
 	 * Interpolation is application specific.
 	 */
-	SPECIFIC;
+	public static final Interpolation SPECIFIC = new Interpolation();
 
 	// ======================================================================
 	// Public methods

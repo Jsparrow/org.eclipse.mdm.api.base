@@ -14,7 +14,7 @@ import org.eclipse.mdm.api.base.AttributeImpl.Type;
 import org.eclipse.mdm.api.base.query.Attribute;
 import org.eclipse.mdm.api.base.query.EntityType;
 import org.eclipse.mdm.api.base.query.Relation;
-import org.eclipse.mdm.api.base.query.Relationship;
+import org.eclipse.mdm.api.base.query.RelationType;
 
 public class EntityTypeImpl implements EntityType {
 
@@ -69,7 +69,7 @@ public class EntityTypeImpl implements EntityType {
 	}
 
 	@Override
-	public List<Relation> getRelations(Relationship relationship) {
+	public List<Relation> getRelations(RelationType relationType) {
 		return null;
 	}
 

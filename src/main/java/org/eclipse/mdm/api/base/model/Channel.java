@@ -20,7 +20,7 @@ package org.eclipse.mdm.api.base.model;
  * @see ContextSensor
  * @see ParameterSet
  */
-public final class Channel extends BaseEntity implements Deletable, Describable {
+public class Channel extends BaseEntity implements Deletable, Describable {
 
 	// TODO Channel may have a relation to a sensor!
 

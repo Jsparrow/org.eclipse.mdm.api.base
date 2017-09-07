@@ -9,43 +9,27 @@
 package org.eclipse.mdm.api.base.query;
 
 /**
- * The operator enumeration.
+ * JoinType enumeration.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
- * @see Condition
- * @see Filter
+ * @see Query
  */
-public enum Operator {
+public enum JoinType {
 
 	// ======================================================================
 	// Enumerations
 	// ======================================================================
 
 	/**
-	 * Left parenthesis.
+	 * Enforces an inner join.
 	 */
-	OPEN,
+	INNER,
 
 	/**
-	 * Right parenthesis.
+	 * Enforces an outer join.
 	 */
-	CLOSE,
-
-	/**
-	 * Logical conjunction.
-	 */
-	AND,
-
-	/**
-	 * Logical disjunction.
-	 */
-	OR,
-
-	/**
-	 * Logical Negation.
-	 */
-	NOT
+	OUTER
 
 }

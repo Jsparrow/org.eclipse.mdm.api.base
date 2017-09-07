@@ -8,6 +8,8 @@
 
 package org.eclipse.mdm.api.base;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -121,8 +123,25 @@ public interface BaseEntityManager<S extends BaseEntityFactory> {
 	 * @throws DataAccessException
 	 *             Thrown if unable to retrieve the entity.
 	 */
-	<T extends Entity> T load(Class<T> entityClass, String instanceID) throws DataAccessException;
+	default <T extends Entity> T load(Class<T> entityClass, String instanceID) throws DataAccessException {
+		List<T> entities = load(entityClass, Collections.singletonList(instanceID));
+		if (entities.size() != 1) {
+			throw new DataAccessException("Failed to load entity by instance ID.");
+		}
+		return entities.get(0);
+	}
 
+	/**
+	 * Loads the entities identified by given entity class and its instance IDs.
+	 *
+	 * @param <T>  The desired type.
+	 * @param entityClass Type of the returned entities.
+	 * @param instanceIDs The instance IDs to load. If a instance ID does not exist, it is ignored.
+	 * @return Entities are returned in a list.
+	 * @throws DataAccessException Thrown if unable to retrieve the entities.
+	 */
+	<T extends Entity> List<T> load(Class<T> entityClass, Collection<String> instanceIDs) throws DataAccessException;
+	
 	/**
 	 * Loads all available entities of given type. This method is useful while
 	 * working with types whose amount is known to be fairly small (e.g.:

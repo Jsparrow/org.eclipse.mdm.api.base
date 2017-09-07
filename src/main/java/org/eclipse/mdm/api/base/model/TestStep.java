@@ -8,6 +8,12 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.mdm.api.base.BaseEntityManager;
+import org.eclipse.mdm.api.base.query.DataAccessException;
+
 /**
  * Implementation of the test step entity type. A test step is an atomic
  * measurement task as part of a {@link Test}. The boundary conditions do not
@@ -82,6 +88,24 @@ public class TestStep extends BaseEntity implements ContextDescribable, Datable,
 	 */
 	public void setOptional(Boolean optional) {
 		getValue(ATTR_OPTIONAL).set(optional);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ContextType> loadContextTypes(BaseEntityManager<? extends BaseEntityFactory> manager)
+			throws DataAccessException {
+		return manager.loadContextTypes(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Map<ContextType, ContextRoot> loadContexts(BaseEntityManager<? extends BaseEntityFactory> manager,
+			ContextType... contextTypes) throws DataAccessException {
+		return manager.loadContexts(this, contextTypes);
 	}
 
 }

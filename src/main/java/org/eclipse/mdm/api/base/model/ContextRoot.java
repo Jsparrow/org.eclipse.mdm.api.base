@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class ContextRoot extends BaseEntity implements Deletable {
+public class ContextRoot extends BaseEntity implements Deletable {
 
 	// ======================================================================
 	// Class variables
@@ -86,7 +86,7 @@ public final class ContextRoot extends BaseEntity implements Deletable {
 	 *         given name does not exist.
 	 */
 	public Optional<ContextComponent> getContextComponent(String name) {
-		return getContextComponents().stream().filter(cc -> cc.nameMatches(name)).findAny();
+		return getContextComponents().stream().filter(cc -> cc.nameEquals(name)).findAny();
 	}
 
 	/**

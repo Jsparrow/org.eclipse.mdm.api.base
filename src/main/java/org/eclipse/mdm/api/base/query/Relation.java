@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Gigatronik Ingolstadt GmbH
+ * Copyright (c) 2016 Gigatronik Ingolstadt GmbH and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,7 +18,7 @@ import org.eclipse.mdm.api.base.model.ValueType;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see EntityType
- * @see Relationship
+ * @see RelationType
  */
 public interface Relation {
 
@@ -48,11 +48,11 @@ public interface Relation {
 	EntityType getTarget();
 
 	/**
-	 * Returns the {@link Relationship} type for this relation.
+	 * Returns the {@link RelationType} type for this relation.
 	 *
-	 * @return The {@code Relationship} is returned.
+	 * @return The {@code RelationType} is returned.
 	 */
-	Relationship getRelationship();
+	RelationType getRelationType();
 
 	/**
 	 * Returns the foreign key {@link Attribute} for this {@link Relation}.
@@ -77,5 +77,31 @@ public interface Relation {
 	 */
 	@Override
 	String toString();
+	
+	/**
+	 * Checks whether this relation is of the same {@link RelationType} as the
+	 * given one and whether the foreign key is in the table of the source
+	 * entity type (or, in other words, if there may be at most 1 related
+	 * destination object). 
+	 *
+	 * @param relationType
+	 *            The {@code RelationType}.
+	 * @return Returns {@code true} this relation's {@code RelationType} is
+	 *         equal with the given one and it is is an outgoing relation.
+	 */
+	boolean isOutgoing(RelationType relationType);
+	
+	/**
+	 * Checks whether this relation is of the same {@link RelationType} as the
+	 * given one and whether the foreign key is in the table of the target
+	 * entity type (or, in other words, if there may be more than one related
+	 * destination objects).
+	 *
+	 * @param relationType
+	 *            The {@code RelationType}.
+	 * @return Returns {@code true} this relation's {@code RelationType} is
+	 *         equal with the given one and it is is an incoming relation.
+	 */
+	boolean isIncoming(RelationType relationType);
 
 }

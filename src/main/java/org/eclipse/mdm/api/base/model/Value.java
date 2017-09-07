@@ -36,7 +36,7 @@ public final class Value {
 	// Instances variables
 	// ======================================================================
 
-	private final ValueType valueType;
+	private final ValueType<?> valueType;
 	private final String name;
 	private final String unit;
 
@@ -47,6 +47,7 @@ public final class Value {
 	private Object value;
 
 	private final Class<?> valueClass;
+	private final String valueTypeDescr;
 	private final Object defaultValue;
 
 	// ======================================================================
@@ -71,9 +72,10 @@ public final class Value {
 	 * @param defaultValue
 	 *            Used as null replacement.
 	 */
-	Value(ValueType valueType, String name, String unit, boolean valid, Object value, Class<?> valueClass,
-			Object defaultValue) {
+	Value(ValueType<?> valueType, String name, String unit, boolean valid, Object value, Class<?> valueClass,
+			Object defaultValue, String valueTypeDescr) {
 		this.valueType = valueType;
+		this.valueTypeDescr = valueTypeDescr;
 		this.name = name;
 		this.unit = unit == null ? "" : unit;
 
@@ -99,7 +101,8 @@ public final class Value {
 	 *            The new value.
 	 */
 	private Value(Value origin, Object input) {
-		this(origin.valueType, origin.name, origin.unit, origin.valid, input, origin.valueClass, origin.defaultValue);
+		this(origin.valueType, origin.name, origin.unit, origin.valid, input, origin.valueClass, origin.defaultValue,
+				origin.valueTypeDescr);
 	}
 
 	// ======================================================================
@@ -120,7 +123,7 @@ public final class Value {
 	 *
 	 * @return The associated {@code ValueType} is returned.
 	 */
-	public ValueType getValueType() {
+	public ValueType<?> getValueType() {
 		return valueType;
 	}
 
@@ -167,6 +170,20 @@ public final class Value {
 	 *
 	 * @param <T>
 	 *            The expected value type.
+	 * @param type
+	 *            The {@link ValueType}.
+	 * @return Currently stored value is returned.
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> T extract(ValueType<T> type) {
+		return (T) value;
+	}
+
+	/**
+	 * Returns currently stored value of this value container.
+	 *
+	 * @param <T>
+	 *            The expected value type.
 	 * @return Currently stored value is returned.
 	 */
 	@SuppressWarnings("unchecked")
@@ -193,6 +210,22 @@ public final class Value {
 		} else if (valueClass.isInstance(input)) {
 			value = input;
 			setValid(true);
+		} else if (input instanceof EnumerationValue) {
+			String inpvalueTypeDescr = ((EnumerationValue)input).getOwner().getName();
+		    if (inpvalueTypeDescr==null) {
+		    	throw new IllegalArgumentException("EnumerationValue value description of input value not correctly initialized");
+		    }
+			if (valueTypeDescr==null)
+				throw new IllegalArgumentException("EnumerationValue value description not correctly initialized got null, '"
+						+ "' expected '" + valueClass.getSimpleName() + "'.");
+		
+		    if (valueTypeDescr.equals(inpvalueTypeDescr)){
+		       value=input;
+		       setValid(true);
+		    } else {
+		    	throw new IllegalArgumentException("Incompatible value type description'" + inpvalueTypeDescr  
+						+ "' passed, expected '" + valueTypeDescr + "'.");
+		    }
 		} else {
 			throw new IllegalArgumentException("Incompatible value type '" + input.getClass().getSimpleName()
 					+ "' passed, expected '" + valueClass.getSimpleName() + "'.");

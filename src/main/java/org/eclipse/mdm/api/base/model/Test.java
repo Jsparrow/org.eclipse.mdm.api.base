@@ -26,7 +26,7 @@ import java.util.Optional;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class Test extends BaseEntity
+public class Test extends BaseEntity
 		implements Datable, Deletable, Describable, FilesAttachable, Tagable, StatusAttachable {
 
 	// ======================================================================
@@ -85,7 +85,7 @@ public final class Test extends BaseEntity
 	 *         name does not exist.
 	 */
 	public Optional<TestStep> getCommissionedTestStep(String name) {
-		return getCommissionedTestSteps().stream().filter(ts -> ts.nameMatches(name)).findAny();
+		return getCommissionedTestSteps().stream().filter(ts -> ts.nameEquals(name)).findAny();
 	}
 
 	/**
