@@ -8,6 +8,8 @@
 
 package org.eclipse.mdm.api.base.query;
 
+import java.util.Objects;
+
 import org.eclipse.mdm.api.base.model.Value;
 
 /**
@@ -82,5 +84,42 @@ public final class Condition {
 	public ComparisonOperator getComparisonOperator() {
 		return comparisonOperator;
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if (other == this) {
+			return true;
+		}
+		if (!(other instanceof Condition)) {
+			return false;
+		}
 
+		Condition condition = (Condition) other;
+
+		return Objects.equals(this.attribute, condition.attribute)
+				&& Objects.equals(this.value, condition.value)
+				&& Objects.equals(this.comparisonOperator, condition.comparisonOperator);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(attribute, value, comparisonOperator);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return attribute.getEntityType().getName() + "." + attribute.getName() + " " + comparisonOperator + " " + value;
+	}
 }

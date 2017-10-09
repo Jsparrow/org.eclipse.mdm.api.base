@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Gigatronik Ingolstadt GmbH
+ * Copyright (c) 2016 Gigatronik Ingolstadt GmbH and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,6 +14,8 @@ import java.util.Collection;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -352,7 +354,7 @@ public final class Filter implements Iterable<FilterItem> {
 	 * @return Returns this filter.
 	 */
 	public Filter merge(Filter filter) {
-		boolean addBrackets = !filter.isInverted() || filter.hasMultiple() && !(operatorItem == filter.operatorItem);
+		boolean addBrackets = filter.hasMultiple() && operatorItem != filter.operatorItem && !filter.isInverted();
 		insertOperator();
 
 		if (addBrackets) {
@@ -487,4 +489,43 @@ public final class Filter implements Iterable<FilterItem> {
 		return filterItems.size() > 1;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if (other == this) {
+			return true;
+		}
+		if (!(other instanceof Filter)) {
+			return false;
+		}
+
+		Filter filter = (Filter) other;
+
+		// Deque does not implement equals
+		return Arrays.equals(this.filterItems.toArray(new FilterItem[0]), filter.filterItems.toArray(new FilterItem[0]))
+				&& Objects.equals(this.operatorItem, filter.operatorItem);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(filterItems, operatorItem);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return this.stream().map(i -> Objects.toString(i)).collect(Collectors.joining(""));
+	}
 }

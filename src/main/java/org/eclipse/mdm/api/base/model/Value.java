@@ -244,6 +244,42 @@ public final class Value {
 		return new Value(this, equalValue && bothValid ? extract() : null);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if (other == this) {
+			return true;
+		}
+		if (!(other instanceof Value)) {
+			return false;
+		}
+
+		Value value = (Value) other;
+
+		return Objects.equals(this.valueType, value.valueType)
+				&& Objects.equals(this.name, value.name)
+				&& Objects.equals(this.unit, value.unit)
+				&& Objects.equals(this.initialValid, value.initialValid)
+				&& Objects.deepEquals(this.initialValue, value.initialValue)
+				&& Objects.equals(this.valid, value.valid)
+				&& Objects.deepEquals(this.value, value.value)
+				&& Objects.equals(this.valueClass, value.valueClass)
+				&& Objects.equals(this.valueTypeDescr, value.valueTypeDescr)
+				&& Objects.equals(this.defaultValue, value.defaultValue);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(valueType, name, unit, initialValid, initialValue, valid, value, valueClass, valueTypeDescr, defaultValue);
+	}
+	
 	/**
 	 * Returns a human readable {@code String} representation of this value. In
 	 * case of a sequence value container with up to 10 values the complete

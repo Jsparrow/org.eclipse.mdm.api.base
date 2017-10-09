@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Gigatronik Ingolstadt GmbH
+ * Copyright (c) 2016 Gigatronik Ingolstadt GmbH and others
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,8 @@
  */
 
 package org.eclipse.mdm.api.base.query;
+
+import java.util.Objects;
 
 /**
  * Filter item contains either a {@link Condition} or an {@link BooleanOperator}.
@@ -169,6 +171,50 @@ public final class FilterItem {
 		}
 
 		throw new IllegalStateException("Item does not contain a condition.");
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if (other == this) {
+			return true;
+		}
+		if (!(other instanceof FilterItem)) {
+			return false;
+		}
+
+		FilterItem filterItem = (FilterItem) other;
+
+		return Objects.equals(this.condition, filterItem.condition)
+				&& Objects.equals(this.booleanOperator, filterItem.booleanOperator)
+				&& Objects.equals(this.bracketOperator, filterItem.bracketOperator);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(condition, booleanOperator, bracketOperator);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		if (isBooleanOperator()) {
+			return " " + booleanOperator.toString() + " ";
+		} else if (isBracketOperator()) {
+			return bracketOperator.toString();
+		} else {
+			return condition.toString();
+		}
 	}
 
 }
