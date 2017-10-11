@@ -12,6 +12,7 @@ import static java.util.stream.IntStream.range;
 import static org.eclipse.mdm.api.base.model.Value.readAt;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -77,7 +78,7 @@ public final class MeasuredValues {
 			throw new IllegalArgumentException("Length of values and flags is not equal.");
 		}
 
-		this.flags = flags;
+		this.flags = Arrays.copyOf(flags, flags.length);
 		length = flags.length;
 	}
 
@@ -144,26 +145,22 @@ public final class MeasuredValues {
 		// idea: getScalarType().createIterator(values, flags); // <- package
 		// private
 		return new ValueIterator<E>() {
-
 			private int index = 0;
 
 			@Override
 			public boolean hasNext() {
 				return index < length;
 			}
-
 			@Override
 			public boolean isValid() {
 				return flags[index];
 			}
-
 			@Override
 			@SuppressWarnings("unchecked")
 			public E next() {
 				if (hasNext()) {
 					return (E) Array.get(values, index++);
 				}
-
 				throw new NoSuchElementException("Subsequent value is not available.");
 			}
 		};

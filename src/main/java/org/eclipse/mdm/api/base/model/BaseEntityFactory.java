@@ -62,10 +62,6 @@ public abstract class BaseEntityFactory {
 		getMutableStore(channel).set(quantity.getDefaultUnit());
 		getMutableStore(channel).set(quantity);
 
-		// if(contextSensor != null) {
-		// channel.getCore().setInfoRelation(contextSensor);
-		// }
-
 		// properties
 		channel.setName(name);
 		channel.setDescription(quantity.getDescription());

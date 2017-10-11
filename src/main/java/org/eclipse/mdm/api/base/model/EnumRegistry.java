@@ -9,12 +9,13 @@
 package org.eclipse.mdm.api.base.model;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This singleton class registers globally available enumerations.
  *
  */
-public class EnumRegistry {
+public final class EnumRegistry {
 
 	// singleton instance
 	private static final EnumRegistry instance = new EnumRegistry();
@@ -27,7 +28,7 @@ public class EnumRegistry {
 	public static final String VERSION_STATE = "VersionState";
 	public static final String AXIS_TYPE = "AxisType";
 
-	private HashMap<String, Enumeration<? extends EnumerationValue>> enumerations;
+	private Map<String, Enumeration<? extends EnumerationValue>> enumerations;
 
 	/**
 	 * Constructor. Not called directly. Use getInstance() instead.

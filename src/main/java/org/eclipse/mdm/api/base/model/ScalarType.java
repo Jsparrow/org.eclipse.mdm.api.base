@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 
 
 
-public class ScalarType extends EnumerationValue {
+public final class ScalarType extends EnumerationValue {
 
 	// ======================================================================
 	// Enumerations

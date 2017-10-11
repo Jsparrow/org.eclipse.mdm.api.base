@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public class ValueType<T> extends EnumerationValue {
+public final class ValueType<T> extends EnumerationValue {
 
 	// ======================================================================
 	// Enumerations

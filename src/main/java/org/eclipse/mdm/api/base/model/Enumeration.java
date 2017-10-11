@@ -10,6 +10,7 @@ package org.eclipse.mdm.api.base.model;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A class which dynamically bundles enumeration values
@@ -17,15 +18,14 @@ import java.util.HashMap;
  * @param <E>
  */
 public class Enumeration<E extends EnumerationValue> {
-	public E ens = null;
 
-	private HashMap<String, E> values;
+	private Map<String, E> values;
 
-	private HashMap<E, String> revvalues;
+	private Map<E, String> revvalues;
 
-	private HashMap<Integer, String> ordinals;
+	private Map<Integer, String> ordinals;
 
-	private HashMap<String, Integer> revordinals;
+	private Map<String, Integer> revordinals;
 
 	private int nextordinal;
 
@@ -90,12 +90,12 @@ public class Enumeration<E extends EnumerationValue> {
 	 */
 	public void addValue(E enumeration) {
 		enumeration.setOwner(this);
-		String name = enumeration.name();
+		String enumerationName = enumeration.name();
 		int ordinal = enumeration.ordinal();
-		values.put(name, enumeration);
-		revvalues.put(enumeration, name);
-		ordinals.put(ordinal, name);
-		revordinals.put(name, ordinal);
+		values.put(enumerationName, enumeration);
+		revvalues.put(enumeration, enumerationName);
+		ordinals.put(ordinal, enumerationName);
+		revordinals.put(enumerationName, ordinal);
 	}
 
 	/**
