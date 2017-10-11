@@ -9,6 +9,8 @@
 package org.eclipse.mdm.api.base.model;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -52,6 +54,7 @@ import java.util.function.Function;
  */
 public abstract class BaseParameter extends BaseEntity implements Deletable {
 
+	private static final Map<ScalarType, Function<String, Object>> SCALARTYPE_FUNCTION_MAP = new HashMap<>();
 	// ======================================================================
 	// Instance variables
 	// ======================================================================
@@ -59,6 +62,19 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	private final String attrScalarType;
 	private final String attrValue;
 
+	static {
+		SCALARTYPE_FUNCTION_MAP.put(ScalarType.STRING, v -> v);
+		SCALARTYPE_FUNCTION_MAP.put(ScalarType.DATE, v -> LocalDateTime.parse(v, Value.LOCAL_DATE_TIME_FORMATTER));
+		SCALARTYPE_FUNCTION_MAP.put(ScalarType.BOOLEAN, Boolean::valueOf);
+		SCALARTYPE_FUNCTION_MAP.put(ScalarType.BYTE, Byte::valueOf);
+		SCALARTYPE_FUNCTION_MAP.put(ScalarType.SHORT, Short::valueOf);
+		SCALARTYPE_FUNCTION_MAP.put(ScalarType.INTEGER, Integer::valueOf);
+		SCALARTYPE_FUNCTION_MAP.put(ScalarType.LONG, Long::valueOf);
+		SCALARTYPE_FUNCTION_MAP.put(ScalarType.FLOAT, Float::valueOf);
+		SCALARTYPE_FUNCTION_MAP.put(ScalarType.DOUBLE, Double::valueOf);
+		SCALARTYPE_FUNCTION_MAP.put(ScalarType.FLOAT_COMPLEX, FloatComplex::valueOf);
+		SCALARTYPE_FUNCTION_MAP.put(ScalarType.DOUBLE_COMPLEX, DoubleComplex::valueOf);
+	}
 	// ======================================================================
 	// Constructors
 	// ======================================================================
@@ -112,32 +128,10 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 	 * @return The created {@code Value} with the converted value is returned.
 	 */
 	public Value getVirtualValue() {
-		Function<String, Object> typeConverter;
-
 		ScalarType scalarType = getScalarType();
-		if (scalarType.isString()) {
-			typeConverter = v -> v;
-		} else if (scalarType.isDate()) {
-			typeConverter = v -> LocalDateTime.parse(v, Value.LOCAL_DATE_TIME_FORMATTER);
-		} else if (scalarType.isBoolean()) {
-			typeConverter = Boolean::valueOf;
-		} else if (scalarType.isByte()) {
-			typeConverter = Byte::valueOf;
-		} else if (scalarType.isShort()) {
-			typeConverter = Short::valueOf;
-		} else if (scalarType.isInteger()) {
-			typeConverter = Integer::valueOf;
-		} else if (scalarType.isLong()) {
-			typeConverter = Long::valueOf;
-		} else if (scalarType.isFloat()) {
-			typeConverter = Float::valueOf;
-		} else if (scalarType.isDouble()) {
-			typeConverter = Double::valueOf;
-		} else if (scalarType.isFloatComplex()) {
-			typeConverter = FloatComplex::valueOf;
-		} else if (scalarType.isDoubleComplex()) {
-			typeConverter = DoubleComplex::valueOf;
-		} else {
+		Function<String, Object> typeConverter = SCALARTYPE_FUNCTION_MAP.get(scalarType);
+		
+		if(typeConverter == null) {
 			return ValueType.UNKNOWN.create(getName());
 		}
 
