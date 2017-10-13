@@ -303,55 +303,6 @@ public final class WriteRequest {
 	 *            The {@link Unit} of the measured values.
 	 */
 	void setSourceUnit(Unit sourceUnit) {
-		// Unit targetUnit = getChannel().getUnit();
-		//
-		// if(!targetUnit.nameMatches(sourceUnit.getName())) {
-		// if(!targetUnit.getPhysicalDimension().nameMatches(sourceUnit.getPhysicalDimension().getName()))
-		// {
-		// // conversion is not possible!
-		// //
-		// // different physical dimensions -> replace Unit of channel with
-		// given sourceUnit!
-		// // MeaQuantityImpl.addDataValues()
-		// //
-		// // or simply throw an exception?!
-		// // MeaQuantityImpl.addDataFromExternalComponentInUnit
-		// //
-		// // what to do?!
-		// }
-		//
-		// // convert from source to target unit!
-		// SequenceRepresentation sequenceRepresentation =
-		// getSequenceRepresentation();
-		// if(sequenceRepresentation.isExplicit()) {
-		// if(sequenceRepresentation.isExternal()) {
-		// // values stored in file so what to do?!
-		// // switch sequenceRepresentation to
-		// SequenceRepresentation.RAW_LINEAR?
-		// } else {
-		// // convert this.values
-		// }
-		// } else if(sequenceRepresentation.isImplicit()) {
-		// // adjust generation parameters
-		// // ATTENTION -> generation parameters are stored in this.values! (new
-		// ODS standard!)
-		// } else {
-		// // adjust generation parameters for all other SeqReps....
-		// }
-		//
-		//
-		//
-		// // Problematik bei Umrechnung impliziter INTEGER Kanäle -> Anpassen
-		// des RAW Datentyps?!
-		//
-		// // Problematik bei Umrechung Einheit in dB zu Einheit in nicht dB
-		// // Problematik bei Umrechung Einheit in nicht dB zu Einheit in dB
-		//
-		// // should we do this implicitly within the WritRequest?!
-		// // ==> implementation is central and adapter implementation
-		// independent!
-		// }
-
 		throw new UnsupportedOperationException("Conversion between units is not implemented yet.");
 	}
 
