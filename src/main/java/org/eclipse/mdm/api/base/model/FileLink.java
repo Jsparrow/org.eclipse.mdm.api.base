@@ -307,9 +307,14 @@ public final class FileLink {
 	@Override
 	public int hashCode() {
 		if (State.LOCAL == state) {
+			if (!isLocal()) {
+				return "".hashCode();
+			}
 			return getLocalPath().hashCode();
 		}
-
+		if (!isRemote()) {
+			return "".hashCode();
+		}
 		return getRemotePath().hashCode();
 	}
 
@@ -322,9 +327,14 @@ public final class FileLink {
 			FileLink other = (FileLink) object;
 			if (state == other.state) {
 				if (State.LOCAL == state) {
+					if (!isLocal()) {
+						return !other.isLocal();
+					}
 					return getLocalPath().equals(other.getLocalPath());
 				}
-
+				if (!isRemote()) {
+					return !other.isRemote();
+				}
 				return getRemotePath().equals(other.getRemotePath());
 			}
 		}
