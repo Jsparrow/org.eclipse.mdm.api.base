@@ -14,7 +14,7 @@ package org.eclipse.mdm.api.base.query;
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  */
-public final class DataAccessException extends Exception {
+public final class DataAccessException extends RuntimeException {
 
 	// ======================================================================
 	// Class variables

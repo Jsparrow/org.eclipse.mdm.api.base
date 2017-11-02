@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.mdm.api.base;
+package org.eclipse.mdm.api.base.file;
 
 import java.io.IOException;
 import java.io.InputStream;

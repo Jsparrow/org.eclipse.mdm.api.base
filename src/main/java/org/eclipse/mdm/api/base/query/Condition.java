@@ -10,6 +10,7 @@ package org.eclipse.mdm.api.base.query;
 
 import java.util.Objects;
 
+import org.eclipse.mdm.api.base.adapter.Attribute;
 import org.eclipse.mdm.api.base.model.Value;
 
 /**

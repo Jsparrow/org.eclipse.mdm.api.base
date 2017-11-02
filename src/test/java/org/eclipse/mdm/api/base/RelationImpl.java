@@ -8,10 +8,10 @@
 
 package org.eclipse.mdm.api.base;
 
-import org.eclipse.mdm.api.base.query.Attribute;
-import org.eclipse.mdm.api.base.query.EntityType;
-import org.eclipse.mdm.api.base.query.Relation;
-import org.eclipse.mdm.api.base.query.RelationType;
+import org.eclipse.mdm.api.base.adapter.Attribute;
+import org.eclipse.mdm.api.base.adapter.EntityType;
+import org.eclipse.mdm.api.base.adapter.Relation;
+import org.eclipse.mdm.api.base.adapter.RelationType;
 
 public class RelationImpl implements Relation {
 

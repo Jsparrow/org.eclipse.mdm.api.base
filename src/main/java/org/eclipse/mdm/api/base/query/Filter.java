@@ -18,6 +18,11 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.eclipse.mdm.api.base.adapter.EntityType;
+import org.eclipse.mdm.api.base.adapter.Relation;
+import org.eclipse.mdm.api.base.search.SearchQuery;
+import org.eclipse.mdm.api.base.search.SearchService;
+
 /**
  * A filter is a sequence of {@link FilterItem}s containing {@link BooleanOperator}s or
  * {@link Condition}s.

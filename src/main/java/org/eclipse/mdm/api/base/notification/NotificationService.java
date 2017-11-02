@@ -6,7 +6,7 @@ package org.eclipse.mdm.api.base.notification;
  * @since 1.0.0
  * @author Matthias Koller, Peak Solution GmbH
  */
-public interface NotificationManager {
+public interface NotificationService {
 
 	/**
 	 * Registers a NotificationListener at the underlying notification service.

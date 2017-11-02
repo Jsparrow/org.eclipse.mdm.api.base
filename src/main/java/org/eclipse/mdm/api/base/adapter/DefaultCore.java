@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.mdm.api.base.query;
+package org.eclipse.mdm.api.base.adapter;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,6 +15,7 @@ import java.util.Map;
 import org.eclipse.mdm.api.base.model.Core;
 import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.model.Value;
+import org.eclipse.mdm.api.base.query.Record;
 
 /**
  * Provides access to the internals of any entity:

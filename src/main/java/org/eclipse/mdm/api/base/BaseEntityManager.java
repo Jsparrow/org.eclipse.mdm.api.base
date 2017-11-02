@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.mdm.api.base.massdata.ReadRequest;
-import org.eclipse.mdm.api.base.model.BaseEntityFactory;
 import org.eclipse.mdm.api.base.model.ContextDescribable;
 import org.eclipse.mdm.api.base.model.ContextRoot;
 import org.eclipse.mdm.api.base.model.ContextType;
@@ -26,8 +25,6 @@ import org.eclipse.mdm.api.base.model.Measurement;
 import org.eclipse.mdm.api.base.model.TestStep;
 import org.eclipse.mdm.api.base.model.User;
 import org.eclipse.mdm.api.base.query.DataAccessException;
-import org.eclipse.mdm.api.base.query.ModelManager;
-import org.eclipse.mdm.api.base.query.SearchService;
 
 /**
  * Provides business layer CRUD operations and services (CREATE, READ, UPDATE,
@@ -39,53 +36,11 @@ import org.eclipse.mdm.api.base.query.SearchService;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public interface BaseEntityManager<S extends BaseEntityFactory> {
+public interface BaseEntityManager {
 
 	// ======================================================================
 	// Public methods
 	// ======================================================================
-
-	/**
-	 * The returned service creates new entities.
-	 *
-	 * @return {@code Optional} is empty if no such service is available.
-	 */
-	default Optional<S> getEntityFactory() {
-		return Optional.empty();
-	}
-
-	/**
-	 * The returned service provides advanced search capabilities for supported
-	 * entity types.
-	 *
-	 * @return {@code Optional} is empty if no such service is available.
-	 * @see SearchService
-	 */
-	default Optional<SearchService> getSearchService() {
-		return Optional.empty();
-	}
-
-	/**
-	 * The returned service provides access to the low level query API and the
-	 * application model's meta data.
-	 *
-	 * @return {@code Optional} is empty if no such service is available.
-	 * @see ModelManager
-	 */
-	default Optional<ModelManager> getModelManager() {
-		return Optional.empty();
-	}
-
-	/**
-	 * The returned service allows to download linked files from the file
-	 * storage.
-	 *
-	 * @return {@code Optional} is empty if no such service is available.
-	 * @see FileService
-	 */
-	default Optional<FileService> getFileService() {
-		return Optional.empty();
-	}
 
 	/**
 	 * Returns the {@link Environment} this entity manager is connected to.

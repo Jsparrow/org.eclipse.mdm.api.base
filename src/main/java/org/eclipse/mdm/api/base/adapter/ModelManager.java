@@ -6,12 +6,13 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.mdm.api.base.query;
+package org.eclipse.mdm.api.base.adapter;
 
 import java.util.List;
 
 import org.eclipse.mdm.api.base.model.ContextType;
 import org.eclipse.mdm.api.base.model.Entity;
+import org.eclipse.mdm.api.base.query.Query;
 
 /**
  * Provides access to any modeled {@link EntityType} within an underlying
@@ -27,13 +28,6 @@ public interface ModelManager {
 	// ======================================================================
 	// Public methods
 	// ======================================================================
-
-	/**
-	 * Creates a new and empty {@link Query}.
-	 *
-	 * @return Created {@code Query} is returned.
-	 */
-	Query createQuery();
 
 	/**
 	 * Returns all available {@link EntityType}s.
