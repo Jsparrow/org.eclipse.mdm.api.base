@@ -8,6 +8,8 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -447,7 +449,7 @@ public abstract class BaseEntityFactory {
 	 * @return {@code 1} is returned if given {@code List} is empty, otherwise
 	 *         the max sort index increased by 1 is returned.
 	 */
-	protected final Integer nextIndex(List<? extends Sortable> sortables) {
+	protected static final Integer nextIndex(List<? extends Sortable> sortables) {
 		Optional<Integer> maxIndex = sortables.stream().max(Sortable.COMPARATOR).map(Sortable::getSortIndex);
 		return Integer.valueOf(maxIndex.isPresent() ? maxIndex.get().intValue() + 1 : 1);
 	}
@@ -460,7 +462,7 @@ public abstract class BaseEntityFactory {
 	 *            returned.
 	 * @return The {@code ChildrenStore} is returned.
 	 */
-	protected final ChildrenStore getChildrenStore(BaseEntity entity) {
+	protected static final ChildrenStore getChildrenStore(BaseEntity entity) {
 		return getCore(entity).getChildrenStore();
 	}
 
@@ -472,7 +474,7 @@ public abstract class BaseEntityFactory {
 	 *            returned.
 	 * @return The mutable {@code EntityStore} is returned.
 	 */
-	protected final EntityStore getMutableStore(BaseEntity entity) {
+	protected static final EntityStore getMutableStore(BaseEntity entity) {
 		return getCore(entity).getMutableStore();
 	}
 
@@ -484,19 +486,58 @@ public abstract class BaseEntityFactory {
 	 *            returned.
 	 * @return The permanent {@code EntityStore} is returned.
 	 */
-	protected final EntityStore getPermanentStore(BaseEntity entity) {
+	protected static final EntityStore getPermanentStore(BaseEntity entity) {
 		return getCore(entity).getPermanentStore();
 	}
 
 	/**
-	 * Returns {@link Core} of given {@link Entity}.
+	 * Returns {@link Core} of given {@link Entity}. Uses protected method from
+	 * BaseEntity, which is accessible here as BaseEntity resides in the same
+	 * package as BaseEntityFactory. By declaring this method protected, the
+	 * Core-related functionality is hidden from other classes since the only
+	 * classes which can access them (outside this package) are derivatives of
+	 * BaseEntityFactory, and it is through such derivatives that a BaseEntity's
+	 * Core should be accessed elsewhere if needed.
 	 *
 	 * @param entity
 	 *            The {@code BaseEntity} whose {@code Core} is required.
 	 * @return The {@code Core} is returned.
 	 */
-	protected final Core getCore(BaseEntity entity) {
+	protected static final Core getCore(BaseEntity entity) {
 		return entity.getCore();
+	}
+
+	/**
+	 * Create an instance of {@link BaseEntity} (or derivative) with core as the
+	 * instance's {@link Core}. By declaring this method protected, the Core-related
+	 * functionality is hidden from other classes since the only classes which can
+	 * access them (outside this package) are derivatives of BaseEntityFactory, and
+	 * it is through such derivatives that a BaseEntity's Core should be accessed
+	 * elsewhere if needed.
+	 * 
+	 * @param clazz
+	 *            The class to instantiate, must extend {@link BaseEntity}.
+	 * @param core
+	 *            The {@link Core} to use for the newly created instance.
+	 * @return The newly created instance.
+	 */
+	protected static final <T extends BaseEntity> T createBaseEntity(Class<T> clazz, Core core) {
+		Constructor<T> constructor = null;
+		boolean isAccessible = false;
+		try {
+			constructor = clazz.getDeclaredConstructor(Core.class);
+			isAccessible = constructor.isAccessible();
+			constructor.setAccessible(true); 
+
+			return constructor.newInstance(core);
+		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException
+				| InstantiationException exc) {
+			throw new IllegalStateException(exc.getMessage(), exc);
+		} finally {
+			if (null != constructor) {
+				constructor.setAccessible(isAccessible);
+			}
+		}
 	}
 
 	/**
