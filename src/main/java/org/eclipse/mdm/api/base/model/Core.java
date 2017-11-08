@@ -82,6 +82,7 @@ public interface Core {
 	/**
 	 * Hides {@link Value} containers whose name is contained in the given names
 	 * {@code Collection}.
+	 * E.g. hide attributes from a CatalogComponent when not used in a TemplateComponent.  
 	 *
 	 * @param names
 	 *            Names of the {@code Value} which shall be hidden.
@@ -143,13 +144,15 @@ public interface Core {
 
 	/**
 	 * Applies modifications made to the entity stores and {@link Value}
-	 * containers.
+	 * containers. This method is called when a transaction is finalized 
+	 * (all operations completed successfully) to reflect the new state in
+	 * the core.
 	 */
 	default void apply() {
-		// apply removed mutable entities
+		// apply the removed state to mutable entities
 		getMutableStore().apply();
 
-		// apply removed children
+		// apply the removed state to children
 		getChildrenStore().apply();
 
 		// apply modified values
@@ -157,27 +160,35 @@ public interface Core {
 	}
 
 	/**
-	 * Returns the mutable {@link EntityStore}. This store holds related
-	 * entities of any kind.
+	 * Returns the mutable {@link EntityStore}. 
+	 * Holds entities with mutable (editable) relations to the entity 
+	 * bound to this core instance.
+	 * This store only contains always only one relation for one entity. 
+	 * For child relations use {@link ChildrenStore}.  
 	 *
 	 * @return The mutable {@code EntityStore} is returned.
 	 */
 	EntityStore getMutableStore();
 
 	/**
-	 * Returns the permanent {@link EntityStore}. This store holds usually only
-	 * the related parent entity.
+	 * Returns the permanent {@link EntityStore}. 
+	 * Holds entities with immutable (non-editable) relations to the entity 
+	 * bound to this core instance. 
+	 * E.g. relations to the parent entity. 
 	 *
 	 * @return The permanent {@code EntityStore} is returned.
 	 */
 	EntityStore getPermanentStore();
 
 	/**
-	 * Returns the {@link ChildrenStore}. This store holds related child
-	 * entities of any kind.
-	 *
+	 * Returns the {@link ChildrenStore}. This store holds child
+	 * entities with relations to the entity bound to this core instance. 
+	 * 	 
 	 * @return The {@code ChildrenStore} is returned.
 	 */
+	// TODO (8.11.2017; Florian Schmitt, Angelika Wittek)
+	// Entities with more than one related entity that do not refer to children, have also to go here, 
+	// as it is not permitted to go to the other stores. Does this work at all? 
 	ChildrenStore getChildrenStore();
 
 	// ======================================================================
@@ -189,16 +200,8 @@ public interface Core {
 	 */
 	public static final class EntityStore {
 
-		// ======================================================================
-		// Instance variables
-		// ======================================================================
-
 		private final Map<String, Entity> current = new HashMap<>(0);
 		private final Map<String, Entity> removed = new HashMap<>(0);
-
-		// ======================================================================
-		// Public methods
-		// ======================================================================
 
 		/**
 		 * Returns current set of related entities.
@@ -346,12 +349,8 @@ public interface Core {
 			}
 		}
 
-		// ======================================================================
-		// Private methods
-		// ======================================================================
-
 		/**
-		 * Drops removed entities.
+		 * Clean up list of removed entities.
 		 */
 		private void apply() {
 			removed.clear();
@@ -377,16 +376,8 @@ public interface Core {
 	 */
 	public static final class ChildrenStore {
 
-		// ======================================================================
-		// Instance variables
-		// ======================================================================
-
 		private final Map<Class<? extends Deletable>, List<? extends Deletable>> current = new HashMap<>(0);
 		private final Map<Class<? extends Deletable>, List<? extends Deletable>> removed = new HashMap<>(0);
-
-		// ======================================================================
-		// Public methods
-		// ======================================================================
 
 		/**
 		 * Returns current set of related children mapped by their type.
@@ -464,12 +455,8 @@ public interface Core {
 			}
 		}
 
-		// ======================================================================
-		// Private methods
-		// ======================================================================
-
 		/**
-		 * Drops removed children.
+		 * Clean up list of removed entities.
 		 */
 		private void apply() {
 			removed.clear();
