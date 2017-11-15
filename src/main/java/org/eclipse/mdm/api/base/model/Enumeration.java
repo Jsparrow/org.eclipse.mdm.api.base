@@ -27,7 +27,7 @@ public class Enumeration<E extends EnumerationValue> {
 
 	private Map<String, Integer> revordinals;
 
-	private int nextordinal;
+	private int maxordinal;
 
 	private String name;
 
@@ -45,7 +45,7 @@ public class Enumeration<E extends EnumerationValue> {
 	 */
 	@SuppressWarnings("unchecked")
 	public Enumeration(Class<E> enumclass, String name) {
-		this.nextordinal = 0;
+		this.maxordinal = 0;
 		this.values = new HashMap<>();
 		this.revvalues = new HashMap<>();
 		this.ordinals = new HashMap<>();
@@ -73,12 +73,7 @@ public class Enumeration<E extends EnumerationValue> {
 					fname = field.getName();
 					((EnumerationValue) fieldObject).setName(fname);
 				}
-				((EnumerationValue) fieldObject).setOwner(this);
-				values.put(fname, (E) fieldObject);
-				revvalues.put((E) fieldObject, fname);
-				ordinals.put(nextordinal, fname);
-				revordinals.put(fname, nextordinal);
-				nextordinal++;
+				addValue((E) fieldObject);				
 			}
 		}
 	}
@@ -91,7 +86,13 @@ public class Enumeration<E extends EnumerationValue> {
 	public void addValue(E enumeration) {
 		enumeration.setOwner(this);
 		String enumerationName = enumeration.name();
-		int ordinal = enumeration.ordinal();
+		Integer ordinal = enumeration.ordinal();
+		if (ordinal == null) {
+			ordinal = ++maxordinal;
+			enumeration.setOrdinal(ordinal);
+		} else {
+			maxordinal = Math.max(ordinal, maxordinal);
+		}
 		values.put(enumerationName, enumeration);
 		revvalues.put(enumeration, enumerationName);
 		ordinals.put(ordinal, enumerationName);

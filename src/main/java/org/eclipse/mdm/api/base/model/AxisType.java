@@ -16,30 +16,22 @@ package org.eclipse.mdm.api.base.model;
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  * @see Channel
  */
-public class AxisType extends EnumerationValue{
-
-	// ======================================================================
-	// Enumerations
-	// ======================================================================
+public class AxisType extends EnumerationValue {
 
 	/**
 	 * A {@link Channel} of this type may be displayed as the x-axis.
 	 */
-	public static final AxisType X_AXIS = new AxisType(); 
+	public static final AxisType X_AXIS = new AxisType(0);
 
 	/**
 	 * A {@link Channel} of this type may be displayed as the y-axis.
 	 */
-	public static final AxisType Y_AXIS = new AxisType();
+	public static final AxisType Y_AXIS = new AxisType(1);
 
 	/**
 	 * A {@link Channel} of this type may be displayed as the x- or y-axis.
 	 */
-	public static final AxisType XY_AXIS = new AxisType();
-
-	// ======================================================================
-	// Public methods
-	// ======================================================================
+	public static final AxisType XY_AXIS = new AxisType(2);
 
 	/**
 	 * Returns true if this axis type is {@link #X_AXIS}.
@@ -71,4 +63,11 @@ public class AxisType extends EnumerationValue{
 		return XY_AXIS == this;
 	}
 
+	/**
+	 * Constructor, makes sure that the order matches the order of the static
+	 * fields
+	 */
+	AxisType(int ord) {
+		super(ord);
+	}
 }

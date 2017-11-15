@@ -17,28 +17,20 @@ package org.eclipse.mdm.api.base.model;
  */
 public class Interpolation extends EnumerationValue {
 
-	// ======================================================================
-	// Enumerations
-	// ======================================================================
-
 	/**
 	 * No interpolation is used.
 	 */
-	public static final Interpolation NONE = new Interpolation();
+	public static final Interpolation NONE = new Interpolation(0);
 
 	/**
 	 * Interpolation is linear.
 	 */
-	public static final Interpolation LINEAR = new Interpolation();
+	public static final Interpolation LINEAR = new Interpolation(1);
 
 	/**
 	 * Interpolation is application specific.
 	 */
-	public static final Interpolation SPECIFIC = new Interpolation();
-
-	// ======================================================================
-	// Public methods
-	// ======================================================================
+	public static final Interpolation SPECIFIC = new Interpolation(2);
 
 	/**
 	 * Returns true if this interpolation is {@link #NONE}.
@@ -68,6 +60,13 @@ public class Interpolation extends EnumerationValue {
 	 */
 	public boolean isSpecific() {
 		return SPECIFIC == this;
+	}
+
+	/**
+	 * Constructor, sets the order
+	 */
+	Interpolation(int ord) {
+		super(ord);
 	}
 
 }

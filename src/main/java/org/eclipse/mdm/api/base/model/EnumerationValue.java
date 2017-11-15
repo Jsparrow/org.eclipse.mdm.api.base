@@ -17,8 +17,8 @@ package org.eclipse.mdm.api.base.model;
  * fields whose type is of the derivative class.
  * 
  * To be able to add dynamically enum values and for full initialization, you
- * should set an owner enumeration (either by choosing the right
- * constructor or by calling the setOwner method)
+ * should set an owner enumeration (either by choosing the right constructor or
+ * by calling the setOwner method)
  * 
  * @author Florian Schmitt
  *
@@ -40,6 +40,15 @@ public class EnumerationValue {
 	}
 
 	/**
+	 * explicitly set the ordinal of this element.
+	 * 
+	 * @param name
+	 */
+	protected void setOrdinal(int ordinal) {
+		this.ordinal = ordinal;
+	}
+
+	/**
 	 * 
 	 * set the owner dynamic enumeration of this object.
 	 * 
@@ -54,7 +63,6 @@ public class EnumerationValue {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("rawtypes")
 	public Enumeration<? extends EnumerationValue> getOwner() {
 		return owner;
 	}
@@ -77,8 +85,8 @@ public class EnumerationValue {
 	 * 
 	 * be sure to initialize the enumeration fully, by either adding it as a
 	 * static field in an extending class, or setting the ordinal by hand.
-	 * You'll also have to add the resulting object to a DynamiEnumeration for
-	 * it to be completely usable.
+	 * You'll also have to add the resulting object to a Enumeration for it to
+	 * be completely usable.
 	 * 
 	 * @param name
 	 */
@@ -89,8 +97,8 @@ public class EnumerationValue {
 	/**
 	 * This Constructor is protected to avoid accidental misuse.
 	 * 
-	 * You'll have to add the resulting object to a DynamiEnumeration for it to
-	 * be completely usable.
+	 * You'll have to add the resulting object to a Enumeration for it to be
+	 * completely usable.
 	 * 
 	 * @param name
 	 */
@@ -98,6 +106,20 @@ public class EnumerationValue {
 		this.name = name;
 		this.ordinal = ordinal;
 		this.owner = null;
+	}
+
+	/**
+	 * This Constructor is protected to avoid accidental misuse.
+	 * 
+	 * be sure to initialize the enumeration fully, by either adding it as a
+	 * static field in an extending class, or setting the name by hand and
+	 * adding the resulting object to a Enumeration for it to be completely
+	 * usable.
+	 * 
+	 * @param name
+	 */
+	protected EnumerationValue(int ordinal) {
+		this(null, ordinal);
 	}
 
 	/**
@@ -118,11 +140,7 @@ public class EnumerationValue {
 	 * @return the ordinal value represented by this enumeration value
 	 */
 	public Integer ordinal() {
-		if (this.ordinal != null) {
-			return this.ordinal;
-		} else {
-			return owner.ordinal(this);
-		}
+		return ordinal;
 	}
 
 	/*
