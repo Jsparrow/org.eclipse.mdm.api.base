@@ -8,6 +8,8 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import org.eclipse.mdm.api.base.core.Core;
+
 /**
  * Implementation of the physical dimension entity type. Each {@link Unit} must
  * have a relation to an instance of this type. The attributes represent the

@@ -319,10 +319,6 @@ public final class Value {
 		return sb.toString();
 	}
 
-	// ======================================================================
-	// Package methods
-	// ======================================================================
-
 	/**
 	 * Checks whether either the validity flag or the value have been modified
 	 * since initialization.
@@ -330,7 +326,7 @@ public final class Value {
 	 * @return Returns {@code true} either if the flag or the value has been
 	 *         modified.
 	 */
-	boolean isModified() {
+	public boolean isModified() {
 		return wasValid() != isValid() || !Objects.deepEquals(extractInitial(), extract());
 	}
 
@@ -339,7 +335,7 @@ public final class Value {
 	 *
 	 * @return Returns {@code true} if the value was initially marked as valid.
 	 */
-	boolean wasValid() {
+	public boolean wasValid() {
 		return initialValid;
 	}
 
@@ -348,17 +344,21 @@ public final class Value {
 	 *
 	 * @return The initial value is returned.
 	 */
-	Object extractInitial() {
+	public Object extractInitial() {
 		return initialValue;
 	}
 
 	/**
 	 * Overwrites the initial validity flag and value with the current ones.
 	 */
-	void apply() {
+	public void apply() {
 		initialValid = isValid();
 		initialValue = copy(extract());
 	}
+	
+	// ======================================================================
+	// Package methods
+	// ======================================================================
 
 	/**
 	 * Returns the {@code String} value from given array at given position.

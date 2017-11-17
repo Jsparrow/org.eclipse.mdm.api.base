@@ -8,6 +8,8 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import org.eclipse.mdm.api.base.core.Core;
+
 /**
  * Implementation of the unit entity type. Units referring to the same
  * {@link PhysicalDimension} can be converted to each other by means of their

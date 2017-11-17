@@ -8,6 +8,8 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import org.eclipse.mdm.api.base.core.Core;
+
 /**
  * Implementation of the context sensor entity types. Instances of this class
  * are only provided / managed via the owning {@link ContextComponent}. A

@@ -8,6 +8,8 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import org.eclipse.mdm.api.base.core.Core;
+
 /**
  * Implementation of the channel group entity type. It belongs to exactly one
  * {@link Measurement} and groups a set of its {@link Channel}s.

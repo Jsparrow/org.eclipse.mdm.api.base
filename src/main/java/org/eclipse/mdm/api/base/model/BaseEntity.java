@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.eclipse.mdm.api.base.core.Core;
+
 /**
  * This is a base implementation for modeled entities. API consumers should
  * never use this class in any way, instead the most common interface should be
