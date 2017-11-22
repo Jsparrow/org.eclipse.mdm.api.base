@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.mdm.api.base.BaseEntityManager;
+import org.eclipse.mdm.api.base.core.Core;
 import org.eclipse.mdm.api.base.query.DataAccessException;
 
 /**

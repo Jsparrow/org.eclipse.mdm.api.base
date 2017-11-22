@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.eclipse.mdm.api.base.core.Core;
+
 /**
  * Implementation of the context component entity types. Instances of this class
  * are only provided / managed via the owning descriptive {@link ContextRoot}.

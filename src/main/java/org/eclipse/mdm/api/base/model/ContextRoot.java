@@ -15,6 +15,8 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.eclipse.mdm.api.base.core.Core;
+
 /**
  * Implementation of the context root entity types. This is the root node of the
  * descriptive component structure for a {@link ContextType}. This element is

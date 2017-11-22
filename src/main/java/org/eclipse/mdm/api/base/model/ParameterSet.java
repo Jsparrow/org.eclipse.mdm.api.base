@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.eclipse.mdm.api.base.core.Core;
+
 /**
  * Implementation of the parameter set entity type. Instances of this class
  * group a set of further describing data stored in {@link Parameter}s.

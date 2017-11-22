@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
+import org.eclipse.mdm.api.base.core.Core;
+
 /**
  * Implementation of an abstract parameter which holds a value with one of the
  * supported {@link ValueType}s listed below. The value is internally stored in
