@@ -38,10 +38,6 @@ import org.eclipse.mdm.api.base.query.DataAccessException;
  */
 public interface BaseEntityManager {
 
-	// ======================================================================
-	// Public methods
-	// ======================================================================
-
 	/**
 	 * Returns the {@link Environment} this entity manager is connected to.
 	 *
@@ -291,13 +287,5 @@ public interface BaseEntityManager {
 	 *             Thrown if unable to create a new {@code Transaction}.
 	 */
 	Transaction startTransaction() throws DataAccessException;
-
-	/**
-	 * Closes the connection to the underlying data source.
-	 *
-	 * @throws ConnectionException
-	 *             Thrown in case of errors while closing the connection.
-	 */
-	void close() throws ConnectionException;
 
 }

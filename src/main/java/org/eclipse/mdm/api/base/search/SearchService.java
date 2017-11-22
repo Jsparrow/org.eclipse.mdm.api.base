@@ -11,7 +11,6 @@ package org.eclipse.mdm.api.base.search;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.eclipse.mdm.api.base.adapter.Attribute;
 import org.eclipse.mdm.api.base.adapter.EntityType;
@@ -25,7 +24,7 @@ import org.eclipse.mdm.api.base.query.Result;
 
 /**
  * This search service uses given {@link Entity} type to execute the associated
- * {@link SearchQuery}.
+ * predefined {@link SearchQuery} and returns the results.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -38,10 +37,6 @@ import org.eclipse.mdm.api.base.query.Result;
  * @see Result
  */
 public interface SearchService {
-
-	// ======================================================================
-	// Public methods
-	// ======================================================================
 
 	/**
 	 * Returns all {@link Entity} types this search service provides a
@@ -153,8 +148,7 @@ public interface SearchService {
 	 * @param entityTypes
 	 *            Select statements will be added for all {@code Attribute}s of
 	 *            each given {@code EntityType}.
-	 * @return All {@link Result}s are returned in a {@code Map}, which maps
-	 *         entities to related {@link Record}s.
+	 * @return All matched entities are returned in a {@code List}.
 	 * @throws DataAccessException
 	 *             Thrown in case of errors while executing the
 	 *             {@code SearchQuery} or analyzing its {@code Result}s.
@@ -167,7 +161,7 @@ public interface SearchService {
 	 * @see #fetch(Class, List)
 	 * @see Record#merge(Record)
 	 */
-	default <T extends Entity> Map<T, Result> fetchComplete(Class<T> entityCass, List<EntityType> entityTypes)
+	default <T extends Entity> List<T> fetchComplete(Class<T> entityCass, List<EntityType> entityTypes)
 			throws DataAccessException {
 		return fetchComplete(entityCass, entityTypes, Filter.and());
 	}
@@ -191,8 +185,7 @@ public interface SearchService {
 	 *            each given {@code EntityType}.
 	 * @param filter
 	 *            The criteria sequence.
-	 * @return All {@link Result}s are returned in a {@code Map}, which maps
-	 *         entities to related {@link Record}s.
+	 * @return All matched entities are returned in a {@code List}.
 	 * @throws DataAccessException
 	 *             Thrown in case of errors while executing the
 	 *             {@code SearchQuery} or analyzing its {@code Result}s.
@@ -205,7 +198,7 @@ public interface SearchService {
 	 * @see #fetch(Class, List, Filter)
 	 * @see Record#merge(Record)
 	 */
-	<T extends Entity> Map<T, Result> fetchComplete(Class<T> entityClass, List<EntityType> entityTypes, Filter filter)
+	<T extends Entity> List<T> fetchComplete(Class<T> entityClass, List<EntityType> entityTypes, Filter filter)
 			throws DataAccessException;
 
 	/**
@@ -254,7 +247,7 @@ public interface SearchService {
 	 * @see #fetch(Class)
 	 */
 	default <T extends Entity> List<T> fetch(Class<T> entityClass, Filter filter) throws DataAccessException {
-		return fetch(entityClass, Collections.emptyList(), filter).keySet().stream().collect(Collectors.toList());
+		return fetch(entityClass, Collections.emptyList(), filter);
 	}
 
 	/**
@@ -274,8 +267,7 @@ public interface SearchService {
 	 * @param attributes
 	 *            Select statements will be added for each {@code
 	 * 		Attribute}.
-	 * @return All {@link Result}s are returned in a {@code Map}, which maps
-	 *         entities to related {@code Record}s.
+	 * @return All matched entities are returned in a {@code List}.
 	 * @throws DataAccessException
 	 *             Thrown in case of errors while executing the
 	 *             {@code SearchQuery} or analyzing its {@code Result}s.
@@ -288,7 +280,7 @@ public interface SearchService {
 	 * @see #fetchComplete(Class, List)
 	 * @see Record#merge(Record)
 	 */
-	default <T extends Entity> Map<T, Result> fetch(Class<T> entityClass, List<Attribute> attributes)
+	default <T extends Entity> List<T> fetch(Class<T> entityClass, List<Attribute> attributes)
 			throws DataAccessException {
 		return fetch(entityClass, attributes, Filter.and());
 	}
@@ -312,8 +304,7 @@ public interface SearchService {
 	 * 		Attribute}.
 	 * @param filter
 	 *            The criteria sequence.
-	 * @return All {@link Result}s are returned in a {@code Map}, which maps
-	 *         entities to related {@code Record}s.
+	 * @return All matched entities are returned in a {@code List}.
 	 * @throws DataAccessException
 	 *             Thrown in case of errors while executing the
 	 *             {@code SearchQuery} or analyzing its {@code Result}s.
@@ -326,7 +317,7 @@ public interface SearchService {
 	 * @see #fetchComplete(Class, List, Filter)
 	 * @see Record#merge(Record)
 	 */
-	<T extends Entity> Map<T, Result> fetch(Class<T> entityClass, List<Attribute> attributes, Filter filter)
+	<T extends Entity> List<T> fetch(Class<T> entityClass, List<Attribute> attributes, Filter filter)
 			throws DataAccessException;
 
 	/**
@@ -334,7 +325,7 @@ public interface SearchService {
 	 * and {@link Filter}. Both must be fully supported by the
 	 * {@code SearchQuery} associated with given {@link Entity} type. This
 	 * method allows fine grained {@link Record} configuration. This method
-	 * allows to specify a fulltext search query.
+	 * allows to specify a fulltext search query string.
 	 *
 	 * <p>
 	 * <b>Note:</b> Related {@code Record}s may be merged according to the
