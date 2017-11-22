@@ -68,6 +68,15 @@ public class ContextComponent extends BaseEntity implements Deletable {
 	}
 
 	/**
+	 * Returns the {@link ContextRoot} this context component belongs to.
+	 *
+	 * @return The parent {@link ContextRoot}.
+	 */
+	public ContextRoot getContextRoot() {
+		return getCore().getPermanentStore().get(ContextRoot.class);
+	}
+	
+	/**
 	 * Removes the {@link ContextSensor} identified by given name.
 	 *
 	 * @param name
