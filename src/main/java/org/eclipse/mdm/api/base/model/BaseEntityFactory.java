@@ -14,7 +14,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.mdm.api.base.core.ChildrenStore;
 import org.eclipse.mdm.api.base.core.Core;
+import org.eclipse.mdm.api.base.core.EntityStore;
 
 /**
  * Implementation of an abstract entity factory which creates new entities.
@@ -451,6 +453,73 @@ public abstract class BaseEntityFactory {
 	protected static final Integer nextIndex(List<? extends Sortable> sortables) {
 		Optional<Integer> maxIndex = sortables.stream().max(Sortable.COMPARATOR).map(Sortable::getSortIndex);
 		return Integer.valueOf(maxIndex.isPresent() ? maxIndex.get().intValue() + 1 : 1);
+	}
+
+	/**
+	 * Returns the {@link ChildrenStore} for given {@link BaseEntity}.
+	 * Please be aware that the contents of this store is subject
+	 * to the adapter creating it. It is up to the adapter to decide
+	 * which related entities are included.
+	 * As there are adapter specific details to the contents of the store it
+	 * should be protected from external access.
+	 * Therefore by declaring this method protected, the
+	 * related functionality is hidden from other classes since the only
+	 * classes which can access them (outside this package) are derivatives of
+	 * BaseEntityFactory, and it is through such derivatives that BaseEntity's
+	 * Stores should be accessed elsewhere if needed.
+	 *
+	 * @param entity
+	 *            The {@code BaseEntity} whose {@code ChildrenStore} will be
+	 *            returned.
+	 * @return The {@code ChildrenStore} is returned.
+	 */
+	protected static ChildrenStore getChildrenStore(BaseEntity entity) {
+		return getCore(entity).getChildrenStore();
+	}
+
+	/**
+	 * Returns the mutable {@link EntityStore} for given {@link BaseEntity}.
+	 * Please be aware that the contents of this store is subject
+	 * to the adapter creating it. It is up to the adapter to decide
+	 * which related entities are included. 
+	 * As there are adapter specific details to the contents of the store it
+	 * should be protected from external access. 
+	 * Therefore by declaring this method protected, the
+	 * related functionality is hidden from other classes since the only
+	 * classes which can access them (outside this package) are derivatives of
+	 * BaseEntityFactory, and it is through such derivatives that BaseEntity's
+	 * Stores should be accessed elsewhere if needed.
+	 * 
+	 *
+	 * @param entity
+	 *            The {@code BaseEntity} whose {@code ChildrenStore} will be
+	 *            returned.
+	 * @return The mutable {@code EntityStore} is returned.
+	 */
+	protected static EntityStore getMutableStore(BaseEntity entity) {
+		return getCore(entity).getMutableStore();
+	}
+
+	/**
+	 * Returns the permanent {@link EntityStore} for given {@link BaseEntity}.
+	 * Please be aware that the contents of this store is subject
+	 * to the adapter creating it. It is up to the adapter to decide
+	 * which related entities are included.
+	 * As there are adapter specific details to the contents of the store it
+	 * should be protected from external access.
+	 * Therefore by declaring this method protected, the
+	 * related functionality is hidden from other classes since the only
+	 * classes which can access them (outside this package) are derivatives of
+	 * BaseEntityFactory, and it is through such derivatives that BaseEntity's
+	 * Stores should be accessed elsewhere if needed.
+	 *    
+	 * @param entity
+	 *            The {@code BaseEntity} whose {@code ChildrenStore} will be
+	 *            returned.
+	 * @return The permanent {@code EntityStore} is returned.
+	 */
+	protected static EntityStore getPermanentStore(BaseEntity entity) {
+		return getCore(entity).getPermanentStore();
 	}
 
 	/**
