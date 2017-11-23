@@ -35,4 +35,12 @@ public class ContextSensor extends BaseEntity implements Deletable {
 		super(core);
 	}
 
+	/**
+	 * Returns the {@link ContextComponent} this context sensor belongs to.
+	 *
+	 * @return The parent {@link ContextComponent}
+	 */
+	public ContextComponent getContextComponent() {
+		return getCore().getPermanentStore().get(ContextComponent.class);
+	}
 }
