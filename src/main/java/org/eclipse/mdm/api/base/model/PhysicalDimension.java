@@ -8,7 +8,7 @@
 
 package org.eclipse.mdm.api.base.model;
 
-import org.eclipse.mdm.api.base.core.Core;
+import org.eclipse.mdm.api.base.adapter.Core;
 
 /**
  * Implementation of the physical dimension entity type. Each {@link Unit} must

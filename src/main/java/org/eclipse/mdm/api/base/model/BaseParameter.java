@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-import org.eclipse.mdm.api.base.core.Core;
+import org.eclipse.mdm.api.base.adapter.Core;
 
 /**
  * Implementation of an abstract parameter which holds a value with one of the

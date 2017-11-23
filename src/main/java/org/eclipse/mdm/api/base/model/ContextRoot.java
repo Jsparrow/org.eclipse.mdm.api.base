@@ -15,7 +15,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.eclipse.mdm.api.base.core.Core;
+import org.eclipse.mdm.api.base.adapter.Core;
 
 /**
  * Implementation of the context root entity types. This is the root node of the

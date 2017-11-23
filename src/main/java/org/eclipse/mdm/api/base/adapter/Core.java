@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.mdm.api.base.core;
+package org.eclipse.mdm.api.base.adapter;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -8,9 +8,9 @@ import static org.mockito.Mockito.when;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.mdm.api.base.core.ChildrenStore;
-import org.eclipse.mdm.api.base.core.Core;
-import org.eclipse.mdm.api.base.core.EntityStore;
+import org.eclipse.mdm.api.base.adapter.ChildrenStore;
+import org.eclipse.mdm.api.base.adapter.Core;
+import org.eclipse.mdm.api.base.adapter.EntityStore;
 
 public class ContextComponentTest {
 

@@ -14,9 +14,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.mdm.api.base.core.ChildrenStore;
-import org.eclipse.mdm.api.base.core.Core;
-import org.eclipse.mdm.api.base.core.EntityStore;
+import org.eclipse.mdm.api.base.adapter.ChildrenStore;
+import org.eclipse.mdm.api.base.adapter.Core;
+import org.eclipse.mdm.api.base.adapter.EntityStore;
 
 /**
  * Implementation of an abstract entity factory which creates new entities.

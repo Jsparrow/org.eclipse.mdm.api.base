@@ -1,4 +1,4 @@
-package org.eclipse.mdm.api.base.core;
+package org.eclipse.mdm.api.base.adapter;
 
 import java.util.ArrayList;
 import java.util.Collections;

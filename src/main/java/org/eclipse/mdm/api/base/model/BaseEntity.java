@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.eclipse.mdm.api.base.core.Core;
+import org.eclipse.mdm.api.base.adapter.Core;
 
 /**
  * This is a base implementation for modeled entities. API consumers should

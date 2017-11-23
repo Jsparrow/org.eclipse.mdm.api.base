@@ -18,7 +18,7 @@ import java.util.Map;
 
 import org.eclipse.mdm.api.base.CoreImpl;
 import org.eclipse.mdm.api.base.EntityFactoryImpl;
-import org.eclipse.mdm.api.base.core.Core;
+import org.eclipse.mdm.api.base.adapter.Core;
 import org.eclipse.mdm.api.base.massdata.UnitBuilder;
 import org.eclipse.mdm.api.base.massdata.WriteRequest;
 import org.eclipse.mdm.api.base.massdata.WriteRequestBuilder;
