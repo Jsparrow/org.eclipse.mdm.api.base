@@ -25,5 +25,21 @@ public enum BracketOperator {
 	/**
 	 * Right parenthesis.
 	 */
-	CLOSE
+	CLOSE;
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Enum#toString()
+	 */
+	@Override
+	public String toString() {
+		switch (this) {
+		case OPEN:
+			return "(";
+		case CLOSE:
+			return ")";
+		default:
+			return this.toString();
+		}
+	}
 }

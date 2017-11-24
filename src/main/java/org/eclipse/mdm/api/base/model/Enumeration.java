@@ -10,6 +10,7 @@ package org.eclipse.mdm.api.base.model;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A class which dynamically bundles enumeration values
@@ -17,17 +18,16 @@ import java.util.HashMap;
  * @param <E>
  */
 public class Enumeration<E extends EnumerationValue> {
-	public E ens = null;
 
-	private HashMap<String, E> values;
+	private Map<String, E> values;
 
-	private HashMap<E, String> revvalues;
+	private Map<E, String> revvalues;
 
-	private HashMap<Integer, String> ordinals;
+	private Map<Integer, String> ordinals;
 
-	private HashMap<String, Integer> revordinals;
+	private Map<String, Integer> revordinals;
 
-	private int nextordinal;
+	private int maxordinal;
 
 	private String name;
 
@@ -45,7 +45,7 @@ public class Enumeration<E extends EnumerationValue> {
 	 */
 	@SuppressWarnings("unchecked")
 	public Enumeration(Class<E> enumclass, String name) {
-		this.nextordinal = 0;
+		this.maxordinal = 0;
 		this.values = new HashMap<>();
 		this.revvalues = new HashMap<>();
 		this.ordinals = new HashMap<>();
@@ -73,12 +73,7 @@ public class Enumeration<E extends EnumerationValue> {
 					fname = field.getName();
 					((EnumerationValue) fieldObject).setName(fname);
 				}
-				((EnumerationValue) fieldObject).setOwner(this);
-				values.put(fname, (E) fieldObject);
-				revvalues.put((E) fieldObject, fname);
-				ordinals.put(nextordinal, fname);
-				revordinals.put(fname, nextordinal);
-				nextordinal++;
+				addValue((E) fieldObject);				
 			}
 		}
 	}
@@ -90,12 +85,18 @@ public class Enumeration<E extends EnumerationValue> {
 	 */
 	public void addValue(E enumeration) {
 		enumeration.setOwner(this);
-		String name = enumeration.name();
-		int ordinal = enumeration.ordinal();
-		values.put(name, enumeration);
-		revvalues.put(enumeration, name);
-		ordinals.put(ordinal, name);
-		revordinals.put(name, ordinal);
+		String enumerationName = enumeration.name();
+		Integer ordinal = enumeration.ordinal();
+		if (ordinal == null) {
+			ordinal = ++maxordinal;
+			enumeration.setOrdinal(ordinal);
+		} else {
+			maxordinal = Math.max(ordinal, maxordinal);
+		}
+		values.put(enumerationName, enumeration);
+		revvalues.put(enumeration, enumerationName);
+		ordinals.put(ordinal, enumerationName);
+		revordinals.put(enumerationName, ordinal);
 	}
 
 	/**

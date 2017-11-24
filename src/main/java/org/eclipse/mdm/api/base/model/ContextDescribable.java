@@ -37,7 +37,7 @@ public interface ContextDescribable extends Entity {
 	 * @throws DataAccessException
 	 *             Thrown if unable to query the available {@code ContextType}s.
 	 */
-	List<ContextType> loadContextTypes(BaseEntityManager<? extends BaseEntityFactory> manager) throws DataAccessException;
+	List<ContextType> loadContextTypes(BaseEntityManager manager) throws DataAccessException;
 
 	/**
 	 * Loads the requested {@link ContextRoot}s for given
@@ -55,7 +55,7 @@ public interface ContextDescribable extends Entity {
 	 * 		ContextRoot}s.
 	 * @see ContextType
 	 */
-	Map<ContextType, ContextRoot> loadContexts(BaseEntityManager<? extends BaseEntityFactory> manager, ContextType... contextTypes)
+	Map<ContextType, ContextRoot> loadContexts(BaseEntityManager manager, ContextType... contextTypes)
 			throws DataAccessException;
 
 }

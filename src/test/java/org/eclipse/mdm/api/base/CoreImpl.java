@@ -11,7 +11,9 @@ package org.eclipse.mdm.api.base;
 import java.util.Collection;
 import java.util.Map;
 
-import org.eclipse.mdm.api.base.model.Core;
+import org.eclipse.mdm.api.base.adapter.ChildrenStore;
+import org.eclipse.mdm.api.base.adapter.Core;
+import org.eclipse.mdm.api.base.adapter.EntityStore;
 import org.eclipse.mdm.api.base.model.Value;
 
 /**

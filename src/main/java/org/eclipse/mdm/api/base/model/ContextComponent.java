@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.eclipse.mdm.api.base.adapter.Core;
+
 /**
  * Implementation of the context component entity types. Instances of this class
  * are only provided / managed via the owning descriptive {@link ContextRoot}.
@@ -65,6 +67,15 @@ public class ContextComponent extends BaseEntity implements Deletable {
 		return getCore().getChildrenStore().get(ContextSensor.class);
 	}
 
+	/**
+	 * Returns the {@link ContextRoot} this context component belongs to.
+	 *
+	 * @return The parent {@link ContextRoot}.
+	 */
+	public ContextRoot getContextRoot() {
+		return getCore().getPermanentStore().get(ContextRoot.class);
+	}
+	
 	/**
 	 * Removes the {@link ContextSensor} identified by given name.
 	 *

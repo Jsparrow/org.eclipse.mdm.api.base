@@ -14,10 +14,12 @@ import java.util.Map;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import org.eclipse.mdm.api.base.adapter.Attribute;
+import org.eclipse.mdm.api.base.adapter.EntityType;
 import org.eclipse.mdm.api.base.model.Value;
 
 /**
- * A result consists of one or more {@link Record}s.
+ * A result consists of one or more {@link Record}s, which is mapped from an {@link EntityType} 
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -25,15 +27,7 @@ import org.eclipse.mdm.api.base.model.Value;
  */
 public final class Result implements Iterable<Record> {
 
-	// ======================================================================
-	// Instance variables
-	// ======================================================================
-
 	private final Map<EntityType, Record> records = new HashMap<>();
-
-	// ======================================================================
-	// Public methods
-	// ======================================================================
 
 	/**
 	 * Adds given {@link Record} to this result.

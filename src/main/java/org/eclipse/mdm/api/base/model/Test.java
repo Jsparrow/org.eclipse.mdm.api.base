@@ -11,6 +11,8 @@ package org.eclipse.mdm.api.base.model;
 import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.mdm.api.base.adapter.Core;
+
 /**
  * Implementation of the test entity type. The test groups a number of single
  * {@link TestStep}s. A measurement order always corresponds with exactly one

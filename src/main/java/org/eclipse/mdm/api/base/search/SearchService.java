@@ -6,19 +6,25 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.mdm.api.base.query;
+package org.eclipse.mdm.api.base.search;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
+import org.eclipse.mdm.api.base.adapter.Attribute;
+import org.eclipse.mdm.api.base.adapter.EntityType;
+import org.eclipse.mdm.api.base.adapter.Relation;
 import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.model.Value;
+import org.eclipse.mdm.api.base.query.DataAccessException;
+import org.eclipse.mdm.api.base.query.Filter;
+import org.eclipse.mdm.api.base.query.Record;
+import org.eclipse.mdm.api.base.query.Result;
 
 /**
  * This search service uses given {@link Entity} type to execute the associated
- * {@link SearchQuery}.
+ * predefined {@link SearchQuery} and returns the results.
  *
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
@@ -31,10 +37,6 @@ import org.eclipse.mdm.api.base.model.Value;
  * @see Result
  */
 public interface SearchService {
-
-	// ======================================================================
-	// Public methods
-	// ======================================================================
 
 	/**
 	 * Returns all {@link Entity} types this search service provides a
@@ -135,6 +137,10 @@ public interface SearchService {
 	 * the {@code SearchQuery} associated with given {@link Entity} type. This
 	 * method selects all {@link Attribute}s of each given {@code EntityType}.
 	 *
+	 * It is only guaranteed that this method loads the selected entities,
+	 * and their relations among themselves. No information about additional related entities 
+	 * is necessarily loaded.
+	 *
 	 * <p>
 	 * <b>Note:</b> Related {@code Record}s may be merged according to the
 	 * cardinality of the associated {@link Relation}.
@@ -146,8 +152,7 @@ public interface SearchService {
 	 * @param entityTypes
 	 *            Select statements will be added for all {@code Attribute}s of
 	 *            each given {@code EntityType}.
-	 * @return All {@link Result}s are returned in a {@code Map}, which maps
-	 *         entities to related {@link Record}s.
+	 * @return All matched entities are returned in a {@code List}.
 	 * @throws DataAccessException
 	 *             Thrown in case of errors while executing the
 	 *             {@code SearchQuery} or analyzing its {@code Result}s.
@@ -160,7 +165,7 @@ public interface SearchService {
 	 * @see #fetch(Class, List)
 	 * @see Record#merge(Record)
 	 */
-	default <T extends Entity> Map<T, Result> fetchComplete(Class<T> entityCass, List<EntityType> entityTypes)
+	default <T extends Entity> List<T> fetchComplete(Class<T> entityCass, List<EntityType> entityTypes)
 			throws DataAccessException {
 		return fetchComplete(entityCass, entityTypes, Filter.and());
 	}
@@ -170,6 +175,10 @@ public interface SearchService {
 	 * {@link EntityType}s and {@link Filter}. Both must be fully supported by
 	 * the {@code SearchQuery} associated with given {@link Entity} type. This
 	 * method selects all {@link Attribute}s of each given {@code EntityType}.
+	 * 
+	 * It is only guaranteed that this method loads the selected entities,
+	 * and their relations among themselves. No information about additional related entities 
+	 * is necessarily loaded.
 	 *
 	 * <p>
 	 * <b>Note:</b> Related {@code Record}s may be merged according to the
@@ -184,8 +193,7 @@ public interface SearchService {
 	 *            each given {@code EntityType}.
 	 * @param filter
 	 *            The criteria sequence.
-	 * @return All {@link Result}s are returned in a {@code Map}, which maps
-	 *         entities to related {@link Record}s.
+	 * @return All matched entities are returned in a {@code List}.
 	 * @throws DataAccessException
 	 *             Thrown in case of errors while executing the
 	 *             {@code SearchQuery} or analyzing its {@code Result}s.
@@ -198,12 +206,15 @@ public interface SearchService {
 	 * @see #fetch(Class, List, Filter)
 	 * @see Record#merge(Record)
 	 */
-	<T extends Entity> Map<T, Result> fetchComplete(Class<T> entityClass, List<EntityType> entityTypes, Filter filter)
+	<T extends Entity> List<T> fetchComplete(Class<T> entityClass, List<EntityType> entityTypes, Filter filter)
 			throws DataAccessException;
 
 	/**
 	 * Executes the associated {@link SearchQuery} and returns all available
 	 * instances of the specified {@link Entity} type.
+	 * 
+	 * It is only guaranteed that this method loads the selected entity,
+	 * no information about related entities is necessarily loaded.
 	 *
 	 * @param <T>
 	 *            Type of the entities that will be generated for each result.
@@ -227,6 +238,9 @@ public interface SearchService {
 	 * Executes the associated {@link SearchQuery} with given {@link Filter}.
 	 * The {@code Filter} must be fully supported by the {@code SearchQuery}
 	 * associated with given {@link Entity} type.
+	 * It is only guaranteed that this method loads the selected entity,
+	 * no information about related entities is necessarily loaded.
+	 *  
 	 *
 	 * @param <T>
 	 *            Type of the entities that will be generated for each result.
@@ -247,7 +261,7 @@ public interface SearchService {
 	 * @see #fetch(Class)
 	 */
 	default <T extends Entity> List<T> fetch(Class<T> entityClass, Filter filter) throws DataAccessException {
-		return fetch(entityClass, Collections.emptyList(), filter).keySet().stream().collect(Collectors.toList());
+		return fetch(entityClass, Collections.emptyList(), filter);
 	}
 
 	/**
@@ -255,6 +269,9 @@ public interface SearchService {
 	 * {@link Attribute}s. The {@code Attribute}s must be fully supported by the
 	 * {@code SearchQuery} associated with given {@link Entity} type. This
 	 * method allows fine grained {@link Record} configuration.
+	 * 
+	 * It is only guaranteed that this method loads the selected entity or attributes,
+	 * no additional information about related entities is necessarily loaded.
 	 *
 	 * <p>
 	 * <b>Note:</b> Related {@code Record}s may be merged according to the
@@ -267,8 +284,7 @@ public interface SearchService {
 	 * @param attributes
 	 *            Select statements will be added for each {@code
 	 * 		Attribute}.
-	 * @return All {@link Result}s are returned in a {@code Map}, which maps
-	 *         entities to related {@code Record}s.
+	 * @return All matched entities are returned in a {@code List}.
 	 * @throws DataAccessException
 	 *             Thrown in case of errors while executing the
 	 *             {@code SearchQuery} or analyzing its {@code Result}s.
@@ -281,7 +297,7 @@ public interface SearchService {
 	 * @see #fetchComplete(Class, List)
 	 * @see Record#merge(Record)
 	 */
-	default <T extends Entity> Map<T, Result> fetch(Class<T> entityClass, List<Attribute> attributes)
+	default <T extends Entity> List<T> fetch(Class<T> entityClass, List<Attribute> attributes)
 			throws DataAccessException {
 		return fetch(entityClass, attributes, Filter.and());
 	}
@@ -291,6 +307,9 @@ public interface SearchService {
 	 * and {@link Filter}. Both must be fully supported by the
 	 * {@code SearchQuery} associated with given {@link Entity} type. This
 	 * method allows fine grained {@link Record} configuration.
+	 * 
+	 * It is only guaranteed that this method loads the selected entity or attributes,
+	 * no additional information about related entities is necessarily loaded.
 	 *
 	 * <p>
 	 * <b>Note:</b> Related {@code Record}s may be merged according to the
@@ -305,8 +324,7 @@ public interface SearchService {
 	 * 		Attribute}.
 	 * @param filter
 	 *            The criteria sequence.
-	 * @return All {@link Result}s are returned in a {@code Map}, which maps
-	 *         entities to related {@code Record}s.
+	 * @return All matched entities are returned in a {@code List}.
 	 * @throws DataAccessException
 	 *             Thrown in case of errors while executing the
 	 *             {@code SearchQuery} or analyzing its {@code Result}s.
@@ -319,7 +337,7 @@ public interface SearchService {
 	 * @see #fetchComplete(Class, List, Filter)
 	 * @see Record#merge(Record)
 	 */
-	<T extends Entity> Map<T, Result> fetch(Class<T> entityClass, List<Attribute> attributes, Filter filter)
+	<T extends Entity> List<T> fetch(Class<T> entityClass, List<Attribute> attributes, Filter filter)
 			throws DataAccessException;
 
 	/**
@@ -327,7 +345,10 @@ public interface SearchService {
 	 * and {@link Filter}. Both must be fully supported by the
 	 * {@code SearchQuery} associated with given {@link Entity} type. This
 	 * method allows fine grained {@link Record} configuration. This method
-	 * allows to specify a fulltext search query.
+	 * allows to specify a fulltext search query string.
+	 * 
+	 * It is only guaranteed that this method loads the selected entity or attributes,
+	 * no additional information about related entities is necessarily loaded.
 	 *
 	 * <p>
 	 * <b>Note:</b> Related {@code Record}s may be merged according to the

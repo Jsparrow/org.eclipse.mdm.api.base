@@ -6,9 +6,11 @@
  * http://www.eclipse.org/legal/epl-v10.html
  */
 
-package org.eclipse.mdm.api.base.query;
+package org.eclipse.mdm.api.base.search;
 
 import java.util.List;
+
+import org.eclipse.mdm.api.base.adapter.EntityType;
 
 /**
  * A searchable is used to describe the hierarchical order of

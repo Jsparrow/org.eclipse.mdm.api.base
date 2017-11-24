@@ -10,6 +10,8 @@ package org.eclipse.mdm.api.base.model;
 
 import java.time.LocalDateTime;
 
+import org.eclipse.mdm.api.base.adapter.Core;
+
 /**
  * Implementation of the parameter entity type. Instances of this class hold a
  * value in its {@code String} representation, which is converted upon request

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.mdm.api.base.BaseEntityManager;
+import org.eclipse.mdm.api.base.adapter.Core;
 import org.eclipse.mdm.api.base.query.DataAccessException;
 
 /**
@@ -94,7 +95,7 @@ public class TestStep extends BaseEntity implements ContextDescribable, Datable,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<ContextType> loadContextTypes(BaseEntityManager<? extends BaseEntityFactory> manager)
+	public List<ContextType> loadContextTypes(BaseEntityManager manager)
 			throws DataAccessException {
 		return manager.loadContextTypes(this);
 	}
@@ -103,7 +104,7 @@ public class TestStep extends BaseEntity implements ContextDescribable, Datable,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<ContextType, ContextRoot> loadContexts(BaseEntityManager<? extends BaseEntityFactory> manager,
+	public Map<ContextType, ContextRoot> loadContexts(BaseEntityManager manager,
 			ContextType... contextTypes) throws DataAccessException {
 		return manager.loadContexts(this, contextTypes);
 	}

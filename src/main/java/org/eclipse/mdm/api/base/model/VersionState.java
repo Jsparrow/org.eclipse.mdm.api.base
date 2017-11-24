@@ -26,7 +26,7 @@ public class VersionState extends EnumerationValue {
 	 * An entity with this version state is still editable and hence not allowed
 	 * be used when creating new entities.
 	 */
-	public static final VersionState EDITABLE = new VersionState(); 
+	public static final VersionState EDITABLE = new VersionState(0); 
 
 	/**
 	 * An entity with this version state is no longer editable and is allowed to
@@ -36,7 +36,7 @@ public class VersionState extends EnumerationValue {
 	 * <b>Note:</b> If an entity's version state is this state, then its version
 	 * state is only allowed to be changed to {@link #ARCHIVED}.
 	 */
-	public static final VersionState VALID = new VersionState(); 
+	public static final VersionState VALID = new VersionState(1); 
 
 	/**
 	 * An entity with this version state is neither editable nor is it allowed
@@ -46,7 +46,7 @@ public class VersionState extends EnumerationValue {
 	 * <b>Note:</b> If an entity's version state is this state, then its version
 	 * state is no longer allowed to be changed.
 	 */
-	public static final VersionState ARCHIVED = new VersionState(); 
+	public static final VersionState ARCHIVED = new VersionState(2); 
 
 	// ======================================================================
 	// Public methods
@@ -81,5 +81,11 @@ public class VersionState extends EnumerationValue {
 	public boolean isArchived() {
 		return ARCHIVED == this;
 	}
-
+	
+	/**
+	 *  Constructor, ensures the correct order
+	 */
+	VersionState(int ord) {
+		super(ord);
+	}
 }

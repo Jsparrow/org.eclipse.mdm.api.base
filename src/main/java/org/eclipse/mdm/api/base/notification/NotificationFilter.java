@@ -5,7 +5,7 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.mdm.api.base.query.EntityType;
+import org.eclipse.mdm.api.base.adapter.EntityType;
 
 /**
  * Class represents a filter for notifications.

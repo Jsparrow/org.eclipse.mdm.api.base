@@ -8,6 +8,8 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import org.eclipse.mdm.api.base.adapter.Core;
+
 /**
  * Implementation of the user entity type.
  *

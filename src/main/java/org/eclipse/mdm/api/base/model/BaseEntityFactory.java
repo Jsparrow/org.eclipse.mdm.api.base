@@ -8,12 +8,15 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.mdm.api.base.model.Core.ChildrenStore;
-import org.eclipse.mdm.api.base.model.Core.EntityStore;
+import org.eclipse.mdm.api.base.adapter.ChildrenStore;
+import org.eclipse.mdm.api.base.adapter.Core;
+import org.eclipse.mdm.api.base.adapter.EntityStore;
 
 /**
  * Implementation of an abstract entity factory which creates new entities.
@@ -57,14 +60,10 @@ public abstract class BaseEntityFactory {
 		Channel channel = new Channel(createCore(Channel.class));
 
 		// relations
-		getPermanentStore(channel).set(measurement);
-		getChildrenStore(measurement).add(channel);
-		getMutableStore(channel).set(quantity.getDefaultUnit());
-		getMutableStore(channel).set(quantity);
-
-		// if(contextSensor != null) {
-		// channel.getCore().setInfoRelation(contextSensor);
-		// }
+		getCore(channel).getPermanentStore().set(measurement);
+		getCore(measurement).getChildrenStore().add(channel);
+		getCore(channel).getMutableStore().set(quantity.getDefaultUnit());
+		getCore(channel).getMutableStore().set(quantity);
 
 		// properties
 		channel.setName(name);
@@ -98,8 +97,8 @@ public abstract class BaseEntityFactory {
 		ChannelGroup channelGroup = new ChannelGroup(createCore(ChannelGroup.class));
 
 		// relations
-		getPermanentStore(channelGroup).set(measurement);
-		getChildrenStore(measurement).add(channelGroup);
+		getCore(channelGroup).getPermanentStore().set(measurement);
+		getCore(measurement).getChildrenStore().add(channelGroup);
 
 		// properties
 		channelGroup.setName(name);
@@ -123,10 +122,10 @@ public abstract class BaseEntityFactory {
 		Measurement measurement = new Measurement(createCore(Measurement.class));
 
 		// relations
-		getPermanentStore(measurement).set(testStep);
-		getChildrenStore(testStep).add(measurement);
+		getCore(measurement).getPermanentStore().set(testStep);
+		getCore(testStep).getChildrenStore().add(measurement);
 		for (ContextRoot contextRoot : contextRoots) {
-			getMutableStore(measurement).set(contextRoot, contextRoot.getContextType());
+			getCore(measurement).getMutableStore().set(contextRoot, contextRoot.getContextType());
 		}
 
 		// properties
@@ -161,8 +160,8 @@ public abstract class BaseEntityFactory {
 		Parameter parameter = new Parameter(createCore(Parameter.class));
 
 		// relations
-		getPermanentStore(parameter).set(parameterSet);
-		getChildrenStore(parameterSet).add(parameter);
+		getCore(parameter).getPermanentStore().set(parameterSet);
+		getCore(parameterSet).getChildrenStore().add(parameter);
 
 		// properties
 		parameter.setName(name);
@@ -186,8 +185,8 @@ public abstract class BaseEntityFactory {
 		ParameterSet parameterSet = new ParameterSet(createCore(ParameterSet.class));
 
 		// relations
-		getPermanentStore(parameterSet).set(measurement);
-		getChildrenStore(measurement).add(parameterSet);
+		getCore(parameterSet).getPermanentStore().set(measurement);
+		getCore(measurement).getChildrenStore().add(parameterSet);
 
 		// properties
 		parameterSet.setName(name);
@@ -211,8 +210,8 @@ public abstract class BaseEntityFactory {
 		ParameterSet parameterSet = new ParameterSet(createCore(ParameterSet.class));
 
 		// relations
-		getPermanentStore(parameterSet).set(channel);
-		getChildrenStore(channel).add(parameterSet);
+		getCore(parameterSet).getPermanentStore().set(channel);
+		getCore(channel).getChildrenStore().add(parameterSet);
 
 		// properties
 		parameterSet.setName(name);
@@ -258,7 +257,7 @@ public abstract class BaseEntityFactory {
 		Quantity quantity = new Quantity(createCore(Quantity.class));
 
 		// relations
-		getMutableStore(quantity).set(defaultUnit);
+		getCore(quantity).getMutableStore().set(defaultUnit);
 
 		// properties
 		quantity.setName(name);
@@ -290,7 +289,7 @@ public abstract class BaseEntityFactory {
 		Optional<User> responsiblePerson = getLoggedInUser();
 		if (responsiblePerson.isPresent()) {
 			// may be null if user entities are not available
-			getMutableStore(test).set(responsiblePerson.get());
+			getCore(test).getMutableStore().set(responsiblePerson.get());
 		}
 
 		// properties
@@ -313,8 +312,8 @@ public abstract class BaseEntityFactory {
 		TestStep testStep = new TestStep(createCore(TestStep.class));
 
 		// relations
-		getPermanentStore(testStep).set(test);
-		getChildrenStore(test).add(testStep);
+		getCore(testStep).getPermanentStore().set(test);
+		getCore(test).getChildrenStore().add(testStep);
 
 		// properties
 		testStep.setName(name);
@@ -325,7 +324,7 @@ public abstract class BaseEntityFactory {
 			// highest sort index in use will be queried before written
 			testStep.setSortIndex(Integer.valueOf(-1));
 		} else {
-			testStep.setSortIndex(nextIndex(getChildrenStore(test).get(TestStep.class)));
+			testStep.setSortIndex(nextIndex(getCore(test).getChildrenStore().get(TestStep.class)));
 		}
 
 		return testStep;
@@ -344,7 +343,7 @@ public abstract class BaseEntityFactory {
 		Unit unit = new Unit(createCore(Unit.class));
 
 		// relations
-		getMutableStore(unit).set(physicalDimension);
+		getCore(unit).getMutableStore().set(physicalDimension);
 
 		// properties
 		unit.setName(name);
@@ -412,8 +411,8 @@ public abstract class BaseEntityFactory {
 		ContextComponent contextComponent = new ContextComponent(createCore(name, ContextComponent.class));
 
 		// relations
-		getPermanentStore(contextComponent).set(contextRoot);
-		getChildrenStore(contextRoot).add(contextComponent);
+		getCore(contextComponent).getPermanentStore().set(contextRoot);
+		getCore(contextRoot).getChildrenStore().add(contextComponent);
 
 		// properties
 		contextComponent.setName(name);
@@ -433,8 +432,8 @@ public abstract class BaseEntityFactory {
 	protected ContextSensor createContextSensor(String name, ContextComponent contextComponent) {
 		ContextSensor contextSensor = new ContextSensor(createCore(name, ContextSensor.class));
 		// relations
-		getPermanentStore(contextSensor).set(contextComponent);
-		getChildrenStore(contextComponent).add(contextSensor);
+		getCore(contextSensor).getPermanentStore().set(contextComponent);
+		getCore(contextComponent).getChildrenStore().add(contextSensor);
 
 		// properties
 		contextSensor.setName(name);
@@ -451,56 +450,125 @@ public abstract class BaseEntityFactory {
 	 * @return {@code 1} is returned if given {@code List} is empty, otherwise
 	 *         the max sort index increased by 1 is returned.
 	 */
-	protected final Integer nextIndex(List<? extends Sortable> sortables) {
+	protected static final Integer nextIndex(List<? extends Sortable> sortables) {
 		Optional<Integer> maxIndex = sortables.stream().max(Sortable.COMPARATOR).map(Sortable::getSortIndex);
 		return Integer.valueOf(maxIndex.isPresent() ? maxIndex.get().intValue() + 1 : 1);
 	}
 
 	/**
 	 * Returns the {@link ChildrenStore} for given {@link BaseEntity}.
+	 * Please be aware that the contents of this store is subject
+	 * to the adapter creating it. It is up to the adapter to decide
+	 * which related entities are included.
+	 * As there are adapter specific details to the contents of the store it
+	 * should be protected from external access.
+	 * Therefore by declaring this method protected, the
+	 * related functionality is hidden from other classes since the only
+	 * classes which can access them (outside this package) are derivatives of
+	 * BaseEntityFactory, and it is through such derivatives that BaseEntity's
+	 * Stores should be accessed elsewhere if needed.
 	 *
 	 * @param entity
 	 *            The {@code BaseEntity} whose {@code ChildrenStore} will be
 	 *            returned.
 	 * @return The {@code ChildrenStore} is returned.
 	 */
-	protected final ChildrenStore getChildrenStore(BaseEntity entity) {
+	protected static ChildrenStore getChildrenStore(BaseEntity entity) {
 		return getCore(entity).getChildrenStore();
 	}
 
 	/**
 	 * Returns the mutable {@link EntityStore} for given {@link BaseEntity}.
+	 * Please be aware that the contents of this store is subject
+	 * to the adapter creating it. It is up to the adapter to decide
+	 * which related entities are included. 
+	 * As there are adapter specific details to the contents of the store it
+	 * should be protected from external access. 
+	 * Therefore by declaring this method protected, the
+	 * related functionality is hidden from other classes since the only
+	 * classes which can access them (outside this package) are derivatives of
+	 * BaseEntityFactory, and it is through such derivatives that BaseEntity's
+	 * Stores should be accessed elsewhere if needed.
+	 * 
 	 *
 	 * @param entity
 	 *            The {@code BaseEntity} whose {@code ChildrenStore} will be
 	 *            returned.
 	 * @return The mutable {@code EntityStore} is returned.
 	 */
-	protected final EntityStore getMutableStore(BaseEntity entity) {
+	protected static EntityStore getMutableStore(BaseEntity entity) {
 		return getCore(entity).getMutableStore();
 	}
 
 	/**
 	 * Returns the permanent {@link EntityStore} for given {@link BaseEntity}.
-	 *
+	 * Please be aware that the contents of this store is subject
+	 * to the adapter creating it. It is up to the adapter to decide
+	 * which related entities are included.
+	 * As there are adapter specific details to the contents of the store it
+	 * should be protected from external access.
+	 * Therefore by declaring this method protected, the
+	 * related functionality is hidden from other classes since the only
+	 * classes which can access them (outside this package) are derivatives of
+	 * BaseEntityFactory, and it is through such derivatives that BaseEntity's
+	 * Stores should be accessed elsewhere if needed.
+	 *    
 	 * @param entity
 	 *            The {@code BaseEntity} whose {@code ChildrenStore} will be
 	 *            returned.
 	 * @return The permanent {@code EntityStore} is returned.
 	 */
-	protected final EntityStore getPermanentStore(BaseEntity entity) {
+	protected static EntityStore getPermanentStore(BaseEntity entity) {
 		return getCore(entity).getPermanentStore();
 	}
 
 	/**
-	 * Returns {@link Core} of given {@link Entity}.
+	 * Returns {@link Core} of given {@link Entity}. Uses protected method from
+	 * BaseEntity, which is accessible here as BaseEntity resides in the same
+	 * package as BaseEntityFactory. By declaring this method protected, the
+	 * Core-related functionality is hidden from other classes since the only
+	 * classes which can access them (outside this package) are derivatives of
+	 * BaseEntityFactory, and it is through such derivatives that a BaseEntity's
+	 * Core should be accessed elsewhere if needed.
 	 *
 	 * @param entity
 	 *            The {@code BaseEntity} whose {@code Core} is required.
 	 * @return The {@code Core} is returned.
 	 */
-	protected final Core getCore(BaseEntity entity) {
+	protected static final Core getCore(BaseEntity entity) {
 		return entity.getCore();
+	}
+
+	/**
+	 * Create an instance of {@link BaseEntity} (or derivative) with core as the
+	 * instance's {@link Core}. By declaring this method protected, the Core-related
+	 * functionality is hidden from other classes since the only classes which can
+	 * access them (outside this package) are derivatives of BaseEntityFactory, and
+	 * it is through such derivatives that a BaseEntity's Core should be accessed
+	 * elsewhere if needed.
+	 * <br> <br>
+	 * This method accesses the (usually protected) Constructor(Core) of clazz, so
+	 * this method should be overridden in a derived class and call
+	 * super.createBaseEntity() if that constructor is invisible from the derived
+	 * class.
+	 * 
+	 * @param clazz
+	 *            The class to instantiate, must extend {@link BaseEntity}.
+	 * @param core
+	 *            The {@link Core} to use for the newly created instance.
+	 * @return The newly created instance.
+	 */
+	protected <T extends BaseEntity> T createBaseEntity(Class<T> clazz, Core core) {
+		try {
+			Constructor<T> constructor = clazz.getDeclaredConstructor(Core.class);
+			try {
+				return constructor.newInstance(core);
+			} catch (IllegalAccessException exc) {
+				throw new IllegalStateException("Cannot access Constructor(Core) of class '" + clazz.getName() + "'!");
+			}
+		} catch (NoSuchMethodException | InvocationTargetException | InstantiationException exc) {
+			throw new IllegalStateException(exc.getMessage(), exc);
+		}
 	}
 
 	/**

@@ -211,21 +211,7 @@ public final class Value {
 			value = input;
 			setValid(true);
 		} else if (input instanceof EnumerationValue) {
-			String inpvalueTypeDescr = ((EnumerationValue)input).getOwner().getName();
-		    if (inpvalueTypeDescr==null) {
-		    	throw new IllegalArgumentException("EnumerationValue value description of input value not correctly initialized");
-		    }
-			if (valueTypeDescr==null)
-				throw new IllegalArgumentException("EnumerationValue value description not correctly initialized got null, '"
-						+ "' expected '" + valueClass.getSimpleName() + "'.");
-		
-		    if (valueTypeDescr.equals(inpvalueTypeDescr)){
-		       value=input;
-		       setValid(true);
-		    } else {
-		    	throw new IllegalArgumentException("Incompatible value type description'" + inpvalueTypeDescr  
-						+ "' passed, expected '" + valueTypeDescr + "'.");
-		    }
+			setForEnumerationValue(input);
 		} else {
 			throw new IllegalArgumentException("Incompatible value type '" + input.getClass().getSimpleName()
 					+ "' passed, expected '" + valueClass.getSimpleName() + "'.");
@@ -258,6 +244,42 @@ public final class Value {
 		return new Value(this, equalValue && bothValid ? extract() : null);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if (other == this) {
+			return true;
+		}
+		if (!(other instanceof Value)) {
+			return false;
+		}
+
+		Value value = (Value) other;
+
+		return Objects.equals(this.valueType, value.valueType)
+				&& Objects.equals(this.name, value.name)
+				&& Objects.equals(this.unit, value.unit)
+				&& Objects.equals(this.initialValid, value.initialValid)
+				&& Objects.deepEquals(this.initialValue, value.initialValue)
+				&& Objects.equals(this.valid, value.valid)
+				&& Objects.deepEquals(this.value, value.value)
+				&& Objects.equals(this.valueClass, value.valueClass)
+				&& Objects.equals(this.valueTypeDescr, value.valueTypeDescr)
+				&& Objects.equals(this.defaultValue, value.defaultValue);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(valueType, name, unit, initialValid, initialValue, valid, value, valueClass, valueTypeDescr, defaultValue);
+	}
+	
 	/**
 	 * Returns a human readable {@code String} representation of this value. In
 	 * case of a sequence value container with up to 10 values the complete
@@ -297,10 +319,6 @@ public final class Value {
 		return sb.toString();
 	}
 
-	// ======================================================================
-	// Package methods
-	// ======================================================================
-
 	/**
 	 * Checks whether either the validity flag or the value have been modified
 	 * since initialization.
@@ -308,7 +326,7 @@ public final class Value {
 	 * @return Returns {@code true} either if the flag or the value has been
 	 *         modified.
 	 */
-	boolean isModified() {
+	public boolean isModified() {
 		return wasValid() != isValid() || !Objects.deepEquals(extractInitial(), extract());
 	}
 
@@ -317,7 +335,7 @@ public final class Value {
 	 *
 	 * @return Returns {@code true} if the value was initially marked as valid.
 	 */
-	boolean wasValid() {
+	public boolean wasValid() {
 		return initialValid;
 	}
 
@@ -326,17 +344,21 @@ public final class Value {
 	 *
 	 * @return The initial value is returned.
 	 */
-	Object extractInitial() {
+	public Object extractInitial() {
 		return initialValue;
 	}
 
 	/**
 	 * Overwrites the initial validity flag and value with the current ones.
 	 */
-	void apply() {
+	public void apply() {
 		initialValid = isValid();
 		initialValue = copy(extract());
 	}
+	
+	// ======================================================================
+	// Package methods
+	// ======================================================================
 
 	/**
 	 * Returns the {@code String} value from given array at given position.
@@ -375,20 +397,7 @@ public final class Value {
 
 		Class<?> valueClass = value.getClass();
 		if (valueClass.isArray() && Array.getLength(value) > 0) {
-			int length = Array.getLength(value);
-			if (valueClass.getComponentType().isPrimitive()) {
-				Object copy = Array.newInstance(valueClass.getComponentType(), length);
-				System.arraycopy(value, 0, copy, 0, length);
-				return copy;
-			} else {
-				if (value instanceof byte[][]) {
-					return Arrays.stream((byte[][]) value).map(v -> v.clone()).toArray(byte[][]::new);
-				} else if (value instanceof FileLink[]) {
-					return Arrays.stream((FileLink[]) value).map(FileLink::new).toArray(FileLink[]::new);
-				} else {
-					return Arrays.copyOf((Object[]) value, length);
-				}
-			}
+			return createDeepCopy(value, valueClass);
 		} else if (value instanceof FileLink) {
 			return new FileLink((FileLink) value);
 		}
@@ -396,5 +405,62 @@ public final class Value {
 		// simple immutable value
 		return value;
 	}
+	
+	/**
+	 * Replaces currently stored value with the given one.
+	 *
+	 * @param input
+	 *            The new value must be an instance of the enumeration type
+	 *            an appropriate enumeration constant.
+	 * @throws IllegalArgumentException
+	 *             Thrown if an incompatible value is given.
+	 */
+	private void setForEnumerationValue(Object input) {
+		String inpvalueTypeDescr = ((EnumerationValue) input).getOwner().getName();
+		if (inpvalueTypeDescr == null) {
+			throw new IllegalArgumentException(
+					"EnumerationValue value description of input value not correctly initialized");
+		}
+		if (valueTypeDescr == null) {
+			throw new IllegalArgumentException(
+					"EnumerationValue value description not correctly initialized got null, '" + "' expected '"
+							+ valueClass.getSimpleName() + "'.");
+		}
 
+		if (valueTypeDescr.equals(inpvalueTypeDescr)) {
+			value = input;
+			setValid(true);
+		} else {
+			throw new IllegalArgumentException("Incompatible value type description'" + inpvalueTypeDescr
+					+ "' passed, expected '" + valueTypeDescr + "'.");
+		}
+	}
+
+	/**
+	 * Returns a deep copy of given {@code Object}, so modifications in one do not
+	 * affect to other.
+	 *
+	 * @param value
+	 *            The object which will be copied.
+	 * @param valueClass
+	 *            The class of the value object.
+	 * @return The copy is returned.
+	 */
+	private static Object createDeepCopy(Object value, Class<?> valueClass) {
+		int length = Array.getLength(value);
+
+		if (valueClass.getComponentType().isPrimitive()) {
+			Object copy = Array.newInstance(valueClass.getComponentType(), length);
+			System.arraycopy(value, 0, copy, 0, length);
+			return copy;
+		} else {
+			if (value instanceof byte[][]) {
+				return Arrays.stream((byte[][]) value).map(v -> v.clone()).toArray(byte[][]::new);
+			} else if (value instanceof FileLink[]) {
+				return Arrays.stream((FileLink[]) value).map(FileLink::new).toArray(FileLink[]::new);
+			} else {
+				return Arrays.copyOf((Object[]) value, length);
+			}
+		}
+	}
 }

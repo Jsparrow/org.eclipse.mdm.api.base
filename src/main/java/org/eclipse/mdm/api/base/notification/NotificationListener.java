@@ -2,9 +2,9 @@ package org.eclipse.mdm.api.base.notification;
 
 import java.util.List;
 
+import org.eclipse.mdm.api.base.adapter.EntityType;
 import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.model.User;
-import org.eclipse.mdm.api.base.query.EntityType;
 
 /**
  * Listener interface for notifications.
