@@ -12,10 +12,11 @@ public class ValueTypeTest {
 	}
 
 	@org.junit.Test
-	public void testCreateUnknown() {
-		Value v = ValueType.UNKNOWN.create("Unknown");
+	public void testExtractStringFromUnknown() {
+		Value v = ValueType.UNKNOWN.create("Name", "abcd");
 		
-		assertThat(v.extract(ValueType.UNKNOWN)).isNull();
+		assertThat((String) v.extract()).isEqualTo("abcd");
+		assertThat(v.extract(ValueType.UNKNOWN)).isEqualTo("abcd");
 	}
 	
 	@org.junit.Test

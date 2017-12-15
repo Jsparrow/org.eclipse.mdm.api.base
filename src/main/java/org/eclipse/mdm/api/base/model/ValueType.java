@@ -213,7 +213,7 @@ public final class ValueType<T> extends EnumerationValue {
 	 * not replace {@code null}. This value type does not have a corresponding
 	 * sequence type.
 	 */
-	public static final ValueType<Void> UNKNOWN = new ValueType<>(29);
+	public static final ValueType<Object> UNKNOWN = new ValueType<>(29, Object.class, null);
 
 	// ======================================================================
 	// Instance variables
