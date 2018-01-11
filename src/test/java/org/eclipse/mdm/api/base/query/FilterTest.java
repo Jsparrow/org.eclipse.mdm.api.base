@@ -16,6 +16,8 @@ import java.util.Iterator;
 import org.eclipse.mdm.api.base.EntityTypeImpl;
 import org.eclipse.mdm.api.base.RelationImpl;
 import org.eclipse.mdm.api.base.RelationImpl.AttributeType;
+import org.eclipse.mdm.api.base.model.EnumRegistry;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -28,6 +30,11 @@ public class FilterTest {
 
 	static String[] values = new String[] { "1", "2", "3" };
 
+	@Before
+	public void init() {
+		 EnumRegistry.getInstance();
+	}
+	
 	/**
 	 * Tests ids(EntityType entityType, Collection<String> ids)
 	 */
