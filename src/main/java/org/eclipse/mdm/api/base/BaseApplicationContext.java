@@ -13,6 +13,7 @@ import java.util.Optional;
 import org.eclipse.mdm.api.base.adapter.ModelManager;
 import org.eclipse.mdm.api.base.file.FileService;
 import org.eclipse.mdm.api.base.model.BaseEntityFactory;
+import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.notification.NotificationService;
 import org.eclipse.mdm.api.base.query.QueryService;
 import org.eclipse.mdm.api.base.search.SearchService;
@@ -104,6 +105,15 @@ public interface BaseApplicationContext<S extends BaseEntityFactory, T extends B
 	 * @return map with configuration parameters
 	 */
 	Map<String, String> getParameters();
+	
+	/**
+	 * Returns a string describing the type of the underlying API implementation.
+	 * The exact content is up to the individual adapter and it is intended to be 
+	 * interpreted by the client.
+	 * 
+	 * @return a string describing the type of the underlying API implementation.
+	 */
+	String getAdapterType();
 	
 	/**
 	 * Closes the BaseContext.
