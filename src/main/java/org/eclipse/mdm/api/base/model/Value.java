@@ -257,18 +257,18 @@ public final class Value {
 			return false;
 		}
 
-		Value value = (Value) other;
+		Value val = (Value) other;
 
-		return Objects.equals(this.valueType, value.valueType)
-				&& Objects.equals(this.name, value.name)
-				&& Objects.equals(this.unit, value.unit)
-				&& Objects.equals(this.initialValid, value.initialValid)
-				&& Objects.deepEquals(this.initialValue, value.initialValue)
-				&& Objects.equals(this.valid, value.valid)
-				&& Objects.deepEquals(this.value, value.value)
-				&& Objects.equals(this.valueClass, value.valueClass)
-				&& Objects.equals(this.valueTypeDescr, value.valueTypeDescr)
-				&& Objects.equals(this.defaultValue, value.defaultValue);
+		return Objects.equals(this.valueType, val.valueType)
+				&& Objects.equals(this.name, val.name)
+				&& Objects.equals(this.unit, val.unit)
+				&& Objects.equals(this.initialValid, val.initialValid)
+				&& Objects.deepEquals(this.initialValue, val.initialValue)
+				&& Objects.equals(this.valid, val.valid)
+				&& Objects.deepEquals(this.value, val.value)
+				&& Objects.equals(this.valueClass, val.valueClass)
+				&& Objects.equals(this.valueTypeDescr, val.valueTypeDescr)
+				&& Objects.equals(this.defaultValue, val.defaultValue);
 	}
 
 	/*

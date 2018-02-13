@@ -27,7 +27,7 @@ public interface Datable extends Entity {
 	/**
 	 * The 'DateCreated' attribute name.
 	 */
-	static final String ATTR_DATE_CREATED = "DateCreated";
+	String ATTR_DATE_CREATED = "DateCreated";
 
 	// ======================================================================
 	// Public methods

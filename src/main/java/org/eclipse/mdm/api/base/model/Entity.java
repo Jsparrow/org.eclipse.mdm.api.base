@@ -28,22 +28,22 @@ public interface Entity {
 	 * This {@code Comparator} compares entities by their name in ascending
 	 * order.
 	 */
-	static final Comparator<Entity> COMPARATOR = Comparator.comparing(Entity::getName);
+	Comparator<Entity> COMPARATOR = Comparator.comparing(Entity::getName);
 
 	/**
 	 * The 'MimeType' attribute name.
 	 */
-	static final String ATTR_MIMETYPE = "MimeType";
+	String ATTR_MIMETYPE = "MimeType";
 
 	/**
 	 * The 'Name' attribute name.
 	 */
-	static final String ATTR_NAME = "Name";
+	String ATTR_NAME = "Name";
 
 	/**
 	 * The 'Id' attribute name.
 	 */
-	static final String ATTR_ID = "Id";
+	String ATTR_ID = "Id";
 
 	// ======================================================================
 	// Public methods
