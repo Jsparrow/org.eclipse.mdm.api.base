@@ -30,7 +30,7 @@ public interface FilesAttachable extends Entity {
 	/**
 	 * The 'FileLinks' attribute name.
 	 */
-	static final String ATTR_FILE_LINKS = "MDMLinks";
+	String ATTR_FILE_LINKS = "MDMLinks";
 
 	// ======================================================================
 	// Public methods

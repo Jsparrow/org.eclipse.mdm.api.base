@@ -213,7 +213,7 @@ public final class ValueType<T> extends EnumerationValue {
 	 * not replace {@code null}. This value type does not have a corresponding
 	 * sequence type.
 	 */
-	public static final ValueType<Void> UNKNOWN = new ValueType<>(29);
+	public static final ValueType<Object> UNKNOWN = new ValueType<>(29, Object.class, null);
 
 	// ======================================================================
 	// Instance variables
@@ -235,13 +235,15 @@ public final class ValueType<T> extends EnumerationValue {
 	 * Constructor - May only be used to create {@link #ENUMERATION},
 	 * {@link #ENUMERATION_SEQUENCE} or {@link #UNKNOWN} types.
 	 */
-	private ValueType(int ord) {
-		this(ord, null, null);
+	private ValueType(int ordinal) {
+		this(ordinal, null, null);
 	}
 
 	/**
 	 * Constructor.
 	 *
+	 * @param ordinal
+	 *            The ordinal value of a {@link Value} with this value type.
 	 * @param type
 	 *            The type of value a {@link Value} with this value type will
 	 *            accept.
@@ -249,7 +251,8 @@ public final class ValueType<T> extends EnumerationValue {
 	 *            Will be used as {@code null} replacement in
 	 *            {@link Value#set(Object)}.
 	 */
-	private ValueType(int ord, Class<T> type, T defaultValue) {
+	private ValueType(int ordinal, Class<T> type, T defaultValue) {
+		super(ordinal);
 		this.type = type;
 		this.defaultValue = defaultValue;
 	}
@@ -1035,7 +1038,7 @@ public final class ValueType<T> extends EnumerationValue {
 		if (isEnumerationType()) {
 			throw new IllegalStateException("");
 		}
+		
 		return type;
 	}
-
 }

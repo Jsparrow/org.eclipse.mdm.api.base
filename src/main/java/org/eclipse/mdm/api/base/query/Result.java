@@ -85,14 +85,35 @@ public final class Result implements Iterable<Record> {
 
 	/**
 	 * Returns the {@link Value} container associated with given
-	 * {@link Attribute}.
+	 * {@link Attribute} and no aggregation.
 	 *
 	 * @param attribute
 	 *            Used as identifier to find the associated {@code Value}.
 	 * @return Associated {@code Value} is returned.
 	 */
 	public Value getValue(Attribute attribute) {
-		return getRecord(attribute.getEntityType()).getValue(attribute.getName());
+		return getValue(attribute, Aggregation.NONE);
+	}
+	
+	/**
+	 * Returns the {@link Value} container associated with given {@link Attribute}
+	 * and {@link Aggregation}.
+	 *
+	 * @param attribute
+	 *            Used as identifier to find the associated {@code Value}.
+	 * @param aggregation
+	 *            {@link Aggregation} used with the attribute.
+	 * @return Associated {@code Value} is returned.
+	 */
+	public Value getValue(Attribute attribute, Aggregation aggregation) {
+		String key;
+		if (Aggregation.NONE == aggregation) {
+			key = attribute.getName();
+		} else {
+			key = String.format("%s(%s)", aggregation.name(), attribute.getName());
+		}
+
+		return getRecord(attribute.getEntityType()).getValue(key);
 	}
 
 	/**

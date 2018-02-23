@@ -169,7 +169,7 @@ public final class Record {
 	 *            Used as identifier.
 	 * @return {@code Value} with given name is returned.
 	 * @throws IllegalArgumentException
-	 *             Thrown if attribute with given name is not contained.
+	 *             Thrown if value with given name is not contained.
 	 */
 	Value getValue(String name) {
 		Value value = getValues().get(name);

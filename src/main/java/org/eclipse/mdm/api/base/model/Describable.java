@@ -25,7 +25,7 @@ public interface Describable extends Entity {
 	/**
 	 * The 'Description' attribute name.
 	 */
-	static final String ATTR_DESCRIPTION = "Description";
+	String ATTR_DESCRIPTION = "Description";
 
 	// ======================================================================
 	// Public methods

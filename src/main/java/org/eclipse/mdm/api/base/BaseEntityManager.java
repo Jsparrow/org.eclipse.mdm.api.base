@@ -288,4 +288,16 @@ public interface BaseEntityManager {
 	 */
 	Transaction startTransaction() throws DataAccessException;
 
+	/**
+	 * Returns links to the given entities in the data store. The format of the links 
+	 * is adapter specific and depends on the underlying data store. The links can be used by the client
+	 * to directly access the entities by bypassing the MDM API, if the client is capable of 
+	 * accessing the adapters data store. The client can invoke {@link BaseApplicationContext#getAdapterType()}
+	 * to get the type of the adapter.
+	 * 
+	 * @param entities the Entities for which the links are retrieved
+	 * @return the links to the given entities in the data store abstracted by the current adapter. The map 
+	 * contains the requested entities as keys and the corresponding links as values.
+	 */
+	Map<Entity, String> getLinks(Collection<Entity> entities);
 }
