@@ -12,6 +12,9 @@ import org.eclipse.mdm.api.base.model.Enumeration;
 import org.eclipse.mdm.api.base.model.Value;
 import org.eclipse.mdm.api.base.model.ValueType;
 
+import javax.xml.ws.Service;
+import java.lang.reflect.Field;
+
 /**
  * Represents a modeled attribute.
  *
@@ -118,12 +121,27 @@ public interface Attribute {
 	 * @return Created {@code Value} is returned.
 	 */
 	default Value createValueSeq(String unit, Object input) {
-		ValueType<?> valueType = getValueType().toSequenceType();
-		if (valueType.isEnumerationType()) {
-			return valueType.create(getName(), unit, true, input, getEnumObj().getName());
-		} else {
-			return valueType.create(getName(), unit, true, input);
+		if(getValueType().isEnumerationType()) {
+			return createEnumerationSequence(unit, input);
 		}
+		return createValueSequence(unit, input);
+	}
+
+	default Value createValueSequence(String unit, Object input) {
+		ValueType valueType = getValueType();
+		try {
+			Field field = valueType.getClass().getField(valueType.name() + "_SEQUENCE");
+			ValueType<?> sequenceValueType = (ValueType<?>) field.get(valueType);
+			return sequenceValueType.create(getName(), unit, true, input);
+
+		} catch (NoSuchFieldException | ClassCastException | IllegalAccessException e) {
+			throw new RuntimeException("Can't figure out sequence type for " + valueType.name());
+		}
+	}
+
+	default Value createEnumerationSequence(String unit, Object input) {
+		ValueType valueType = getValueType().toSequenceType();
+		return valueType.create(getName(), unit, true, input, getEnumObj().getName());
 	}
 
 	/**

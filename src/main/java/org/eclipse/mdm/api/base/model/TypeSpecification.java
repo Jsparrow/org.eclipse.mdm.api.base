@@ -18,90 +18,83 @@ package org.eclipse.mdm.api.base.model;
  */
 public class TypeSpecification extends EnumerationValue {
 
-	// ======================================================================
-	// Enumerations
-	// ======================================================================
+	public static final TypeSpecification BOOLEAN = new TypeSpecification("BOOLEAN", 0);
 
-	final static TypeSpecification BOOLEAN = new TypeSpecification(0);
+	public static final TypeSpecification BYTE = new TypeSpecification("BYTE", 1);
 
-	final static TypeSpecification BYTE = new TypeSpecification(1);
+	public static final TypeSpecification SHORT = new TypeSpecification("SHORT", 2);
 
-	final static TypeSpecification SHORT = new TypeSpecification(2);
+	public static final TypeSpecification INTEGER = new TypeSpecification("INTEGER", 3);
 
-	final static TypeSpecification INTEGER = new TypeSpecification(3);
+	public static final TypeSpecification LONG = new TypeSpecification("LONG", 4);
 
-	final static TypeSpecification LONG = new TypeSpecification(4);
+	public static final TypeSpecification FLOAT = new TypeSpecification("FLOAT", 5);
 
-	final static TypeSpecification FLOAT = new TypeSpecification(5);
+	public static final TypeSpecification DOUBLE = new TypeSpecification("DOUBLE", 6);
 
-	final static TypeSpecification DOUBLE = new TypeSpecification(6);
+	public static final TypeSpecification SHORT_BEO = new TypeSpecification("SHORT_BEO", 7);
 
-	final static TypeSpecification SHORT_BEO = new TypeSpecification(7);
+	public static final TypeSpecification INTEGER_BEO = new TypeSpecification("INTEGER_BEO", 8);
 
-	final static TypeSpecification INTEGER_BEO = new TypeSpecification(8);
+	public static final TypeSpecification LONG_BEO = new TypeSpecification("LONG_BEO", 9);
 
-	final static TypeSpecification LONG_BEO = new TypeSpecification(9);
+	public static final TypeSpecification FLOAT_BEO = new TypeSpecification("FLOAT_BEO", 10);
 
-	final static TypeSpecification FLOAT_BEO = new TypeSpecification(10);
+	public static final TypeSpecification DOUBLE_BEO = new TypeSpecification("DOUBLE_BEO", 11);
 
-	final static TypeSpecification DOUBLE_BEO = new TypeSpecification(11);
+	public static final TypeSpecification STRING = new TypeSpecification("STRING", 12);
 
-	final static TypeSpecification STRING = new TypeSpecification(12);
+	public static final TypeSpecification BYTE_STREAM = new TypeSpecification("BYTE_STREAM", 13);
 
-	final static TypeSpecification BYTE_STREAM = new TypeSpecification(13);
+	public static final TypeSpecification BLOB = new TypeSpecification("BLOB", 14);
 
-	final static TypeSpecification BLOB = new TypeSpecification(14);
+	public static final TypeSpecification BOOLEAN_FLAGS_BEO = new TypeSpecification("BOOLEAN_FLAGS_BEO", 15);
 
-	final static TypeSpecification BOOLEAN_FLAGS_BEO = new TypeSpecification(15);
+	public static final TypeSpecification BYTE_FLAGS_BEO = new TypeSpecification("BYTE_FLAGS_BEO", 16);
 
-	final static TypeSpecification BYTE_FLAGS_BEO = new TypeSpecification(16);
+	public static final TypeSpecification STRING_FLAGS_BEO = new TypeSpecification("STRING_FLAGS_BEO", 17);
 
-	final static TypeSpecification STRING_FLAGS_BEO = new TypeSpecification(17);
-
-	final static TypeSpecification BYTE_STREAM_BEO = new TypeSpecification(18);
+	public static final TypeSpecification BYTE_STREAM_BEO = new TypeSpecification("BYTE_STREAM_BEO", 18);
 
 	// SBYTE,
-	final static TypeSpecification SIGNED_BYTE = new TypeSpecification(19);
+	public static final TypeSpecification SIGNED_BYTE = new TypeSpecification("SIGNED_BYTE", 19);
 
 	// SBYTE_FLAGS_BEO,
-	final static TypeSpecification SIGNED_BYTE_FLAGS_BEO = new TypeSpecification(20);
+	public static final TypeSpecification SIGNED_BYTE_FLAGS_BEO = new TypeSpecification("SIGNED_BYTE_FLAGS_BEO", 20);
 
 	// USHORT,
-	final static TypeSpecification UNSIGNED_SHORT = new TypeSpecification(21);
+	public static final TypeSpecification UNSIGNED_SHORT = new TypeSpecification("UNSIGNED_SHORT", 21);
 
 	// USHORT_BEO,
-	final static TypeSpecification UNSIGNED_SHORT_BEO = new TypeSpecification(22);
+	public static final TypeSpecification UNSIGNED_SHORT_BEO = new TypeSpecification("UNSIGNED_SHORT_BEO", 22);
 
 	// UINTEGER,
-	final static TypeSpecification UNSIGNED_INTEGER = new TypeSpecification(23);
+	public static final TypeSpecification UNSIGNED_INTEGER = new TypeSpecification("UNSIGNED_INTEGER", 23);
 
 	// UINTEGER_BEO,
-	final static TypeSpecification UNSIGNED_INTEGER_BEO = new TypeSpecification(24);
+	public static final TypeSpecification UNSIGNED_INTEGER_BEO = new TypeSpecification("UNSIGNED_INTEGER_BEO", 24);
 
-	final static TypeSpecification STRING_UTF8 = new TypeSpecification(25);
+	public static final TypeSpecification STRING_UTF8 = new TypeSpecification("STRING_UTF8", 25);
 
-	final static TypeSpecification STRING_UTF8_FLAGS_BEO = new TypeSpecification(26);
+	public static final TypeSpecification STRING_UTF8_FLAGS_BEO = new TypeSpecification("STRING_UTF8_FLAGS_BEO", 26);
 
 	// BIT_INT,
-	final static TypeSpecification BIT_INTEGER = new TypeSpecification(27);
+	public static final TypeSpecification BIT_INTEGER = new TypeSpecification("BIT_INTEGER", 27);
 
 	// BIT_INT_BEO,
-	final static TypeSpecification BIT_INTEGER_BEO = new TypeSpecification(28);
+	public static final TypeSpecification BIT_INTEGER_BEO = new TypeSpecification("BIT_INTEGER_BEO", 28);
 
 	// BIT_UINT,
-	final static TypeSpecification BIT_UNSIGNED_INTEGER = new TypeSpecification(29);
+	public static final TypeSpecification BIT_UNSIGNED_INTEGER = new TypeSpecification("BIT_UNSIGNED_INTEGER", 29);
 
 	// BIT_UINT_BEO,
-	final static TypeSpecification BIT_UNSIGNED_INTEGER_BEO = new TypeSpecification(30);
+	public static final TypeSpecification BIT_UNSIGNED_INTEGER_BEO = new TypeSpecification("BIT_UNSIGNED_INTEGER_BEO", 30);
 
-	final static TypeSpecification BIT_FLOAT = new TypeSpecification(31);
+	public static final TypeSpecification BIT_FLOAT = new TypeSpecification("BIT_FLOAT", 31);
 
-	final static TypeSpecification BIT_FLOAT_BEO = new TypeSpecification(32);
+	public static final TypeSpecification BIT_FLOAT_BEO = new TypeSpecification("BIT_FLOAT_BEO", 32);
 
-	/**
-	 * Constructor, sets the order
-	 */
-	TypeSpecification(int ord) {
-		super(ord);
+	private TypeSpecification(String name, int ordinal) {
+		super(name, ordinal);
 	}
 }

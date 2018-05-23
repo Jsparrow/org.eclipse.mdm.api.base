@@ -8,6 +8,8 @@
 
 package org.eclipse.mdm.api.base.model;
 
+import java.util.Objects;
+
 /**
  * This class emulates the behaviour of a java enum. The reason for its
  * existence is that classic enums can't be extended by new values. This class
@@ -32,17 +34,15 @@ public class EnumerationValue {
 
 	/**
 	 * explicitly set the name of this element.
-	 * 
+	 *
 	 * @param name
 	 */
 	protected void setName(String name) {
-		this.name = name;
+		this.name = Objects.requireNonNull(name);
 	}
 
 	/**
 	 * explicitly set the ordinal of this element.
-	 * 
-	 * @param name
 	 */
 	protected void setOrdinal(int ordinal) {
 		this.ordinal = ordinal;
@@ -68,25 +68,12 @@ public class EnumerationValue {
 	}
 
 	/**
-	 * 
-	 * This Constructor is protected to avoid accidental misuse.
-	 * 
-	 * be sure to initialize the enumeration fully, by either adding it as a
-	 * static field in an extending class, or setting name and ordinal by hand.
-	 * You'll also have to add the resulting object to a DynamiEnumeration for
-	 * it to be completely usable.
-	 */
-	protected EnumerationValue() {
-		this(null, null);
-	}
-
-	/**
 	 * This Constructor is protected to avoid accidental misuse.
 	 * 
 	 * be sure to initialize the enumeration fully, by either adding it as a
 	 * static field in an extending class, or setting the ordinal by hand.
-	 * You'll also have to add the resulting object to a Enumeration for it to
-	 * be completely usable.
+	 * You'll also have to add the resulting object to a DynamicEnumeration for
+	 * it to be completely usable.
 	 * 
 	 * @param name
 	 */
@@ -103,23 +90,9 @@ public class EnumerationValue {
 	 * @param name
 	 */
 	protected EnumerationValue(String name, Integer ordinal) {
-		this.name = name;
+		this.name = Objects.requireNonNull(name, "Name of an EnumerationValue can never be null!");
 		this.ordinal = ordinal;
 		this.owner = null;
-	}
-
-	/**
-	 * This Constructor is protected to avoid accidental misuse.
-	 * 
-	 * be sure to initialize the enumeration fully, by either adding it as a
-	 * static field in an extending class, or setting the name by hand and
-	 * adding the resulting object to a Enumeration for it to be completely
-	 * usable.
-	 * 
-	 * @param name
-	 */
-	protected EnumerationValue(int ordinal) {
-		this(null, ordinal);
 	}
 
 	/**

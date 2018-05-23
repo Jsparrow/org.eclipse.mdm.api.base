@@ -30,8 +30,6 @@ import org.eclipse.mdm.api.base.query.DataAccessException;
  * Provides business layer CRUD operations and services (CREATE, READ, UPDATE,
  * INSERT).
  *
- * @param <S>
- *            Concrete type of the provided entity factory.
  * @since 1.0.0
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH

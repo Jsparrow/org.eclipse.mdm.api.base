@@ -26,14 +26,14 @@ public class SequenceRepresentation extends EnumerationValue {
 	 * Measured values are stored as is and values are therefore immediately
 	 * available.
 	 */
-	public static final SequenceRepresentation EXPLICIT = new SequenceRepresentation(0);
+	public static final SequenceRepresentation EXPLICIT = new SequenceRepresentation("EXPLICIT", 0);
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> = p for i
 	 * &isin; [1, n], n is the total number of values and generation parameter p
 	 * (offset).
 	 */
-	public static final SequenceRepresentation IMPLICIT_CONSTANT = new SequenceRepresentation(1);
+	public static final SequenceRepresentation IMPLICIT_CONSTANT = new SequenceRepresentation("IMPLICIT_CONSTANT", 1);
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> =
@@ -41,7 +41,7 @@ public class SequenceRepresentation extends EnumerationValue {
 	 * number of values and generation parameters p<sub>1</sub> (start value)
 	 * and p<sub>2</sub> (increment).
 	 */
-	public static final SequenceRepresentation IMPLICIT_LINEAR = new SequenceRepresentation(2);
+	public static final SequenceRepresentation IMPLICIT_LINEAR = new SequenceRepresentation("IMPLICIT_LINEAR", 2);
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> =
@@ -52,7 +52,7 @@ public class SequenceRepresentation extends EnumerationValue {
 	 * (p<sub>3</sub>-p<sub>1</sub>)/p<sub>2</sub> must be truncated to integer
 	 * to start each saw curve cycle at p<sub>1</sub>.
 	 */
-	public static final SequenceRepresentation IMPLICIT_SAW = new SequenceRepresentation(3);
+	public static final SequenceRepresentation IMPLICIT_SAW = new SequenceRepresentation("IMPLICIT_SAW", 3);
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> =
@@ -60,7 +60,7 @@ public class SequenceRepresentation extends EnumerationValue {
 	 * total number of values and generation parameters p<sub>1</sub> (offset),
 	 * p<sub>2</sub> (factor) and the raw value r at position i.
 	 */
-	public static final SequenceRepresentation RAW_LINEAR = new SequenceRepresentation(4);
+	public static final SequenceRepresentation RAW_LINEAR = new SequenceRepresentation("RAW_LINEAR", 4);
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> = &sum;
@@ -70,19 +70,18 @@ public class SequenceRepresentation extends EnumerationValue {
 	 * p<sub>j</sub> for j &isin; [1, p<sub>1</sub>] and the raw value r at
 	 * position i.
 	 */
-	public static final SequenceRepresentation RAW_POLYNOMIAL = new SequenceRepresentation(5);
+	public static final SequenceRepresentation RAW_POLYNOMIAL = new SequenceRepresentation("RAW_POLYNOMIAL", 5);
 
 	/*
-	 * Not used. Do not remove, because this changes the ordinal numbers of the
-	 * enumeration.
+	 * Not used. But keep here to show ordinal sequence.
 	 */
-	public static final SequenceRepresentation FORMULA = new SequenceRepresentation(6);
-
+	public static final SequenceRepresentation FORMULA = new SequenceRepresentation("FORMULA", 6);
+	
 	/**
 	 * Measured values are stored as is in an external file and values are
 	 * therefore immediately available.
 	 */
-	public static final SequenceRepresentation EXPLICIT_EXTERNAL = new SequenceRepresentation(7);
+	public static final SequenceRepresentation EXPLICIT_EXTERNAL = new SequenceRepresentation("EXPLICIT_EXTERNAL", 7);
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> =
@@ -91,7 +90,7 @@ public class SequenceRepresentation extends EnumerationValue {
 	 * p<sub>2</sub> (factor) and the raw value r at position i read from an
 	 * external file.
 	 */
-	public static final SequenceRepresentation RAW_LINEAR_EXTERNAL = new SequenceRepresentation(8);
+	public static final SequenceRepresentation RAW_LINEAR_EXTERNAL = new SequenceRepresentation("RAW_LINEAR_EXTERNAL", 8);
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> = &sum;
@@ -101,7 +100,7 @@ public class SequenceRepresentation extends EnumerationValue {
 	 * p<sub>j</sub> for j &isin; [1, p<sub>1</sub>] and the raw value r at
 	 * position i read from an external file.
 	 */
-	public static final SequenceRepresentation RAW_POLYNOMIAL_EXTERNAL = new SequenceRepresentation(9);
+	public static final SequenceRepresentation RAW_POLYNOMIAL_EXTERNAL = new SequenceRepresentation("RAW_POLYNOMIAL_EXTERNAL", 9);
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> =
@@ -110,7 +109,7 @@ public class SequenceRepresentation extends EnumerationValue {
 	 * p<sub>1</sub> (offset), p<sub>2</sub> (factor), p<sub>2</sub>
 	 * (calibration) and the raw value r at position i.
 	 */
-	public static final SequenceRepresentation RAW_LINEAR_CALIBRATED = new SequenceRepresentation(10);
+	public static final SequenceRepresentation RAW_LINEAR_CALIBRATED = new SequenceRepresentation("RAW_LINEAR_CALIBRATED", 10);
 
 	/**
 	 * Each value x<sub>i</sub> is generated as follows: x<sub>i</sub> =
@@ -120,7 +119,11 @@ public class SequenceRepresentation extends EnumerationValue {
 	 * (calibration) and the raw value r at position i read from an external
 	 * file.
 	 */
-	public static final SequenceRepresentation RAW_LINEAR_CALIBRATED_EXTERNAL = new SequenceRepresentation(11);
+	public static final SequenceRepresentation RAW_LINEAR_CALIBRATED_EXTERNAL = new SequenceRepresentation("RAW_LINEAR_CALIBRATED_EXTERNAL", 11);
+
+	private SequenceRepresentation(String name, int ordinal) {
+		super(name, ordinal);
+	}
 
 	// ======================================================================
 	// Public methods
@@ -247,10 +250,4 @@ public class SequenceRepresentation extends EnumerationValue {
 		return name().startsWith("RAW");
 	}
 
-	/**
-	 * Constructor, ensures the correct order
-	 */
-	SequenceRepresentation(int ord) {
-		super(ord);
-	}
 }
