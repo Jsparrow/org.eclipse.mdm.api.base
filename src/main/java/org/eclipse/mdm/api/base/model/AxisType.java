@@ -21,17 +21,25 @@ public class AxisType extends EnumerationValue {
 	/**
 	 * A {@link Channel} of this type may be displayed as the x-axis.
 	 */
-	public static final AxisType X_AXIS = new AxisType(0);
+	public static final AxisType X_AXIS = new AxisType("X_AXIS", 0);
 
 	/**
 	 * A {@link Channel} of this type may be displayed as the y-axis.
 	 */
-	public static final AxisType Y_AXIS = new AxisType(1);
+	public static final AxisType Y_AXIS = new AxisType("Y_AXIS", 1);
 
 	/**
 	 * A {@link Channel} of this type may be displayed as the x- or y-axis.
 	 */
-	public static final AxisType XY_AXIS = new AxisType(2);
+	public static final AxisType XY_AXIS = new AxisType("XY_AXIS", 2);
+
+	private AxisType(String name, int ordinal) {
+		super(name, ordinal);
+	}
+
+	// ======================================================================
+	// Public methods
+	// ======================================================================
 
 	/**
 	 * Returns true if this axis type is {@link #X_AXIS}.
@@ -63,11 +71,4 @@ public class AxisType extends EnumerationValue {
 		return XY_AXIS == this;
 	}
 
-	/**
-	 * Constructor, makes sure that the order matches the order of the static
-	 * fields
-	 */
-	AxisType(int ord) {
-		super(ord);
-	}
 }

@@ -20,17 +20,21 @@ public class Interpolation extends EnumerationValue {
 	/**
 	 * No interpolation is used.
 	 */
-	public static final Interpolation NONE = new Interpolation(0);
+	public static final Interpolation NONE = new Interpolation("NONE", 0);
 
 	/**
 	 * Interpolation is linear.
 	 */
-	public static final Interpolation LINEAR = new Interpolation(1);
+	public static final Interpolation LINEAR = new Interpolation("LINEAR", 1);
 
 	/**
 	 * Interpolation is application specific.
 	 */
-	public static final Interpolation SPECIFIC = new Interpolation(2);
+	public static final Interpolation SPECIFIC = new Interpolation("SPECIFIC", 2);
+
+	private Interpolation(String name, int ordinal) {
+		super(name, ordinal);
+	}
 
 	/**
 	 * Returns true if this interpolation is {@link #NONE}.
@@ -60,13 +64,6 @@ public class Interpolation extends EnumerationValue {
 	 */
 	public boolean isSpecific() {
 		return SPECIFIC == this;
-	}
-
-	/**
-	 * Constructor, sets the order
-	 */
-	Interpolation(int ord) {
-		super(ord);
 	}
 
 }

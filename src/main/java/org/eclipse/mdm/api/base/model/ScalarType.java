@@ -143,7 +143,7 @@ public final class ScalarType extends EnumerationValue {
 	 *            The associated {@link ValueType}.
 	 */
 	private ScalarType(int ord, ValueType valueType) {
-		super(ord);
+		super(valueType.name(), ord);
 		this.valueType = valueType;
 		arrayType = null;
 	}
@@ -158,7 +158,7 @@ public final class ScalarType extends EnumerationValue {
 	 *            {@link MeasuredValues}.
 	 */
 	private ScalarType(int ord, ValueType valueType, Class<?> componentType) {
-		super(ord);
+		super(valueType.name(), ord);
 		this.valueType = valueType;
 		arrayType = Array.newInstance(componentType, 0).getClass();
 	}
