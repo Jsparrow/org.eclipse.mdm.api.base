@@ -21,10 +21,6 @@ import java.time.LocalDateTime;
  */
 public class ValueType<T> extends EnumerationValue {
 
-	// ======================================================================
-	// Enumerations
-	// ======================================================================
-
 	/**
 	 * A {@link Value} with this type contains a {@code String} value and
 	 * replaces {@code null} with an empty {@code String}.
@@ -208,10 +204,6 @@ public class ValueType<T> extends EnumerationValue {
 	 */
 	public static final ValueType<Object> UNKNOWN  = new ValueType<>(Object.class, "UNKNOWN", null);
 
-	// ======================================================================
-	// Instance variables
-	// ======================================================================
-
 	/**
 	 * The type is used to check assignment compatibility of non {@code null}
 	 * values passed to {@link Value#set(Object)}.
@@ -224,13 +216,11 @@ public class ValueType<T> extends EnumerationValue {
 	 */
 	private final T defaultValue;
 
-	// ======================================================================
-	// Constructors
-	// ======================================================================
-
 	/**
 	 * Constructor - May only be used to create {@link #ENUMERATION},
 	 * {@link #ENUMERATION_SEQUENCE} or {@link #UNKNOWN} types.
+	 * 
+	 * @param name
 	 */
 	private ValueType(String name) {
 		this(null, name, null);
@@ -238,7 +228,7 @@ public class ValueType<T> extends EnumerationValue {
 
 	/**
 	 * Constructor.
-	 *  @param type
+	 * @param type
 	 *            The type of value a {@link Value} with this value type will
 	 *            accept.
 	 * @param name
@@ -251,10 +241,6 @@ public class ValueType<T> extends EnumerationValue {
 		this.type = type;
 		this.defaultValue = defaultValue;
 	}
-
-	// ======================================================================
-	// Public methods
-	// ======================================================================
 
 	/**
 	 * Creates a new {@link Value} initialized with given name. The {@code
