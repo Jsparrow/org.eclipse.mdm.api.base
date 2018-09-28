@@ -9,6 +9,7 @@
 package org.eclipse.mdm.api.base.model;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 
 /**
@@ -18,206 +19,190 @@ import java.time.LocalDateTime;
  * @author Viktor Stoehr, Gigatronik Ingolstadt GmbH
  * @author Sebastian Dirsch, Gigatronik Ingolstadt GmbH
  */
-public final class ValueType<T> extends EnumerationValue {
-
-	// ======================================================================
-	// Enumerations
-	// ======================================================================
+public class ValueType<T> extends EnumerationValue {
 
 	/**
 	 * A {@link Value} with this type contains a {@code String} value and
 	 * replaces {@code null} with an empty {@code String}.
 	 */
-	public static final ValueType<String> STRING = new ValueType<>(0, String.class, "");
+	public static final ValueType<String> STRING = new ValueType<>(String.class, "STRING", "");
 
 	/**
 	 * A {@link Value} with this type contains a {@code String[]} value replaces
 	 * {@code null} with an empty {@code String} array.
 	 */
-	public static final ValueType<String[]> STRING_SEQUENCE = new ValueType<>(1, String[].class, new String[0]);
+	public static final ValueType<String[]> STRING_SEQUENCE = new ValueType<>(String[].class, "STRING_SEQUENCE", new String[0]);
 
 	/**
 	 * A {@link Value} with this type contains a {@link LocalDateTime} value and
 	 * does not replace {@code null}.
 	 */
-	public static final ValueType<LocalDateTime> DATE = new ValueType<>(2, LocalDateTime.class, null);
+	public static final ValueType<LocalDateTime> DATE = new ValueType<>(LocalDateTime.class, "DATE", null);
 
 	/**
 	 * A {@link Value} with this type contains a {@code LocalDateTime[]} value
 	 * and replaces {@code null} with an empty {@code LocalDateTime} array.
 	 */
-	public static final ValueType<LocalDateTime[]> DATE_SEQUENCE = new ValueType<>(3, LocalDateTime[].class,
-			new LocalDateTime[0]);
+	public static final ValueType<LocalDateTime[]> DATE_SEQUENCE = new ValueType<>(LocalDateTime[].class, "DATE_SEQUENCE", new LocalDateTime[0]);
 
 	/**
 	 * A {@link Value} with this type contains a {@link Boolean} value and
 	 * replaces {@code null} with {@link Boolean#FALSE}.
 	 */
-	public static final ValueType<Boolean> BOOLEAN = new ValueType<>(4, Boolean.class, Boolean.FALSE);
+	public static final ValueType<Boolean> BOOLEAN = new ValueType<>(Boolean.class, "BOOLEAN", Boolean.FALSE);
 
 	/**
 	 * A {@link Value} with this type contains a {@code boolean[]} value and
 	 * replaces {@code null} with an empty {@code boolean} array.
 	 */
-	public static final ValueType<boolean[]> BOOLEAN_SEQUENCE = new ValueType<>(5, boolean[].class, new boolean[0]);
+	public static final ValueType<boolean[]> BOOLEAN_SEQUENCE = new ValueType<>(boolean[].class, "BOOLEAN_SEQUENCE", new boolean[0]);
 
 	/**
 	 * A {@link Value} with this type contains a {@link Byte} value and replaces
 	 * {@code null} with a {@code Byte} containing zero.
 	 */
-	public static final ValueType<Byte> BYTE = new ValueType<>(6, Byte.class, Byte.valueOf((byte) 0));
+	public static final ValueType<Byte> BYTE = new ValueType<>(Byte.class, "BYTE", Byte.valueOf((byte) 0));
 
 	/**
 	 * A {@link Value} with this type contains a {@code byte[]} value and
 	 * replaces {@code null} with an empty {@code byte} array.
 	 */
-	public static final ValueType<byte[]> BYTE_SEQUENCE = new ValueType<>(7, byte[].class, new byte[0]);
+	public static final ValueType<byte[]> BYTE_SEQUENCE = new ValueType<>(byte[].class, "BYTE_SEQUENCE", new byte[0]);
 
 	/**
 	 * A {@link Value} with this type contains a {@link Short} value and
 	 * replaces {@code null} with a {@code Short} containing zero.
 	 */
-	public static final ValueType<Short> SHORT = new ValueType<>(8, Short.class, Short.valueOf((short) 0));
+	public static final ValueType<Short> SHORT = new ValueType<>(Short.class, "SHORT", Short.valueOf((short) 0));
 
 	/**
 	 * A {@link Value} with this type contains a {@code short[]} value and
 	 * replaces {@code null} with an empty {@code short} array.
 	 */
-	public static final ValueType<short[]> SHORT_SEQUENCE = new ValueType<>(9, short[].class, new short[0]);
+	public static final ValueType<short[]> SHORT_SEQUENCE = new ValueType<>(short[].class, "SHORT_SEQUENCE", new short[0]);
 
 	/**
 	 * A {@link Value} with this type contains a {@link Integer} value and
 	 * replaces {@code null} with a {@code Integer} containing zero.
 	 */
-	public static final ValueType<Integer> INTEGER = new ValueType<>(10, Integer.class, Integer.valueOf(0));
+	public static final ValueType<Integer> INTEGER = new ValueType<>(Integer.class, "INTEGER", Integer.valueOf(0));
 
 	/**
 	 * A {@link Value} with this type contains a {@code int[]} value and
 	 * replaces {@code null} with an empty {@code int} array.
 	 */
-	public static final ValueType<int[]> INTEGER_SEQUENCE = new ValueType<>(11, int[].class, new int[0]);
+	public static final ValueType<int[]> INTEGER_SEQUENCE = new ValueType<>(int[].class, "INTEGER_SEQUENCE", new int[0]);
 
 	/**
 	 * A {@link Value} with this type contains a {@link Long} value and replaces
 	 * {@code null} with a {@code Long} containing zero.
 	 */
-	public static final ValueType<Long> LONG = new ValueType<>(12, Long.class, Long.valueOf(0));
+	public static final ValueType<Long> LONG = new ValueType<>(Long.class, "LONG", Long.valueOf(0));
 
 	/**
 	 * A {@link Value} with this type contains a {@code long[]} value and
 	 * replaces {@code null} with an empty {@code long} array.
 	 */
-	public static final ValueType<long[]> LONG_SEQUENCE = new ValueType<>(13, long[].class, new long[0]);
+	public static final ValueType<long[]> LONG_SEQUENCE = new ValueType<>(long[].class, "LONG_SEQUENCE", new long[0]);
 
 	/**
 	 * A {@link Value} with this type contains a {@link Float} value and
 	 * replaces {@code null} with a {@code Float} containing zero.
 	 */
-	public static final ValueType<Float> FLOAT = new ValueType<>(14, Float.class, Float.valueOf(0));
+	public static final ValueType<Float> FLOAT = new ValueType<>(Float.class, "FLOAT", Float.valueOf(0));
 
 	/**
 	 * A {@link Value} with this type contains a {@code float[]} value and
 	 * replaces {@code null} with an empty {@code float} array.
 	 */
-	public static final ValueType<float[]> FLOAT_SEQUENCE = new ValueType<>(15, float[].class, new float[0]);
+	public static final ValueType<float[]> FLOAT_SEQUENCE = new ValueType<>(float[].class, "FLOAT_SEQUENCE", new float[0]);
 
 	/**
 	 * A {@link Value} with this type contains a {@link Double} value and
 	 * replaces {@code null} with a {@code Double} containing zero.
 	 */
-	public static final ValueType<Double> DOUBLE = new ValueType<>(16, Double.class, Double.valueOf(0));
+	public static final ValueType<Double> DOUBLE = new ValueType<>(Double.class, "DOUBLE", Double.valueOf(0));
 
 	/**
 	 * A {@link Value} with this type contains a {@code double[]} value and
 	 * replaces {@code null} with an empty {@code double} array.
 	 */
-	public static final ValueType<double[]> DOUBLE_SEQUENCE = new ValueType<>(17, double[].class, new double[0]);
+	public static final ValueType<double[]> DOUBLE_SEQUENCE = new ValueType<>(double[].class, "DOUBLE_SEQUENCE", new double[0]);
 
 	/**
 	 * A {@link Value} with this type contains a {@code byte[]} value and
 	 * replaces {@code null} with an empty {@code byte} array.
 	 */
-	public static final ValueType<byte[]> BYTE_STREAM = new ValueType<>(18, byte[].class, new byte[0]);
+	public static final ValueType<byte[]> BYTE_STREAM = new ValueType<>(byte[].class, "BYTE_STREAM", new byte[0]);
 
 	/**
 	 * A {@link Value} with this type contains a {@code byte[][]} value and
 	 * replaces {@code null} with an empty {@code byte[][]} array.
 	 */
-	public static final ValueType<byte[][]> BYTE_STREAM_SEQUENCE = new ValueType<>(19, byte[][].class, new byte[0][]);
+	public static final ValueType<byte[][]> BYTE_STREAM_SEQUENCE = new ValueType<>(byte[][].class, "BYTE_STREAM_SEQUENCE", new byte[0][]);
 
 	/**
 	 * A {@link Value} with this type contains a {@link FloatComplex} value and
 	 * does not replaces {@code null}.
 	 */
-	public static final ValueType<FloatComplex> FLOAT_COMPLEX = new ValueType<>(22, FloatComplex.class, null);
+	public static final ValueType<FloatComplex> FLOAT_COMPLEX = new ValueType<>(FloatComplex.class, "FLOAT_COMPLEX", null);
 
 	/**
 	 * A {@link Value} with this type contains a {@code FloatComplex[]} value
 	 * and replaces {@code null} with an empty {@code FloatComplex[]} array.
 	 */
-	public static final ValueType<FloatComplex[]> FLOAT_COMPLEX_SEQUENCE = new ValueType<>(21, FloatComplex[].class,
-			new FloatComplex[0]);
+	public static final ValueType<FloatComplex[]> FLOAT_COMPLEX_SEQUENCE = new ValueType<>(FloatComplex[].class, "FLOAT_COMPLEX_SEQUENCE", new FloatComplex[0]);
 
 	/**
 	 * A {@link Value} with this type contains a {@link DoubleComplex} value and
 	 * does not replaces {@code null}.
 	 */
-	public static final ValueType<DoubleComplex> DOUBLE_COMPLEX = new ValueType<>(22, DoubleComplex.class, null);
+	public static final ValueType<DoubleComplex> DOUBLE_COMPLEX = new ValueType<>(DoubleComplex.class, "DOUBLE_COMPLEX", null);
 
 	/**
 	 * A {@link Value} with this type contains a {@code DoubleComplex[]} value
 	 * and replaces {@code null} with an empty {@code DoubleComplex[]} array.
 	 */
-	public static final ValueType<DoubleComplex[]> DOUBLE_COMPLEX_SEQUENCE = new ValueType<>(23, DoubleComplex[].class,
-			new DoubleComplex[0]);
+	public static final ValueType<DoubleComplex[]> DOUBLE_COMPLEX_SEQUENCE = new ValueType<>(DoubleComplex[].class, "DOUBLE_COMPLEX_SEQUENCE" , new DoubleComplex[0]);
 
 	/**
 	 * A {@link Value} with this type contains a modeled enumeration constant
 	 * value and does not replace {@code null}.
 	 *
-	 * @see #create(Class, String)
-	 * @see #create(Class, String, String, boolean, Object)
 	 */
-	public static final ValueType<EnumerationValue> ENUMERATION = new ValueType<>(24);
+	public static final ValueType<EnumerationValue> ENUMERATION = new ValueType<>("ENUMERATION");
 
 	/**
 	 * A {@link Value} with this type contains a modeled enumeration constant
 	 * array value and replaces {@code null} with an empty array with defined
 	 * component type.
 	 *
-	 * @see #create(Class, String)
-	 * @see #create(Class, String, String, boolean, Object)
 	 */
-	public static final ValueType<EnumerationValue[]> ENUMERATION_SEQUENCE = new ValueType<>(25);
+	public static final ValueType<EnumerationValue[]> ENUMERATION_SEQUENCE = new ValueType<>("ENUMERATION_SEQUENCE");
 
 	/**
 	 * A {@link Value} with this type contains a {@link FileLink} value and does
 	 * not replace {@code null}.
 	 */
-	public static final ValueType<FileLink> FILE_LINK = new ValueType<>(26, FileLink.class, null);
+	public static final ValueType<FileLink> FILE_LINK = new ValueType<>(FileLink.class, "FILE_LINK" , null);
 
 	/**
 	 * A {@link Value} with this type contains a {@code FileLink[]} value and
 	 * replaces {@code null} with an empty {@code FileLink} array.
 	 */
-	public static final ValueType<FileLink[]> FILE_LINK_SEQUENCE = new ValueType<>(27, FileLink[].class,
-			new FileLink[0]);
+	public static final ValueType<FileLink[]> FILE_LINK_SEQUENCE = new ValueType<>(FileLink[].class, "FILE_LINK_SEQUENCE" , new FileLink[0]);
 
 	/**
 	 * TODO ...
 	 */
-	public static final ValueType<Object> BLOB = new ValueType<>(28, Object.class, null);
+	public static final ValueType<Object> BLOB  = new ValueType<>(Object.class, "", null);
 
 	/**
 	 * A {@link Value} with this type contains a {@link Object} value and does
 	 * not replace {@code null}. This value type does not have a corresponding
 	 * sequence type.
 	 */
-	public static final ValueType<Object> UNKNOWN = new ValueType<>(29, Object.class, null);
-
-	// ======================================================================
-	// Instance variables
-	// ======================================================================
+	public static final ValueType<Object> UNKNOWN  = new ValueType<>(Object.class, "UNKNOWN", null);
 
 	/**
 	 * The type is used to check assignment compatibility of non {@code null}
@@ -234,32 +219,28 @@ public final class ValueType<T> extends EnumerationValue {
 	/**
 	 * Constructor - May only be used to create {@link #ENUMERATION},
 	 * {@link #ENUMERATION_SEQUENCE} or {@link #UNKNOWN} types.
+	 * 
+	 * @param name
 	 */
-	private ValueType(int ordinal) {
-		this(ordinal, null, null);
+	private ValueType(String name) {
+		this(null, name, null);
 	}
 
 	/**
 	 * Constructor.
-	 *
-	 * @param ordinal
-	 *            The ordinal value of a {@link Value} with this value type.
 	 * @param type
 	 *            The type of value a {@link Value} with this value type will
 	 *            accept.
+	 * @param name
 	 * @param defaultValue
 	 *            Will be used as {@code null} replacement in
 	 *            {@link Value#set(Object)}.
 	 */
-	private ValueType(int ordinal, Class<T> type, T defaultValue) {
-		super(ordinal);
+	private ValueType(Class<T> type, String name, T defaultValue) {
+		super(name);
 		this.type = type;
 		this.defaultValue = defaultValue;
 	}
-
-	// ======================================================================
-	// Public methods
-	// ======================================================================
 
 	/**
 	 * Creates a new {@link Value} initialized with given name. The {@code
@@ -342,8 +323,6 @@ public final class ValueType<T> extends EnumerationValue {
 	 *
 	 * @param <E>
 	 *            Modeled enumeration type.
-	 * @param enumClass
-	 *            The enumeration class type will be used for validity checking.
 	 * @param name
 	 *            The name of the attribute.
 	 * @return The created {@code Value} is returned.
@@ -363,8 +342,6 @@ public final class ValueType<T> extends EnumerationValue {
 	 *
 	 * @param <E>
 	 *            Modeled enumeration type.
-	 * @param enumClass
-	 *            The enumeration class type will be used for validity checking.
 	 * @param name
 	 *            The name of the attribute.
 	 * @param unit
@@ -377,8 +354,7 @@ public final class ValueType<T> extends EnumerationValue {
 	 * @throws IllegalStateException
 	 *             Thrown if {@link #isEnumerationType()} returns {@code false}.
 	 */
-	public <E extends EnumerationValue> Value create(String name, String unit, boolean valid, Object input,
-			String valueTypeDescr) {
+	public <E extends EnumerationValue> Value create(String name, String unit, boolean valid, Object input, String valueTypeDescr) {
 		if (isEnumerationType()) {
 			Object nullReplacement = null;
 			Class<?> valueClass = EnumerationValue.class;
@@ -988,15 +964,16 @@ public final class ValueType<T> extends EnumerationValue {
 	 * @return Returns {@code true} in the cases listed above.
 	 */
 	public boolean isSequence() {
-		return name().endsWith("SEQUENCE");
+		return name() != null && name().endsWith("SEQUENCE");
 	}
 
 	/**
 	 * Returns the sequence version of this value type. This method returns
 	 * itself, if this value type is a sequence type.
 	 * 
-	 * If you extend the class ValueType, you have to ensure that T contains a
-	 * field of the correct name and type, otherwise a runtime error will occur.
+	 * If you extend the class ValueType, you have to ensure that T contains a field 
+	 * of the correct name and type,
+	 * otherwise a runtime error will occur. 
 	 *
 	 * @return The sequence version of this value type is returned.
 	 */
@@ -1013,18 +990,32 @@ public final class ValueType<T> extends EnumerationValue {
 	 * Returns the scalar version of this value type. This method returns
 	 * itself, if this value type is a scalar type.
 	 * 
-	 * If you extend the class ValueType, you have to ensure that T contains a
-	 * field of the correct name and type, otherwise a runtime error will occur.
+	 * If you extend the class ValueType, you have to ensure that T 
+	 * contains a field of the correct name and type,
+	 * otherwise a runtime error will occur. 
 	 *
 	 * @return The sequence version of this value type is returned.
 	 */
 	@SuppressWarnings("unchecked")
 	public <S extends ValueType<?>> S toSingleType() {
-		if (isSequence()) {
-			return (S) valueOf(name().replace("_SEQUENCE", ""));
-		}
 
-		return (S) this;
+		if(isEnumerationType()) {
+			if (isSequence()) {
+				return (S) valueOf(name().replace("_SEQUENCE", ""));
+			}
+
+			return (S) this;
+		} else {
+			try {
+				if(isSequence()) {
+					Field field = getClass().getField(name().replace("_SEQUENCE", ""));
+					return (S) field.get(this);
+				}
+				return (S) this;
+			} catch (NoSuchFieldException | ClassCastException | IllegalAccessException e) {
+				throw new RuntimeException("Can't figure out single type for " + name());
+			}
+		}
 	}
 
 	/**
@@ -1038,7 +1029,8 @@ public final class ValueType<T> extends EnumerationValue {
 		if (isEnumerationType()) {
 			throw new IllegalStateException("");
 		}
-		
 		return type;
 	}
+
+
 }

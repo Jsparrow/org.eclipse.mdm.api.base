@@ -26,7 +26,7 @@ public class VersionState extends EnumerationValue {
 	 * An entity with this version state is still editable and hence not allowed
 	 * be used when creating new entities.
 	 */
-	public static final VersionState EDITABLE = new VersionState(0); 
+	public static final VersionState EDITABLE = new VersionState("EDITABLE", 0);
 
 	/**
 	 * An entity with this version state is no longer editable and is allowed to
@@ -36,21 +36,21 @@ public class VersionState extends EnumerationValue {
 	 * <b>Note:</b> If an entity's version state is this state, then its version
 	 * state is only allowed to be changed to {@link #ARCHIVED}.
 	 */
-	public static final VersionState VALID = new VersionState(1); 
+	public static final VersionState VALID = new VersionState("VALID", 1);
 
 	/**
 	 * An entity with this version state is neither editable nor is it allowed
-	 * to use it when creating new entities.
+	 * to use it when creating new entities
 	 *
 	 * <p>
 	 * <b>Note:</b> If an entity's version state is this state, then its version
 	 * state is no longer allowed to be changed.
 	 */
-	public static final VersionState ARCHIVED = new VersionState(2); 
+	public static final VersionState ARCHIVED = new VersionState("ARCHIVED", 2);
 
-	// ======================================================================
-	// Public methods
-	// ======================================================================
+	private VersionState(String name, int ordinal) {
+		super(name, ordinal);
+	}
 
 	/**
 	 * Returns true if this version state is {@link #EDITABLE}.
@@ -82,10 +82,4 @@ public class VersionState extends EnumerationValue {
 		return ARCHIVED == this;
 	}
 	
-	/**
-	 *  Constructor, ensures the correct order
-	 */
-	VersionState(int ord) {
-		super(ord);
-	}
 }

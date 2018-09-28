@@ -34,19 +34,9 @@ import org.eclipse.mdm.api.base.model.MeasuredValues.ValueIterator;
  */
 public class ModelTest {
 
-	/**
-	 * Quick and dirty comparison of two numbers for approximate equality
-	 * 
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	private <T extends Number> boolean fpEquals(T a, T b) {
-		double eps = 0.00005d;
-		double ad = a.doubleValue();
-		double bd = b.doubleValue();
-		return (Math.abs(ad - bd) < eps * Math.abs(Math.max(ad, bd)));
-	}
+	// compare doubles up to this accuracy
+	private static final double EPSILON = 0.00005d;
+
 
 	/**
 	 * basic test for reading the value of a parameter.The intialization via
@@ -54,7 +44,7 @@ public class ModelTest {
 	 */
 	@org.junit.Test
 	public void parameterValue() {
-		Map<String, Value> map = new HashMap<String, Value>();
+		Map<String, Value> map = new HashMap<>();
 		map.put("DataType", new Value(ValueType.STRING, "DataType", null, true, ScalarType.FLOAT, ScalarType.class,
 				ScalarType.FLOAT, EnumRegistry.SCALAR_TYPE));
 		map.put("Value", ValueType.STRING.create("Value", null, true, "5.7"));
@@ -62,8 +52,8 @@ public class ModelTest {
 		Core core = new CoreImpl(map);
 		Parameter tp = new Parameter(core);
 		Value vv = tp.getVirtualValue();
-		Float extracted = vv.<Float>extract();
-		assertTrue(fpEquals(new Float(5.7f), extracted));
+		Float extracted = vv.extract();
+		assertEquals(5.7f, extracted, EPSILON);
 	}
 
 	/**
@@ -79,7 +69,7 @@ public class ModelTest {
 		while (valueIterator.hasNext()) {
 			boolean isCurrentValid = valueIterator.isValid();
 			Float currentValue = valueIterator.next();
-			assertTrue(fpEquals(vals[i], currentValue));
+			assertEquals(vals[i], currentValue, EPSILON);
 			assertEquals(flags[i], isCurrentValid);
 			i++;
 		}
@@ -99,7 +89,7 @@ public class ModelTest {
 		while (valueIterator.hasNext()) {
 			boolean isCurrentValid = valueIterator.isValid();
 			Double currentValue = valueIterator.next();
-			assertTrue(fpEquals(vals[i], currentValue));
+			assertEquals(vals[i], currentValue, EPSILON);
 			assertEquals(flags[i], isCurrentValid);
 			i++;
 		}
@@ -141,8 +131,8 @@ public class ModelTest {
 		Channel ch = new Channel(core);
 		Double min = ch.getMinimum();
 		Double max = ch.getMaximum();
-		assertTrue(fpEquals(min, min_src));
-		assertTrue(fpEquals(max, max_src));
+		assertEquals(min, min_src, EPSILON);
+		assertEquals(max, max_src, EPSILON);
 	}
 
 	/**
@@ -166,8 +156,7 @@ public class ModelTest {
 	@org.junit.Test
 	public void writeRequest() {
 		AxisType axisType = AxisType.X_AXIS;
-		Map<String, Value> map = new HashMap<String, Value>();
-		Core core = new CoreImpl(map);
+		Core core = new CoreImpl(new HashMap<>());
 		ChannelGroup channelGroup = new ChannelGroup(core);
 		Channel channel = new Channel(core);
 		WriteRequestBuilder wrb = WriteRequest.create(channelGroup, channel, axisType);
@@ -373,7 +362,7 @@ public class ModelTest {
 	@org.junit.Test
 	public void enumRegistry() {
 		EnumRegistry er = EnumRegistry.getInstance();
-		assertTrue(er.get("Interpolation") instanceof Enumeration<?>);
+		assertTrue(er.get("Interpolation") != null);
 	}
 
 }
