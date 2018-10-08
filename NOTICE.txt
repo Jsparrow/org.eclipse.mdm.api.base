@@ -16,10 +16,10 @@ All content is the property of the following respective authors or their employe
 For more information regarding authorship of content, please consult the listed
 source code repository logs.
 
-Copyright (c) 2016-2017 Gigatronik Ingolstadt GmbH
+Copyright (c) 2016-2018 Gigatronik Ingolstadt GmbH
 Copyright (c) 2016-2018 Peak Solution GmbH
 Copyright (c) 2017-2018 science + computing AG Tuebingen (ATOS SE)
-Copyright (c) 2017 Canoo Engineering AG
+Copyright (c) 2017-2018 Canoo Engineering AG
 Copyright (c) 2017 Florian Schmitt
 Copyright (c) 2017-2018 Angelika Wittek
 Copyright (c) 2018 Elektronische Fahrwerksysteme GMBH
