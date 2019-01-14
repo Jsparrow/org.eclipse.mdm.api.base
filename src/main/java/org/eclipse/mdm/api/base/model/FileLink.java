@@ -156,7 +156,9 @@ public final class FileLink {
 			fileNamePath = getLocalPath().getFileName();
 		} else if (isRemote()) {
 			try {
-				fileNamePath = Paths.get(URLDecoder.decode(remotePath, StandardCharsets.UTF_8.name())).getFileName();
+				//on Windows, Paths.get() cannot handle file urls in the form file://REMOTE_HOST/path/filename
+				String fixedPath = remotePath.replaceFirst("file:", "");
+				fileNamePath = Paths.get(URLDecoder.decode(fixedPath, StandardCharsets.UTF_8.name())).getFileName();
 			} catch (UnsupportedEncodingException e) {
 				throw new IllegalStateException("Unable to decode remote path due to: " + e.getMessage(), e);
 			}

@@ -15,7 +15,7 @@
 
 description = 'MDM API - Base Model'
 group = 'org.eclipse.mdm'
-version = '5.0.0'
+version = '5.1.0M1-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'maven'

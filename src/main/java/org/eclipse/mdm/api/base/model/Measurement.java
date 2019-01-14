@@ -48,7 +48,7 @@ import org.eclipse.mdm.api.base.query.DataAccessException;
  * @see ParameterSet
  */
 public class Measurement extends BaseEntity
-		implements ContextDescribable, Datable, Deletable, Describable, FilesAttachable, Tagable {
+		implements ContextDescribable, Datable, Deletable, Describable, FilesAttachable, Tagable, StatusAttachable {
 
 	// ======================================================================
 	// Class variables
