@@ -117,9 +117,7 @@ public interface Core {
 		List<Value> values = getValues().values().stream().filter(v -> v.getValueType().isFileLinkSequence())
 				.filter(Value::isValid).collect(Collectors.toList());
 
-		for (Value value : values) {
-			Arrays.stream((FileLink[]) value.extract()).filter(isRemote.negate()).forEach(fileLinks::add);
-		}
+		values.forEach(value -> Arrays.stream((FileLink[]) value.extract()).filter(isRemote.negate()).forEach(fileLinks::add));
 
 		return fileLinks;
 	}
@@ -139,11 +137,11 @@ public interface Core {
 		List<Value> values = getValues().values().stream().filter(v -> v.getValueType().isFileLinkSequence())
 				.filter(Value::wasValid).filter(Value::isModified).collect(Collectors.toList());
 
-		for (Value value : values) {
+		values.forEach(value -> {
 			List<FileLink> current = Arrays.asList((FileLink[]) value.extract());
 			Arrays.stream((FileLink[]) value.extractInitial()).filter(fl -> !current.contains(fl))
 					.forEach(fileLinks::add);
-		}
+		});
 
 		return fileLinks;
 	}

@@ -206,7 +206,7 @@ public class Channel extends BaseEntity implements Deletable, Describable {
 	 */
 	public void setScalarType(ScalarType scalarType) {
 		if (scalarType.isUnknown()) {
-			throw new IllegalArgumentException("Scalar type constant is not allowed to be '" + scalarType + "'.");
+			throw new IllegalArgumentException(new StringBuilder().append("Scalar type constant is not allowed to be '").append(scalarType).append("'.").toString());
 		}
 
 		getValue(ATTR_SCALAR_TYPE).set(scalarType);

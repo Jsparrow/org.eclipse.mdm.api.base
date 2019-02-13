@@ -118,12 +118,11 @@ public class ContextRoot extends BaseEntity implements Deletable {
 	 */
 	public boolean removeContextComponent(String name) {
 		Optional<ContextComponent> contextComponent = getContextComponent(name);
-		if (contextComponent.isPresent()) {
-			getCore().getChildrenStore().remove(contextComponent.get());
-			return true;
+		if (!contextComponent.isPresent()) {
+			return false;
 		}
-
-		return false;
+		getCore().getChildrenStore().remove(contextComponent.get());
+		return true;
 	}
 
 	/**

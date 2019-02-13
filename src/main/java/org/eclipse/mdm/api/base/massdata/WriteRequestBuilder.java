@@ -101,7 +101,7 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 		} else if (scalarType.isDouble()) {
 			values = new double[] { offset };
 		} else {
-			throw new IllegalArgumentException("Scalar type '" + scalarType + "' is not supported.");
+			throw new IllegalArgumentException(new StringBuilder().append("Scalar type '").append(scalarType).append("' is not supported.").toString());
 		}
 		createValues(scalarType, values);
 
@@ -155,7 +155,7 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 		} else if (scalarType.isDouble()) {
 			values = new double[] { start };
 		} else {
-			throw new IllegalArgumentException("Scalar type '" + scalarType + "' is not supported.");
+			throw new IllegalArgumentException(new StringBuilder().append("Scalar type '").append(scalarType).append("' is not supported.").toString());
 		}
 		createValues(scalarType, values);
 
@@ -211,7 +211,7 @@ public final class WriteRequestBuilder extends BaseValuesBuilder {
 		} else if (scalarType.isDouble()) {
 			values = new double[] { start };
 		} else {
-			throw new IllegalArgumentException("Scalar type '" + scalarType + "' is not supported.");
+			throw new IllegalArgumentException(new StringBuilder().append("Scalar type '").append(scalarType).append("' is not supported.").toString());
 		}
 		createValues(scalarType, values);
 

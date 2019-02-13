@@ -15,12 +15,11 @@
 
 package org.eclipse.mdm.api.base.adapter;
 
+import java.lang.reflect.Field;
+
 import org.eclipse.mdm.api.base.model.Enumeration;
 import org.eclipse.mdm.api.base.model.Value;
 import org.eclipse.mdm.api.base.model.ValueType;
-
-import javax.xml.ws.Service;
-import java.lang.reflect.Field;
 
 /**
  * Represents a modeled attribute.

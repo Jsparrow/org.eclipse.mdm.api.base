@@ -128,6 +128,7 @@ public final class Condition {
 	 */
 	@Override
 	public String toString() {
-		return attribute.getEntityType().getName() + "." + attribute.getName() + " " + comparisonOperator + " " + value;
+		return new StringBuilder().append(attribute.getEntityType().getName()).append(".").append(attribute.getName()).append(" ").append(comparisonOperator).append(" ")
+				.append(value).toString();
 	}
 }

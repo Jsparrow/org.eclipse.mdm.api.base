@@ -220,8 +220,7 @@ public final class Value {
 		} else if (input instanceof EnumerationValue) {
 			setForEnumerationValue(input);
 		} else {
-			throw new IllegalArgumentException("Incompatible value type '" + input.getClass().getSimpleName()
-					+ "' passed, expected '" + valueClass.getSimpleName() + "'.");
+			throw new IllegalArgumentException(new StringBuilder().append("Incompatible value type '").append(input.getClass().getSimpleName()).append("' passed, expected '").append(valueClass.getSimpleName()).append("'.").toString());
 		}
 	}
 
@@ -430,16 +429,14 @@ public final class Value {
 		}
 		if (valueTypeDescr == null) {
 			throw new IllegalArgumentException(
-					"EnumerationValue value description not correctly initialized got null, '" + "' expected '"
-							+ valueClass.getSimpleName() + "'.");
+					new StringBuilder().append("EnumerationValue value description not correctly initialized got null, '").append("' expected '").append(valueClass.getSimpleName()).append("'.").toString());
 		}
 
 		if (valueTypeDescr.equals(inpvalueTypeDescr)) {
 			value = input;
 			setValid(true);
 		} else {
-			throw new IllegalArgumentException("Incompatible value type description'" + inpvalueTypeDescr
-					+ "' passed, expected '" + valueTypeDescr + "'.");
+			throw new IllegalArgumentException(new StringBuilder().append("Incompatible value type description'").append(inpvalueTypeDescr).append("' passed, expected '").append(valueTypeDescr).append("'.").toString());
 		}
 	}
 

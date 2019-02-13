@@ -88,7 +88,7 @@ public abstract class BaseEntity implements Entity {
 	public final Value getValue(String name) {
 		Value value = getCore().getValues().get(name);
 		if (value == null) {
-			throw new IllegalStateException("Value with name '" + name + "' does not exist");
+			throw new IllegalStateException(new StringBuilder().append("Value with name '").append(name).append("' does not exist").toString());
 		}
 		return value;
 	}

@@ -36,7 +36,6 @@ public class CoreImpl implements Core {
 	private EntityStore mutableStore;
 
 	public CoreImpl(Map<String, Value> values) {
-		super();
 		this.values = values;
 		this.mutableStore = new EntityStore();
 	}

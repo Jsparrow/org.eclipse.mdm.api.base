@@ -327,7 +327,7 @@ public interface Query {
 	 *             Thrown in case of errors while executing the query or
 	 *             generating the {@code Result}.
 	 */
-	default Optional<Result> fetchSingleton() throws DataAccessException {
+	default Optional<Result> fetchSingleton() {
 		return fetchSingleton(Filter.and());
 	}
 
@@ -342,7 +342,7 @@ public interface Query {
 	 *             Thrown in case of errors while executing the query or
 	 *             generating the {@code Result}.
 	 */
-	Optional<Result> fetchSingleton(Filter filter) throws DataAccessException;
+	Optional<Result> fetchSingleton(Filter filter);
 
 	/**
 	 * Executes this query with an empty {@link Filter} and returns the
@@ -353,7 +353,7 @@ public interface Query {
 	 *             Thrown in case of errors while executing the query or
 	 *             generating the {@code Result}s.
 	 */
-	default List<Result> fetch() throws DataAccessException {
+	default List<Result> fetch() {
 		return fetch(Filter.and());
 	}
 
@@ -368,6 +368,6 @@ public interface Query {
 	 *             Thrown in case of errors while executing the query or
 	 *             generating the {@code Result}s.
 	 */
-	List<Result> fetch(Filter filter) throws DataAccessException;
+	List<Result> fetch(Filter filter);
 
 }

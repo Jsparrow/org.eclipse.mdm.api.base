@@ -148,12 +148,12 @@ public class DefaultCore implements Core {
 			return;
 		}
 
-		for (String name : names) {
+		names.forEach(name -> {
 			Value value = values.remove(name);
 			if (name != null) {
 				hiddenValues.put(name, value);
 			}
-		}
+		});
 	}
 
 	/**

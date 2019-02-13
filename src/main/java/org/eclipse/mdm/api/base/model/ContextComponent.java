@@ -93,12 +93,11 @@ public class ContextComponent extends BaseEntity implements Deletable {
 	 */
 	public boolean removeContextSensor(String name) {
 		Optional<ContextSensor> catalogSensor = getContextSensor(name);
-		if (catalogSensor.isPresent()) {
-			getCore().getChildrenStore().remove(catalogSensor.get());
-			return true;
+		if (!catalogSensor.isPresent()) {
+			return false;
 		}
-
-		return false;
+		getCore().getChildrenStore().remove(catalogSensor.get());
+		return true;
 	}
 
 	/**

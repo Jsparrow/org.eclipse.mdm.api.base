@@ -52,7 +52,7 @@ public final class MimeType {
 	// ======================================================================
 
 	public MimeType addSubType(String name) {
-		return new MimeType(internal + '.' + name);
+		return new MimeType(new StringBuilder().append(internal).append('.').append(name).toString());
 	}
 
 	/**

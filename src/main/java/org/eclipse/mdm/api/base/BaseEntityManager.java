@@ -51,7 +51,7 @@ public interface BaseEntityManager {
 	 *             Thrown if unable to retrieve the {@code
 	 * 		Environment}.
 	 */
-	Environment loadEnvironment() throws DataAccessException;
+	Environment loadEnvironment();
 
 	/**
 	 * Returns the {@link User} which was used to connect to the underlying data
@@ -62,7 +62,7 @@ public interface BaseEntityManager {
 	 * @throws DataAccessException
 	 *             Thrown if unable to retrieve the {@code User}.
 	 */
-	default Optional<User> loadLoggedOnUser() throws DataAccessException {
+	default Optional<User> loadLoggedOnUser() {
 		return Optional.empty();
 	}
 
@@ -79,7 +79,7 @@ public interface BaseEntityManager {
 	 * @throws DataAccessException
 	 *             Thrown if unable to retrieve the entity.
 	 */
-	default <T extends Entity> T load(Class<T> entityClass, String instanceID) throws DataAccessException {
+	default <T extends Entity> T load(Class<T> entityClass, String instanceID) {
 		List<T> entities = load(entityClass, Collections.singletonList(instanceID));
 		if (entities.size() != 1) {
 			throw new DataAccessException("Failed to load entity by instance ID.");
@@ -96,7 +96,7 @@ public interface BaseEntityManager {
 	 * @return Entities are returned in a list.
 	 * @throws DataAccessException Thrown if unable to retrieve the entities.
 	 */
-	<T extends Entity> List<T> load(Class<T> entityClass, Collection<String> instanceIDs) throws DataAccessException;
+	<T extends Entity> List<T> load(Class<T> entityClass, Collection<String> instanceIDs);
 	
 	/**
 	 * Loads all available entities of given type. This method is useful while
@@ -123,7 +123,7 @@ public interface BaseEntityManager {
 	 *             Thrown if unable to retrieve the entities.
 	 * @see #loadAll(Class, String)
 	 */
-	default <T extends Entity> List<T> loadAll(Class<T> entityClass) throws DataAccessException {
+	default <T extends Entity> List<T> loadAll(Class<T> entityClass) {
 		return loadAll(entityClass, "*");
 	}
 
@@ -157,7 +157,7 @@ public interface BaseEntityManager {
 	 *             Thrown if unable to retrieve the entities.
 	 * @see #loadAll(Class)
 	 */
-	<T extends Entity> List<T> loadAll(Class<T> entityClass, String pattern) throws DataAccessException;
+	<T extends Entity> List<T> loadAll(Class<T> entityClass, String pattern);
 
 	/**
 	 * Loads the parent entity for given child. Each modeled entity provides
@@ -180,7 +180,7 @@ public interface BaseEntityManager {
 	 * @throws DataAccessException
 	 *             Thrown if unable to retrieve parent entity.
 	 */
-	<T extends Entity> Optional<T> loadParent(Entity child, Class<T> entityClass) throws DataAccessException;
+	<T extends Entity> Optional<T> loadParent(Entity child, Class<T> entityClass);
 
 	/**
 	 * Loads all related children of given type for given parent entity. Each
@@ -205,7 +205,7 @@ public interface BaseEntityManager {
 	 *             Thrown if unable to retrieve the children.
 	 * @see #loadChildren(Entity, Class, String)
 	 */
-	default <T extends Entity> List<T> loadChildren(Entity parent, Class<T> entityClass) throws DataAccessException {
+	default <T extends Entity> List<T> loadChildren(Entity parent, Class<T> entityClass) {
 		return loadChildren(parent, entityClass, "*");
 	}
 
@@ -236,8 +236,7 @@ public interface BaseEntityManager {
 	 *             Thrown if unable to retrieve the children.
 	 * @see #loadChildren(Entity, Class)
 	 */
-	<T extends Entity> List<T> loadChildren(Entity parent, Class<T> entityClass, String pattern)
-			throws DataAccessException;
+	<T extends Entity> List<T> loadChildren(Entity parent, Class<T> entityClass, String pattern);
 
 	/**
 	 * Queries available {@link ContextType} for given
@@ -250,7 +249,7 @@ public interface BaseEntityManager {
 	 * @throws DataAccessException
 	 *             Thrown if unable to query the available {@code ContextType}s.
 	 */
-	List<ContextType> loadContextTypes(ContextDescribable contextDescribable) throws DataAccessException;
+	List<ContextType> loadContextTypes(ContextDescribable contextDescribable);
 
 	/**
 	 * Loads the requested {@link ContextRoot}s for given
@@ -268,8 +267,7 @@ public interface BaseEntityManager {
 	 * 		ContextRoot}s.
 	 * @see ContextType
 	 */
-	Map<ContextType, ContextRoot> loadContexts(ContextDescribable contextDescribable, ContextType... contextTypes)
-			throws DataAccessException;
+	Map<ContextType, ContextRoot> loadContexts(ContextDescribable contextDescribable, ContextType... contextTypes);
 
 	/**
 	 * Retrieves the {@link MeasuredValues} as specified by the given
@@ -282,7 +280,7 @@ public interface BaseEntityManager {
 	 * @throws DataAccessException
 	 *             Thrown if unable to access the measured values.
 	 */
-	List<MeasuredValues> readMeasuredValues(ReadRequest readRequest) throws DataAccessException;
+	List<MeasuredValues> readMeasuredValues(ReadRequest readRequest);
 
 	/**
 	 * Creates a new {@link Transaction} for modifying access.
@@ -291,7 +289,7 @@ public interface BaseEntityManager {
 	 * @throws DataAccessException
 	 *             Thrown if unable to create a new {@code Transaction}.
 	 */
-	Transaction startTransaction() throws DataAccessException;
+	Transaction startTransaction();
 
 	/**
 	 * Returns links to the given entities in the data store. The format of the links 

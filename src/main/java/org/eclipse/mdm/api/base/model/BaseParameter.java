@@ -205,7 +205,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 			setDoubleComplexValue((DoubleComplex) value, unit);
 		} else {
 			throw new IllegalArgumentException(
-					"Value '" + value + "' of type '" + value.getClass().getSimpleName() + "' is not supported.");
+					new StringBuilder().append("Value '").append(value).append("' of type '").append(value.getClass().getSimpleName()).append("' is not supported.").toString());
 		}
 	}
 
@@ -391,9 +391,7 @@ public abstract class BaseParameter extends BaseEntity implements Deletable {
 		}
 
 		Optional<Unit> unit = getUnit();
-		if (unit.isPresent()) {
-			sb.append(" [").append(unit.get().getName()).append(']');
-		}
+		unit.ifPresent(value -> sb.append(" [").append(value.getName()).append(']'));
 
 		return sb.append(')').toString();
 	}

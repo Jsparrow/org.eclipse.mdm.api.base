@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.eclipse.mdm.api.base.BaseEntityManager;
 import org.eclipse.mdm.api.base.adapter.Core;
-import org.eclipse.mdm.api.base.query.DataAccessException;
 
 /**
  * Implementation of the measurement entity type. The measurement entity holds
@@ -144,8 +143,7 @@ public class Measurement extends BaseEntity
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<ContextType> loadContextTypes(BaseEntityManager manager) 
-			throws DataAccessException {
+	public List<ContextType> loadContextTypes(BaseEntityManager manager) {
 		return manager.loadContextTypes(this);
 	}
 
@@ -154,7 +152,7 @@ public class Measurement extends BaseEntity
 	 */
 	@Override
 	public Map<ContextType, ContextRoot> loadContexts(BaseEntityManager manager,
-			ContextType... contextTypes) throws DataAccessException {
+			ContextType... contextTypes) {
 		return manager.loadContexts(this, contextTypes);
 	}
 

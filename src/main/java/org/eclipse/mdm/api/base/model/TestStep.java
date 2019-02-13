@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.eclipse.mdm.api.base.BaseEntityManager;
 import org.eclipse.mdm.api.base.adapter.Core;
-import org.eclipse.mdm.api.base.query.DataAccessException;
 
 /**
  * Implementation of the test step entity type. A test step is an atomic
@@ -102,8 +101,7 @@ public class TestStep extends BaseEntity implements ContextDescribable, Datable,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<ContextType> loadContextTypes(BaseEntityManager manager)
-			throws DataAccessException {
+	public List<ContextType> loadContextTypes(BaseEntityManager manager) {
 		return manager.loadContextTypes(this);
 	}
 
@@ -112,7 +110,7 @@ public class TestStep extends BaseEntity implements ContextDescribable, Datable,
 	 */
 	@Override
 	public Map<ContextType, ContextRoot> loadContexts(BaseEntityManager manager,
-			ContextType... contextTypes) throws DataAccessException {
+			ContextType... contextTypes) {
 		return manager.loadContexts(this, contextTypes);
 	}
 

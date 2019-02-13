@@ -216,7 +216,7 @@ public final class FilterItem {
 	@Override
 	public String toString() {
 		if (isBooleanOperator()) {
-			return " " + booleanOperator.toString() + " ";
+			return new StringBuilder().append(" ").append(booleanOperator.toString()).append(" ").toString();
 		} else if (isBracketOperator()) {
 			return bracketOperator.toString();
 		} else {

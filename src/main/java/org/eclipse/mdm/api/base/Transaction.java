@@ -49,7 +49,7 @@ public interface Transaction {
 	 * @throws DataAccessException
 	 *             Thrown in case of errors while writing entities.
 	 */
-	<T extends Entity> void create(Collection<T> entities) throws DataAccessException;
+	<T extends Entity> void create(Collection<T> entities);
 
 	/**
 	 * Updates given entities.
@@ -61,7 +61,7 @@ public interface Transaction {
 	 * @throws DataAccessException
 	 *             Thrown in case of errors while writing entities.
 	 */
-	<T extends Entity> void update(Collection<T> entities) throws DataAccessException;
+	<T extends Entity> void update(Collection<T> entities);
 
 	/**
 	 * Deletes given entities. Related children will be searched and
@@ -74,7 +74,7 @@ public interface Transaction {
 	 * @throws DataAccessException
 	 *             Thrown in case of errors while deleting entities.
 	 */
-	<T extends Deletable> void delete(Collection<T> entities) throws DataAccessException;
+	<T extends Deletable> void delete(Collection<T> entities);
 
 	/**
 	 * Creates {@link MeasuredValues} as specified by the given
@@ -85,7 +85,7 @@ public interface Transaction {
 	 * @throws DataAccessException
 	 *             Thrown if unable to create specified measured values.
 	 */
-	void writeMeasuredValues(Collection<WriteRequest> writeRequests) throws DataAccessException;
+	void writeMeasuredValues(Collection<WriteRequest> writeRequests);
 
 	/**
 	 * Commit this transaction. Any changes made within this transaction become
@@ -94,7 +94,7 @@ public interface Transaction {
 	 * @throws DataAccessException
 	 *             Thrown if unable to commit this transaction.
 	 */
-	void commit() throws DataAccessException;
+	void commit();
 
 	/**
 	 * Aborts (rollback) this transaction. Any changes made within this

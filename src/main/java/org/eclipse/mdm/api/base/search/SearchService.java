@@ -105,8 +105,7 @@ public interface SearchService {
 	 * @see #listEntityTypes(Class)
 	 * @see #getFilterValues(Class, Attribute, Filter)
 	 */
-	default List<Value> getFilterValues(Class<? extends Entity> entityClass, Attribute attribute)
-			throws DataAccessException {
+	default List<Value> getFilterValues(Class<? extends Entity> entityClass, Attribute attribute) {
 		return getFilterValues(entityClass, attribute, Filter.and());
 	}
 
@@ -135,8 +134,7 @@ public interface SearchService {
 	 * @see #listEntityTypes(Class)
 	 * @see #getFilterValues(Class, Attribute)
 	 */
-	List<Value> getFilterValues(Class<? extends Entity> entityClass, Attribute attribute, Filter filter)
-			throws DataAccessException;
+	List<Value> getFilterValues(Class<? extends Entity> entityClass, Attribute attribute, Filter filter);
 
 	/**
 	 * Executes the associated {@link SearchQuery} with given
@@ -172,8 +170,7 @@ public interface SearchService {
 	 * @see #fetch(Class, List)
 	 * @see Record#merge(Record)
 	 */
-	default <T extends Entity> List<T> fetchComplete(Class<T> entityCass, List<EntityType> entityTypes)
-			throws DataAccessException {
+	default <T extends Entity> List<T> fetchComplete(Class<T> entityCass, List<EntityType> entityTypes) {
 		return fetchComplete(entityCass, entityTypes, Filter.and());
 	}
 
@@ -213,8 +210,7 @@ public interface SearchService {
 	 * @see #fetch(Class, List, Filter)
 	 * @see Record#merge(Record)
 	 */
-	<T extends Entity> List<T> fetchComplete(Class<T> entityClass, List<EntityType> entityTypes, Filter filter)
-			throws DataAccessException;
+	<T extends Entity> List<T> fetchComplete(Class<T> entityClass, List<EntityType> entityTypes, Filter filter);
 
 	/**
 	 * Executes the associated {@link SearchQuery} and returns all available
@@ -237,7 +233,7 @@ public interface SearchService {
 	 * @see #listSearchableTypes()
 	 * @see #fetch(Class, Filter)
 	 */
-	default <T extends Entity> List<T> fetch(Class<T> entityClass) throws DataAccessException {
+	default <T extends Entity> List<T> fetch(Class<T> entityClass) {
 		return fetch(entityClass, Filter.and());
 	}
 
@@ -267,7 +263,7 @@ public interface SearchService {
 	 * @see #listEntityTypes(Class)
 	 * @see #fetch(Class)
 	 */
-	default <T extends Entity> List<T> fetch(Class<T> entityClass, Filter filter) throws DataAccessException {
+	default <T extends Entity> List<T> fetch(Class<T> entityClass, Filter filter) {
 		return fetch(entityClass, Collections.emptyList(), filter);
 	}
 
@@ -304,8 +300,7 @@ public interface SearchService {
 	 * @see #fetchComplete(Class, List)
 	 * @see Record#merge(Record)
 	 */
-	default <T extends Entity> List<T> fetch(Class<T> entityClass, List<Attribute> attributes)
-			throws DataAccessException {
+	default <T extends Entity> List<T> fetch(Class<T> entityClass, List<Attribute> attributes) {
 		return fetch(entityClass, attributes, Filter.and());
 	}
 
@@ -344,8 +339,7 @@ public interface SearchService {
 	 * @see #fetchComplete(Class, List, Filter)
 	 * @see Record#merge(Record)
 	 */
-	<T extends Entity> List<T> fetch(Class<T> entityClass, List<Attribute> attributes, Filter filter)
-			throws DataAccessException;
+	<T extends Entity> List<T> fetch(Class<T> entityClass, List<Attribute> attributes, Filter filter);
 
 	/**
 	 * Executes the associated {@link SearchQuery} with given {@link Attribute}s
@@ -384,7 +378,7 @@ public interface SearchService {
 	 * @see Record#merge(Record)
 	 */
 	default List<Result> fetchResults(Class<? extends Entity> entityClass, List<Attribute> attributes, Filter filter,
-			String query) throws DataAccessException {
+			String query) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -393,11 +387,11 @@ public interface SearchService {
 	}
 
 	@SuppressWarnings("unchecked")
-	default <T extends Entity> List<T> fetch(Class<T> entityClass, String query) throws DataAccessException {
+	default <T extends Entity> List<T> fetch(Class<T> entityClass, String query) {
 		return (List<T>) fetch(query).getOrDefault(entityClass, Collections.emptyList());
 	}
 
-	default Map<Class<? extends Entity>, List<Entity>> fetch(String query) throws DataAccessException {
+	default Map<Class<? extends Entity>, List<Entity>> fetch(String query) {
 		throw new UnsupportedOperationException();
 	}
 

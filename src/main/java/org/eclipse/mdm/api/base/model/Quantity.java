@@ -172,7 +172,7 @@ public class Quantity extends BaseEntity implements Datable, Deletable, Describa
 	public void setDefaultScalarType(ScalarType defaultScalarType) {
 		if (defaultScalarType.isUnknown()) {
 			throw new IllegalArgumentException(
-					"Default scalar type constant is not allowed to be '" + defaultScalarType + "'.");
+					new StringBuilder().append("Default scalar type constant is not allowed to be '").append(defaultScalarType).append("'.").toString());
 		}
 
 		getValue(ATTR_DEFAULT_SCALAR_TYPE).set(defaultScalarType);

@@ -187,9 +187,9 @@ public final class ScalarType extends EnumerationValue {
 	 */
 	public MeasuredValues createMeasuredValues(String name, String unit, Object input, boolean[] flags) {
 		if (isEnumeration() || isUnknown()) {
-			throw new IllegalStateException("It is not allowed to create measured values of type '" + this + "'.");
+			throw new IllegalStateException(new StringBuilder().append("It is not allowed to create measured values of type '").append(this).append("'.").toString());
 		} else if (!arrayType.isInstance(input)) {
-			throw new IllegalArgumentException("Given values of type '" + input.getClass() + "'.");
+			throw new IllegalArgumentException(new StringBuilder().append("Given values of type '").append(input.getClass()).append("'.").toString());
 		}
 
 		return new MeasuredValues(this, name, unit, input, flags);

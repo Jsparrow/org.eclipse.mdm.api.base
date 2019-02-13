@@ -27,6 +27,6 @@ public class ServiceNotProvidedException extends RuntimeException {
 	 * @param clazz the service that is not provided
 	 */
 	public ServiceNotProvidedException(Class<?> clazz) {
-		super("The service '" + clazz + "' is not implemented!");
+		super(new StringBuilder().append("The service '").append(clazz).append("' is not implemented!").toString());
 	}
 }

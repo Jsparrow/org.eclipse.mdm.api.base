@@ -47,7 +47,7 @@ public final class Result implements Iterable<Record> {
 	public void addRecord(Record record) {
 		if (records.put(record.getEntityType(), record) != null) {
 			throw new IllegalArgumentException(
-					"Record for entity type '" + record.getEntityType() + "' is already defined.");
+					new StringBuilder().append("Record for entity type '").append(record.getEntityType()).append("' is already defined.").toString());
 		}
 	}
 
@@ -64,7 +64,7 @@ public final class Result implements Iterable<Record> {
 	public Record getRecord(EntityType entityType) {
 		Record record = records.get(entityType);
 		if (record == null) {
-			throw new IllegalArgumentException("Record for entity type '" + entityType + "' is not available.");
+			throw new IllegalArgumentException(new StringBuilder().append("Record for entity type '").append(entityType).append("' is not available.").toString());
 		}
 
 		return record;
@@ -84,7 +84,7 @@ public final class Result implements Iterable<Record> {
 	public Record removeRecord(EntityType entityType) {
 		Record record = records.remove(entityType);
 		if (record == null) {
-			throw new IllegalArgumentException("Record for entity type '" + entityType + "' is not available.");
+			throw new IllegalArgumentException(new StringBuilder().append("Record for entity type '").append(entityType).append("' is not available.").toString());
 		}
 
 		return record;

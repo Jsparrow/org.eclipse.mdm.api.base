@@ -14,21 +14,26 @@
 
 package org.eclipse.mdm.api.base;
 
-import org.eclipse.mdm.api.base.model.TestStep;
-import org.eclipse.mdm.api.base.query.DataAccessException;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyCollection;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.Collections;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.*;
+import org.eclipse.mdm.api.base.model.TestStep;
+import org.eclipse.mdm.api.base.query.DataAccessException;
+import org.junit.Test;
 
 public class BaseEntityManagerTest {
 
 	@Test
-	public void loadShouldReturnEntity() throws DataAccessException {
+	public void loadShouldReturnEntity() {
 		
 		@SuppressWarnings("unchecked")
 		BaseEntityManager entityManager = mock(BaseEntityManager.class);
@@ -42,7 +47,7 @@ public class BaseEntityManagerTest {
 	}
 	
 	@Test
-	public void loadNotExistingIdShouldThrowDataAccessException() throws DataAccessException {
+	public void loadNotExistingIdShouldThrowDataAccessException() {
 		
 		@SuppressWarnings("unchecked")
 		BaseEntityManager entityManager = mock(BaseEntityManager.class);
@@ -56,7 +61,7 @@ public class BaseEntityManagerTest {
 	}
 	
 	@Test
-	public void loadNotUniqueIdShouldThrowDataAccessException() throws DataAccessException {
+	public void loadNotUniqueIdShouldThrowDataAccessException() {
 		
 		@SuppressWarnings("unchecked")
 		BaseEntityManager entityManager = mock(BaseEntityManager.class);

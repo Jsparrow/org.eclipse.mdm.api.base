@@ -20,7 +20,6 @@ import java.util.Optional;
 import org.eclipse.mdm.api.base.adapter.ModelManager;
 import org.eclipse.mdm.api.base.file.FileService;
 import org.eclipse.mdm.api.base.model.BaseEntityFactory;
-import org.eclipse.mdm.api.base.model.Entity;
 import org.eclipse.mdm.api.base.notification.NotificationService;
 import org.eclipse.mdm.api.base.query.QueryService;
 import org.eclipse.mdm.api.base.search.SearchService;
@@ -127,5 +126,6 @@ public interface BaseApplicationContext<S extends BaseEntityFactory, T extends B
 	 * 
 	 * This closes all underlying managers and services.
 	 */
+	@Override
 	void close() throws ConnectionException;
 }

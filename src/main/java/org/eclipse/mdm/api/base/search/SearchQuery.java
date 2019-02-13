@@ -75,7 +75,7 @@ public interface SearchQuery {
 	 * @see #listEntityTypes()
 	 * @see #getFilterValues(Attribute, Filter)
 	 */
-	default List<Value> getFilterValues(Attribute attribute) throws DataAccessException {
+	default List<Value> getFilterValues(Attribute attribute) {
 		return getFilterValues(attribute, Filter.and());
 	}
 
@@ -97,7 +97,7 @@ public interface SearchQuery {
 	 * @see #listEntityTypes()
 	 * @see #getFilterValues(Attribute)
 	 */
-	List<Value> getFilterValues(Attribute attribute, Filter filter) throws DataAccessException;
+	List<Value> getFilterValues(Attribute attribute, Filter filter);
 
 	/**
 	 * Executes this search query with given {@link EntityType}s. The {@code
@@ -116,7 +116,7 @@ public interface SearchQuery {
 	 * @see #fetchComplete(List, Filter)
 	 * @see #fetch(List)
 	 */
-	default List<Result> fetchComplete(List<EntityType> entityTypes) throws DataAccessException {
+	default List<Result> fetchComplete(List<EntityType> entityTypes) {
 		return fetchComplete(entityTypes, Filter.and());
 	}
 
@@ -139,7 +139,7 @@ public interface SearchQuery {
 	 * @see #fetchComplete(List)
 	 * @see #fetch(List, Filter)
 	 */
-	List<Result> fetchComplete(List<EntityType> entityTypes, Filter filter) throws DataAccessException;
+	List<Result> fetchComplete(List<EntityType> entityTypes, Filter filter);
 
 	/**
 	 * Executes this search query with given {@link Attribute}s. The {@code
@@ -158,7 +158,7 @@ public interface SearchQuery {
 	 * @see #fetch(List, Filter)
 	 * @see #fetchComplete(List)
 	 */
-	default List<Result> fetch(List<Attribute> attributes) throws DataAccessException {
+	default List<Result> fetch(List<Attribute> attributes) {
 		return fetch(attributes, Filter.and());
 	}
 
@@ -181,6 +181,6 @@ public interface SearchQuery {
 	 * @see #fetch(List)
 	 * @see #fetchComplete(List, Filter)
 	 */
-	List<Result> fetch(List<Attribute> attributes, Filter filter) throws DataAccessException;
+	List<Result> fetch(List<Attribute> attributes, Filter filter);
 
 }

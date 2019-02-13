@@ -193,7 +193,7 @@ public final class EntityStore {
 	 * @return A context type dependent key is returned.
 	 */
 	private static String createContextTypeKey(Class<? extends Entity> entityClass, ContextType contextType) {
-		return entityClass.getSimpleName() + '_' + contextType;
+		return new StringBuilder().append(entityClass.getSimpleName()).append('_').append(contextType).toString();
 	}
 
 }

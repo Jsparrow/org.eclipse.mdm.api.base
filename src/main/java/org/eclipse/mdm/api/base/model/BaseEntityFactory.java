@@ -161,7 +161,7 @@ public abstract class BaseEntityFactory {
 	 */
 	public Parameter createParameter(String name, Object value, Unit unit, ParameterSet parameterSet) {
 		if (parameterSet.getParameter(name).isPresent()) {
-			throw new IllegalArgumentException("Parameter with name '" + name + "' already exists.");
+			throw new IllegalArgumentException(new StringBuilder().append("Parameter with name '").append(name).append("' already exists.").toString());
 		}
 
 		Parameter parameter = new Parameter(createCore(Parameter.class));
@@ -294,10 +294,8 @@ public abstract class BaseEntityFactory {
 
 		// relations
 		Optional<User> responsiblePerson = getLoggedInUser();
-		if (responsiblePerson.isPresent()) {
-			// may be null if user entities are not available
-			getCore(test).getMutableStore().set(responsiblePerson.get());
-		}
+		// may be null if user entities are not available
+		responsiblePerson.ifPresent(value -> getCore(test).getMutableStore().set(value));
 
 		// properties
 		test.setName(name);
@@ -571,7 +569,7 @@ public abstract class BaseEntityFactory {
 			try {
 				return constructor.newInstance(core);
 			} catch (IllegalAccessException exc) {
-				throw new IllegalStateException("Cannot access Constructor(Core) of class '" + clazz.getName() + "'!");
+				throw new IllegalStateException(new StringBuilder().append("Cannot access Constructor(Core) of class '").append(clazz.getName()).append("'!").toString());
 			}
 		} catch (NoSuchMethodException | InvocationTargetException | InstantiationException exc) {
 			throw new IllegalStateException(exc.getMessage(), exc);

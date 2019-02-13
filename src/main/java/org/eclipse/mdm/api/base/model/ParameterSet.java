@@ -101,12 +101,11 @@ public class ParameterSet extends BaseEntity implements Deletable {
 	 */
 	public boolean removeParameter(String name) {
 		Optional<Parameter> parameter = getParameter(name);
-		if (parameter.isPresent()) {
-			getCore().getChildrenStore().remove(parameter.get());
-			return true;
+		if (!parameter.isPresent()) {
+			return false;
 		}
-
-		return false;
+		getCore().getChildrenStore().remove(parameter.get());
+		return true;
 	}
 
 	/**

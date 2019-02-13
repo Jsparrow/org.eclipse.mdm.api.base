@@ -129,11 +129,11 @@ public class ModelTest {
 	 */
 	@org.junit.Test
 	public void getChannelAttrs() {
-		Map<String, Value> map = new HashMap<String, Value>();
+		Map<String, Value> map = new HashMap<>();
 		float min_src = 5.7f;
 		float max_src = 10.23f;
-		map.put("Minimum", ValueType.DOUBLE.create("Minimum", "m/s", true, new Double(min_src)));
-		map.put("Maximum", ValueType.DOUBLE.create("Maximum", "m/s", true, new Double(max_src)));
+		map.put("Minimum", ValueType.DOUBLE.create("Minimum", "m/s", true, Double.valueOf(min_src)));
+		map.put("Maximum", ValueType.DOUBLE.create("Maximum", "m/s", true, Double.valueOf(max_src)));
 		Core core = new CoreImpl(map);
 		Channel ch = new Channel(core);
 		Double min = ch.getMinimum();
@@ -148,7 +148,7 @@ public class ModelTest {
 	 */
 	@org.junit.Test
 	public void getQuantity() {
-		Map<String, Value> map = new HashMap<String, Value>();
+		Map<String, Value> map = new HashMap<>();
 		map.put("DefDataType", new Value(ValueType.ENUMERATION, "name", "unit", true, ScalarType.FLOAT,
 				ScalarType.class, ScalarType.FLOAT, EnumRegistry.SCALAR_TYPE));
 		Core core = new CoreImpl(map);
@@ -181,7 +181,7 @@ public class ModelTest {
 	 */
 	@org.junit.Test
 	public void entityFactory() {
-		Map<String, Value> map = new HashMap<String, Value>();
+		Map<String, Value> map = new HashMap<>();
 		map.put("Name", ValueType.STRING.create("Name", null, true, "pdnameabc"));
 		map.put("Length", ValueType.INTEGER.create("Length", null, true, 13));
 		map.put("Mass", ValueType.INTEGER.create("Length", null, true, 0));
@@ -196,7 +196,7 @@ public class ModelTest {
 		EntityFactoryImpl ef = new EntityFactoryImpl(core);
 		PhysicalDimension physicalDimension = ef.createPhysicalDimension("physdim");
 
-		map = new HashMap<String, Value>();
+		map = new HashMap<>();
 		map.put("Offset", ValueType.DOUBLE.create("Length", null, true, 0d));
 		map.put("Factor", ValueType.DOUBLE.create("Length", null, true, 0d));
 		map.put("Name", ValueType.STRING.create("Name", null, true, "unitname"));
@@ -204,7 +204,7 @@ public class ModelTest {
 		ef = new EntityFactoryImpl(core);
 		Unit unit = ef.createUnit("unit", physicalDimension);
 
-		map = new HashMap<String, Value>();
+		map = new HashMap<>();
 		map.put("Name", ValueType.STRING.create("Name", null, true, "quantname"));
 		map.put("Version", ValueType.STRING.create("Version", null, true, "4711"));
 		map.put("DateCreated", ValueType.DATE.create("DateCreated", null, true, null));
@@ -227,14 +227,14 @@ public class ModelTest {
 		assertEquals("quantity", quantity.getName());
 		assertEquals(unit, quantity.getDefaultUnit());
 
-		map = new HashMap<String, Value>();
+		map = new HashMap<>();
 		map.put("Name", ValueType.STRING.create("Name", null, true, null));
 		map.put("DateCreated", ValueType.DATE.create("DateCreated", null, true, null));
 		core = new CoreImpl(map);
 		ef = new EntityFactoryImpl(core);
 		Test test = ef.createTest("mytest");
 
-		map = new HashMap<String, Value>();
+		map = new HashMap<>();
 		map.put("Name", ValueType.STRING.create("Name", null, true, null));
 		map.put("DateCreated", ValueType.DATE.create("DateCreated", null, true, null));
 		map.put("Optional", ValueType.BOOLEAN.create("Optional", null, true, null));
@@ -243,14 +243,14 @@ public class ModelTest {
 		ef = new EntityFactoryImpl(core);
 		TestStep testStep = ef.createTestStep("teststep", test);
 
-		map = new HashMap<String, Value>();
+		map = new HashMap<>();
 		map.put("Name", ValueType.STRING.create("Name", null, true, null));
 		map.put("DateCreated", ValueType.DATE.create("DateCreated", null, true, null));
 		core = new CoreImpl(map);
 		ef = new EntityFactoryImpl(core);
 		Measurement measurement = ef.createMeasurement("measurement", testStep);
 
-		map = new HashMap<String, Value>();
+		map = new HashMap<>();
 		map.put("Name", ValueType.STRING.create("Name", null, true, null));
 		map.put("Description", ValueType.STRING.create("Description", null, true, null));
 		map.put("Interpolation", new Value(ValueType.ENUMERATION, "Interpolation", "", true, null, Interpolation.class,

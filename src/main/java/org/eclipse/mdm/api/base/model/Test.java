@@ -116,12 +116,11 @@ public class Test extends BaseEntity
 	 */
 	public boolean removeCommissionedTestStep(String name) {
 		Optional<TestStep> testStep = getCommissionedTestStep(name);
-		if (testStep.isPresent()) {
-			getCore().getChildrenStore().remove(testStep.get());
-			return true;
+		if (!testStep.isPresent()) {
+			return false;
 		}
-
-		return false;
+		getCore().getChildrenStore().remove(testStep.get());
+		return true;
 	}
 
 }

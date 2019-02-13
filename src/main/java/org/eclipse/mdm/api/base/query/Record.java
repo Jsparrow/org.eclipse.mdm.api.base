@@ -109,7 +109,7 @@ public final class Record {
 	public Optional<String> getID(Relation relation) {
 		Value idValue = getValues().get(relation.getName());
 		if (idValue == null) {
-			throw new IllegalStateException("Relation attribute '" + relation + "' was not selected.");
+			throw new IllegalStateException(new StringBuilder().append("Relation attribute '").append(relation).append("' was not selected.").toString());
 		}
 
 		return Optional.ofNullable(idValue.isValid() ? idValue.extract() : null);
@@ -125,8 +125,7 @@ public final class Record {
 	 */
 	public void addValue(Value value) {
 		if (values.put(value.getName(), value) != null) {
-			throw new IllegalArgumentException("Value with name '" + value.getName() + "' for entity type '"
-					+ entityType + "' record is already defined.");
+			throw new IllegalArgumentException(new StringBuilder().append("Value with name '").append(value.getName()).append("' for entity type '").append(entityType).append("' record is already defined.").toString());
 		}
 	}
 
@@ -181,7 +180,7 @@ public final class Record {
 	Value getValue(String name) {
 		Value value = getValues().get(name);
 		if (value == null) {
-			throw new IllegalArgumentException("Value with name '" + name + "' not found.");
+			throw new IllegalArgumentException(new StringBuilder().append("Value with name '").append(name).append("' not found.").toString());
 		}
 
 		return value;
